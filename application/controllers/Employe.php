@@ -34,9 +34,9 @@ class Employe extends CI_Controller {
         $new = $_POST['email'];
         $pass = md5($_POST['password']);
         $check = $this->employe_model->log($new, $pass);
-        if (!empty($check) && $check['is_active']==1 && $check['is_verified']==1) {
-           // $this->session->set_userdata("user_id",$check['id']);
-            $check1['User'] = $this->employe_model->find_by_id($check['id']);
+        if (!empty($check) ) {
+            $this->session->set_userdata("user_id",$check['auth_id']);
+            $check1['User'] = $this->employe_model->find_by_id($check['auth_id']);
             $this->load->view('User/success');
         } else {
             $this->load->view('User/error');

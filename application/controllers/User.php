@@ -36,7 +36,7 @@ class User extends CI_Controller {
         $check = $this->User_model->log($new, $pass);
         if (!empty($check) && $check['is_active']==1 && $check['is_verified']==1) {
            // $this->session->set_userdata("user_id",$check['id']);
-            $check1['User'] = $this->news_model->find_by_id($check['id']);
+            $check1['User'] = $this->news_model->find_by_id($check['auth_id']);
             $this->load->view('User/success');
         } else {
             $this->load->view('User/error');
