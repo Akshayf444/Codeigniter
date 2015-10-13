@@ -4,7 +4,7 @@
 
 <?php echo validation_errors(); ?>
 
-<?php echo form_open('Employe/login') ?>
+<?php echo form_open('Employee/login') ?>
 <div align="center">
     <label>Email</label>
     <input type="text" name="email"/>

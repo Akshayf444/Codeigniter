@@ -35,44 +35,47 @@ class User extends CI_Controller {
         $new = $_POST['email'];
         $pass = md5($_POST['password']);
         $check = $this->User_model->log($new, $pass);
-         //&& $check['is_active']==1 && $check['is_verified']==1
+        //&& $check['is_active']==1 && $check['is_verified']==1
         if (!empty($check)) {
-          $this->session->set_userdata("user_id",$check['auth_id']);
-          $this->session->set_userdata("user_email",$check['email']);
+            $this->session->set_userdata("user_id", $check['auth_id']);
+            $this->session->set_userdata("user_email", $check['email']);
+            $this->session->set_userdata("user_mobile", $check['mobile']);
             $check1['User'] = $this->User_model->find_by_id($check['auth_id']);
             //$this->load->view('User/success');
             redirect('User/view', 'refresh');
         } else {
             $this->load->view('User/error');
         }
-        
-        }
-        
-        public function view()
-    {
-        $this->load->helper('url');
-        $user_id=$this->session->userdata("user_id");
-        $user_email=$this->session->userdata("user_email");
-        $check1['User'] = $this->User_model->find_by_id($user_id);
-        $this->load->view('header');
-            $this->load->view('User/View', $check1);
-            $this->load->view('footer');
     }
+
+    public function view() {
         
-        public function logout() {
+        $this->load->view('header');
+        $this->load->view('User/View');
+        $this->load->view('footer');
+    }
+
+    public function add_detail() {
         $this->load->helper('url');
-    
+        $user_id = $this->session->userdata("user_id");
+        $user_email = $this->session->userdata("user_email");
+        $user_mobile = $this->session->userdata("user_mobile");
+        //$check1['User'] = $this->User_model->find_by_id($user_id);
+        $check2['User1'] =$this->USer_model->Add_detail($user_id,$user_email,$user_mobile);
+     
+    }
+
+    public function logout() {
+        $this->load->helper('url');
+
 
 //        $data['title'] = 'Update a news item';
-        
-            $this->session->unset_userdata("user_id");
-            $this->session->unset_userdata("user_email");
-          
-            redirect('User/login_show', 'refresh');
 
-        
+        $this->session->unset_userdata("user_id");
+        $this->session->unset_userdata("user_email");
+
+        redirect('User/login_show', 'refresh');
     }
-    
 
 //    public function create() {
 //        $this->load->helper('form');

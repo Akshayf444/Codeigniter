@@ -1,10 +1,10 @@
 
 
-<h2 align="center">Enter Employe Detail</h2>
+<h2 align="center">Enter Employee Detail</h2>
 
 <?php echo validation_errors(); ?>
 
-<?php echo form_open('Employe/register') ?>
+<?php echo form_open('Employee/register') ?>
 <div align="center">
     <label>Email</label>
     <input type="text" name="email"/>
