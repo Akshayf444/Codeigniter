@@ -36,13 +36,39 @@ class Employe extends CI_Controller {
         $check = $this->employe_model->log($new, $pass);
         if (!empty($check) ) {
             $this->session->set_userdata("user_id",$check['auth_id']);
+            $this->session->set_userdata("user_email",$check['email']);
             $check1['User'] = $this->employe_model->find_by_id($check['auth_id']);
-            $this->load->view('User/success');
+           //$this->load->view('Employe/view');
+            redirect('Employe/view', 'refresh');
         } else {
-            $this->load->view('User/error');
+            $this->load->view('Employe/error');
         }
         
         }
+      public function logout() {
+        $this->load->helper('url');
+    
+
+//        $data['title'] = 'Update a news item';
+        
+            $this->session->unset_userdata("user_id");
+            $this->session->unset_userdata("user_email");
+            $this->session->unset_userdata("employe_id");
+            $this->session->unset_userdata("employe_email");
+            redirect('Employe/login_show', 'refresh');
+
+        
+    }
+    public function view()
+    {
+        $this->load->helper('url');
+        $user_id=$this->session->userdata("user_id");
+        $user_email=$this->session->userdata("user_email");
+        $check1['User'] = $this->employe_model->find_by_id($user_id);
+        $this->load->view('header');
+            $this->load->view('Employe/View', $check1);
+            $this->load->view('footer');
+    }
     
 
 //    public function create() {
