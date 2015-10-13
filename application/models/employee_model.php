@@ -1,6 +1,6 @@
 <?php
 
-class employe_model extends CI_Model {
+class employee_model extends CI_Model {
 
     public function __construct() {
         $this->load->database();

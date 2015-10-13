@@ -1,17 +1,18 @@
 
 
-<h2 align="center">Login Form</h2>
+<h2 align="center">Enter Employee Detail</h2>
 
 <?php echo validation_errors(); ?>
 
-<?php echo form_open('Employe/login') ?>
+<?php echo form_open('Employee/register') ?>
 <div align="center">
     <label>Email</label>
     <input type="text" name="email"/>
     <label>Password</label>
     <input type="text" name="password"/>
-    
-    <input type="submit" value="Log In" />
+    <label>mobile</label>
+    <input type="text" name="mobile"/>
+    <input type="submit" value="Register" />
     </div>
-<?php //echo '<pre>'; print_r($this->session->all_userdata());exit;?>
+
 </form>

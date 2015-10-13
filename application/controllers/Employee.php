@@ -1,10 +1,10 @@
 <?php
 
-class Employe extends CI_Controller {
+class Employee extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('employe_model');
+        $this->load->model('employee_model');
         $this->load->library('session');
     }
 
@@ -15,10 +15,10 @@ class Employe extends CI_Controller {
         $this->form_validation->set_rules('mobile', 'mobile', 'required');
 
         if ($this->form_validation->run() === FALSE) {
-            $this->loadFinalView(array('Employe/registration'));
+            $this->loadFinalView(array('Employee/registration'));
         } else {
-            $this->employe_model->create();
-            redirect('Employe/login_show', 'refresh');
+            $this->employee_model->create();
+            redirect('Employee/login_show', 'refresh');
             // $this->loadFinalView(array('User/login'));
             //redirect('news', 'refresh');
         }
@@ -27,22 +27,48 @@ class Employe extends CI_Controller {
     public function login_show() {
 
 
-        $this->loadFinalView(array('Employe/login'));
+        $this->loadFinalView(array('Employee/login'));
     }
 
     public function login() {
         $new = $_POST['email'];
         $pass = md5($_POST['password']);
-        $check = $this->employe_model->log($new, $pass);
+        $check = $this->employee_model->log($new, $pass);
         if (!empty($check) ) {
             $this->session->set_userdata("user_id",$check['auth_id']);
-            $check1['User'] = $this->employe_model->find_by_id($check['auth_id']);
-            $this->load->view('User/success');
+            $this->session->set_userdata("user_email",$check['email']);
+            $this->session->set_userdata("user_mobile",$check['mobile']);
+            $check1['User'] = $this->employee_model->find_by_id($check['auth_id']);
+           //$this->load->view('Employe/view');
+            redirect('Employee/view', 'refresh');
         } else {
-            $this->load->view('User/error');
+            $this->load->view('Employee/error');
         }
         
         }
+      public function logout() {
+        $this->load->helper('url');
+    
+
+//        $data['title'] = 'Update a news item';
+        
+            $this->session->unset_userdata("user_id");
+            $this->session->unset_userdata("user_email");
+            $this->session->unset_userdata("user_mobile");
+            redirect('Employee/login_show', 'refresh');
+
+        
+    }
+    public function view()
+    {
+        $this->load->helper('url');
+        $user_id=$this->session->userdata("user_id");
+        $user_email=$this->session->userdata("user_email");
+        $check1['User'] = $this->employee_model->find_by_id($user_id);
+        $this->load->view('header');
+            $this->load->view('Employee/View', $check1);
+            $this->load->view('footer');
+    }
     
 
 //    public function create() {

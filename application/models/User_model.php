@@ -39,7 +39,14 @@ class User_model extends CI_Model {
             return $query->result_array();
         }
 
-        $query = $this->db->get_where('authentication', array('id' => $id));
+        $query = $this->db->get_where('authentication', array('auth_id' => $id));
+        return $query->row_array();
+    }
+    public function Add_detail($id,$email) {
+        
+
+        $query = $this->db->where(array('auth_id' => $id));
+        $query = $this->db->update('user', array('Name' => $id));
         return $query->row_array();
     }
 
