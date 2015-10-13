@@ -75,9 +75,9 @@ class User extends CI_Controller {
                 $this->load->view('User/success');
                 $data = array('title' => 'Basic Profile', 'content' => 'User/Add_profile');
                 $this->load->view('template1', $data);
-            } else {
-                redirect('User/login', 'refresh');
             }
+        } else {
+            redirect('User/login', 'refresh');
         }
     }
 
