@@ -37,6 +37,7 @@ class Employee extends CI_Controller {
         if (!empty($check) ) {
             $this->session->set_userdata("user_id",$check['auth_id']);
             $this->session->set_userdata("user_email",$check['email']);
+            $this->session->set_userdata("user_mobile",$check['mobile']);
             $check1['User'] = $this->employee_model->find_by_id($check['auth_id']);
            //$this->load->view('Employe/view');
             redirect('Employee/view', 'refresh');

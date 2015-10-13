@@ -15,8 +15,14 @@
     <br>
     <label>Experince Month</label>
     <input type="text" class="form-control" name="experince_month"/>
-    <label>Experince Month</label>
+    <label>Current Location</label>
     <input type="text" class="form-control" name="current_location"/>
+    <label>Prefered Location</label>
+    <input type="text" class="form-control" name="prefred_location"/>
+    <label>Industry</label>
+    <input type="text" class="form-control" name="industry"/>
+    <label>Function Area</label>
+    <input type="text" class="form-control" name="function_area"/>
     <br>
     <input type="submit" value="Register" />
     </div>
