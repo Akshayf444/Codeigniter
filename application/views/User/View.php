@@ -12,8 +12,11 @@
     <label>Gender</label>
     <input type="radio" class="form-control" name="sex" value="Male"/>Male
     <input type="radio" class="form-control" name="sex" value="Female"/>Female
+    <br>
     <label>Experince Month</label>
     <input type="text" class="form-control" name="experince_month"/>
+    <label>Experince Month</label>
+    <input type="text" class="form-control" name="current_location"/>
     <br>
     <input type="submit" value="Register" />
     </div>
