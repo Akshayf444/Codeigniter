@@ -60,7 +60,7 @@ class CI_Controller {
 
     protected function loadFinalView($current_view) {
         $this->load->view('header');
-        $this->load->view('menu');
+        //$this->load->view('menu');
         if (!empty($current_view)) {
             foreach ($current_view as $view) {
                 $this->load->view($view);
