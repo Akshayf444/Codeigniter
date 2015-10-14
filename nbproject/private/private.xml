@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/wamp/www/jobportal/application/views/User/registration.php</file>
+            <file>file:/C:/wamp/www/jobportal/application/views/User/login.php</file>
+            <file>file:/C:/wamp/www/jobportal/application/views/employee/registration.php</file>
+            <file>file:/C:/wamp/www/jobportal/application/controllers/Employee.php</file>
+            <file>file:/C:/wamp/www/jobportal/application/models/employee_model.php</file>
+            <file>file:/C:/wamp/www/jobportal/application/views/employee/login.php</file>
+            <file>file:/C:/wamp/www/jobportal/application/views/employee/View.php</file>
+            <file>file:/C:/wamp/www/jobportal/system/core/Controller.php</file>
+            <file>file:/C:/wamp/www/jobportal/application/views/User/Add_profile.php</file>
+            <file>file:/C:/wamp/www/jobportal/application/views/User/Profile_update.php</file>
+            <file>file:/C:/wamp/www/jobportal/application/models/User_model.php</file>
+            <file>file:/C:/wamp/www/jobportal/application/views/template1.php</file>
+            <file>file:/C:/wamp/www/jobportal/application/controllers/User.php</file>
+            <file>file:/C:/wamp/www/jobportal/index.php</file>
+        </group>
+    </open-files>
+</project-private>

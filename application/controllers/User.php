@@ -124,7 +124,22 @@ class User extends CI_Controller {
             }
             $is_logged_in = $this->session->userdata('user_id');
             $show['user'] = $this->User_model->Show_profile($is_logged_in);
-            $data = array('title' => 'Basic Profile', 'content' => 'User/Profile_update', 'view_data' => $show );
+            $data = array('title' => 'Basic Profile', 'content' => 'User/Profile_update', 'view_data' => $show);
+            $this->load->view('template1', $data);
+        } else {
+            redirect('User/login', 'refresh');
+        }
+    }
+
+    public function user_qualification() {
+        if ($this->is_logged_in() == TRUE) {
+            if ($this->input->post()) {
+            
+            }
+            $is_logged_in = $this->session->userdata('user_id');
+            $special['edu']=$this->User_model->education_master();
+            //var_dump($special);
+            $data = array('title' => 'Basic Qualification', 'content' => 'User/user_qualification', 'view_data' => $special);
             $this->load->view('template1', $data);
         } else {
             redirect('User/login', 'refresh');

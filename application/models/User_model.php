@@ -96,5 +96,11 @@ class User_model extends CI_Model {
         return $this->db->update('user',$data);
         
     }
+    public function education_master()
+    {
+        $query=$this->db->get('education_master');
+        return $query->result();
+        
+    }
 
 }
