@@ -73,9 +73,9 @@ class User extends CI_Controller {
                     $check2['User1'] = $this->User_model->Add_detail($user_id, $user_email, $user_mobile);
                 }
                 $this->load->view('User/success');
-                $data = array('title' => 'Basic Profile', 'content' => 'User/Add_profile');
-                $this->load->view('template1', $data);
             }
+            $data = array('title' => 'Basic Profile', 'content' => 'User/Add_profile', 'view_data' => 'blank');
+            $this->load->view('template1', $data);
         } else {
             redirect('User/login', 'refresh');
         }
@@ -86,16 +86,31 @@ class User extends CI_Controller {
         $this->session->unset_userdata("user_id");
         $this->session->unset_userdata("user_email");
         $this->session->unset_userdata("user_mobile");
-
+        $this->session->session_destroy();
         redirect('User/login', 'refresh');
     }
 
     public function is_logged_in() {
         $is_logged_in = $this->session->userdata('user_id');
-        if (isset($is_logged_in) || $is_logged_in == true) {
+        if (isset($is_logged_in) && $is_logged_in != '') {
             return TRUE;
         } else {
             return FALSE;
+        }
+    }
+
+    public function profile_update() {
+        if ($this->is_logged_in() == TRUE) {
+
+            if ($this->input->post()) {
+                
+            }
+            $is_logged_in = $this->session->userdata('user_id');
+            $show = $this->user_modal->Show_profile($is_logged_in);
+            $data = array('title' => 'Basic Profile', 'content' => 'User/Add_profile', $show);
+            $this->load->view('template1', $data);
+        } else {
+            redirect('User/login', 'refresh');
         }
     }
 

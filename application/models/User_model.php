@@ -69,5 +69,10 @@ class User_model extends CI_Model {
 
         return $this->db->insert('user', $data);
     }
+    public function Show_profile($id)
+    {
+        $query = $this->db->get_where('news',array('user_id'=>$id));
+        return $query->row_array();
+    }
 
 }
