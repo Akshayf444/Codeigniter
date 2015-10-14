@@ -50,7 +50,8 @@ class User extends CI_Controller {
     public function Add_profile() {
 
         if ($this->is_logged_in() == TRUE) {
-
+            $user_id = $this->session->userdata("user_id");
+            $scheck = $this->User_model->find_by_user_id($user_id);
             if ($this->input->post()) {
                 $user_id = $this->session->userdata("user_id");
                 $user_email = $this->session->userdata("user_email");
@@ -70,7 +71,11 @@ class User extends CI_Controller {
                 $this->form_validation->set_rules('resume_headline', 'resume_headline', 'required');
                 //$check1['User'] = $this->User_model->find_by_id($user_id);
                 if ($this->form_validation->run() === True) {
-                    $check2['User1'] = $this->User_model->Add_detail($user_id, $user_email, $user_mobile);
+                    if ($check['auth_id'] != $user_id) {
+                        $check2['User1'] = $this->User_model->Add_detail($user_id, $user_email, $user_mobile);
+                    } else {
+                        $data['user'] = $this->User_model->profile_update($user_id, $user_email, $user_mobile);
+                    }
                 }
                 $this->load->view('User/success');
             }
@@ -138,6 +143,7 @@ class User extends CI_Controller {
                 
             }
             $is_logged_in = $this->session->userdata('user_id');
+
             //$special['edu'] = $this->User_model->education_master();
             //var_dump($special);
             $dropdown['dropdowns'] = $this->Master_model->getQualification();
