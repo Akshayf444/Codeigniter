@@ -106,7 +106,6 @@ class User extends CI_Controller {
 
     public function profile_update() {
         if ($this->is_logged_in() == TRUE) {
-
             if ($this->input->post()) {
                 $user_id = $this->session->userdata("user_id");
                 $user_email = $this->session->userdata("user_email");
