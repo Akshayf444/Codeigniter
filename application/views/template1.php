@@ -66,7 +66,7 @@
         <!-- Page Content -->
         <div class="section" >
             <div class="container" >
-                <?php $this->load->view($content); ?>
+                <?php $this->load->view($content, $view_data); ?>
             </div>
         </div>
         <footer class="section section-primary"> 

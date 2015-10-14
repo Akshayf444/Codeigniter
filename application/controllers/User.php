@@ -73,9 +73,9 @@ class User extends CI_Controller {
                     $check2['User1'] = $this->User_model->Add_detail($user_id, $user_email, $user_mobile);
                 }
                 $this->load->view('User/success');
-                $data = array('title' => 'Basic Profile', 'content' => 'User/Add_profile');
-                $this->load->view('template1', $data);
             }
+            $data = array('title' => 'Basic Profile', 'content' => 'User/Add_profile', 'view_data' => 'blank');
+            $this->load->view('template1', $data);
         } else {
             redirect('User/login', 'refresh');
         }
@@ -92,7 +92,7 @@ class User extends CI_Controller {
 
     public function is_logged_in() {
         $is_logged_in = $this->session->userdata('user_id');
-        if (isset($is_logged_in) || $is_logged_in == true) {
+        if (isset($is_logged_in) && $is_logged_in != '') {
             return TRUE;
         } else {
             return FALSE;
