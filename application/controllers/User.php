@@ -5,7 +5,6 @@ class User extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('User_model');
-        $this->load->library('session');
     }
 
     public function register() {
@@ -50,43 +49,54 @@ class User extends CI_Controller {
 
     public function Add_profile() {
 
-        if ($this->input->post()) {
-            $user_id = $this->session->userdata("user_id");
-            $user_email = $this->session->userdata("user_email");
-            $user_mobile = $this->session->userdata("user_mobile");
-            $this->form_validation->set_rules('name', 'name', 'required');
-            $this->form_validation->set_rules('dob', 'dob', 'required');
-            $this->form_validation->set_rules('sex', 'sex', 'required');
-            $this->form_validation->set_rules('experince_year', 'experince_year', 'required');
-            $this->form_validation->set_rules('experince_month', 'experince_month', 'required');
-            $this->form_validation->set_rules('current_location', 'current_location', 'required');
-            $this->form_validation->set_rules('prefred_location', 'prefred_location', 'required');
-            $this->form_validation->set_rules('industry', 'industry', 'required');
-            $this->form_validation->set_rules('function_area', 'function_area', 'required');
-            $this->form_validation->set_rules('role', 'role', 'required');
-            $this->form_validation->set_rules('key_skill', 'key_skill', 'required');
-            $this->form_validation->set_rules('marital_status', 'marital_status', 'required');
-            $this->form_validation->set_rules('resume_headline', 'resume_headline', 'required');
-            //$check1['User'] = $this->User_model->find_by_id($user_id);
-            if ($this->form_validation->run() === True) {
-                $check2['User1'] = $this->User_model->Add_detail($user_id, $user_email, $user_mobile);
-            }
-            $this->load->view('User/success');
-        }
+        if ($this->is_logged_in() == TRUE) {
 
-        $data = array('title' => 'Basic Profile', 'content' => 'User/Add_profile');
-        $this->load->view('template1', $data);
+            if ($this->input->post()) {
+                $user_id = $this->session->userdata("user_id");
+                $user_email = $this->session->userdata("user_email");
+                $user_mobile = $this->session->userdata("user_mobile");
+                $this->form_validation->set_rules('name', 'name', 'required');
+                $this->form_validation->set_rules('dob', 'dob', 'required');
+                $this->form_validation->set_rules('sex', 'sex', 'required');
+                $this->form_validation->set_rules('experince_year', 'experince_year', 'required');
+                $this->form_validation->set_rules('experince_month', 'experince_month', 'required');
+                $this->form_validation->set_rules('current_location', 'current_location', 'required');
+                $this->form_validation->set_rules('prefred_location', 'prefred_location', 'required');
+                $this->form_validation->set_rules('industry', 'industry', 'required');
+                $this->form_validation->set_rules('function_area', 'function_area', 'required');
+                $this->form_validation->set_rules('role', 'role', 'required');
+                $this->form_validation->set_rules('key_skill', 'key_skill', 'required');
+                $this->form_validation->set_rules('marital_status', 'marital_status', 'required');
+                $this->form_validation->set_rules('resume_headline', 'resume_headline', 'required');
+                //$check1['User'] = $this->User_model->find_by_id($user_id);
+                if ($this->form_validation->run() === True) {
+                    $check2['User1'] = $this->User_model->Add_detail($user_id, $user_email, $user_mobile);
+                }
+                $this->load->view('User/success');
+                $data = array('title' => 'Basic Profile', 'content' => 'User/Add_profile');
+                $this->load->view('template1', $data);
+            }
+        } else {
+            redirect('User/login', 'refresh');
+        }
     }
 
     public function logout() {
-        //$this->load->helper('url');
-//        $data['title'] = 'Update a news item';
 
         $this->session->unset_userdata("user_id");
         $this->session->unset_userdata("user_email");
         $this->session->unset_userdata("user_mobile");
         $this->session->session_destroy();
         redirect('User/login', 'refresh');
+    }
+
+    public function is_logged_in() {
+        $is_logged_in = $this->session->userdata('user_id');
+        if (isset($is_logged_in) || $is_logged_in == true) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
     }
 
 }

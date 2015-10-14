@@ -10,8 +10,10 @@
     <input type="text" name="email"/>
     <label>Password</label>
     <input type="text" name="password"/>
-    
+
     <input type="submit" value="Log In" />
-    </div>
-<?php echo '<pre>'; print_r($this->session->all_userdata());exit;?>
+</div>
+<?php echo '<pre>';
+print_r($this->session->all_userdata());
+exit; ?>
 </form>
