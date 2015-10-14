@@ -152,6 +152,7 @@ class User extends CI_Controller {
             //$special['edu'] = $this->User_model->education_master();
             //var_dump($special);
             $dropdown['dropdowns'] = $this->Master_model->getQualification();
+            $dropdown['institute'] = $this->Master_model->institute();
             $data = array('title' => 'Basic Qualification', 'content' => 'User/user_qualification', 'view_data' => $dropdown);
             $this->load->view('template1', $data);
         } else {

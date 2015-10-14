@@ -22,7 +22,11 @@
         </div>
         <div class="form-group">
             <label class="control-label">Institute</label>
-            <input type="text" name="institute" class="form-control"/>
+            <select class="form-control" name="institute">
+                <?php foreach($institute as $ins):?>
+                <option value="<?php echo $ins->id?>"><?php echo $ins->institute?></option>
+                    <?php endforeach?>
+            </select>
         </div>
         
         <label id="add" class="pull-right add" >AddMore +</label>
