@@ -50,17 +50,19 @@
                 <input type="text" name="year" class="form-control"/>
             </div>
         </div>
-        <label class="pull-right add">AddMore +</label>
+        <label id="add" class="pull-right add" style="display: none">AddMore +</label>
         <label class="pull-right del" style="display: none">Delete -</label>
+       <div class="form-group"> 
         <input type="submit" class="btn btn-success" value="Add Qualification"/>
+        </div>
     </div>
     <div class="col-lg-3"></div>
 
 </div>
 </form>
-<script type="javascript/text">
+<script >
     $(document).ready(function(){
-    $('.add').click(function(){
+    $('#add').click(function(){
     alert();
     $('.del').show();
     })
