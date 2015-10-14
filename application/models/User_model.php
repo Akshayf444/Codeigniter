@@ -9,10 +9,6 @@ class User_model extends CI_Model {
     public function create() {
         $this->load->helper('url');
 
-
-
-
-
         $data2 = array(
             'email' => $this->input->post('email'),
             'mobile' => $this->input->post('mobile'),
@@ -27,8 +23,6 @@ class User_model extends CI_Model {
     }
 
     public function log($email, $pass) {
-
-
         $query = $this->db->get_where('authentication', array('email' => $email, 'password' => $pass,));
         return $query->row_array();
     }
@@ -42,6 +36,7 @@ class User_model extends CI_Model {
         $query = $this->db->get_where('authentication', array('auth_id' => $id));
         return $query->row_array();
     }
+
     public function find_by_user_id($id) {
         if ($id === FALSE) {
             $query = $this->db->get('user');
@@ -53,9 +48,6 @@ class User_model extends CI_Model {
     }
 
     public function Add_detail($id, $email, $mobile) {
-
-
-
         $data = array('name' => $this->input->post('name'),
             'dob' => $this->input->post('dob'),
             'email' => $email,
@@ -78,13 +70,14 @@ class User_model extends CI_Model {
 
         return $this->db->insert('user', $data);
     }
-    public function Show_profile($id)
-    {
-        $query = $this->db->get_where('user',array('auth_id'=>$id));
+
+    public function Show_profile($id) {
+        $query = $this->db->get_where('user', array('auth_id' => $id));
         return $query->row_array();
     }
-    public function profile_update($id, $email, $mobile)
-    {
+
+    public function profile_update($id, $email, $mobile) {
+
         $data = array('name' => $this->input->post('name'),
             'dob' => $this->input->post('dob'),
             'email' => $email,
@@ -104,15 +97,13 @@ class User_model extends CI_Model {
             'marital_status' => $this->input->post('marital_status'),
             'resume_headline' => $this->input->post('resume_headline'),
         );
-       $this->db->where(array('auth_id'=>$id));
-        return $this->db->update('user',$data);
-        
+        $this->db->where(array('auth_id' => $id));
+        return $this->db->update('user', $data);
     }
-    public function education_master()
-    {
-        $query=$this->db->get('education_master');
+
+    public function education_master() {
+        $query = $this->db->get('education_master');
         return $query->result();
-        
     }
 
 }
