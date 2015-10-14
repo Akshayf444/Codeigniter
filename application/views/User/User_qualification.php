@@ -1,4 +1,4 @@
-<?php echo form_open('User/profile_update') ?>
+<?php echo form_open('User/user_qualification') ?>
 <h2 align="center">Enter Your Education Details</h2>
 <div class="row"><?php echo validation_errors(); ?></div>
 <div class="row">
@@ -22,7 +22,7 @@
         </div>
         <div class="form-group">
             <label class="control-label">Institute</label>
-            <input type="text" name="year" class="form-control"/>
+            <input type="text" name="institute" class="form-control"/>
         </div>
         
         <label id="add" class="pull-right add" >AddMore +</label>
