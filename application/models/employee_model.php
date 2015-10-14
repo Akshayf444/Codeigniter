@@ -21,8 +21,6 @@ class employee_model extends CI_Model {
             'type' => "employe",
             'password' => md5($this->input->post('password')),
         );
-
-
         return $this->db->insert('authentication', $data2);
     }
 
@@ -43,5 +41,17 @@ class employee_model extends CI_Model {
         return $query->row_array();
     }
 
-}
+    public function add_details() {
+        $data = array('name' => $this->input->post['name'],
+            'type' => $this->input->post['type'],
+            'industry_type_id' => $this->input->post['industry_type'],
+            'contact_person' => $this->input->post['contact_person'],
+            'address_id' => $this->input->post['address_id'],
+            'auth_id' => $this->input->post['user_id'],
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
+        );
+        return $this->db->insert('emp_profile', $data);
+    }
 
+}
