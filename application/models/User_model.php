@@ -42,6 +42,15 @@ class User_model extends CI_Model {
         $query = $this->db->get_where('authentication', array('auth_id' => $id));
         return $query->row_array();
     }
+    public function find_by_user_id($id) {
+        if ($id === FALSE) {
+            $query = $this->db->get('user');
+            return $query->result_array();
+        }
+
+        $query = $this->db->get_where('user', array('auth_id' => $id));
+        return $query->row_array();
+    }
 
     public function Add_detail($id, $email, $mobile) {
 
@@ -74,11 +83,14 @@ class User_model extends CI_Model {
         $query = $this->db->get_where('user',array('auth_id'=>$id));
         return $query->row_array();
     }
-    public function profile_update($id)
+    public function profile_update($id, $email, $mobile)
     {
         $data = array('name' => $this->input->post('name'),
             'dob' => $this->input->post('dob'),
-            'created_at' => date('Y-m_d H:i:s'),
+            'email' => $email,
+            'mobile' => $mobile,
+            'auth_id' => $id,
+//            'created_at' => date('Y-m_d H:i:s'),
             'updated_at' => date('Y-m_d H:i:s'),
             'gender' => $this->input->post('sex'),
             'exp_year' => $this->input->post('experince_year'),
