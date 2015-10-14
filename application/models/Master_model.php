@@ -24,11 +24,7 @@ class Master_model extends CI_Model {
 
                 $script .= ' var _' . $item->edu_id . ' = [ ';
                 $caseCondition .= 'case "_' . $item->edu_id . '" : list(_' . $item->edu_id . '); break;';
-                /*
-                  {display: "Truck", value: "Bike-Dealers" },
-                  {display: "Cars/SUVs", value: "Cars/SUVs" },
-                  {display: "Aeroplanes", value: "Car-Dealers" },
-                  {display: "Ships", value: "Member-Advice-(Tips)" }];'; */
+
 
                 for ($i = 0; $i < count($spec_id); $i++) {
                     $specialization .= '<option value = "' . $spec_id[$i] . '" >' . $specializearray[$i] . '</option>';
@@ -60,5 +56,6 @@ class Master_model extends CI_Model {
 
         return array($qualification, $specialization, $script);
     }
+
 
 }
