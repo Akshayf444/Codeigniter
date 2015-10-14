@@ -8,7 +8,6 @@ class User extends CI_Controller {
     }
 
     public function register() {
-
         $this->form_validation->set_rules('email', 'email', 'required');
         $this->form_validation->set_rules('password', 'password', 'required');
         $this->form_validation->set_rules('mobile', 'mobile', 'required');
@@ -35,6 +34,7 @@ class User extends CI_Controller {
                 $this->session->set_userdata("user_id", $check['auth_id']);
                 $this->session->set_userdata("user_email", $check['email']);
                 $this->session->set_userdata("user_mobile", $check['mobile']);
+                $this->session->set_userdata("user_type", $check['type']);
                 $check1['User'] = $this->User_model->find_by_id($check['auth_id']);
                 //$this->load->view('User/success');
                 redirect('User/Add_profile', 'refresh');
@@ -151,9 +151,7 @@ class User extends CI_Controller {
                 if ($this->form_validation->run() === True) {
                     if ($qual['auth_id'] !== $user_id) {
                         $add = $this->User_model->user_qualification($user_id);
-                    }
-                    else
-                    {
+                    } else {
                         $update = $this->User_model->user_qualification_update($user_id);
                     }
                 }

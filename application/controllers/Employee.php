@@ -5,6 +5,7 @@ class Employee extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('employee_model');
+
     }
 
     public function register() {
@@ -17,14 +18,8 @@ class Employee extends CI_Controller {
             $this->loadFinalView(array('Employee/registration'));
         } else {
             $this->employee_model->create();
-            redirect('Employee/login_show', 'refresh');
+            redirect('Employee/login', 'refresh');
         }
-    }
-
-    public function login_show() {
-
-
-        $this->loadFinalView(array('Employee/login'));
     }
 
     public function login() {
@@ -33,10 +28,11 @@ class Employee extends CI_Controller {
             $new = $_POST['email'];
             $pass = md5($_POST['password']);
             $check = $this->employee_model->log($new, $pass);
-            if (!empty($check && $check['type'] == 'employe')) {
+            if (!empty($check && $check['type'] == 'Employee')) {
                 $this->session->set_userdata("user_id", $check['auth_id']);
                 $this->session->set_userdata("user_email", $check['email']);
                 $this->session->set_userdata("user_mobile", $check['mobile']);
+                $this->session->set_userdata("user_type", $check['type']);
                 $check1['User'] = $this->employee_model->find_by_id($check['auth_id']);
                 //$this->load->view('Employe/view');
                 redirect('Employee/add_details', 'refresh');
@@ -57,7 +53,7 @@ class Employee extends CI_Controller {
         $this->session->unset_userdata("user_id");
         $this->session->unset_userdata("user_email");
         $this->session->unset_userdata("user_mobile");
-        redirect('Employee/login_show', 'refresh');
+        redirect('Employee/login', 'refresh');
     }
 
     public function view() {
@@ -71,8 +67,8 @@ class Employee extends CI_Controller {
     }
 
     public function is_logged_in() {
-        $is_logged_in = $this->session->userdata('user_id');
-        if (isset($is_logged_in) && $is_logged_in != '') {
+        //$is_logged_in = $this->session->userdata('user_id');
+        if (isset($this->user_id) && $this->user_id != '') {
             return TRUE;
         } else {
             return FALSE;

@@ -1,7 +1,7 @@
 <?php
 
 class employee_model extends CI_Model {
-
+  
     public function __construct() {
         $this->load->database();
     }
@@ -13,15 +13,13 @@ class employee_model extends CI_Model {
             'mobile' => $this->input->post('mobile'),
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
-            'type' => "employe",
+            'type' => "Employee",
             'password' => md5($this->input->post('password')),
         );
         return $this->db->insert('authentication', $data2);
     }
 
     public function log($email, $pass) {
-
-
         $query = $this->db->get_where('authentication', array('email' => $email, 'password' => $pass,));
         return $query->row_array();
     }

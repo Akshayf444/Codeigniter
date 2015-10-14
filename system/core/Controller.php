@@ -33,6 +33,8 @@ if (!defined('BASEPATH'))
 class CI_Controller {
 
     private static $instance;
+    protected $user_id;
+    protected $user_type;
 
     /**
      * Constructor
@@ -50,7 +52,8 @@ class CI_Controller {
         $this->load = & load_class('Loader', 'core');
 
         $this->load->initialize();
-
+        $this->user_id = $this->session->userdata('user_id');
+        $this->user_type = $this->session->userdata('user_type');
         log_message('debug', "Controller Class Initialized");
     }
 

@@ -46,7 +46,8 @@ class User_model extends CI_Model {
         $query = $this->db->get_where('user', array('auth_id' => $id));
         return $query->row_array();
     }
-    public function user_qualification_by_id($id) {        
+
+    public function user_qualification_by_id($id) {
 
         $query = $this->db->get_where('user_qualification', array('auth_id' => $id));
         return $query->row_array();
@@ -110,25 +111,28 @@ class User_model extends CI_Model {
         $query = $this->db->get('education_master');
         return $query->result();
     }
+
     public function user_qualification($id) {
         $data = array('qualification' => $this->input->post('qualification'),
-            'specialization'=>  $this->input->post('specialization'),
-            'institute'=>  $this->input->post('institute'),
-            'year'=>  $this->input->post('year'),
-            'created'=>  date('Y-m-d H:i:s'),
-            'auth_id'=> $id ,
-            );
+            'specialization' => $this->input->post('specialization'),
+            'institute' => $this->input->post('institute'),
+            'year' => $this->input->post('year'),
+            'created' => date('Y-m-d H:i:s'),
+            'auth_id' => $id,
+        );
         return $this->db->insert('user_qualification', $data);
     }
-     public function user_qualification_update($id) {
+
+    public function user_qualification_update($id) {
         $data = array('qualification' => $this->input->post('qualification'),
-            'specialization'=>  $this->input->post('specialization'),
-            'institute'=>  $this->input->post('institute'),
-            'year'=>  $this->input->post('year'),
-            'updated_at'=>  date('Y-m-d H:i:s'),
-            'auth_id'=> $id ,
-            );
-            $this->db->where(array('auth_id'=>$id));
+            'specialization' => $this->input->post('specialization'),
+            'institute' => $this->input->post('institute'),
+            'year' => $this->input->post('year'),
+            'updated_at' => date('Y-m-d H:i:s'),
+            'auth_id' => $id,
+        );
+        $this->db->where(array('auth_id' => $id));
         return $this->db->update('user_qualification', $data);
     }
+
 }
