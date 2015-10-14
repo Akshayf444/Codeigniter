@@ -60,5 +60,9 @@ class Master_model extends CI_Model {
 
         return array($qualification, $specialization, $script);
     }
+    public function institute()
+    {
+        
+    }
 
 }

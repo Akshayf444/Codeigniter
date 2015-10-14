@@ -140,7 +140,12 @@ class User extends CI_Controller {
         $this->load->model('Master_model');
         if ($this->is_logged_in() == TRUE) {
             if ($this->input->post()) {
-                
+                $user_id = $this->session->userdata("user_id");
+                $this->form_validation->set_rules('qualification', 'qualification', 'required');
+                $this->form_validation->set_rules('specialization', 'specialization', 'required');
+                $this->form_validation->set_rules('institute', 'institute', 'required');
+                $this->form_validation->set_rules('year', 'year', 'required');
+                $add=  $this->User_model->user_qualification($user_id);
             }
             $is_logged_in = $this->session->userdata('user_id');
 

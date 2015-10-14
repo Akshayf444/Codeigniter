@@ -105,5 +105,15 @@ class User_model extends CI_Model {
         $query = $this->db->get('education_master');
         return $query->result();
     }
+    public function user_qualification($id) {
+        $data = array('qualification' => $this->input->post('qualification'),
+            'specialization'=>  $this->input->post('specialization'),
+            'institute'=>  $this->input->post('institute'),
+            'year'=>  $this->input->post('year'),
+            'created'=>  date('Y-m-d H:i:s'),
+            'auth_id'=> $id ,
+            );
+        return $this->db->insert('user_qualification', $data);
+    }
 
 }
