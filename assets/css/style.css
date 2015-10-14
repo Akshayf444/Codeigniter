@@ -1,0 +1,94 @@
+.navbar-default {
+    background-color: #ffffff;
+    border-color: #eeeeee;
+}
+.section {
+    position: relative;
+    padding: 35px 0;
+}
+.section .background-image {
+    z-index: 0;
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+}
+.section .background-image.background-image-fixed {
+    background-attachment: fixed;
+}
+.section-primary {
+    background-color: #3d9970 !important;
+    color: #ffffff;
+}
+.section-primary .background-image {
+    opacity: 0.5;
+}
+.section-info {
+    background-color: #5C2D91 !important;
+    color: #ffffff;
+}
+.section-info .background-image {
+    opacity: 0.5;
+}
+.section-default {
+    background-color: #fff !important;
+    color: #222;
+}
+.section-default .background-image {
+    opacity: 0.5;
+}
+.section-success {
+    background-color: #5cb85c !important;
+    color: #ffffff;
+}
+.section-success .background-image {
+    opacity: 0.5;
+}
+.section-warning {
+    background-color: #f0ad4e !important;
+    color: #ffffff;
+}
+.section-warning .background-image {
+    opacity: 0.5;
+}
+.section-danger {
+    background-color: #d9534f !important;
+    color: #ffffff;
+}
+.section-danger .background-image {
+    opacity: 0.5;
+}
+
+.carousel {
+    height: 80%;
+    margin-top: 50px;
+}
+
+.item,
+.active,
+.carousel-inner {
+    height: 100%;
+}
+
+/* Background images are set within the HTML using inline CSS, not here */
+
+.fill {
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+.panel{
+    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+footer{
+    background: url(../images/bg.png);
+}
