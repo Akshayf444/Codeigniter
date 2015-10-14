@@ -85,7 +85,7 @@ class User extends CI_Controller {
         $this->session->unset_userdata("user_id");
         $this->session->unset_userdata("user_email");
         $this->session->unset_userdata("user_mobile");
-
+        $this->session->session_destroy();
         redirect('User/login', 'refresh');
     }
 
