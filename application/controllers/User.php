@@ -144,13 +144,26 @@ class User extends CI_Controller {
                 $this->form_validation->set_rules('specialization', 'specialization', 'required');
                 $this->form_validation->set_rules('institute', 'institute', 'required');
                 $this->form_validation->set_rules('year', 'year', 'required');
-                $add=  $this->User_model->user_qualification($user_id);
+
+
+                $qual = $this->User_model->user_qualification_by_id($user_id);
+
+                if ($this->form_validation->run() === True) {
+                    if ($qual['auth_id'] !== $user_id) {
+                        $add = $this->User_model->user_qualification($user_id);
+                    }
+                    else
+                    {
+                        $update = $this->User_model->user_qualification_update($user_id);
+                    }
+                }
             }
             $is_logged_in = $this->session->userdata('user_id');
 
             //$special['edu'] = $this->User_model->education_master();
             //var_dump($special);
             $dropdown['dropdowns'] = $this->Master_model->getQualification();
+            $dropdown['institute'] = $this->Master_model->institute();
             $data = array('title' => 'Basic Qualification', 'content' => 'User/user_qualification', 'view_data' => $dropdown);
             $this->load->view('template1', $data);
         } else {

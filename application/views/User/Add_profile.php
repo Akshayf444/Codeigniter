@@ -1,5 +1,6 @@
 
 
+
 <?php echo form_open('User/Add_profile') ?>
 
 <h2 align="center">Enter User Detail</h2>

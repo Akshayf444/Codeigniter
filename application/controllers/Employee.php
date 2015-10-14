@@ -5,7 +5,6 @@ class Employee extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('employee_model');
-        $this->load->library('session');
     }
 
     public function register() {
@@ -29,19 +28,24 @@ class Employee extends CI_Controller {
     }
 
     public function login() {
-        $new = $_POST['email'];
-        $pass = md5($_POST['password']);
-        $check = $this->employee_model->log($new, $pass);
-        if (!empty($check)) {
-            $this->session->set_userdata("user_id", $check['auth_id']);
-            $this->session->set_userdata("user_email", $check['email']);
-            $this->session->set_userdata("user_mobile", $check['mobile']);
-            $check1['User'] = $this->employee_model->find_by_id($check['auth_id']);
-            //$this->load->view('Employe/view');
-            redirect('Employee/view', 'refresh');
-        } else {
-            $this->load->view('Employee/error');
+
+        if ($this->input->post()) {
+            $new = $_POST['email'];
+            $pass = md5($_POST['password']);
+            $check = $this->employee_model->log($new, $pass);
+            if (!empty($check && $check['type'] == 'employe')) {
+                $this->session->set_userdata("user_id", $check['auth_id']);
+                $this->session->set_userdata("user_email", $check['email']);
+                $this->session->set_userdata("user_mobile", $check['mobile']);
+                $check1['User'] = $this->employee_model->find_by_id($check['auth_id']);
+                //$this->load->view('Employe/view');
+                redirect('Employee/add_details', 'refresh');
+            } else {
+                $this->load->view('employee/error');
+            }
         }
+        $data = array('title' => 'Login', 'content' => 'employee/login');
+        $this->load->view('template2', $data);
     }
 
     public function logout() {
@@ -64,6 +68,42 @@ class Employee extends CI_Controller {
         $this->load->view('header');
         $this->load->view('Employee/View', $check1);
         $this->load->view('footer');
+    }
+
+    public function is_logged_in() {
+        $is_logged_in = $this->session->userdata('user_id');
+        if (isset($is_logged_in) && $is_logged_in != '') {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
+    public function add_details() {
+        if ($this->is_logged_in() == TRUE) {
+            $user_id = $this->session->userdata("user_id");
+            $user_email = $this->session->userdata("mobile");
+            $user_mobile = $this->session->userdata("user_email");
+            if ($this->input->post()) {
+                $this->form_validation->set_rules('name', 'name', 'required');
+                $this->form_validation->set_rules('type', 'type', 'required');
+                $this->form_validation->set_rules('industry_type', 'industry_type', 'required');
+                $this->form_validation->set_rules('address_id', 'address_id', 'required');
+                $this->form_validation->set_rules('industry_type', 'industry_type', 'required');
+
+                if ($this->form_validation->run() === True) {
+                    $check2['User1'] = $this->employee_model->add_details($user_id);
+                }
+//                $this->load->view('empolyee/success');
+            }
+
+            $userData['user'] = $this->employee_model->find_id($user_id);
+            $userData['user_id'] = $user_id;
+            $data = array('title' => 'Basic Employee Profile', 'content' => 'employee/add_details', 'view_data' => $userData);
+            $this->load->view('template1', $data);
+        } else {
+            redirect('employee/login', 'refresh');
+        }
     }
 
 }

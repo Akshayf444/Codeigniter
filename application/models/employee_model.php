@@ -7,12 +7,7 @@ class employee_model extends CI_Model {
     }
 
     public function create() {
-        $this->load->helper('url');
-
-
-
-
-
+//        $this->load->helper('url');
         $data2 = array(
             'email' => $this->input->post('email'),
             'mobile' => $this->input->post('mobile'),
@@ -21,8 +16,6 @@ class employee_model extends CI_Model {
             'type' => "employe",
             'password' => md5($this->input->post('password')),
         );
-
-
         return $this->db->insert('authentication', $data2);
     }
 
@@ -43,5 +36,38 @@ class employee_model extends CI_Model {
         return $query->row_array();
     }
 
-}
+    public function add_details($id) {
+        $query = $this->db->get_where('emp_profile', array('auth_id' => $id));
 
+//      return $query->row_array();
+        $data = array('auth_id' => $this->input->post('user_id'),
+            'name' => $this->input->post('name'),
+            'type' => $this->input->post('type'),
+            'industry_type' => $this->input->post('industry_type'),
+            'contact_person' => $this->input->post('contact_person'),
+            'address_id' => $this->input->post('address_id'),
+            'updated_at' => date('Y-m-d H:i:s'),
+        );
+        $data2 = array('auth_id' => $this->input->post('user_id'),
+            'name' => $this->input->post('name'),
+            'type' => $this->input->post('type'),
+            'industry_type' => $this->input->post('industry_type'),
+            'contact_person' => $this->input->post('contact_person'),
+            'address_id' => $this->input->post('address_id'),
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
+        );
+        if (!empty($query->num_rows() > 0)) {
+            $this->db->where('auth_id', $id);
+            return $this->db->update('emp_profile', $data);
+        } else {
+            return $this->db->insert('emp_profile', $data2);
+        }
+    }
+
+    public function find_id($id) {
+        $query = $this->db->get_where('emp_profile', array('auth_id' => $id));
+        return $query->row_array();
+    }
+
+}

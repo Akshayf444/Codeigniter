@@ -57,5 +57,9 @@ class Master_model extends CI_Model {
         return array($qualification, $specialization, $script);
     }
 
+    public function institute() {
+        $query = $this->db->get('institute_master');
+        return $query->result();
+    }
 
 }
