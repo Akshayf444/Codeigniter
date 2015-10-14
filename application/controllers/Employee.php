@@ -18,8 +18,6 @@ class Employee extends CI_Controller {
         } else {
             $this->employee_model->create();
             redirect('Employee/login_show', 'refresh');
-            // $this->loadFinalView(array('User/login'));
-            //redirect('news', 'refresh');
         }
     }
 
@@ -30,6 +28,7 @@ class Employee extends CI_Controller {
     }
 
     public function login() {
+<<<<<<< HEAD
         if ($this->input->post()) {
             $new = $_POST['email'];
             $pass = md5($_POST['password']);
@@ -47,6 +46,21 @@ class Employee extends CI_Controller {
         }
         $data = array('title' => 'Login', 'content' => 'employee/login');
         $this->load->view('template2', $data);
+=======
+        $new = $_POST['email'];
+        $pass = md5($_POST['password']);
+        $check = $this->employee_model->log($new, $pass);
+        if (!empty($check)) {
+            $this->session->set_userdata("user_id", $check['auth_id']);
+            $this->session->set_userdata("user_email", $check['email']);
+            $this->session->set_userdata("user_mobile", $check['mobile']);
+            $check1['User'] = $this->employee_model->find_by_id($check['auth_id']);
+            //$this->load->view('Employe/view');
+            redirect('Employee/view', 'refresh');
+        } else {
+            $this->load->view('Employee/error');
+        }
+>>>>>>> 052e2361a1fba442efac6028855bce8bdbfd311b
     }
 
     public function logout() {
@@ -69,6 +83,7 @@ class Employee extends CI_Controller {
         $this->load->view('header');
         $this->load->view('Employee/View', $check1);
         $this->load->view('footer');
+<<<<<<< HEAD
     }
 
     public function is_logged_in() {
@@ -121,3 +136,8 @@ class Employee extends CI_Controller {
 //
 //    
 
+=======
+    }
+
+}
+>>>>>>> 052e2361a1fba442efac6028855bce8bdbfd311b
