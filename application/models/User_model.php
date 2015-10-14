@@ -71,8 +71,30 @@ class User_model extends CI_Model {
     }
     public function Show_profile($id)
     {
-        $query = $this->db->get_where('news',array('user_id'=>$id));
+        $query = $this->db->get_where('user',array('auth_id'=>$id));
         return $query->row_array();
+    }
+    public function profile_update($id)
+    {
+        $data = array('name' => $this->input->post('name'),
+            'dob' => $this->input->post('dob'),
+            'created_at' => date('Y-m_d H:i:s'),
+            'updated_at' => date('Y-m_d H:i:s'),
+            'gender' => $this->input->post('sex'),
+            'exp_year' => $this->input->post('experince_year'),
+            'experince_month' => $this->input->post('experince_month'),
+            'current_location' => $this->input->post('current_location'),
+            'prefred_location' => $this->input->post('prefred_location'),
+            'industry' => $this->input->post('industry'),
+            'function_area' => $this->input->post('function_area'),
+            'role' => $this->input->post('role'),
+            'key_skill' => $this->input->post('key_skill'),
+            'marital_status' => $this->input->post('marital_status'),
+            'resume_headline' => $this->input->post('resume_headline'),
+        );
+       $this->db->where(array('auth_id'=>$id));
+        return $this->db->update('user',$data);
+        
     }
 
 }
