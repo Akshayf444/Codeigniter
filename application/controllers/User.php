@@ -132,14 +132,16 @@ class User extends CI_Controller {
     }
 
     public function user_qualification() {
+        $this->load->model('Master_model');
         if ($this->is_logged_in() == TRUE) {
             if ($this->input->post()) {
-            
+                
             }
             $is_logged_in = $this->session->userdata('user_id');
-            $special['edu']=$this->User_model->education_master();
+            //$special['edu'] = $this->User_model->education_master();
             //var_dump($special);
-            $data = array('title' => 'Basic Qualification', 'content' => 'User/user_qualification', 'view_data' => $special);
+            $dropdown['dropdowns'] = $this->Master_model->getQualification();
+            $data = array('title' => 'Basic Qualification', 'content' => 'User/user_qualification', 'view_data' => $dropdown);
             $this->load->view('template1', $data);
         } else {
             redirect('User/login', 'refresh');

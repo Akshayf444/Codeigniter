@@ -9,15 +9,12 @@
         </div>
         <div class="form-group">
             <label class="control-label">Highest Qualification Held</label>
-            <select class="form-control" name="qualification"/>
-            <?php foreach ($edu as $edu_spl): ?>
-            <option value="<?php echo $edu_spl->edu_id?>"><?php echo $edu_spl->qualification; ?></option>
-            <?php endforeach ?>
-            </select>
+                <?php echo $dropdowns[0]; ?>
+
         </div>
         <div class="form-group">
             <label class="control-label">Specialization</label>
-            <input type="text" name="specialization" class="form-control"/>
+            <?php echo $dropdowns[1]; ?>
         </div>
         <div class="form-group">
             <label class="control-label">Year</label>
@@ -60,6 +57,7 @@
 
 </div>
 </form>
+<script><?php echo $dropdowns[2]; ?></script>
 <script >
     $(document).ready(function(){
     $('#add').click(function(){
