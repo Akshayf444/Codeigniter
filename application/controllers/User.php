@@ -52,7 +52,7 @@ class User extends CI_Controller {
     }
 
     public function Add_profile() {
-
+$this->load->model('Master_model');
         if ($this->is_logged_in() == TRUE) {
             $user_id = $this->session->userdata("user_id");
             $check = $this->User_model->find_by_user_id($user_id);
@@ -83,7 +83,8 @@ class User extends CI_Controller {
                 }
                 $this->load->view('User/success');
             }
-            $data = array('title' => 'Basic Profile', 'content' => 'User/Add_profile', 'view_data' => 'blank');
+            $dropdown['dropdowns'] = $this->Master_model->getLocation();
+            $data = array('title' => 'Basic Profile', 'content' => 'User/Add_profile', 'view_data' => $dropdown);
             $this->load->view('template1', $data);
         } else {
             redirect('User/login', 'refresh');
