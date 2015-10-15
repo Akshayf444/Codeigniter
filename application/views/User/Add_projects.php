@@ -1,4 +1,4 @@
-<?php echo form_open('User/user_qualification') ?>
+<?php echo form_open('User/user_projects') ?>
 <h2 align="center">Enter Your Projects Details</h2>
 <div class="row"><?php echo validation_errors(); ?></div>
 <div class="row">

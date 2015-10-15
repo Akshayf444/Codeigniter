@@ -1,6 +1,8 @@
 <?php
+
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
+
 class User extends CI_Controller {
 
     public function __construct() {
@@ -40,9 +42,8 @@ class User extends CI_Controller {
                 //$this->load->view('User/success');
                 redirect('User/Add_profile', 'refresh');
             } else {
-                $data['user']="Incorrect Login";
-                $this->load->view('User/login',$data);
-                
+                $data['user'] = "Incorrect Login";
+                $this->load->view('User/login', $data);
             }
         }
 
@@ -172,11 +173,15 @@ class User extends CI_Controller {
             redirect('User/login', 'refresh');
         }
     }
-    public function add_projects() {
-        $this->load->model('Master_model');
+
+    public function user_projects() {
+      $this->load->model('Master_model');
+         $user_id = $this->session->userdata("user_id");
+                $qual1 = $this->User_model->project_by_id($user_id);
         if ($this->is_logged_in() == TRUE) {
             if ($this->input->post()) {
-                $user_id = $this->session->userdata("user_id");
+                
+               
                 $this->form_validation->set_rules('client', 'client', 'required');
                 $this->form_validation->set_rules('projects_title', 'projects_title', 'required');
                 $this->form_validation->set_rules('to', 'to', 'required');
@@ -191,21 +196,19 @@ class User extends CI_Controller {
                 $this->form_validation->set_rules('skill', 'skill', 'required');
 
 
-                
 
-//                if ($this->form_validation->run() === True) {
-//                    if ($qual['auth_id'] !== $user_id) {
-//                        $add = $this->User_model->user_qualification($user_id);
-//                    } else {
-//                        $update = $this->User_model->user_qualification_update($user_id);
-//                    }
-//                }
+                
+                if ($this->form_validation->run() === True) {
+                    
+                       $this->User_model->project_add($user_id);
+                    
+                }
             }
             $is_logged_in = $this->session->userdata('user_id');
 
             //$special['edu'] = $this->User_model->education_master();
             //var_dump($special);
-            
+
             $data = array('title' => 'Projects', 'content' => 'User/Add_projects', 'view_data' => 'blank');
             $this->load->view('template1', $data);
         } else {

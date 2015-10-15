@@ -135,10 +135,11 @@ class User_model extends CI_Model {
         return $this->db->update('user_qualification', $data);
     }
     
-    public function project_add()
+    public function project_add($id)
     {
         $data=array(
             'client'=>$this->input->post('client'),
+            'auth_id'=>$id,
             'projects_title'=>$this->input->post('projects_title'),
             'to'=>$this->input->post('to'),
             'from'=>$this->input->post('from'),
@@ -154,13 +155,29 @@ class User_model extends CI_Model {
         return $this->db->insert('user_project',$data);
     }
     public function project_by_id($id) {
-        if ($id === FALSE) {
-            $query = $this->db->get('user');
-            return $query->result_array();
-        }
+       
 
-        $query = $this->db->get_where('user', array('auth_id' => $id));
+        $query = $this->db->get_where('user_project', array('auth_id' => $id));
         return $query->row_array();
+    }
+    public function project_update($id)
+    {
+        $data=array(
+            'client'=>$this->input->post('client'),
+            'projects_title'=>$this->input->post('projects_title'),
+            'to'=>$this->input->post('to'),
+            'from'=>$this->input->post('from'),
+            'location'=>$this->input->post('location'),
+            'site'=>$this->input->post('site'),
+            'type'=>$this->input->post('type'),
+            'detail'=>$this->input->post('detail'),
+            'role'=>$this->input->post('role'),
+            'role_description'=>$this->input->post('role_description'),
+            'team_size'=>$this->input->post('team_size'),
+            'skill'=>$this->input->post('skill'),
+        );
+        $this->db->where(array('auth_id'=>$id));
+        return $this->db->update('user_project',$data);
     }
 
 }
