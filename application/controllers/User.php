@@ -51,7 +51,7 @@ class User extends CI_Controller {
 
         if ($this->is_logged_in() == TRUE) {
             $user_id = $this->session->userdata("user_id");
-            $scheck = $this->User_model->find_by_user_id($user_id);
+            $check = $this->User_model->find_by_user_id($user_id);
             if ($this->input->post()) {
                 $user_id = $this->session->userdata("user_id");
                 $user_email = $this->session->userdata("user_email");
