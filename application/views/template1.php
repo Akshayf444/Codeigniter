@@ -49,8 +49,15 @@
         </nav>
         <!-- Page Content -->
         <div class="section" >
-            <div class="container" >
-                <?php $this->load->view($content, $view_data); ?>
+            <div class="container-fluid" >
+                <div class="row">
+                    <div class="col-lg-2">
+                        <?php $CI =& get_instance(); $this->load->view('Sidebar', $CI->loadSidebar()); ?>
+                    </div>
+                    <div class="col-lg-10">
+                        <?php $this->load->view($content, $view_data); ?>
+                    </div>
+                </div>
             </div>
         </div>
         <?php $this->load->view('footer'); ?>

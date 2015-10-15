@@ -1,79 +1,78 @@
-
-
-
-<?php echo form_open('User/Add_profile') ?>
-
-<h2 align="center">Enter User Detail</h2>
-
 <div class="row"><?php echo validation_errors(); ?></div>
-<div class="row   panel panel-default"  style="padding-top: 21px">
+<div class="row">
+    <div class="col-lg-12 ">
+        <h3 class="page-header">Basic Profile</h3>
+        <?php echo form_open('User/Add_profile') ?>
+        <div class="panel">
+            <div class="panel-body">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="control-label">Name*</label><input type="text" required="required" class="form-control" placeholder="Enter Name" name="name"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">dob*</label>
+                        <input type="date"  class="form-control" required="required" name="dob"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Gender*</label>
+                        <input type="radio" required="required"  name="sex" value="Male"/>Male
+                        <input type="radio" required="required"  name="sex" value="Female"/>Female
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Experience*</label><br>
+                        <input type="text" class="form-control half-formcontrol"  required="required" placeholder="In Years" name="experince_year"/>
+                        <input type="text" class="form-control half-formcontrol"  placeholder="In Months" required="required" name="experince_month"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Current Location*</label>
+                        <input type="text" class="form-control"  placeholder="Enter Current Location" required="required" name="current_location"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Prefered Location</label>
+                        <input type="text" class="form-control"  placeholder="Enter Prefred Location" name="prefred_location"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Industry*</label>
+                        <input type="text"  placeholder="Enter industries" required="required" class="form-control" name="industry"/>
+                    </div>
 
-    <div class="col-lg-6">
-        <div class="form-group">
-            <label class="col-sm-7 control-label">Name*</label><input type="text" style="width: 300px" required="required" class="form-control" placeholder="Enter Name" name="name"/>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-7 control-label">dob*</label>
-            <input type="date" style="width: 300px" class="form-control" required="required" name="dob"/>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">Gender*</label>
-            <input type="radio" required="required"  name="sex" value="Male"/>Male
-            <input type="radio" required="required"  name="sex" value="Female"/>Female
-        </div>
-        <div class="form-group">
-            <label class="col-sm-12 control-label">Experince*</label>
-            <input type="text" class="form-control" style="width: 100px;float:left" required="required" placeholder="In Years" name="experince_year"/>
-            <input type="text" class="form-control" style="width: 100px" placeholder="In Months" required="required" name="experince_month"/>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-7 control-label">Current Location*</label>
-            <input type="text" class="form-control" style="width: 300px" placeholder="Enter Current Location" required="required" name="current_location"/>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-7 control-label">Prefered Location</label>
-            <input type="text" class="form-control" style="width: 300px" placeholder="Enter Prefred Location" name="prefred_location"/>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-7 control-label">Industry*</label>
-            <input type="text" style="width: 300px" placeholder="Enter industries" required="required" class="form-control" name="industry"/>
-        </div>
+                    <br>
+                </div>
 
-        <br>
-    </div>
+                <div class="col-lg-6" >
 
-    <div class="col-lg-6 pull-right" >
+                    <div class="form-group">
+                        <label class="control-label">Function Area</label>
+                        <input type="text" class="form-control"  name="function_area"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Role*</label>
+                        <input type="text" class="form-control"  required="required" name="role"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Key Skills</label>
+                        <input type="text" class="form-control"  name="key_skill"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Marital Status</label>
+                        <select class="form-control"  name="marital_status">
+                            <option value="single">Single</option>
+                            <option value="married">Married</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Resume Headline</label>
+                        <input type="text" class="form-control"  name="resume_headline"/>
+                    </div>
 
-        <div class="form-group">
-            <label class="col-sm-7 control-label">Function Area</label>
-            <input type="text" class="form-control" style="width: 300px" name="function_area"/>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="form-group">
+                    <input type="submit" class="btn btn-success" value="Register" />
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label class="col-sm-7 control-label">Role*</label>
-            <input type="text" class="form-control" style="width: 300px" required="required" name="role"/>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-7 control-label">Key Skills</label>
-            <input type="text" class="form-control" style="width: 300px" name="key_skill"/>
-        </div>
-        <div class="form-group">
-            <!--    <label>Experince</label>
-                <input type="text" class="form-control" name="exp_year"/>-->
-            <label class="col-sm-7 control-label">Marital Status</label>
-            <select class="form-control" style="width: 300px" name="marital_status">
-                <option value="single">Single</option>
-                <option value="married">Married</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-7 control-label">Resume Headline</label>
-            <input type="text" class="form-control" style="width: 300px" name="resume_headline"/>
-        </div>
-
-        <br>
-        <input type="submit" class="btn btn-success" value="Register" />
-        <br><br><br><br>
+        </form>
     </div>
 </div>
-
-</form>

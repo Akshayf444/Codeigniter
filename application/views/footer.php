@@ -36,7 +36,7 @@
         </div>
     </div>
 </footer>
-<footer class="section-info"> 
+    <footer class="section-info"> 
     <div class="container"> 
         <div class="row col-lg-12">
             <p></p>
