@@ -25,7 +25,10 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">Current Location*</label>
-                        <input type="text" class="form-control"  placeholder="Enter Current Location" required="required" name="current_location"/>
+                        
+                        <select class="form-control" required="required" name="current_location">
+                            <?php echo $dropdowns;?>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Prefered Location</label>

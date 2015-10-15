@@ -63,20 +63,20 @@ class Master_model extends CI_Model {
     }
 
     public function getLocation($loc_id = 0) {
-        $locationString = '';
+        $location = '';
         $query = $this->db->get('location_master');
         $result = $query->result();
 
         if (!empty($result)) {
-            foreach ($result as $row) {
-                if ($loc_id == $row->loc_id) {
-                    $locationString .= '<option value="' . $row->loc_id . '" selected>' . $row->location . '</option>';
+            foreach ($result as $loc) {
+                if ($loc_id == $loc->loc_id) {
+                    $location .= '<option value="' . $loc->loc_id . '" selected>' . $loc->location . '</option>';
                 } else {
-                    $locationString .= '<option value="' . $row->loc_id . '" >' . $row->location . '</option>';
+                    $location .= '<option value="' . $loc->loc_id . '" >' . $loc->location . '</option>';
                 }
             }
         }
-        return $locationString;
+        return $location;
     }
 
 }
