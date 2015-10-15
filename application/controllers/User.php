@@ -196,7 +196,7 @@ $this->load->model('Master_model');
                 $this->form_validation->set_rules('role', 'role', 'trim|required');
                 $this->form_validation->set_rules('role_description', 'role_description', 'trim|required');
                 $this->form_validation->set_rules('team_size', 'team_size', 'trim|required');
-                $this->form_validation->set_rules('skill', 'skill', 'trim|required');
+                $this->form_validation->set_rules('skill', 'skill', 'required');
 
 
 
