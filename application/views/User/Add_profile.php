@@ -32,7 +32,10 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">Prefered Location</label>
-                        <input type="text" class="form-control"  placeholder="Enter Prefred Location" name="prefred_location"/>
+                        
+                        <select class="form-control" required="required" name="prefred_location">
+                            <?php echo $dropdowns;?>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Industry*</label>
