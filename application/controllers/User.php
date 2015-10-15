@@ -172,5 +172,45 @@ class User extends CI_Controller {
             redirect('User/login', 'refresh');
         }
     }
+    public function add_projects() {
+        $this->load->model('Master_model');
+        if ($this->is_logged_in() == TRUE) {
+            if ($this->input->post()) {
+                $user_id = $this->session->userdata("user_id");
+                $this->form_validation->set_rules('client', 'client', 'required');
+                $this->form_validation->set_rules('projects_title', 'projects_title', 'required');
+                $this->form_validation->set_rules('to', 'to', 'required');
+                $this->form_validation->set_rules('from', 'from', 'required');
+                $this->form_validation->set_rules('location', 'location', 'required');
+                $this->form_validation->set_rules('site', 'site', 'required');
+                $this->form_validation->set_rules('type', 'type', 'required');
+                $this->form_validation->set_rules('detail', 'detail', 'required');
+                $this->form_validation->set_rules('role', 'role', 'required');
+                $this->form_validation->set_rules('role_description', 'role_description', 'required');
+                $this->form_validation->set_rules('team_size', 'team_size', 'required');
+                $this->form_validation->set_rules('skill', 'skill', 'required');
+
+
+                
+
+//                if ($this->form_validation->run() === True) {
+//                    if ($qual['auth_id'] !== $user_id) {
+//                        $add = $this->User_model->user_qualification($user_id);
+//                    } else {
+//                        $update = $this->User_model->user_qualification_update($user_id);
+//                    }
+//                }
+            }
+            $is_logged_in = $this->session->userdata('user_id');
+
+            //$special['edu'] = $this->User_model->education_master();
+            //var_dump($special);
+            
+            $data = array('title' => 'Projects', 'content' => 'User/Add_projects', 'view_data' => 'blank');
+            $this->load->view('template1', $data);
+        } else {
+            redirect('User/login', 'refresh');
+        }
+    }
 
 }
