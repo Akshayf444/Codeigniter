@@ -31,8 +31,8 @@
             </div>
 
 
-            <label id="add" class="pull-right add" >AddMore +</label>
-            <label class="pull-right del" style="display: none">Delete -</label>
+<!--            <label id="add" class="pull-right add" >AddMore +</label>
+            <label class="pull-right del" style="display: none">Delete -</label>-->
             <div class="form-group"> 
                 <input type="submit" class="btn btn-success" value="Add Qualification"/>
 

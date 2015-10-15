@@ -40,7 +40,9 @@ class User extends CI_Controller {
                 //$this->load->view('User/success');
                 redirect('User/Add_profile', 'refresh');
             } else {
-                $this->load->view('User/error');
+                $data['user']="Incorrect Login";
+                $this->load->view('User/login',$data);
+                
             }
         }
 
@@ -52,7 +54,7 @@ class User extends CI_Controller {
 
         if ($this->is_logged_in() == TRUE) {
             $user_id = $this->session->userdata("user_id");
-            $scheck = $this->User_model->find_by_user_id($user_id);
+            $check = $this->User_model->find_by_user_id($user_id);
             if ($this->input->post()) {
                 $user_id = $this->session->userdata("user_id");
                 $user_email = $this->session->userdata("user_email");
@@ -92,6 +94,7 @@ class User extends CI_Controller {
         $this->session->unset_userdata("user_id");
         $this->session->unset_userdata("user_email");
         $this->session->unset_userdata("user_mobile");
+        $this->session->unset_userdata("user_type");
 //        $this->session->session_destroy();
         redirect('User/login', 'refresh');
     }
