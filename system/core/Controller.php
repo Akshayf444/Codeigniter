@@ -2,34 +2,7 @@
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
-/**
- * CodeIgniter
- *
- * An open source application development framework for PHP 5.1.6 or newer
- *
- * @package		CodeIgniter
- * @author		EllisLab Dev Team
- * @copyright		Copyright (c) 2008 - 2014, EllisLab, Inc.
- * @copyright		Copyright (c) 2014 - 2015, British Columbia Institute of Technology (http://bcit.ca/)
- * @license		http://codeigniter.com/user_guide/license.html
- * @link		http://codeigniter.com
- * @since		Version 1.0
- * @filesource
- */
-// ------------------------------------------------------------------------
 
-/**
- * CodeIgniter Application Controller Class
- *
- * This class object is the super class that every library in
- * CodeIgniter will be assigned to.
- *
- * @package		CodeIgniter
- * @subpackage	Libraries
- * @category	Libraries
- * @author		EllisLab Dev Team
- * @link		http://codeigniter.com/user_guide/general/controllers.html
- */
 class CI_Controller {
 
     private static $instance;
@@ -61,22 +34,47 @@ class CI_Controller {
         return self::$instance;
     }
 
-    protected function loadFinalView($current_view) {
-        $this->load->view('header');
-        $this->load->view('menu');
-        if (!empty($current_view)) {
-            foreach ($current_view as $key => $value) {
-                $this->load->view($key, $value);
-            }
+    function loadSidebar() {
+        $menu;
+        $user_type = $this->user_type;
+        if ($user_type == 'Employee') {
+            $menu['Sidebar'] = array(
+                'Inbox' => array(
+                ),
+                'Profle' => array(
+                ),
+                'Jobs & Application' => array(
+                ),
+                'Recruiters' => array(
+                ),
+                'Settings' => array(
+                )
+            );
+        } elseif ($user_type == 'User') {
+            $menu['Sidebar'] = array(
+                'Inbox' => array(
+                    'Message' => 'User/'
+                ),
+                'Profle' => array(
+                    'View Profile' => 'User/View',
+                    'Project' => 'User/Projects',
+                    'Education' => 'User/Education'
+                ),
+                'Jobs & Application' => array(
+                    'Saved Jobs' => 'User/#',
+                    'Application History' => 'User/#'
+                ),
+                'Recruiters' => array(
+                    ''
+                ),
+                'Settings' => array(
+                    'Change Password' => 'User/#'
+                )
+            );
+        } else {
+            
         }
-
-        $this->load->view('footer');
-        return NULL;
+        return $menu;
     }
 
 }
-
-// END Controller class
-
-/* End of file Controller.php */
-/* Location: ./system/core/Controller.php */
