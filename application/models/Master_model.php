@@ -62,4 +62,20 @@ class Master_model extends CI_Model {
         return $query->result();
     }
 
+    public function getLocation($loc_id = 0) {
+        $location = '';
+        $query = $this->db->get('institute_master');
+        $result = $query->result();
+        if (!empty($result)) {
+            foreach ($result as $location) {
+                if ($loc_id == $location->loc_id) {
+                    $location .= '<option value="' . $location->loc_id . '" selected>' . $location->location . '</option>';
+                } else {
+                    $location .= '<option value="' . $location->loc_id . '" >' . $location->location . '</option>';
+                }
+            }
+        }
+        return $location;
+    }
+
 }

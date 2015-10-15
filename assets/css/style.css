@@ -8,7 +8,7 @@ body{
 /*** Navigation Override****/
 .navbar-default {
     background-color: #ffffff;
-    border-color: #eeeeee;
+    border-color: #CECECE;
 }
 .navbar-brand{
     padding: 0px;
@@ -22,6 +22,12 @@ body{
     border-radius: 0;
 }
 
+.half-formcontrol{
+    width: 50%;
+    float: left;
+}
+
+/************** Section *******************/
 .section {
     position: relative;
     padding: 35px 0;
@@ -104,19 +110,11 @@ body{
     -o-background-size: cover;
 }
 
-.panel{
-    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-}
 
 footer{
     background: url(../images/bg.png);
 }
 
-.half-formcontrol{
-    width: 50%;
-    float: left;
-}
 /*********** Heading ************/
 
 h1,h2,h3,h4,h5,h6{
@@ -126,4 +124,25 @@ h1,h2,h3,h4,h5,h6{
 
 .page-header{
     border-bottom: 1px dashed red;
+    margin:26px 0 0px;
+    font-weight: bold;
 }
+
+/*************** Panel Override******************/
+.panel{
+    border-radius: 0px;
+}
+
+.panel{
+    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+/*************Navigation override**************/
+.sidebar > li > a{
+    padding: 5px 15px;
+}
+.sidebar > li > a:hover{
+    background: #CCCCCC;
+}
+

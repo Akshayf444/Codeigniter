@@ -53,22 +53,22 @@ class CI_Controller {
         } elseif ($user_type == 'User') {
             $menu['Sidebar'] = array(
                 'Inbox' => array(
-                    'Message' => 'User/'
+                    'Message' => 'Message'
                 ),
                 'Profle' => array(
-                    'View Profile' => 'User/View',
-                    'Project' => 'User/Projects',
-                    'Education' => 'User/Education'
+                    'View Profile' => 'View',
+                    'Project' => 'Projects',
+                    'Education' => 'Education'
                 ),
                 'Jobs & Application' => array(
-                    'Saved Jobs' => 'User/#',
-                    'Application History' => 'User/#'
+                    'Saved Jobs' => '#',
+                    'Application History' => '#'
                 ),
                 'Recruiters' => array(
-                    ''
+                    'Job & Updates' => '#'
                 ),
                 'Settings' => array(
-                    'Change Password' => 'User/#'
+                    'Change Password' => '#'
                 )
             );
         } else {
