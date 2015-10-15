@@ -47,14 +47,10 @@ class Employee extends CI_Controller {
     }
 
     public function logout() {
-        $this->load->helper('url');
-
-
-//        $data['title'] = 'Update a news item';
-
         $this->session->unset_userdata("user_id");
         $this->session->unset_userdata("user_email");
         $this->session->unset_userdata("user_mobile");
+        $this->session->unset_userdata("user_type");
         redirect('Employee/login', 'refresh');
     }
 

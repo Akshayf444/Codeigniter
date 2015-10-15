@@ -1,4 +1,5 @@
 <?php
+
 class Job extends CI_Controller {
 
     function __construct() {
@@ -28,12 +29,13 @@ class Job extends CI_Controller {
                 $this->form_validation->set_rules('marital_status', 'marital_status', 'required');
                 $this->form_validation->set_rules('resume_headline', 'resume_headline', 'required');
             }
-
+            $this->load->model('Master_model');
             $data['auth_id'] = $this->user_id;
+            $data['location'] = $this->Master_model->getLocation();
             $data = array('title' => 'Add Job', 'content' => 'job/add', 'view_data' => $data);
             $this->load->view('template1', $data);
-        }  else {
-            redirect('Employee/logout','refresh');
+        } else {
+            redirect('Employee/logout', 'refresh');
         }
     }
 

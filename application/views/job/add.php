@@ -34,7 +34,9 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">Location</label>
-                        <select class="form-control" name="location"></select>
+                        <select class="form-control" name="location">
+                            <?php echo $location; ?>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Industry</label>
