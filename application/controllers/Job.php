@@ -1,5 +1,4 @@
 <?php
-
 class Job extends CI_Controller {
 
     function __construct() {

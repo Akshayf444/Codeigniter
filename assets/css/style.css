@@ -1,7 +1,25 @@
+@import url("https://fonts.googleapis.com/css?family=Noto+Sans:400,400italic,700,700italic");
+body{
+    background:  #F5F5F5;
+    font-family: 'Noto Sans';
+
+}
+
+/*** Navigation Override****/
 .navbar-default {
     background-color: #ffffff;
     border-color: #eeeeee;
 }
+.navbar-brand{
+    padding: 0px;
+}
+
+/******** Form Control Override*******************/
+.form-control{
+    padding: 3px 6px;
+    border-radius: 0;
+}
+
 .section {
     position: relative;
     padding: 35px 0;
@@ -19,8 +37,8 @@
     background-attachment: fixed;
 }
 .section-primary {
-    background-color: #3d9970 !important;
-    color: #ffffff;
+    background-color: #CCCCCC !important;
+    color: #1583BE;
 }
 .section-primary .background-image {
     opacity: 0.5;
@@ -91,4 +109,19 @@
 
 footer{
     background: url(../images/bg.png);
+}
+
+.half-formcontrol{
+    width: 50%;
+    float: left;
+}
+/*********** Heading ************/
+
+h1,h2,h3,h4,h5,h6{
+    font-family: 'Noto Sans',sans-serif;
+    font-weight: 400;
+}
+
+.page-header{
+    border-bottom: 1px dashed red;
 }
