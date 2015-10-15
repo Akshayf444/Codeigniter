@@ -1,6 +1,8 @@
 <?php
+
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
+
 class User extends CI_Controller {
 
     public function __construct() {
@@ -40,9 +42,8 @@ class User extends CI_Controller {
                 //$this->load->view('User/success');
                 redirect('User/Add_profile', 'refresh');
             } else {
-                $data['user']="Incorrect Login";
-                $this->load->view('User/login',$data);
-                
+                $data['user'] = "Incorrect Login";
+                $this->load->view('User/login', $data);
             }
         }
 
@@ -167,6 +168,48 @@ class User extends CI_Controller {
             $dropdown['dropdowns'] = $this->Master_model->getQualification();
             $dropdown['institute'] = $this->Master_model->institute();
             $data = array('title' => 'Basic Qualification', 'content' => 'User/user_qualification', 'view_data' => $dropdown);
+            $this->load->view('template1', $data);
+        } else {
+            redirect('User/login', 'refresh');
+        }
+    }
+
+    public function user_projects() {
+      $this->load->model('Master_model');
+         $user_id = $this->session->userdata("user_id");
+                $qual1 = $this->User_model->project_by_id($user_id);
+        if ($this->is_logged_in() == TRUE) {
+            if ($this->input->post()) {
+                
+               
+                $this->form_validation->set_rules('client', 'client', 'required');
+                $this->form_validation->set_rules('projects_title', 'projects_title', 'required');
+                $this->form_validation->set_rules('to', 'to', 'required');
+                $this->form_validation->set_rules('from', 'from', 'required');
+                $this->form_validation->set_rules('location', 'location', 'required');
+                $this->form_validation->set_rules('site', 'site', 'required');
+                $this->form_validation->set_rules('type', 'type', 'required');
+                $this->form_validation->set_rules('detail', 'detail', 'required');
+                $this->form_validation->set_rules('role', 'role', 'required');
+                $this->form_validation->set_rules('role_description', 'role_description', 'required');
+                $this->form_validation->set_rules('team_size', 'team_size', 'required');
+                $this->form_validation->set_rules('skill', 'skill', 'required');
+
+
+
+                
+                if ($this->form_validation->run() === True) {
+                    
+                       $this->User_model->project_add($user_id);
+                    
+                }
+            }
+            $is_logged_in = $this->session->userdata('user_id');
+
+            //$special['edu'] = $this->User_model->education_master();
+            //var_dump($special);
+
+            $data = array('title' => 'Projects', 'content' => 'User/Add_projects', 'view_data' => 'blank');
             $this->load->view('template1', $data);
         } else {
             redirect('User/login', 'refresh');
