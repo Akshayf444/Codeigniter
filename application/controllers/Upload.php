@@ -23,6 +23,20 @@ class Upload extends CI_Controller {
 
 		$this->load->library('upload', $config);
                 
+                if ( ! $this->upload->resume())
+		{
+			$error = array('error' => $this->upload->display_errors());
+
+			$this->load->view('upload_form', $error);
+		}
+		else
+		{
+			$data = array('upload_data' => $this->upload->data());
+
+			$this->load->view('upload_success', $data);
+                        $this->Upload_modal->add($user_id);
+		}
+                
             }
             
             $data = array('title' => 'Resume Upload', 'content' => 'User/Resume_upload', 'view_data' => 'blank');
