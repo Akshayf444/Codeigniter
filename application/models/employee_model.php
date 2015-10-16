@@ -1,7 +1,7 @@
 <?php
 
 class employee_model extends CI_Model {
-  
+
     public function __construct() {
         $this->load->database();
     }
@@ -43,7 +43,6 @@ class employee_model extends CI_Model {
             'type' => $this->input->post('type'),
             'industry_type' => $this->input->post('industry_type'),
             'contact_person' => $this->input->post('contact_person'),
-            'address_id' => $this->input->post('address_id'),
             'updated_at' => date('Y-m-d H:i:s'),
         );
         $data2 = array('auth_id' => $this->input->post('user_id'),
@@ -51,7 +50,6 @@ class employee_model extends CI_Model {
             'type' => $this->input->post('type'),
             'industry_type' => $this->input->post('industry_type'),
             'contact_person' => $this->input->post('contact_person'),
-            'address_id' => $this->input->post('address_id'),
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
         );
@@ -64,7 +62,10 @@ class employee_model extends CI_Model {
     }
 
     public function find_id($id) {
-        $query = $this->db->get_where('emp_profile', array('auth_id' => $id));
+        $this->db->select('*');
+        $this->db->from('emp_profile');
+        $this->db->join('address_master', 'emp_profile.auth_id = address_master.auth_id');
+         $query = $this->db->get();
         return $query->row_array();
     }
 

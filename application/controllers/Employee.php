@@ -82,11 +82,16 @@ class Employee extends CI_Controller {
                 $this->form_validation->set_rules('name', 'name', 'required');
                 $this->form_validation->set_rules('type', 'type', 'required');
                 $this->form_validation->set_rules('industry_type', 'industry_type', 'required');
-                $this->form_validation->set_rules('address_id', 'address_id', 'required');
                 $this->form_validation->set_rules('industry_type', 'industry_type', 'required');
+                $this->form_validation->set_rules('address1', 'address1', 'required');
+                $this->form_validation->set_rules('state', 'state', 'required');
+                $this->form_validation->set_rules('city', 'city', 'required');
+                $this->form_validation->set_rules('pincode', 'pincode', 'required');
 
                 if ($this->form_validation->run() === True) {
                     $check2['User1'] = $this->employee_model->add_details($user_id);
+                    $this->load->model('address_model');
+                    $check1['User1'] = $this->address_model->add_address($user_id);
                 }
 //                $this->load->view('empolyee/success');
             }
@@ -99,5 +104,12 @@ class Employee extends CI_Controller {
             redirect('employee/login', 'refresh');
         }
     }
+ public function add_pincode(){
+        if (isset($_GET['pincode'])) {
+    $pin = $_GET['pincode'];
+    $state = file_get_contents("http://chemistconnect.co/ccwebservice.asmx/GetPincodeData?pincode={$pin}");
 
+    echo $state;
+}
+    }
 }
