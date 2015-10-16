@@ -10,6 +10,10 @@ class User extends CI_Controller {
         $this->load->model('User_model');
     }
 
+    public function index(){
+        $this->login();
+    }
+    
     public function register() {
         $this->form_validation->set_rules('email', 'email', 'trim|required');
         $this->form_validation->set_rules('password', 'password', 'trim|required');
