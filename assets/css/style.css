@@ -47,14 +47,14 @@ body{
     background-attachment: fixed;
 }
 .section-primary {
-    background-color: #CCCCCC !important;
-    color: #1583BE;
+    background-color: #0C79C3 !important;
+    color: #FFF;
 }
 .section-primary .background-image {
     opacity: 0.5;
 }
 .section-info {
-    background-color: #5C2D91 !important;
+    background-color: #0E639D !important;
     color: #ffffff;
 }
 .section-info .background-image {
@@ -112,11 +112,13 @@ body{
     -o-background-size: cover;
 }
 
-
+/**************************/
 footer{
     background: url(../images/bg.png);
 }
-
+footer > a{
+    color: #fff;
+}
 /*********** Heading ************/
 
 h1,h2,h3,h4,h5,h6{
