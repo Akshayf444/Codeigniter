@@ -2,31 +2,32 @@
     <div class="col-lg-12 ">
         <h3 class="page-header">Post Job</h3>
         <div class="panel">
+            <?php echo validation_errors(); ?>
             <?php echo form_open('Job/add'); ?>
             <div class="panel-body">
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label class="control-label">Job Title/Designation *</label>
-                        <input type="text" name="title" class="form-control"/>
+                        <input type="text" name="title" value="<?php echo set_value('title')?>" class="form-control"/>
                     </div>
                     <div class="form-group">
                         <label class="control-label">No of vacancies</label>
-                        <input type="text" name="no_of_vacancy" class="form-control"/>
+                        <input type="text" name="no_of_vacancy" value="<?php echo set_value('no_of_vacancy')?>" class="form-control"/>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Job Description *</label>
-                        <textarea name="description" class="form-control"/></textarea>
+                        <textarea name="description" class="form-control"/><?php echo set_value('description')?></textarea>
                     </div>
                     <div class="form-group">
                         <label class="control-label">keywords *</label>
-                        <input type="text" name="keyword" class="form-control"/>
+                        <input type="text" name="keyword" value="<?php echo set_value('keyword')?>" class="form-control"/>
                     </div>
-                    
+
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label class="control-label">CTC *</label><br>
-                        <input type="text" class="form-control half-formcontrol" placeholder="Enter Salary"  name="ctc_min">
+                        <input type="text" value="<?php echo set_value('ctc_min')?>" class="form-control half-formcontrol" placeholder="Enter Salary"  name="ctc_min">
                         <select class="form-control half-formcontrol"  name="ctc_type">
                             <option value="0">Per Month</option>
                             <option value="1">Per Year</option>
@@ -34,7 +35,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">Hide Salary From Jobseeker*</label>
-                        <input type="checkbox" name="hide_ctc">
+                        <input type="checkbox" name="hide_ctc" value="1">
                     </div>
                     <div class="form-group">
                         <label class="control-label">Work Experience *</label><br>

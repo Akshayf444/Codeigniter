@@ -22,7 +22,7 @@ class Job extends CI_Controller {
                 $this->form_validation->set_rules('exp_max', 'Maximum Experience', 'trim|required');
                 $this->form_validation->set_rules('ctc_min', 'CTC', 'trim|required');                
                 $this->form_validation->set_rules('location', 'Location', 'trim|required');
-                $this->form_validation->set_rules('function_area', 'Functional Area', 'trim|required');
+                $this->form_validation->set_rules('functional_area', 'Functional Area', 'trim|required');
                 $this->form_validation->set_rules('industry', 'Industry', 'trim|required');
 
                 if ($this->form_validation->run() == TRUE) {

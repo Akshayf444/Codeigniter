@@ -20,11 +20,13 @@ body{
 .form-control{
     padding: 3px 6px;
     border-radius: 0;
+    height: 30px;
 }
 
 .half-formcontrol{
     width: 50%;
     float: left;
+    
 }
 
 /************** Section *******************/
@@ -138,7 +140,7 @@ h1,h2,h3,h4,h5,h6{
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
-/*************Navigation override**************/
+/*************Sidebar override**************/
 .sidebar > li > a{
     padding: 5px 15px;
 }
