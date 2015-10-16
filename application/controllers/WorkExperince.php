@@ -18,6 +18,15 @@ class WorkExperince extends CI_Controller {
             return FALSE;
         }
     }
+    public function logout() {
+
+        $this->session->unset_userdata("user_id");
+        $this->session->unset_userdata("user_email");
+        $this->session->unset_userdata("user_mobile");
+        $this->session->unset_userdata("user_type");
+//        $this->session->session_destroy();
+        redirect('User/login', 'refresh');
+    }
     
     public function work_exp()
     {

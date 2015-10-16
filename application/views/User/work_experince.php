@@ -40,7 +40,8 @@
             <div class="form-group">
                 <label class="control-label notice" style="display: none" >Notice Period</label>
                
-                <select style="display: none"  name="notice_period" required="required" class="form-control notice">
+                <select style="display: none"  name="notice_period"  class="form-control notice">
+                    <option value="">None</option>
                     <option value="15 Days Or Less">15 Days Or Less</option>
                     <option value="1 Month">1 Month</option>
                     <option value="2 Month">2 Month</option>
