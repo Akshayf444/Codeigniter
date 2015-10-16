@@ -20,11 +20,13 @@ body{
 .form-control{
     padding: 3px 6px;
     border-radius: 0;
+    height: 30px;
 }
 
 .half-formcontrol{
     width: 50%;
     float: left;
+    
 }
 
 /************** Section *******************/
@@ -59,8 +61,8 @@ body{
     opacity: 0.5;
 }
 .section-default {
-    background-color: #fff !important;
-    color: #222;
+    background-color: #2F3B42 !important;
+    color: #fff;
 }
 .section-default .background-image {
     opacity: 0.5;
@@ -138,11 +140,13 @@ h1,h2,h3,h4,h5,h6{
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
-/*************Navigation override**************/
+/*************Sidebar override**************/
 .sidebar > li > a{
     padding: 5px 15px;
 }
 .sidebar > li > a:hover{
     background: #CCCCCC;
 }
-
+.signin{
+    opacity: 0.8;
+}

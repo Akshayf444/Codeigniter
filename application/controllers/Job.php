@@ -12,26 +12,30 @@ class Job extends CI_Controller {
     }
 
     function add() {
-        //var_dump($this->user_id);
+        $data['auth_id'] = $this->user_id;
         if (isset($this->user_id) && $this->user_id != '' && $this->user_type == 'Employee') {
             if ($this->input->post()) {
-                $this->form_validation->set_rules('title', 'title', 'required');
-                $this->form_validation->set_rules('description', 'description', 'required');
-                $this->form_validation->set_rules('sex', 'sex', 'required');
-                $this->form_validation->set_rules('experince_year', 'experince_year', 'required');
-                $this->form_validation->set_rules('experince_month', 'experince_month', 'required');
-                $this->form_validation->set_rules('current_location', 'current_location', 'required');
-                $this->form_validation->set_rules('prefred_location', 'prefred_location', 'required');
-                $this->form_validation->set_rules('industry', 'industry', 'required');
-                $this->form_validation->set_rules('function_area', 'function_area', 'required');
-                $this->form_validation->set_rules('role', 'role', 'required');
-                $this->form_validation->set_rules('key_skill', 'key_skill', 'required');
-                $this->form_validation->set_rules('marital_status', 'marital_status', 'required');
-                $this->form_validation->set_rules('resume_headline', 'resume_headline', 'required');
+                $this->form_validation->set_rules('title', 'title', 'trim|required');
+                $this->form_validation->set_rules('description', 'description', 'trim|required');
+                $this->form_validation->set_rules('keyword', 'keyword', 'trim|required');
+                $this->form_validation->set_rules('exp_min', 'Minimum Experience', 'trim|required');
+                $this->form_validation->set_rules('exp_max', 'Maximum Experience', 'trim|required');
+                $this->form_validation->set_rules('ctc_min', 'CTC', 'trim|required');                
+                $this->form_validation->set_rules('location', 'Location', 'trim|required');
+                $this->form_validation->set_rules('functional_area', 'Functional Area', 'trim|required');
+                $this->form_validation->set_rules('industry', 'Industry', 'trim|required');
+
+                if ($this->form_validation->run() == TRUE) {
+                    $this->Job_model->add();
+                }
             }
+
             $this->load->model('Master_model');
-            $data['auth_id'] = $this->user_id;
             $data['location'] = $this->Master_model->getLocation();
+            $data['experience'] = $this->Master_model->getWorkExperience();
+            $data['industry'] = $this->Master_model->getIndustry();
+            $data['functional_area'] = $this->Master_model->getFunctionArea();
+            
             $data = array('title' => 'Add Job', 'content' => 'job/add', 'view_data' => $data);
             $this->load->view('template1', $data);
         } else {

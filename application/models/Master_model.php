@@ -63,7 +63,7 @@ class Master_model extends CI_Model {
     }
 
     public function getLocation($loc_id = 0) {
-        $location = '';
+        $location = '<option value = "" >Select Location</option>';
         $query = $this->db->get('location_master');
         $result = $query->result();
 
@@ -77,6 +77,53 @@ class Master_model extends CI_Model {
             }
         }
         return $location;
+    }
+
+    public function getWorkExperience($value = -1) {
+        $experience = '<option value = "" >Select Experience</option>';
+        for ($i = 0; $i < 30; $i++) {
+            if ($value == $i) {
+                $experience .= '<option value="' . $i . '" selected>' . $i . '</option>';
+            } else {
+                $experience .= '<option value="' . $i . '">' . $i . '</option>';
+            }
+        }
+
+        return $experience;
+    }
+
+    function getIndustry($indus_id = -1) {
+        $industry = '<option value = "" >Select Industry</option>';
+        $query = $this->db->get('industry_master');
+        $result = $query->result();
+
+        if (!empty($result)) {
+            foreach ($result as $row) {
+                if ($indus_id == $row->indus_id) {
+                    $industry .= '<option value="' . $row->indus_id . '" selected>' . $row->industry . '</option>';
+                } else {
+                    $industry .= '<option value="' . $row->indus_id . '" >' . $row->industry . '</option>';
+                }
+            }
+        }
+        return $industry;
+    }
+
+    function getFunctionArea($fun_id = -1) {
+        $area = '<option value = "" >Select Functional Area</option>';
+        $query = $this->db->get('functional_area');
+        $result = $query->result();
+
+        if (!empty($result)) {
+            foreach ($result as $row) {
+                if ($fun_id == $row->fun_id) {
+                    $area .= '<option value="' . $row->fun_id . '" selected>' . $row->fun_area . '</option>';
+                } else {
+                    $area .= '<option value="' . $row->fun_id . '" >' . $row->fun_area . '</option>';
+                }
+            }
+        }
+        return $area;
     }
 
 }

@@ -10,6 +10,10 @@ class User extends CI_Controller {
         $this->load->model('User_model');
     }
 
+    public function index(){
+        $this->login();
+    }
+    
     public function register() {
         $this->form_validation->set_rules('email', 'email', 'trim|required');
         $this->form_validation->set_rules('password', 'password', 'trim|required');
@@ -33,7 +37,8 @@ class User extends CI_Controller {
             $pass = md5($_POST['password']);
             $check = $this->User_model->log($new, $pass);
 
-            if (!empty($check) && $check['user_type'] == 'User' ) {
+            if (!empty($check) && $check['type'] == 'User') {
+
                 $this->session->set_userdata("user_id", $check['auth_id']);
                 $this->session->set_userdata("user_email", $check['email']);
                 $this->session->set_userdata("user_mobile", $check['mobile']);
@@ -52,7 +57,7 @@ class User extends CI_Controller {
     }
 
     public function Add_profile() {
-$this->load->model('Master_model');
+        $this->load->model('Master_model');
         if ($this->is_logged_in() == TRUE) {
             $user_id = $this->session->userdata("user_id");
             $check = $this->User_model->find_by_user_id($user_id);
@@ -84,6 +89,8 @@ $this->load->model('Master_model');
                 $this->load->view('User/success');
             }
             $dropdown['dropdowns'] = $this->Master_model->getLocation();
+            $dropdown['industry'] = $this->Master_model->getIndustry();
+            $dropdown['function'] = $this->Master_model->getFunctionArea();
             $data = array('title' => 'Basic Profile', 'content' => 'User/Add_profile', 'view_data' => $dropdown);
             $this->load->view('template1', $data);
         } else {
@@ -165,9 +172,6 @@ $this->load->model('Master_model');
                 }
             }
             $is_logged_in = $this->session->userdata('user_id');
-
-            //$special['edu'] = $this->User_model->education_master();
-            //var_dump($special);
             $dropdown['dropdowns'] = $this->Master_model->getQualification();
             $dropdown['institute'] = $this->Master_model->institute();
             $data = array('title' => 'Basic Qualification', 'content' => 'User/user_qualification', 'view_data' => $dropdown);
@@ -178,13 +182,11 @@ $this->load->model('Master_model');
     }
 
     public function user_projects() {
-      $this->load->model('Master_model');
-         $user_id = $this->session->userdata("user_id");
-                $qual1 = $this->User_model->project_by_id($user_id);
+        $this->load->model('Master_model');
+        $user_id = $this->session->userdata("user_id");
+        $qual1 = $this->User_model->project_by_id($user_id);
         if ($this->is_logged_in() == TRUE) {
             if ($this->input->post()) {
-                
-               
                 $this->form_validation->set_rules('client', 'client', 'trim|required');
                 $this->form_validation->set_rules('projects_title', 'projects_title', 'trim|required');
                 $this->form_validation->set_rules('to', 'to', 'trim|required');
@@ -197,21 +199,11 @@ $this->load->model('Master_model');
                 $this->form_validation->set_rules('role_description', 'role_description', 'trim|required');
                 $this->form_validation->set_rules('team_size', 'team_size', 'trim|required');
                 $this->form_validation->set_rules('skill', 'skill', 'required');
-
-
-
-                
                 if ($this->form_validation->run() === True) {
-                    
-                       $this->User_model->project_add($user_id);
-                    
+                    $this->User_model->project_add($user_id);
                 }
             }
             $is_logged_in = $this->session->userdata('user_id');
-
-            //$special['edu'] = $this->User_model->education_master();
-            //var_dump($special);
-
             $data = array('title' => 'Projects', 'content' => 'User/Add_projects', 'view_data' => 'blank');
             $this->load->view('template1', $data);
         } else {
