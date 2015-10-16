@@ -85,6 +85,8 @@ class User extends CI_Controller {
                 $this->load->view('User/success');
             }
             $dropdown['dropdowns'] = $this->Master_model->getLocation();
+            $dropdown['industry'] = $this->Master_model->getIndustry();
+            $dropdown['function'] = $this->Master_model->getFunctionArea();
             $data = array('title' => 'Basic Profile', 'content' => 'User/Add_profile', 'view_data' => $dropdown);
             $this->load->view('template1', $data);
         } else {
