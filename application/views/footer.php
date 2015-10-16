@@ -36,11 +36,11 @@
         </div>
     </div>
 </footer>
-    <footer class="section-info"> 
+    <footer class="section-default"> 
     <div class="container"> 
         <div class="row col-lg-12">
             <p></p>
-            <p class="pull-right">All Right Reserved @ 2015<a href="http://www.techvertica.com"> Techvertica Technology Ltd.</a></p>
+            <p class="pull-right">All Right Reserved @ 2015 <a href="http://www.techvertica.com"> Techvertica Technology Ltd.</a></p>
         </div>
     </div>
 </footer>

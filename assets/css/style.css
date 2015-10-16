@@ -61,8 +61,8 @@ body{
     opacity: 0.5;
 }
 .section-default {
-    background-color: #fff !important;
-    color: #222;
+    background-color: #2F3B42 !important;
+    color: #fff;
 }
 .section-default .background-image {
     opacity: 0.5;
@@ -147,4 +147,6 @@ h1,h2,h3,h4,h5,h6{
 .sidebar > li > a:hover{
     background: #CCCCCC;
 }
-
+.signin{
+    opacity: 0.8;
+}
