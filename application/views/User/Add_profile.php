@@ -39,7 +39,10 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">Industry*</label>
-                        <input type="text"  placeholder="Enter industries" required="required" class="form-control" name="industry"/>
+                        
+                        <select class="form-control" required="required" name="industry">
+                            <?php echo $industry;?>
+                        </select>
                     </div>
 
                     <br>
@@ -49,7 +52,10 @@
 
                     <div class="form-group">
                         <label class="control-label">Function Area</label>
-                        <input type="text" class="form-control"  name="function_area"/>
+                        
+                        <select class="form-control"  name="function_area">
+                            <?php echo $industry;?>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Role*</label>
