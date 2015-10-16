@@ -17,9 +17,4 @@
 
     <input type="submit" value="Log In" />
 </div>
-<?php
-echo '<pre>';
-print_r($this->session->all_userdata());
-exit;
-?>
 </form>

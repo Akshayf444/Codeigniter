@@ -33,7 +33,7 @@ class User extends CI_Controller {
             $pass = md5($_POST['password']);
             $check = $this->User_model->log($new, $pass);
 
-            if (!empty($check) && $check['user_type'] == 'User' ) {
+            if (!empty($check) && $check['user_type'] == 'User') {
                 $this->session->set_userdata("user_id", $check['auth_id']);
                 $this->session->set_userdata("user_email", $check['email']);
                 $this->session->set_userdata("user_mobile", $check['mobile']);
@@ -52,7 +52,7 @@ class User extends CI_Controller {
     }
 
     public function Add_profile() {
-$this->load->model('Master_model');
+        $this->load->model('Master_model');
         if ($this->is_logged_in() == TRUE) {
             $user_id = $this->session->userdata("user_id");
             $check = $this->User_model->find_by_user_id($user_id);
@@ -176,13 +176,13 @@ $this->load->model('Master_model');
     }
 
     public function user_projects() {
-      $this->load->model('Master_model');
-         $user_id = $this->session->userdata("user_id");
-                $qual1 = $this->User_model->project_by_id($user_id);
+        $this->load->model('Master_model');
+        $user_id = $this->session->userdata("user_id");
+        $qual1 = $this->User_model->project_by_id($user_id);
         if ($this->is_logged_in() == TRUE) {
             if ($this->input->post()) {
-                
-               
+
+
                 $this->form_validation->set_rules('client', 'client', 'required');
                 $this->form_validation->set_rules('projects_title', 'projects_title', 'required');
                 $this->form_validation->set_rules('to', 'to', 'required');
@@ -198,11 +198,10 @@ $this->load->model('Master_model');
 
 
 
-                
+
                 if ($this->form_validation->run() === True) {
-                    
-                       $this->User_model->project_add($user_id);
-                    
+
+                    $this->User_model->project_add($user_id);
                 }
             }
             $is_logged_in = $this->session->userdata('user_id');
