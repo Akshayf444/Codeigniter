@@ -21,8 +21,8 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Duration*</label>
-                <input type="date" name="to" required="required" class="form-control"/>to 
-                <input type="date" name="from" required="required" class="form-control"/> 
+                <input type="date" name="from" required="required" class="form-control"/>to 
+                <input type="date" name="to" required="required" class="form-control"/> 
 
             </div>
             <div class="form-group">
