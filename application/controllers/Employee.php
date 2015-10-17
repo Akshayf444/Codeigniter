@@ -79,7 +79,7 @@ class Employee extends CI_Controller {
             $user_email = $this->session->userdata("mobile");
             $user_mobile = $this->session->userdata("user_email");
             $this->load->model('Master_model');
-            $this->load->model('Master_model');
+
             if ($this->input->post()) {
                 $this->form_validation->set_rules('name', 'name', 'required');
                 $this->form_validation->set_rules('type', 'type', 'required');
