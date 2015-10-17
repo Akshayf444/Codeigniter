@@ -30,7 +30,7 @@ class Employee extends CI_Controller {
             $new = $_POST['email'];
             $pass = md5($_POST['password']);
             $check = $this->employee_model->log($new, $pass);
-            if (!empty($check && $check['type'] == 'Employee')) {
+            if (!empty($check) && $check['type'] == 'Employee') {
                 $this->session->set_userdata("user_id", $check['auth_id']);
                 $this->session->set_userdata("user_email", $check['email']);
                 $this->session->set_userdata("user_mobile", $check['mobile']);
