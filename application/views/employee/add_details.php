@@ -29,12 +29,10 @@
 
                 <div class="form-group">
                     <label class="control-label">Industry Type</label>
-                   
-                    <input type="text" name="industry_type" class="form-control" value="<?php
-                    if (isset($user['industry_type'])) {
-                        echo $user['industry_type'];
-                    }
-                    ?>">   </div>
+                    <select class="form-control" name="industry_type"><?php echo $industry ?></select>
+       
+
+                </div>
                 <div class="form-group">
                     <label class="control-label">Contact Person</label>
                     <input type="text" name="contact_person" class="form-control" value="<?php

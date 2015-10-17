@@ -78,6 +78,8 @@ class Employee extends CI_Controller {
             $user_id = $this->session->userdata("user_id");
             $user_email = $this->session->userdata("mobile");
             $user_mobile = $this->session->userdata("user_email");
+            $this->load->model('Master_model');
+            $this->load->model('Master_model');
             if ($this->input->post()) {
                 $this->form_validation->set_rules('name', 'name', 'required');
                 $this->form_validation->set_rules('type', 'type', 'required');
@@ -89,13 +91,15 @@ class Employee extends CI_Controller {
                 $this->form_validation->set_rules('pincode', 'pincode', 'required');
 
                 if ($this->form_validation->run() === True) {
+                    
+
                     $check2['User1'] = $this->employee_model->add_details($user_id);
                     $this->load->model('address_model');
                     $check1['User1'] = $this->address_model->add_address($user_id);
                 }
 //                $this->load->view('empolyee/success');
             }
-
+            $userData['industry'] = $this->Master_model->getIndustry();
             $userData['user'] = $this->employee_model->find_id($user_id);
             $userData['user_id'] = $user_id;
             $data = array('title' => 'Basic Employee Profile', 'content' => 'employee/add_details', 'view_data' => $userData);
@@ -104,12 +108,14 @@ class Employee extends CI_Controller {
             redirect('employee/login', 'refresh');
         }
     }
- public function add_pincode(){
-        if (isset($_GET['pincode'])) {
-    $pin = $_GET['pincode'];
-    $state = file_get_contents("http://chemistconnect.co/ccwebservice.asmx/GetPincodeData?pincode={$pin}");
 
-    echo $state;
-}
+    public function add_pincode() {
+        if (isset($_GET['pincode'])) {
+            $pin = $_GET['pincode'];
+            $state = file_get_contents("http://chemistconnect.co/ccwebservice.asmx/GetPincodeData?pincode={$pin}");
+
+            echo $state;
+        }
     }
+
 }
