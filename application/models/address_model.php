@@ -8,7 +8,7 @@ class address_model extends CI_Model {
 
     public function add_address($id) {
         $query = $this->db->get_where('address_master', array('auth_id' => $id));
-        $data3 = array('auth_id' => $this->input->post('user_id'),
+        $data3 = array('auth_id' => $this->input->post('auth_id'),
             'address1' => $this->input->post('address1'),
             'pincode' => $this->input->post('pincode'),
             'state' => $this->input->post('state'),
@@ -16,8 +16,8 @@ class address_model extends CI_Model {
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
         );
-        $data4 = array('auth_id' => $this->input->post('user_id'),
-            'address1' => $this->input->post('name'),
+        $data4 = array('auth_id' => $this->input->post('auth_id'),
+            'address1' => $this->input->post('address1'),
             'pincode' => $this->input->post('pincode'),
             'state' => $this->input->post('state'),
             'city' => $this->input->post('city'),
