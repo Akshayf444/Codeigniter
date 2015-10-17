@@ -89,10 +89,11 @@ class User_model extends CI_Model {
 
         $this->db->select('user.*,address_master.*');
         $this->db->from('user');
-        $this->db->join('address_master', 'address_master.auth_id = user.auth_id','left');
+        $this->db->join('address_master', 'address_master.auth_id = user.auth_id', 'left');
         $query = $this->db->get();
         return $query->row_array();
     }
+
     public function Show_profile2($id) {
         $query = $this->db->get_where('address_master', array('auth_id' => $id));
         return $query->row_array();
@@ -194,6 +195,18 @@ class User_model extends CI_Model {
         );
         $this->db->where(array('auth_id' => $id));
         return $this->db->update('user_project', $data);
+    }
+
+    public function view($id) {
+        $query = "SELECT * FROM user u
+                    LEFT JOIN work_exp we
+                    ON u.auth_id=we.auth_id
+                    LEFT JOIN `location_master`lm
+                    ON lm.loc_id=u.current_location
+                    WHERE we.auth_id=$id";
+      $query=  $this->db->query($query);
+        
+        return $query->result();
     }
 
 }

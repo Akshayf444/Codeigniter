@@ -223,5 +223,20 @@ class User extends CI_Controller {
             redirect('User/login', 'refresh');
         }
     }
+    
+    public function view()
+    {
+        if ($this->is_logged_in() == TRUE) {
+            if ($this->input->post()) {
+                
+            }
+            $user_id = $this->session->userdata('user_id');
+            $view['user']=$this->User_model->view($user_id);
+            $data = array('title' => 'Projects', 'content' => 'User/View', 'view_data' => $view);
+            $this->load->view('template1', $data);
+        } else {
+            redirect('User/login', 'refresh');
+        }
+    }
 
 }
