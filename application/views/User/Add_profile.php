@@ -25,40 +25,28 @@
                     <div class="form-group">
                         <label class="control-label">Gender*</label>
                         <input type="radio" required="required"  name="sex" <?php
-                        if ($user['gender'] == 'Male') {
+                        if (isset($user['gender']) && $user['gender'] == 'Male') {
                             echo "checked";
                         }
-                        ?> value="<?php
-                               if (isset($user['gender'])) {
-                                   echo $user['gender'];
-                               } else {
-                                   echo "Male";
-                               }
-                               ?>"/>Male
+                        ?> value="Male"/>Male
                         <input type="radio" required="required" <?php
-                        if ($user['gender'] == 'Female') {
+                        if (isset($user['gender']) && $user['gender'] == 'Female') {
                             echo "checked";
                         }
-                        ?>  name="sex" value="<?php
-                               if (isset($user['gender'])) {
-                                   echo $user['gender'];
-                               } else {
-                                   echo "Female";
-                               }
-                               ?> "/>Female
+                        ?>  name="sex" value="Female "/>Female
                     </div>
                     <div class="form-group">
                         <label class="control-label">Experience*</label><br>
                         <input type="text" class="form-control half-formcontrol"  required="required" placeholder="In Years" name="experince_year" value="<?php
-                               if (isset($user['exp_year'])) {
-                                   echo $user['exp_year'];
-                               } 
-                               ?>"/>
+                        if (isset($user['exp_year'])) {
+                            echo $user['exp_year'];
+                        }
+                        ?>"/>
                         <input type="text" class="form-control half-formcontrol"  placeholder="In Months" required="required" name="experince_month" value="<?php
-                               if (isset($user['experince_month'])) {
-                                   echo $user['experince_month'];
-                               } 
-                               ?>"/>
+                        if (isset($user['experince_month'])) {
+                            echo $user['experince_month'];
+                        }
+                        ?>"/>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Current Location*</label>
@@ -85,16 +73,18 @@
                         <label class="control-label">Function Area</label>
 
                         <select class="form-control"  name="function_area">
-                            <?php echo $industry; ?>
+                            <?php echo $function; ?>
                         </select>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Role*</label>
                         <input type="text" class="form-control"  required="required" name="role" value="<?php
-                               if (isset($user['role'])) {
-                                   echo $user['role'];
-                               } 
-                               ?>"/>
+
+                        if (isset($user['role'])) {
+                            echo $user['role'];
+                        }
+                        ?>"/>
+
                     </div>
                     <br>
                 </div>
@@ -105,10 +95,12 @@
                     <div class="form-group">
                         <label class="control-label">Key Skills</label>
                         <input type="text" class="form-control"  name="key_skill" value="<?php
-                               if (isset($user['key_skill'])) {
-                                   echo $user['key_skill'];
-                               } 
-                               ?>"/>
+
+                        if (isset($user['key_skill'])) {
+                            echo $user['key_skill'];
+                        }
+                        ?>"/>
+
                     </div>
                     <div class="form-group">
                         <label class="control-label">Marital Status</label>
@@ -120,10 +112,12 @@
                     <div class="form-group">
                         <label class="control-label">Permanent Address</label>
                         <textarea name="address1" class="form-control"><?php
-                               if (isset($user2['address1'])) {
-                                   echo $user2['address1'];
-                               } 
-                               ?></textarea>
+
+                        if (isset($user['address1'])) {
+                            echo $user['address1'];
+                        }
+                        ?></textarea>
+
                     </div>
                     <div class="form-group">
                         <label class="control-label">Pincode</label>
@@ -155,10 +149,12 @@
                     <div class="form-group">
                         <label class="control-label">Resume Headline</label>
                         <input type="text" class="form-control"  name="resume_headline" value="<?php
-                               if (isset($user['resume_headline'])) {
-                                   echo $user['resume_headline'];
-                               } 
-                               ?>"/>
+
+                        if (isset($user['resume_headline'])) {
+                            echo $user['resume_headline'];
+                        }
+                        ?>"/>
+
                     </div>
 
                 </div>

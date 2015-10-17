@@ -54,12 +54,14 @@ class User_model extends CI_Model {
     }
 
     public function Add_detail($id, $email, $mobile) {
+
+        $entryExist = $this->Show_profile($id);
+
         $data = array('name' => $this->input->post('name'),
             'dob' => $this->input->post('dob'),
             'email' => $email,
             'mobile' => $mobile,
             'auth_id' => $id,
-            'created_at' => date('Y-m_d H:i:s'),
             'updated_at' => date('Y-m_d H:i:s'),
             'gender' => $this->input->post('sex'),
             'exp_year' => $this->input->post('experince_year'),
@@ -72,14 +74,23 @@ class User_model extends CI_Model {
             'key_skill' => $this->input->post('key_skill'),
             'marital_status' => $this->input->post('marital_status'),
             'resume_headline' => $this->input->post('resume_headline'),
-            
         );
 
-        return $this->db->insert('user', $data);
+        if (!empty($entryExist)) {
+            $this->db->where(array('auth_id' => $id));
+            return $this->db->update('user', $data);
+        } else {
+            $data['created_at'] = date('Y-m_d H:i:s');
+            return $this->db->insert('user', $data);
+        }
     }
 
     public function Show_profile($id) {
-        $query = $this->db->get_where('user', array('auth_id' => $id));
+
+        $this->db->select('user.*,address_master.*');
+        $this->db->from('user');
+        $this->db->join('address_master', 'address_master.auth_id = user.auth_id','left');
+        $query = $this->db->get();
         return $query->row_array();
     }
     public function Show_profile2($id) {
@@ -107,7 +118,6 @@ class User_model extends CI_Model {
             'key_skill' => $this->input->post('key_skill'),
             'marital_status' => $this->input->post('marital_status'),
             'resume_headline' => $this->input->post('resume_headline'),
-             
         );
         $this->db->where(array('auth_id' => $id));
         return $this->db->update('user', $data);
@@ -140,50 +150,50 @@ class User_model extends CI_Model {
         $this->db->where(array('auth_id' => $id));
         return $this->db->update('user_qualification', $data);
     }
-    
-    public function project_add($id)
-    {
-        $data=array(
-            'client'=>$this->input->post('client'),
-            'auth_id'=>$id,
-            'projects_title'=>$this->input->post('projects_title'),
-            'to'=>$this->input->post('to'),
-            'from'=>$this->input->post('from'),
-            'location'=>$this->input->post('location'),
-            'site'=>$this->input->post('site'),
-            'type'=>$this->input->post('type'),
-            'detail'=>$this->input->post('detail'),
-            'role'=>$this->input->post('role'),
-            'role_description'=>$this->input->post('role_description'),
-            'team_size'=>$this->input->post('team_size'),
-            'skill'=>$this->input->post('skill'),
+
+    public function project_add($id) {
+        $data = array(
+            'client' => $this->input->post('client'),
+            'auth_id' => $id,
+            'projects_title' => $this->input->post('projects_title'),
+            'to' => $this->input->post('to'),
+            'from' => $this->input->post('from'),
+            'location' => $this->input->post('location'),
+            'site' => $this->input->post('site'),
+            'type' => $this->input->post('type'),
+            'detail' => $this->input->post('detail'),
+            'role' => $this->input->post('role'),
+            'role_description' => $this->input->post('role_description'),
+            'team_size' => $this->input->post('team_size'),
+            'skill' => $this->input->post('skill'),
         );
-        return $this->db->insert('user_project',$data);
+        return $this->db->insert('user_project', $data);
     }
+
     public function project_by_id($id) {
-       
+
 
         $query = $this->db->get_where('user_project', array('auth_id' => $id));
         return $query->row_array();
     }
-    public function project_update($id)
-    {
-        $data=array(
-            'client'=>$this->input->post('client'),
-            'projects_title'=>$this->input->post('projects_title'),
-            'to'=>$this->input->post('to'),
-            'from'=>$this->input->post('from'),
-            'location'=>$this->input->post('location'),
-            'site'=>$this->input->post('site'),
-            'type'=>$this->input->post('type'),
-            'detail'=>$this->input->post('detail'),
-            'role'=>$this->input->post('role'),
-            'role_description'=>$this->input->post('role_description'),
-            'team_size'=>$this->input->post('team_size'),
-            'skill'=>$this->input->post('skill'),
+
+    public function project_update($id) {
+        $data = array(
+            'client' => $this->input->post('client'),
+            'projects_title' => $this->input->post('projects_title'),
+            'to' => $this->input->post('to'),
+            'from' => $this->input->post('from'),
+            'location' => $this->input->post('location'),
+            'site' => $this->input->post('site'),
+            'type' => $this->input->post('type'),
+            'detail' => $this->input->post('detail'),
+            'role' => $this->input->post('role'),
+            'role_description' => $this->input->post('role_description'),
+            'team_size' => $this->input->post('team_size'),
+            'skill' => $this->input->post('skill'),
         );
-        $this->db->where(array('auth_id'=>$id));
-        return $this->db->update('user_project',$data);
+        $this->db->where(array('auth_id' => $id));
+        return $this->db->update('user_project', $data);
     }
 
 }
