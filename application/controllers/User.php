@@ -58,6 +58,7 @@ class User extends CI_Controller {
 
     public function Add_profile() {
         $this->load->model('Master_model');
+        $this->load->model('address_model');
         if ($this->is_logged_in() == TRUE) {
             $user_id = $this->session->userdata("user_id");
             $check = $this->User_model->find_by_user_id($user_id);
@@ -78,19 +79,26 @@ class User extends CI_Controller {
                 $this->form_validation->set_rules('key_skill', 'key_skill', 'trim|required');
                 $this->form_validation->set_rules('marital_status', 'marital_status', 'trim|required');
                 $this->form_validation->set_rules('resume_headline', 'resume_headline', 'trim|required');
+                $this->form_validation->set_rules('city', 'city', 'trim|required');
+                $this->form_validation->set_rules('pincode', 'pincode', 'trim|required');
+                $this->form_validation->set_rules('state', 'state', 'trim|required');
+                $this->form_validation->set_rules('address1', 'address1', 'trim|required');
                 //$check1['User'] = $this->User_model->find_by_id($user_id);
                 if ($this->form_validation->run() === True) {
-                    if ($check['auth_id'] != $user_id) {
+                    if (empty($check['auth_id']) && $check['auth_id'] != $user_id) {
+                        
                         $check2['User1'] = $this->User_model->Add_detail($user_id, $user_email, $user_mobile);
+                        $check3['User2'] = $this->address_model->add_address($user_id);
                     } else {
                         $data['user'] = $this->User_model->profile_update($user_id, $user_email, $user_mobile);
                     }
                 }
-                $this->load->view('User/success');
+                redirect('User/Add_profile');
             }
             $dropdown['dropdowns'] = $this->Master_model->getLocation();
             $dropdown['industry'] = $this->Master_model->getIndustry();
             $dropdown['function'] = $this->Master_model->getFunctionArea();
+            $dropdown['user'] = $this->User_model->Show_profile($user_id);
             $data = array('title' => 'Basic Profile', 'content' => 'User/Add_profile', 'view_data' => $dropdown);
             $this->load->view('template1', $data);
         } else {
