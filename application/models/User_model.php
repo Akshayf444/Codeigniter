@@ -72,6 +72,7 @@ class User_model extends CI_Model {
             'key_skill' => $this->input->post('key_skill'),
             'marital_status' => $this->input->post('marital_status'),
             'resume_headline' => $this->input->post('resume_headline'),
+            
         );
 
         return $this->db->insert('user', $data);
@@ -102,6 +103,7 @@ class User_model extends CI_Model {
             'key_skill' => $this->input->post('key_skill'),
             'marital_status' => $this->input->post('marital_status'),
             'resume_headline' => $this->input->post('resume_headline'),
+             
         );
         $this->db->where(array('auth_id' => $id));
         return $this->db->update('user', $data);
