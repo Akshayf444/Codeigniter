@@ -45,11 +45,11 @@
             <div class="col-lg-6">
                 <div class="form-group">
                     <label class="control-label">Address </label>
-                    <input type="text" name="address1" class="form-control" value="<?php
+                    <textarea type="text" name="address1" class="form-control" value="<?php
                     if (isset($user['address1'])) {
                         echo $user['address1'];
                     }
-                    ?>">
+                    ?>"></textarea>
                 </div>
 
                 <div class="form-group">
@@ -80,7 +80,7 @@
                     ?>">
                 </div>
             </div>
-            <input type="hidden" name="user_id" class="form-control" value="<?php echo $user_id; ?> " >
+            <input type="hidden" name="auth_id" class="form-control" value="<?php echo $user_id; ?> " >
 
         </div>
 

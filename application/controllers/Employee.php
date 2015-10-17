@@ -91,7 +91,7 @@ class Employee extends CI_Controller {
                 $this->form_validation->set_rules('pincode', 'pincode', 'required');
 
                 if ($this->form_validation->run() === True) {
-                    
+
 
                     $check2['User1'] = $this->employee_model->add_details($user_id);
                     $this->load->model('address_model');
@@ -99,8 +99,9 @@ class Employee extends CI_Controller {
                 }
 //                $this->load->view('empolyee/success');
             }
-            $userData['industry'] = $this->Master_model->getIndustry();
-            $userData['user'] = $this->employee_model->find_id($user_id);
+            $details = $this->employee_model->find_id($user_id);
+            $userData['user'] = $details;
+            $userData['industry'] = isset($details['industry_type']) ? $this->Master_model->getIndustry($details['industry_type']) : $this->Master_model->getIndustry();
             $userData['user_id'] = $user_id;
             $data = array('title' => 'Basic Employee Profile', 'content' => 'employee/add_details', 'view_data' => $userData);
             $this->load->view('template1', $data);
