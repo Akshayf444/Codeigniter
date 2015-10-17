@@ -38,14 +38,14 @@ class employee_model extends CI_Model {
         $query = $this->db->get_where('emp_profile', array('auth_id' => $id));
 
 //      return $query->row_array();
-        $data = array('auth_id' => $this->input->post('user_id'),
+        $data = array('auth_id' =>$id,
             'name' => $this->input->post('name'),
             'type' => $this->input->post('type'),
             'industry_type' => $this->input->post('industry_type'),
             'contact_person' => $this->input->post('contact_person'),
             'updated_at' => date('Y-m-d H:i:s'),
         );
-        $data2 = array('auth_id' => $this->input->post('user_id'),
+        $data2 = array('auth_id' => $id,
             'name' => $this->input->post('name'),
             'type' => $this->input->post('type'),
             'industry_type' => $this->input->post('industry_type'),
