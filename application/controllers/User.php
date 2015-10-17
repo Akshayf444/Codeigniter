@@ -96,6 +96,7 @@ class User extends CI_Controller {
                 redirect('User/Add_profile');
             }
             $dropdown['user'] = $this->User_model->Show_profile($user_id);
+            $dropdown['user2'] = $this->User_model->Show_profile2($user_id);
             $dropdown['dropdowns'] =isset($user['current_location']) ? $this->Master_model->getLocation($user['current_location']) :  $this->Master_model->getLocation();
             $dropdown['industry'] = $this->Master_model->getIndustry();
             $dropdown['function'] = $this->Master_model->getFunctionArea();

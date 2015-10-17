@@ -90,7 +90,11 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">Role*</label>
-                        <input type="text" class="form-control"  required="required" name="role"/>
+                        <input type="text" class="form-control"  required="required" name="role" value="<?php
+                               if (isset($user['role'])) {
+                                   echo $user['role'];
+                               } 
+                               ?>"/>
                     </div>
                     <br>
                 </div>
@@ -100,7 +104,11 @@
 
                     <div class="form-group">
                         <label class="control-label">Key Skills</label>
-                        <input type="text" class="form-control"  name="key_skill"/>
+                        <input type="text" class="form-control"  name="key_skill" value="<?php
+                               if (isset($user['key_skill'])) {
+                                   echo $user['key_skill'];
+                               } 
+                               ?>"/>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Marital Status</label>
@@ -111,13 +119,17 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">Permanent Address</label>
-                        <textarea name="address1" class="form-control"></textarea>
+                        <textarea name="address1" class="form-control"><?php
+                               if (isset($user2['address1'])) {
+                                   echo $user2['address1'];
+                               } 
+                               ?></textarea>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Pincode</label>
                         <input type="text" name="pincode" class="form-control"  id="pincode"value="<?php
-                        if (isset($user['pincode'])) {
-                            echo $user['pincode'];
+                        if (isset($user2['pincode'])) {
+                            echo $user2['pincode'];
                         }
                         ?>">
 
@@ -126,8 +138,8 @@
                     <div class="form-group">
                         <label class="control-label">State </label>
                         <input type="text" name="state" class="form-control" id="state" value="<?php
-                        if (isset($user['state'])) {
-                            echo $user['state'];
+                        if (isset($user2['state'])) {
+                            echo $user2['state'];
                         }
                         ?>">
 
@@ -135,14 +147,18 @@
                     <div class="form-group">
                         <label class="control-label">City </label>
                         <input type="text" name="city" class="form-control"  id="city" value="<?php
-                        if (isset($user['city'])) {
-                            echo $user['city'];
+                        if (isset($user2['city'])) {
+                            echo $user2['city'];
                         }
                         ?>">
                     </div>
                     <div class="form-group">
                         <label class="control-label">Resume Headline</label>
-                        <input type="text" class="form-control"  name="resume_headline"/>
+                        <input type="text" class="form-control"  name="resume_headline" value="<?php
+                               if (isset($user['resume_headline'])) {
+                                   echo $user['resume_headline'];
+                               } 
+                               ?>"/>
                     </div>
 
                 </div>

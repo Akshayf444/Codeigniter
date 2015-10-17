@@ -82,6 +82,10 @@ class User_model extends CI_Model {
         $query = $this->db->get_where('user', array('auth_id' => $id));
         return $query->row_array();
     }
+    public function Show_profile2($id) {
+        $query = $this->db->get_where('address_master', array('auth_id' => $id));
+        return $query->row_array();
+    }
 
     public function profile_update($id, $email, $mobile) {
 
