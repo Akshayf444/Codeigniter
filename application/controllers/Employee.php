@@ -54,16 +54,6 @@ class Employee extends CI_Controller {
         redirect('Employee/login', 'refresh');
     }
 
-    public function view() {
-        $this->load->helper('url');
-        $user_id = $this->session->userdata("user_id");
-        $user_email = $this->session->userdata("user_email");
-        $check1['User'] = $this->employee_model->find_by_id($user_id);
-        $this->load->view('header');
-        $this->load->view('Employee/View', $check1);
-        $this->load->view('footer');
-    }
-
     public function is_logged_in() {
         //$is_logged_in = $this->session->userdata('user_id');
         if (isset($this->user_id) && $this->user_id != '') {
@@ -76,8 +66,6 @@ class Employee extends CI_Controller {
     public function add_details() {
         if ($this->is_logged_in() == TRUE) {
             $user_id = $this->session->userdata("user_id");
-            $user_email = $this->session->userdata("mobile");
-            $user_mobile = $this->session->userdata("user_email");
             $this->load->model('Master_model');
 
             if ($this->input->post()) {
@@ -91,11 +79,9 @@ class Employee extends CI_Controller {
                 $this->form_validation->set_rules('pincode', 'pincode', 'required');
 
                 if ($this->form_validation->run() === True) {
-
-
-                    $check2['User1'] = $this->employee_model->add_details($user_id);
+                    $this->employee_model->add_details($user_id);
                     $this->load->model('address_model');
-                    $check1['User1'] = $this->address_model->add_address($user_id);
+                    $this->address_model->add_address($user_id);
                 }
 //                $this->load->view('empolyee/success');
             }
