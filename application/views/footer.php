@@ -1,6 +1,6 @@
 <footer class="section section-primary"> 
     <div class="container"> 
-        <div class="row">
+        <div class="row footer-nav">
             <div class="col-lg-3">
                 <ul>
                     <li><a href="">About</a></li>

@@ -26,7 +26,7 @@ body{
 .half-formcontrol{
     width: 50%;
     float: left;
-    
+
 }
 
 /************** Section *******************/
@@ -115,9 +115,6 @@ body{
 /**************************/
 footer{
     background: url(../images/bg.png);
-}
-footer > a{
-    color: #fff;
 }
 /*********** Heading ************/
 
