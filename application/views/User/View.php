@@ -14,6 +14,9 @@
             <div class="col-sm-6">
                 <label style="    opacity: 0.5">Total Experince :</label><span><?php echo $u->exp_year."year"; ?> <?php echo $u->experince_month."month"; ?></span>
                 </div>
+            <div class="col-sm-6">
+                <label style="    opacity: 0.5">Qualification :</label><span><?php echo $u->qualification; ?></span>
+                </div>
             </div>    
         <?php endforeach ?>
     </div>

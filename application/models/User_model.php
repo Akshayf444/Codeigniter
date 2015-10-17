@@ -203,6 +203,10 @@ class User_model extends CI_Model {
                     ON u.auth_id=we.auth_id
                     LEFT JOIN `location_master`lm
                     ON lm.loc_id=u.current_location
+                    LEFT JOIN user_qualification uq
+                    ON uq.auth_id=u.auth_id
+                    LEFT JOIN education_master em
+                    ON em.edu_id=uq.qualification
                     WHERE we.auth_id=$id";
       $query=  $this->db->query($query);
         
