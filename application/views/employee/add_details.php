@@ -42,7 +42,6 @@
                     <label class="control-label">Industry Type</label>
                     <select class="form-control" name="industry_type"><?php echo $industry ?></select>
 
-
                 </div>
                 <div class="form-group">
                     <label class="control-label">Contact Person</label>
@@ -55,12 +54,22 @@
             </div>
             <div class="col-lg-6">
                 <div class="form-group">
+
                     <label class="control-label">Address </label>
                     <textarea type="text" name="address1" class="form-control" ><?php
                     if (isset($user['address1'])) {
                         echo $user['address1'];
                     }
                     ?></textarea>
+
+                    <label class="control-label">Address</label>
+                    <textarea type="text" name="address1" class="form-control" ><?php
+                        if (isset($user['address1'])) {
+                            echo $user['address1'];
+                        }
+                        ?>
+                    </textarea>
+
                 </div>
 
                 <div class="form-group">
@@ -101,7 +110,11 @@
         <div class="panel-footer">
             <div class="form-group">
 
+
                 <input type="submit" value="Save" class="btn btn-primary" />
+
+                <input type="submit" value="Register" class="btn btn-primary" />
+
             </div>
         </div>
     </div>

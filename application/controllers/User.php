@@ -10,10 +10,10 @@ class User extends CI_Controller {
         $this->load->model('User_model');
     }
 
-    public function index(){
+    public function index() {
         $this->login();
     }
-    
+
     public function register() {
         $this->form_validation->set_rules('email', 'email', 'trim|required');
         $this->form_validation->set_rules('password', 'password', 'trim|required');
@@ -58,13 +58,16 @@ class User extends CI_Controller {
 
     public function Add_profile() {
         $this->load->model('Master_model');
+        $this->load->model('address_model');
+        $user_id = $this->session->userdata("user_id");
+        $user_profile = $this->User_model->Show_profile($user_id);
+
+        $user_email = $this->session->userdata("user_email");
+        $user_mobile = $this->session->userdata("user_mobile");
+
         if ($this->is_logged_in() == TRUE) {
-            $user_id = $this->session->userdata("user_id");
-            $check = $this->User_model->find_by_user_id($user_id);
+
             if ($this->input->post()) {
-                $user_id = $this->session->userdata("user_id");
-                $user_email = $this->session->userdata("user_email");
-                $user_mobile = $this->session->userdata("user_mobile");
                 $this->form_validation->set_rules('name', 'name', 'trim|required');
                 $this->form_validation->set_rules('dob', 'dob', 'trim|required');
                 $this->form_validation->set_rules('sex', 'sex', 'trim|required');
@@ -78,19 +81,29 @@ class User extends CI_Controller {
                 $this->form_validation->set_rules('key_skill', 'key_skill', 'trim|required');
                 $this->form_validation->set_rules('marital_status', 'marital_status', 'trim|required');
                 $this->form_validation->set_rules('resume_headline', 'resume_headline', 'trim|required');
+                $this->form_validation->set_rules('city', 'city', 'trim|required');
+                $this->form_validation->set_rules('pincode', 'pincode', 'trim|required');
+                $this->form_validation->set_rules('state', 'state', 'trim|required');
+                $this->form_validation->set_rules('address1', 'address1', 'trim|required');
                 //$check1['User'] = $this->User_model->find_by_id($user_id);
                 if ($this->form_validation->run() === True) {
-                    if ($check['auth_id'] != $user_id) {
-                        $check2['User1'] = $this->User_model->Add_detail($user_id, $user_email, $user_mobile);
-                    } else {
-                        $data['user'] = $this->User_model->profile_update($user_id, $user_email, $user_mobile);
-                    }
+                    $check2['User1'] = $this->User_model->Add_detail($user_id, $user_email, $user_mobile);
+                    $check3['User2'] = $this->address_model->add_address($user_id);
+                    /* } else {
+                      $data['user'] = $this->User_model->profile_update($user_id, $user_email, $user_mobile);
+                      } */
                 }
-                $this->load->view('User/success');
+                redirect('User/Add_profile');
             }
-            $dropdown['dropdowns'] = $this->Master_model->getLocation();
-            $dropdown['industry'] = $this->Master_model->getIndustry();
-            $dropdown['function'] = $this->Master_model->getFunctionArea();
+
+
+
+            $dropdown['user'] = $user_profile;
+            $dropdown['dropdowns'] = isset($user_profile['current_location']) ? $this->Master_model->getLocation($user_profile['current_location']) : $this->Master_model->getLocation();
+            $dropdown['industry'] = isset($user_profile['industry']) ? $this->Master_model->getIndustry($user_profile['industry']) : $this->Master_model->getIndustry();
+            $dropdown['function'] = isset($user_profile['function_area']) ? $this->Master_model->getFunctionArea($user_profile['function_area']) : $this->Master_model->getFunctionArea();
+
+            
             $data = array('title' => 'Basic Profile', 'content' => 'User/Add_profile', 'view_data' => $dropdown);
             $this->load->view('template1', $data);
         } else {
