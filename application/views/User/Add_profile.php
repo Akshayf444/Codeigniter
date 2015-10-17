@@ -64,16 +64,7 @@
                         <label class="control-label">Current Location*</label>
 
                         <select class="form-control" required="required" name="current_location">
-                            <?php// echo $dropdowns; ?>
-                            <?php
-                               if (isset( $user['current_location'])==$dropdowns) {
-                                   echo $user['current_location'];
-                               } 
-                               else
-                               {
-                                   echo $dropdowns;
-                               }
-                               ?>
+                            <?php echo $dropdowns; ?>
                         </select>
                     </div>
                     <div class="form-group">
