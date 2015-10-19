@@ -258,4 +258,17 @@ class User extends CI_Controller {
         }
     }
 
+    public function other_detail() {
+        if ($this->is_logged_in() == TRUE) {
+            if ($this->input->post()) {
+                
+            }
+            
+            $data = array('title' => 'Other Detail', 'content' => 'User/other', 'view_data' => 'blank');
+            $this->load->view('template1', $data);
+        } else {
+            redirect('User/login', 'refresh');
+        }
+    }
+
 }
