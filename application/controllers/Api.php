@@ -83,7 +83,7 @@ class Api extends CI_Controller {
         }
         else
         {
-          $output = array('status' => 'error', 'message' => 'Error');  
+            $output = array('status' => 'error', 'message' => 'Error');
         }
         
 

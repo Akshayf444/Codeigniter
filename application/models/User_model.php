@@ -6,15 +6,15 @@ class User_model extends CI_Model {
         $this->load->database();
     }
 
-    public function create() {
-        $data2 = array(
-            'email' => $this->input->post('email'),
-            'mobile' => $this->input->post('mobile'),
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s'),
-            'type' => "User",
-            'password' => md5($this->input->post('password')),
-        );
+    public function create($data2) {
+//        $data2 = array(
+//            'email' => $this->input->post('email'),
+//            'mobile' => $this->input->post('mobile'),
+//            'created_at' => date('Y-m-d H:i:s'),
+//            'updated_at' => date('Y-m-d H:i:s'),
+//            'type' => "User",
+//            'password' => md5($this->input->post('password')),
+//        );
         return $this->db->insert('authentication', $data2);
     }
 
