@@ -90,6 +90,11 @@ class User_model extends CI_Model {
         return $query->row_array();
     }
 
+    public function Show_profile2($id) {
+        $query = $this->db->get_where('address_master', array('auth_id' => $id));
+        return $query->row_array();
+    }
+
     public function education_master() {
         $query = $this->db->get('education_master');
         return $query->result();
@@ -161,6 +166,58 @@ class User_model extends CI_Model {
         );
         $this->db->where(array('auth_id' => $id));
         return $this->db->update('user_project', $data);
+    }
+
+    public function view($id) {
+        $query = "SELECT *,(l.location) AS loc,(up.location) AS ploc,(up.role) AS prole  FROM user u
+                    LEFT JOIN work_exp we
+                    ON u.auth_id=we.auth_id
+                    LEFT JOIN `location_master`lm
+                    ON lm.loc_id=u.current_location
+                    LEFT JOIN user_qualification uq
+                    ON uq.auth_id=u.auth_id
+                    LEFT JOIN education_master em
+                    ON em.edu_id=uq.qualification
+                    LEFT JOIN location_master l
+                    ON l.loc_id=u.`current_location`
+                    LEFT JOIN functional_area fa
+                    ON fa.fun_id=u.`function_area`
+                    LEFT JOIN industry_master ind
+                    ON ind.indus_id=u.`industry`
+                    LEFT JOIN address_master am
+                    ON am.`auth_id`=u.`auth_id`
+                    LEFT JOIN user_project up
+                    ON up.`auth_id`=u.`auth_id`
+                    WHERE u.auth_id=$id";
+        $query = $this->db->query($query);
+
+        return $query->row_array();
+    }
+
+    public function view2($id) {
+        $query = "SELECT *,(l.location) AS loc,(up.location) AS ploc,(up.role) AS prole  FROM user u
+                    LEFT JOIN work_exp we
+                    ON u.auth_id=we.auth_id
+                    LEFT JOIN `location_master`lm
+                    ON lm.loc_id=u.current_location
+                    LEFT JOIN user_qualification uq
+                    ON uq.auth_id=u.auth_id
+                    LEFT JOIN education_master em
+                    ON em.edu_id=uq.qualification
+                    LEFT JOIN location_master l
+                    ON l.loc_id=u.`current_location`
+                    LEFT JOIN functional_area fa
+                    ON fa.fun_id=u.`function_area`
+                    LEFT JOIN industry_master ind
+                    ON ind.indus_id=u.`industry`
+                    LEFT JOIN address_master am
+                    ON am.`auth_id`=u.`auth_id`
+                    LEFT JOIN user_project up
+                    ON up.`auth_id`=u.`auth_id`
+                    WHERE u.auth_id=$id";
+        $query = $this->db->query($query);
+
+        return $query->result();
     }
 
 }

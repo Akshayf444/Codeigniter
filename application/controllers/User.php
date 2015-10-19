@@ -97,10 +97,12 @@ class User extends CI_Controller {
             }
 
 
+
             $dropdown['user'] = $user_profile;
             $dropdown['dropdowns'] = isset($user_profile['current_location']) ? $this->Master_model->getLocation($user_profile['current_location']) : $this->Master_model->getLocation();
             $dropdown['industry'] = isset($user_profile['industry']) ? $this->Master_model->getIndustry($user_profile['industry']) : $this->Master_model->getIndustry();
             $dropdown['function'] = isset($user_profile['function_area']) ? $this->Master_model->getFunctionArea($user_profile['function_area']) : $this->Master_model->getFunctionArea();
+
             
             $data = array('title' => 'Basic Profile', 'content' => 'User/Add_profile', 'view_data' => $dropdown);
             $this->load->view('template1', $data);
@@ -216,6 +218,22 @@ class User extends CI_Controller {
             }
             $is_logged_in = $this->session->userdata('user_id');
             $data = array('title' => 'Projects', 'content' => 'User/Add_projects', 'view_data' => 'blank');
+            $this->load->view('template1', $data);
+        } else {
+            redirect('User/login', 'refresh');
+        }
+    }
+    
+    public function view()
+    {
+        if ($this->is_logged_in() == TRUE) {
+            if ($this->input->post()) {
+                
+            }
+            $user_id = $this->session->userdata('user_id');
+            $view['user']=$this->User_model->view($user_id);
+            $view['user2']=$this->User_model->view2($user_id);
+            $data = array('title' => 'Projects', 'content' => 'User/View', 'view_data' => $view);
             $this->load->view('template1', $data);
         } else {
             redirect('User/login', 'refresh');
