@@ -69,10 +69,12 @@
                 </dt>
             </dl>
         </div>
+</div>
 
-
-    </div>
+   
 <?php //endforeach ?>
+<hr class="page-header">
+<h3 align="center"><u>Project Detail</u></h3>
 <?php foreach ($user2 as $u) : ?>
     <div class="row">
         
@@ -106,10 +108,49 @@
             </div>
         <div class="col-lg-6">
             <dl>
+                <dt>
+                    <label style="    opacity: 0.5">Duration :</label><span><?php echo date('M-Y',strtotime($u->from)); ?> - <?php echo date('M-Y',strtotime($u->to)); ?></span>
+                </dt>
+                <dt>
+                    <label style="    opacity: 0.5">Sight :</label><span><?php echo $u->site; ?></span>
+                </dt>
+                <dt>
+                    <label style="    opacity: 0.5">Team Size :</label><span><?php echo $u->team_size; ?></span>
+                </dt>
                 
             </dl>
         </div>
         
             </div>
+<hr style="border:1px solid;    opacity: 0.2;">
+        <?php endforeach ?>
+
+
+<hr class="page-header">
+<h3 align="center"><u>Education Detail</u></h3>
+<?php foreach ($user3 as $u) : ?>
+    <div class="row">
+        
+        <div class="col-lg-6">
+            <dl>
+                <dt>
+                    <label style="    opacity: 0.5">Qualification :</label><span><?php echo $u->qualification; ?></span>
+                </dt>
+                <dt>
+                    <label style="    opacity: 0.5">Specialization :</label><span><?php echo $u->specialization; ?></span>
+                </dt>
+                <dt>
+                    <label style="    opacity: 0.5">Institute :</label><span><?php echo $u->institute; ?></span>
+                </dt>
+                <dt>
+                    <label style="    opacity: 0.5">Year :</label><span><?php echo $u->year; ?></span>
+                </dt>
+                
+            </dl>
+            </div>
+       
+        
+            </div>
+<hr style="border:1px solid;    opacity: 0.2;">
         <?php endforeach ?>
     </div>

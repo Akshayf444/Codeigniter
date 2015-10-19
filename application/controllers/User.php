@@ -242,6 +242,7 @@ class User extends CI_Controller {
             $user_id = $this->session->userdata('user_id');
             $view['user'] = $this->User_model->view($user_id);
             $view['user2'] = $this->User_model->view2($user_id);
+            $view['user3'] = $this->User_model->qualification_view($user_id);
             $data = array('title' => 'Projects', 'content' => 'User/View', 'view_data' => $view);
             $this->load->view('template1', $data);
         } else {
