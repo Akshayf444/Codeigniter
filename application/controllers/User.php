@@ -178,19 +178,27 @@ class User extends CI_Controller {
         if ($this->is_logged_in() == TRUE) {
             if ($this->input->post()) {
                 $user_id = $this->session->userdata("user_id");
-                $this->form_validation->set_rules('qualification', 'qualification', 'trim|required');
-                $this->form_validation->set_rules('specialization', 'specialization', 'trim|required');
-                $this->form_validation->set_rules('institute', 'institute', 'trim|required');
-                $this->form_validation->set_rules('year', 'year', 'trim|required');
+                $this->form_validation->set_rules('qualification[]', 'qualification', 'trim|required');
+                $this->form_validation->set_rules('specialization[]', 'specialization', 'trim|required');
+                $this->form_validation->set_rules('institute[]', 'institute', 'trim|required');
+                $this->form_validation->set_rules('year[]', 'year', 'trim|required');
 
 
                 $qual = $this->User_model->user_qualification_by_id($user_id);
 
                 if ($this->form_validation->run() === True) {
-                    if ($qual['auth_id'] !== $user_id) {
-                        $add = $this->User_model->user_qualification($user_id);
-                    } else {
-                        $update = $this->User_model->user_qualification_update($user_id);
+                    for ($i = 0; $i < count($this->input->post('qualification')); $i++) {
+                        $data = array(
+                            'qualification' => $this->input->post('qualification')[$i],
+                            'specialization' => $this->input->post('specialization')[$i],
+                            'institute' => $this->input->post('institute')[$i],
+                            'year' => $this->input->post('year')[$i],
+                            'updated_at' => date('Y-m-d H:i:s'),
+                            'created' => date('Y-m-d H:i:s'),
+                            'auth_id' => $user_id,
+                        );
+
+                        $add = $this->User_model->user_qualification($data);
                     }
                 }
             }
