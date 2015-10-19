@@ -5,7 +5,7 @@
     <div class="col-lg-12">
         <div class="form-group"><h5>language Known</h5></div>
         <div class="form-group">
-            <table>
+            <table class="table">
                 <tr>
                     <td>language</td>
                     <td>Proficiency Level</td>
