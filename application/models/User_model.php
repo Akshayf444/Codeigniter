@@ -6,16 +6,10 @@ class User_model extends CI_Model {
         $this->load->database();
     }
 
-    public function create() {
-        $data2 = array(
-            'email' => $this->input->post('email'),
-            'mobile' => $this->input->post('mobile'),
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s'),
-            'type' => "User",
-            'password' => md5($this->input->post('password')),
-        );
-        return $this->db->insert('authentication', $data2);
+    public function create($data) {
+        $this->db->insert('authentication', $data);
+        $insert_id = $this->db->insert_id();
+        return $insert_id;
     }
 
     public function log($email, $pass) {
@@ -49,28 +43,8 @@ class User_model extends CI_Model {
         return $query->row_array();
     }
 
-    public function Add_detail($id, $email, $mobile) {
-
+    public function Add_detail($id, $data) {
         $entryExist = $this->Show_profile($id);
-
-        $data = array('name' => $this->input->post('name'),
-            'dob' => $this->input->post('dob'),
-            'email' => $email,
-            'mobile' => $mobile,
-            'auth_id' => $id,
-            'updated_at' => date('Y-m_d H:i:s'),
-            'gender' => $this->input->post('sex'),
-            'exp_year' => $this->input->post('experince_year'),
-            'experince_month' => $this->input->post('experince_month'),
-            'current_location' => $this->input->post('current_location'),
-            'prefred_location' => $this->input->post('prefred_location'),
-            'industry' => $this->input->post('industry'),
-            'function_area' => $this->input->post('function_area'),
-            'role' => $this->input->post('role'),
-            'key_skill' => $this->input->post('key_skill'),
-            'marital_status' => $this->input->post('marital_status'),
-            'resume_headline' => $this->input->post('resume_headline'),
-        );
 
         if (!empty($entryExist)) {
             $this->db->where(array('auth_id' => $id));
@@ -100,15 +74,7 @@ class User_model extends CI_Model {
         return $query->result();
     }
 
-    public function user_qualification($id) {
-        $data = array(
-            'qualification' => $this->input->post('qualification'),
-            'specialization' => $this->input->post('specialization'),
-            'institute' => $this->input->post('institute'),
-            'year' => $this->input->post('year'),
-            'created' => date('Y-m-d H:i:s'),
-            'auth_id' => $id,
-        );
+    public function user_qualification($data) {
         return $this->db->insert('user_qualification', $data);
     }
 
