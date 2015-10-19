@@ -198,7 +198,7 @@ class User_model extends CI_Model {
     }
 
     public function view($id) {
-        $query = "SELECT * FROM user u
+        $query = "SELECT *,(l.location) AS loc,(up.location) AS ploc,(up.role) AS prole  FROM user u
                     LEFT JOIN work_exp we
                     ON u.auth_id=we.auth_id
                     LEFT JOIN `location_master`lm
@@ -207,9 +207,44 @@ class User_model extends CI_Model {
                     ON uq.auth_id=u.auth_id
                     LEFT JOIN education_master em
                     ON em.edu_id=uq.qualification
-                    WHERE we.auth_id=$id";
-      $query=  $this->db->query($query);
-        
+                    LEFT JOIN location_master l
+                    ON l.loc_id=u.`current_location`
+                    LEFT JOIN functional_area fa
+                    ON fa.fun_id=u.`function_area`
+                    LEFT JOIN industry_master ind
+                    ON ind.indus_id=u.`industry`
+                    LEFT JOIN address_master am
+                    ON am.`auth_id`=u.`auth_id`
+                    LEFT JOIN user_project up
+                    ON up.`auth_id`=u.`auth_id`
+                    WHERE u.auth_id=$id";
+        $query = $this->db->query($query);
+
+        return $query->row_array();
+    }
+    public function view2($id) {
+        $query = "SELECT *,(l.location) AS loc,(up.location) AS ploc,(up.role) AS prole  FROM user u
+                    LEFT JOIN work_exp we
+                    ON u.auth_id=we.auth_id
+                    LEFT JOIN `location_master`lm
+                    ON lm.loc_id=u.current_location
+                    LEFT JOIN user_qualification uq
+                    ON uq.auth_id=u.auth_id
+                    LEFT JOIN education_master em
+                    ON em.edu_id=uq.qualification
+                    LEFT JOIN location_master l
+                    ON l.loc_id=u.`current_location`
+                    LEFT JOIN functional_area fa
+                    ON fa.fun_id=u.`function_area`
+                    LEFT JOIN industry_master ind
+                    ON ind.indus_id=u.`industry`
+                    LEFT JOIN address_master am
+                    ON am.`auth_id`=u.`auth_id`
+                    LEFT JOIN user_project up
+                    ON up.`auth_id`=u.`auth_id`
+                    WHERE u.auth_id=$id";
+        $query = $this->db->query($query);
+
         return $query->result();
     }
 
