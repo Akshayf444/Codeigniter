@@ -7,8 +7,6 @@ class User_model extends CI_Model {
     }
 
     public function create() {
-        $this->load->helper('url');
-
         $data2 = array(
             'email' => $this->input->post('email'),
             'mobile' => $this->input->post('mobile'),
@@ -17,8 +15,6 @@ class User_model extends CI_Model {
             'type' => "User",
             'password' => md5($this->input->post('password')),
         );
-
-
         return $this->db->insert('authentication', $data2);
     }
 
@@ -89,34 +85,9 @@ class User_model extends CI_Model {
 
         $this->db->select('user.*,address_master.*');
         $this->db->from('user');
-        $this->db->join('address_master', 'address_master.auth_id = user.auth_id','left');
+        $this->db->join('address_master', 'address_master.auth_id = user.auth_id', 'left');
         $query = $this->db->get();
         return $query->row_array();
-    }
-
-    public function profile_update($id, $email, $mobile) {
-
-        $data = array('name' => $this->input->post('name'),
-            'dob' => $this->input->post('dob'),
-            'email' => $email,
-            'mobile' => $mobile,
-            'auth_id' => $id,
-//            'created_at' => date('Y-m_d H:i:s'),
-            'updated_at' => date('Y-m_d H:i:s'),
-            'gender' => $this->input->post('sex'),
-            'exp_year' => $this->input->post('experince_year'),
-            'experince_month' => $this->input->post('experince_month'),
-            'current_location' => $this->input->post('current_location'),
-            'prefred_location' => $this->input->post('prefred_location'),
-            'industry' => $this->input->post('industry'),
-            'function_area' => $this->input->post('function_area'),
-            'role' => $this->input->post('role'),
-            'key_skill' => $this->input->post('key_skill'),
-            'marital_status' => $this->input->post('marital_status'),
-            'resume_headline' => $this->input->post('resume_headline'),
-        );
-        $this->db->where(array('auth_id' => $id));
-        return $this->db->update('user', $data);
     }
 
     public function education_master() {
@@ -125,7 +96,8 @@ class User_model extends CI_Model {
     }
 
     public function user_qualification($id) {
-        $data = array('qualification' => $this->input->post('qualification'),
+        $data = array(
+            'qualification' => $this->input->post('qualification'),
             'specialization' => $this->input->post('specialization'),
             'institute' => $this->input->post('institute'),
             'year' => $this->input->post('year'),
@@ -136,7 +108,8 @@ class User_model extends CI_Model {
     }
 
     public function user_qualification_update($id) {
-        $data = array('qualification' => $this->input->post('qualification'),
+        $data = array(
+            'qualification' => $this->input->post('qualification'),
             'specialization' => $this->input->post('specialization'),
             'institute' => $this->input->post('institute'),
             'year' => $this->input->post('year'),
@@ -167,8 +140,6 @@ class User_model extends CI_Model {
     }
 
     public function project_by_id($id) {
-
-
         $query = $this->db->get_where('user_project', array('auth_id' => $id));
         return $query->row_array();
     }
