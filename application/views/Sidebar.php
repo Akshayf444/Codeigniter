@@ -7,7 +7,7 @@
                 echo '<h5 class="page-header">' . $menu . '</h5>';
                 echo '<ul class="nav sidebar">';
                 foreach ($submenu as $name => $link) {
-                    echo '<li><a href="' . $link . '">' . $name . '</a></li>';
+                    echo '<li><a href="' . site_url($link) . '">' . $name . '</a></li>';
                 }
                 echo '</ul>';
             }
