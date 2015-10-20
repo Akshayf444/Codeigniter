@@ -12,7 +12,7 @@ class Job extends CI_Controller {
     }
 
     function add() {
-        $data['auth_id'] = $this->user_id;
+        $data['auth_id'] = $this->session->userdata("user_id");
         if (isset($this->user_id) && $this->user_id != '' && $this->user_type == 'Employee') {
             if ($this->input->post()) {
                 $this->form_validation->set_rules('title', 'title', 'trim|required');
