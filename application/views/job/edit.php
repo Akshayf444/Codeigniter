@@ -57,7 +57,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">Work Experience *</label><br>
-                        <select class="form-control half-formcontrol"  name="exp_min"><?php echo $experience ?></select><select class="form-control half-formcontrol" name="exp_max"><?php echo $experience ?></select>
+                        <select class="form-control half-formcontrol"  name="exp_min"><?php echo $experience ?></select><select class="form-control half-formcontrol" name="exp_max"><?php echo $experience1 ?></select>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Location </label>
