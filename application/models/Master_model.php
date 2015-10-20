@@ -3,39 +3,36 @@
 class Master_model extends CI_Model {
 
     function getQualification() {
-        $qualification = '<select class="form-control" name="qualification" id = "categories">';
-        $specialization = '<select class="form-control" name="specialization" id ="subcats">';
+        $qualification = '<select class="form-control" name="qualification[]" id = "categories">';
+        $specialization = '<select class="form-control" name="specialization[]" id ="subcats">';
         $script = '';
         $caseCondition = '';
 
-        $sql = "SELECT e.`edu_id`,e.`qualification`,GROUP_CONCAT(sp.`spec_id`) AS spec_id,GROUP_CONCAT(`specialization`) AS specialization FROM `education_master` e INNER JOIN `specialization_master` sp
-                ON e.`edu_id` = sp.`edu_id` GROUP BY `qualification`";
-        $query = $this->db->query($sql);
-        if ($query) {
 
-            $result = $query->result();
 
-            foreach ($result as $item) {
-                $qualification .= '
+        $result = $this->listQualification();
+        
+        foreach ($result as $item) {
+            $qualification .= '
                         <option value = "' . $item->edu_id . '" >' . $item->qualification . '</option>';
 
-                $spec_id = explode(",", $item->spec_id);
-                $specializearray = explode(",", $item->specialization);
+            $spec_id = explode(",", $item->spec_id);
+            $specializearray = explode(",", $item->specialization);
 
-                $script .= ' var _' . $item->edu_id . ' = [ ';
-                $caseCondition .= 'case "_' . $item->edu_id . '" : list(_' . $item->edu_id . '); break;';
+            $script .= ' var _' . $item->edu_id . ' = [ ';
+            $caseCondition .= 'case "_' . $item->edu_id . '" : list(_' . $item->edu_id . '); break;';
 
 
-                for ($i = 0; $i < count($spec_id); $i++) {
-                    $specialization .= '<option value = "' . $spec_id[$i] . '" >' . $specializearray[$i] . '</option>';
-                    $script .= '{display: "' . $specializearray[$i] . '", value: "' . $spec_id[$i] . '" },';
-                }
-
-                $script .= '];';
+            for ($i = 0; $i < count($spec_id); $i++) {
+                $specialization .= '<option value = "' . $spec_id[$i] . '" >' . $specializearray[$i] . '</option>';
+                $script .= '{display: "' . $specializearray[$i] . '", value: "' . $spec_id[$i] . '" },';
             }
-            $specialization .= '</select>';
-            $qualification.= '</select>';
+
+            $script .= '];';
         }
+        $specialization .= '</select>';
+        $qualification.= '</select>';
+
 
         $script .= '$("#categories").change(function() {
    					 var parent = "_" + $(this).val();
@@ -57,15 +54,36 @@ class Master_model extends CI_Model {
         return array($qualification, $specialization, $script);
     }
 
+    public function listQualification() {
+        $sql = "SELECT e.`edu_id`,e.`qualification`,GROUP_CONCAT(sp.`spec_id`) AS spec_id,GROUP_CONCAT(`specialization`) AS specialization FROM `education_master` e INNER JOIN `specialization_master` sp
+                ON e.`edu_id` = sp.`edu_id` GROUP BY `qualification`";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+
+    function listLocation() {
+        $query = $this->db->get('location_master');
+        return $query->result();
+    }
+
     public function institute() {
         $query = $this->db->get('institute_master');
         return $query->result();
     }
 
+    public function listIndustry() {
+        $query = $this->db->get('industry_master');
+        return $query->result();
+    }
+
+    public function listFunctionalArea() {
+        $query = $this->db->get('functional_area');
+        return $query->result();
+    }
+
     public function getLocation($loc_id = 0) {
         $location = '<option value = "" >Select Location</option>';
-        $query = $this->db->get('location_master');
-        $result = $query->result();
+        $result = $this->listLocation();
 
         if (!empty($result)) {
             foreach ($result as $loc) {
@@ -94,8 +112,7 @@ class Master_model extends CI_Model {
 
     function getIndustry($indus_id = -1) {
         $industry = '<option value = "" >Select Industry</option>';
-        $query = $this->db->get('industry_master');
-        $result = $query->result();
+        $result = $this->listIndustry();
 
         if (!empty($result)) {
             foreach ($result as $row) {
@@ -111,8 +128,7 @@ class Master_model extends CI_Model {
 
     function getFunctionArea($fun_id = -1) {
         $area = '<option value = "" >Select Functional Area</option>';
-        $query = $this->db->get('functional_area');
-        $result = $query->result();
+        $result = $this->listFunctionalArea();
 
         if (!empty($result)) {
             foreach ($result as $row) {
