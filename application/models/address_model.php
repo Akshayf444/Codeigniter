@@ -1,5 +1,4 @@
 <?php
-
 class address_model extends CI_Model {
 
     public function __construct() {
