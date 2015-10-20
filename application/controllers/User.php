@@ -116,7 +116,7 @@ class User extends CI_Controller {
             }
         }
 
-        $data = array('title' => 'Login', 'content' => 'User/login');
+        $data = array('title' => 'Login', 'content' => 'User/login', 'view_data' => 'blank');
         $this->load->view('template2', $data);
     }
 
