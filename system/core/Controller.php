@@ -53,12 +53,12 @@ class CI_Controller {
         } elseif ($user_type == 'User') {
             $menu['Sidebar'] = array(
                 'Inbox' => array(
-                    'Message' => 'Message'
+                    'Message' => '#'
                 ),
                 'Profle' => array(
-                    'View Profile' => 'View',
-                    'Project' => 'Projects',
-                    'Education' => 'Education'
+                    'View Profile' => 'User/view',
+                    'Project' => 'User/user_project',
+                    'Education' => 'User/user_qualification'
                 ),
                 'Jobs & Application' => array(
                     'Saved Jobs' => '#',

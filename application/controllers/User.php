@@ -325,4 +325,30 @@ class User extends CI_Controller {
         }
     }
 
+    public function resume() {
+        if ($this->is_logged_in() == TRUE) {
+
+            $config['upload_path'] = 'C:\wamp\www\jobportal\application\Resume';
+            $config['allowed_types'] = 'pdf|doc|docx';
+            $config['max_size'] = '4096';
+            $this->load->library('upload', $config);
+            $this->upload->display_errors('', '');
+
+            if (!$this->upload->do_upload("resume")) {
+                echo $this->upload->display_errors();
+                die();
+                $this->data['error'] = array('error' => $this->upload->display_errors());
+            } else {
+                $upload_result = $this->upload->data();
+                print_r($upload_result['file_name']); //or print any valid
+            }
+
+
+            $data = array('title' => 'Other Detail', 'content' => 'User/resume', 'view_data' => 'blank');
+            $this->load->view('template1', $data);
+        } else {
+            redirect('User/login', 'refresh');
+        }
+    }
+
 }
