@@ -14,29 +14,84 @@ class User extends CI_Controller {
         $this->login();
     }
 
+//    public function register() {
+//        $this->form_validation->set_rules('email', 'email', 'trim|required');
+//        $this->form_validation->set_rules('password', 'password', 'trim|required');
+//        $this->form_validation->set_rules('mobile', 'mobile', 'trim|required');
+//        $data2 = array(
+//            'email' => $this->input->post('email'),
+//            'mobile' => $this->input->post('mobile'),
+//            'created_at' => date('Y-m-d H:i:s'),
+//            'updated_at' => date('Y-m-d H:i:s'),
+//            'type' => "User",
+//            'password' => md5($this->input->post('password')),
+//        );
+//        if ($this->form_validation->run() === FALSE) {
+//            // $this->loadFinalView(array('User/registration'));
+//            $data = array('title' => 'Login', 'content' => 'User/registration');
+//            $this->load->view('template2', $data);
+//        } else {
+//
+//            $this->User_model->create($data2);
+//            redirect('User/login_show', 'refresh');
+//            // $this->loadFinalView(array('User/login'));
+//            //redirect('news', 'refresh');
+//        }
+//    }
     public function register() {
-        $this->form_validation->set_rules('email', 'email', 'trim|required');
-        $this->form_validation->set_rules('password', 'password', 'trim|required');
-        $this->form_validation->set_rules('mobile', 'mobile', 'trim|required');
-        $data2 = array(
-            'email' => $this->input->post('email'),
-            'mobile' => $this->input->post('mobile'),
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s'),
-            'type' => "User",
-            'password' => md5($this->input->post('password')),
-        );
-        if ($this->form_validation->run() === FALSE) {
-            // $this->loadFinalView(array('User/registration'));
-            $data = array('title' => 'Login', 'content' => 'User/registration');
-            $this->load->view('template2', $data);
-        } else {
+        $this->load->model('User_model');
+        $this->load->model('address_model');
+        $this->load->model('Master_model');
+        if ($this->input->post()) {
 
-            $this->User_model->create($data2);
-            redirect('User/login_show', 'refresh');
-            // $this->loadFinalView(array('User/login'));
-            //redirect('news', 'refresh');
+            $field_array = array(
+                'email' => $this->input->post('email'),
+                'password' => md5($this->input->post('password')),
+                'mobile' => $this->input->post('mobile'),
+                'type' => 'User'
+            );
+
+            /////Create New User
+            $id = $this->User_model->create($field_array);
+            $data = array(
+                'name' => $this->input->post('name'),
+                'dob' => $this->input->post('dob'),
+                'email' => $this->input->post('email'),
+                'mobile' => $this->input->post('mobile'),
+                'auth_id' => $id,
+                'updated_at' => date('Y-m_d H:i:s'),
+                'gender' => $this->input->post('sex'),
+                'exp_year' => $this->input->post('experince_year'),
+                'experince_month' => $this->input->post('experince_month'),
+                'current_location' => $this->input->post('current_location'),
+                'prefred_location' => $this->input->post('prefred_location'),
+                'industry' => $this->input->post('industry'),
+                'function_area' => $this->input->post('function_area'),
+                'role' => $this->input->post('role'),
+                'key_skill' => $this->input->post('key_skill'),
+                'marital_status' => $this->input->post('marital_status'),
+                'resume_headline' => $this->input->post('resume_headline'),
+            );
+
+            /////////Insert Basic Profile
+            $this->User_model->Add_detail($id,$data);
+
+            ////////Insert education Details
+            $education_details = array(
+                'qualification' => $this->input->post('qualification'),
+                'specialization' => $this->input->post('specialization'),
+                'institute' => $this->input->post('institute'),
+                'year' => $this->input->post('year'),
+                'created' => date('Y-m-d H:i:s'),
+                'auth_id' => $id,
+            );
+
+            $this->User_model->user_qualification($education_details);
         }
+        $dropdown['dropdowns'] = $this->Master_model->getQualification();
+        $dropdown['institute'] = $this->Master_model->institute();
+        $data = array('title' => 'Registration', 'content' => 'User/registration', 'view_data' => $dropdown);
+        $this->load->view('template2', $data);
     }
 
     public function login() {
@@ -61,9 +116,6 @@ class User extends CI_Controller {
                 $this->load->view('User/login', $data);
             }
         }
-
-        $data = array('title' => 'Login', 'content' => 'User/login');
-        $this->load->view('template2', $data);
     }
 
     public function Add_profile() {
@@ -263,7 +315,7 @@ class User extends CI_Controller {
             if ($this->input->post()) {
                 
             }
-            
+
             $data = array('title' => 'Other Detail', 'content' => 'User/other', 'view_data' => 'blank');
             $this->load->view('template1', $data);
         } else {
