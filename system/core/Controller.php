@@ -57,7 +57,7 @@ class CI_Controller {
                 ),
                 'Profle' => array(
                     'View Profile' => 'User/view',
-                    'Project' => 'User/user_project',
+                    'Project' => 'User/user_projects',
                     'Education' => 'User/user_qualification'
                 ),
                 'Jobs & Application' => array(
