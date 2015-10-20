@@ -1,13 +1,16 @@
 <?php echo form_open('WorkExperince/work_exp') ?>
+<div class="row">
 <h2 align="center">Profile Snapshot</h2>
+<hr class="page-header">
+</div>
 <div class="row"><?php // echo form_open_multipart('Upload/resume');     ?></div>
 <?php //foreach ($user as $u) : ?>
     <div class="row">
-        <dl><dt><?php echo $user['name']; ?></dt></dl>
+        <dl></dl>
         <div class="col-lg-6">
 
             <dl >
-
+<dt><?php echo $user['name']; ?></dt>
                 <dt  >
                 <label style="    opacity: 0.5">Resume Headline :</label><?php echo $user['resume_headline']; ?>
                 </dt>   

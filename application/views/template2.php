@@ -13,7 +13,7 @@
     <body>
         <div class="section" >
             <div class="container" >
-                <?php $this->load->view($content); ?>
+                <?php $this->load->view($content,$view_data); ?>
             </div>
         </div>
         <?php $this->load->view('footer'); ?>
@@ -23,3 +23,4 @@
         <script src="<?php echo asset_url() ?>/js/bootstrap.min.js"></script>    
     </body>
 </html>
+<script><?php echo $dropdowns[2]; ?></script>

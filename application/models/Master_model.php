@@ -3,15 +3,15 @@
 class Master_model extends CI_Model {
 
     function getQualification() {
-        $qualification = '<select class="form-control" name="qualification" id = "categories">';
-        $specialization = '<select class="form-control" name="specialization" id ="subcats">';
+        $qualification = '<select class="form-control" name="qualification[]" id = "categories">';
+        $specialization = '<select class="form-control" name="specialization[]" id ="subcats">';
         $script = '';
         $caseCondition = '';
 
 
 
         $result = $this->listQualification();
-
+        
         foreach ($result as $item) {
             $qualification .= '
                         <option value = "' . $item->edu_id . '" >' . $item->qualification . '</option>';
