@@ -42,7 +42,7 @@ class Employee extends CI_Controller {
                 $this->load->view('employee/error');
             }
         }
-        $data = array('title' => 'Login', 'content' => 'employee/login');
+        $data = array('title' => 'Login', 'content' => 'employee/login' ,'view_data'=>'blank');
         $this->load->view('template2', $data);
     }
 
