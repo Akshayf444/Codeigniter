@@ -7,6 +7,7 @@
 <?php //foreach ($user as $u) : ?>
     <div class="row">
         <h3 align="center"><u>Basic Detail</u></h3>
+        <a class="pull-right" href="../User/Add_profile">Edit</a>
         <dl></dl>
         <div class="col-lg-6">
 
@@ -79,6 +80,7 @@
 <?php //endforeach ?>
 <hr class="page-header">
 <h3 align="center"><u>Project Detail</u></h3>
+<a class="pull-right" href="../User/user_projects">ADD</a>
 <?php foreach ($user2 as $u) : ?>
     <div class="row">
         
@@ -132,6 +134,7 @@
 
 <hr class="page-header">
 <h3 align="center"><u>Education Detail</u></h3>
+<a class="pull-right" href="../User/user_qualification">ADD</a>
 <?php foreach ($user3 as $u) : ?>
     <div class="row">
         
