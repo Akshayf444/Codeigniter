@@ -42,10 +42,11 @@ class CI_Controller {
                 'Inbox' => array(
                 ),
                 'Profle' => array(
+                    'view profile'=> 'Employee/profile'
                 ),
-                'Jobs & Application' => array( 
-                    'Add Jobs'=>'job/add',
-                    ' View Jobs'=>'job/job_list'
+                'Jobs & Application' => array(
+                    'Add Jobs' => 'job/add',
+                    ' View Jobs' => 'job/job_list'
                 ),
                 'Recruiters' => array(
                 ),

@@ -12,7 +12,7 @@ class Job extends CI_Controller {
     }
 
     function add() {
-        $data['auth_id'] = $this->user_id;
+        $data['auth_id'] = $this->session->userdata("user_id");
         if (isset($this->user_id) && $this->user_id != '' && $this->user_type == 'Employee') {
             if ($this->input->post()) {
                 $this->form_validation->set_rules('title', 'title', 'trim|required');
@@ -78,7 +78,8 @@ class Job extends CI_Controller {
         $this->load->model('Master_model');
         $data['industry'] = $this->Master_model->getFunctionArea($result['industry']);
         $data['location'] = $this->Master_model->getLocation($result['location']);
-        $data['experience'] = $this->Master_model->getWorkExperience($result['exp_min'], $result['exp_max']);
+        $data['experience'] = $this->Master_model->getWorkExperience($result['exp_min']);
+        $data['experience1'] = $this->Master_model->getWorkExperience( $result['exp_max']);
         $data['functional_area'] = $this->Master_model->getFunctionArea($result['functional_area']);
         $userdata = array('title' => ' update Job', 'content' => 'job/edit', 'view_data' => $data);
         $this->load->view('template1', $userdata);
