@@ -1,13 +1,13 @@
 <?php echo form_open('User/user_qualification') ?>
-<h2 align="center">Enter Your Education Details</h2>
+<h2 class="page-header">Enter Your Education Details</h2>
 <div class="row"><?php echo validation_errors(); ?></div>
 <div class="row">
-    <div class="col-lg-3"></div>
+    
     <div class="panel panel-default col-lg-6 ">
-        <div class="one">
-            <div class="form-group " style="text-align: center">
+        <div class="one panel-body">
+<!--            <div class="form-group " style="text-align: center">
                 <h3>Highest Qualification</h3>
-            </div>
+            </div>-->
             <div class="form-group">
                 <label class="control-label">Highest Qualification Held</label>
                 <?php echo $dropdowns[0]; ?>
@@ -68,6 +68,7 @@
                 <input type="submit" class="btn btn-success" value="Add Qualification"/>
 
             </div>
+            <div class="col-lg-3"></div>
         <div class="col-lg-3"></div>
 
     </div>
@@ -85,7 +86,7 @@
         })
         $('.del').click(function () {
 
-            $('.second').hides();
+            $('.second').hide();
             $('.del').hide();
             $('.add').show();
         })
