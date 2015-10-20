@@ -1,13 +1,13 @@
 <?php echo form_open('User/user_projects') ?>
-<h2 align="center">Enter Your Projects Details</h2>
+<h2 class="page-header">Enter Your Projects Details</h2>
 <div class="row"><?php echo validation_errors(); ?></div>
 <div class="row">
     
     <div class="panel panel-default col-lg-12 ">
-        <div class="form-group " style="text-align: center">
+<!--        <div class="form-group " style="text-align: center">
                 <h3>Enter Your Projects Detail</h3>
-            </div>
-        <div class="col-lg-6">
+            </div>-->
+        <div class="panel-body col-lg-6">
             
             <div class="form-group">
                 <label class="control-label">Client*</label>
