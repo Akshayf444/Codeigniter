@@ -41,7 +41,7 @@ class Api extends CI_Controller {
                 'type' => 'User'
             );
 
-            /////Create New User
+            ///////Create New User
             $id = $this->User_model->create($field_array);
             $data = array(
                 'name' => $this->input->post('name'),
@@ -85,18 +85,6 @@ class Api extends CI_Controller {
         header('content-type: application/json');
         echo json_encode($output);
     }
-
-   /* public function getQualification() {
-        $this->load->model('Master_model');
-        $qualification = $this->Master_model->listQualification();
-        $content = array();
-        foreach ($result as $item) {
-            $content[] = array(
-                    'edu_id' => $loc->loc_id,
-                    'location' => $loc->location
-                );
-        }
-    }*/
 
     public function getLocation() {
         $this->load->model('Master_model');
