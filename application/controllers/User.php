@@ -75,18 +75,19 @@ class User extends CI_Controller {
 
             /////////Insert Basic Profile
             $this->User_model->Add_detail($id, $data);
+            for ($i = 0; $i < count($this->input->post('qualification')); $i++) {
+                ////////Insert education Details
+                $education_details = array(
+                    'qualification' => $this->input->post('qualification')[$i],
+                    'specialization' => $this->input->post('specialization')[$i],
+                    'institute' => $this->input->post('institute')[$i],
+                    'year' => $this->input->post('year')[$i],
+                    'created' => date('Y-m-d H:i:s'),
+                    'auth_id' => $id,
+                );
 
-            ////////Insert education Details
-            $education_details = array(
-                'qualification' => $this->input->post('qualification'),
-                'specialization' => $this->input->post('specialization'),
-                'institute' => $this->input->post('institute'),
-                'year' => $this->input->post('year'),
-                'created' => date('Y-m-d H:i:s'),
-                'auth_id' => $id,
-            );
-
-            $this->User_model->user_qualification($education_details);
+                $this->User_model->user_qualification($education_details);
+            }
         }
         $dropdown['dropdowns'] = $this->Master_model->getQualification();
         $dropdown['institute'] = $this->Master_model->institute();
