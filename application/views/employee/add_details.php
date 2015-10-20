@@ -20,14 +20,16 @@
                     <select class="form-control" name="type">
                         <option>select</option>
                         <option value="0"<?php
-                    if (isset($user['type'])&& $user['type']==0) {
-                        echo "selected";
-                    }?> name="type"> Company</option>
-                     
+                        if (isset($user['type']) && $user['type'] == 0) {
+                            echo "selected";
+                        }
+                        ?> name="type"> Company</option>
+
                         <option value="1"<?php
-                    if (isset($user['type'] )&& $user['type']==1) {
-                        echo "selected";
-                    }?> name="type" > Consultancy</option>
+                        if (isset($user['type']) && $user['type'] == 1) {
+                            echo "selected";
+                        }
+                        ?> name="type" > Consultancy</option>
 
                     </select>
 
@@ -51,27 +53,26 @@
                     }
                     ?>">
                 </div>
+                 <div class="form-group">
+                    <label class="control-label"> Designation </label>
+                    <input type="text" name="Designation" class="form-control"  value="<?php
+                    if (isset($user['designation'])) {
+                        echo $user['designation'];
+                    }
+                    ?>">
+
+                </div>
             </div>
             <div class="col-lg-6">
                 <div class="form-group">
 
                     <label class="control-label">Address </label>
                     <textarea type="text" name="address1" class="form-control" ><?php
-                    if (isset($user['address1'])) {
-                        echo $user['address1'];
-                    }
-                    ?></textarea>
-
-                    <label class="control-label">Address</label>
-                    <textarea type="text" name="address1" class="form-control" ><?php
                         if (isset($user['address1'])) {
                             echo $user['address1'];
                         }
-                        ?>
-                    </textarea>
-
+                        ?></textarea>
                 </div>
-
                 <div class="form-group">
                     <label class="control-label">Pincode</label>
                     <input type="text" name="pincode" class="form-control"  id="pincode"value="<?php
@@ -79,7 +80,6 @@
                         echo $user['pincode'];
                     }
                     ?>">
-
                     <img src="../../assets/images/38-1.gif" id="img" style="display: none"/>
                 </div>
                 <div class="form-group">
@@ -103,18 +103,9 @@
             <input type="hidden" name="auth_id" class="form-control" value="<?php echo $user_id; ?> " >
 
         </div>
-
-
-
-
         <div class="panel-footer">
             <div class="form-group">
-
-
                 <input type="submit" value="Save" class="btn btn-primary" />
-
-                <input type="submit" value="Register" class="btn btn-primary" />
-
             </div>
         </div>
     </div>

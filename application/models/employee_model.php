@@ -36,10 +36,9 @@ class employee_model extends CI_Model {
 
     public function add_details($id) {
         $query = $this->db->get_where('emp_profile', array('auth_id' => $id));
-
         $field_array = array(
             'auth_id' => $this->input->post('auth_id'),
-
+            'desi' => $this->input->post('desi'),
             'name' => $this->input->post('name'),
             'type' => $this->input->post('type'),
             'industry_type' => $this->input->post('industry_type'),
@@ -60,6 +59,17 @@ class employee_model extends CI_Model {
         $this->db->select('emp_profile.*,address_master.*');
         $this->db->from('emp_profile');
         $this->db->join('address_master', 'emp_profile.auth_id = address_master.auth_id');
+        $query = $this->db->get();
+        return $query->row_array();
+    }
+
+    public function profile($id) {
+        $this->db->select('emp_profile.*,address_master.*,industry_master.*');
+        $this->db->from('emp_profile');
+        $this->db->join('address_master', 'emp_profile.auth_id = address_master.auth_id', 'left');
+        $this->db->join('industry_master', 'emp_profile.industry_type = industry_master.indus_id', 'left');
+        $this->db->where('emp_profile.auth_id', $id);
+
         $query = $this->db->get();
         return $query->row_array();
     }

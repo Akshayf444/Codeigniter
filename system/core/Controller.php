@@ -43,7 +43,9 @@ class CI_Controller {
                 ),
                 'Profle' => array(
                 ),
-                'Jobs & Application' => array(
+                'Jobs & Application' => array( 
+                    'Add Jobs'=>'job/add',
+                    ' View Jobs'=>'job/job_list'
                 ),
                 'Recruiters' => array(
                 ),
