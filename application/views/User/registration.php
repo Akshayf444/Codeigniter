@@ -1,6 +1,6 @@
 
 
-<!--<h2 align="center">Enter User Detail</h2>-->
+<h2 align="center">Registration</h2>
 
 <?php echo validation_errors(); ?>
 
@@ -77,6 +77,27 @@
             <div class="form-group">
                 <lable class="control-label">Year</lable>
                 <input type="text" class="form-control" name="year"/>
+            </div>
+        </div>
+        <div class="col-lg-3"></div>
+    </div>
+     <hr class="page-header">
+    <div class="row">
+
+        <div class="col-lg-3">
+            <div class="form-group">
+                <h4 >Work Experince</h4>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            
+            <div class="form-group">
+                <lable class="control-label">In Years</lable>
+                <input type="text" class="form-control" name="experince_year"/>
+            </div>
+            <div class="form-group">
+                <lable class="control-label">In Month</lable>
+                <input type="text" class="form-control" name="experince_month"/>
             </div>
         </div>
         <div class="col-lg-3"></div>
