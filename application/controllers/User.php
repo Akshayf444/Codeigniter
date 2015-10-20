@@ -74,7 +74,7 @@ class User extends CI_Controller {
             );
 
             /////////Insert Basic Profile
-            $this->User_model->Add_detail($id,$data);
+            $this->User_model->Add_detail($id, $data);
 
             ////////Insert education Details
             $education_details = array(
@@ -95,9 +95,7 @@ class User extends CI_Controller {
     }
 
     public function login() {
-
         if ($this->input->post()) {
-
             $new = $_POST['email'];
             $pass = md5($_POST['password']);
             $check = $this->User_model->log($new, $pass);
@@ -116,6 +114,9 @@ class User extends CI_Controller {
                 $this->load->view('User/login', $data);
             }
         }
+
+        $data = array('title' => 'Login', 'content' => 'User/login');
+        $this->load->view('template2', $data);
     }
 
     public function Add_profile() {
