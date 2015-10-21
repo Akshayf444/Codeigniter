@@ -203,14 +203,17 @@ class User_model extends CI_Model {
 
         return $query->result();
     }
+
     public function project_by_id2($id) {
         $query = $this->db->get_where('user_project', array('id' => $id));
         return $query->row_array();
     }
+
     public function qualification_by_id($id) {
         $query = $this->db->get_where('user_qualification', array('id' => $id));
         return $query->row_array();
     }
+
     public function project_update2() {
         $data = array(
             'client' => $this->input->post('client'),
@@ -226,13 +229,25 @@ class User_model extends CI_Model {
             'team_size' => $this->input->post('team_size'),
             'skill' => $this->input->post('skill'),
         );
-      
+
         $this->db->where(array('id' => $this->input->post('id')));
         return $this->db->update('user_project', $data);
     }
-    public function update_qualification($data,$id) {
-        $this->db->where(array('id'=>$id));
+
+    public function update_qualification($data, $id) {
+        $this->db->where(array('id' => $id));
         return $this->db->update('user_qualification', $data);
+    }
+
+    public function all_job() {
+        $query = "SELECT *FROM jobs j
+                    LEFT JOIN emp_profile ep
+                    ON j.auth_id=ep.`auth_id`
+                    LEFT JOIN `location_master` lm
+                    ON lm.loc_id=j.location";
+        $query = $this->db->query($query);
+
+        return $query->result();
     }
 
 }

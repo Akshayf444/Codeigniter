@@ -409,7 +409,7 @@ class User extends CI_Controller {
                 $user_id = $this->session->userdata("user_id");
                 $this->form_validation->set_rules('qualification[]', 'qualification', 'trim|required');
                 $this->form_validation->set_rules('specialization[]', 'specialization', 'trim|required');
-               $this->form_validation->set_rules('id', 'id', 'trim|required');
+                $this->form_validation->set_rules('id', 'id', 'trim|required');
                 $this->form_validation->set_rules('institute[]', 'institute', 'trim|required');
                 $this->form_validation->set_rules('year[]', 'year', 'trim|required');
 
@@ -427,7 +427,7 @@ class User extends CI_Controller {
                             'auth_id' => $user_id,
                         );
 
-                        $add = $this->User_model->user_qualification($data,$this->input->post('id'));
+                        $add = $this->User_model->user_qualification($data, $this->input->post('id'));
                         redirect('User/view', 'refresh');
                     }
                 }
@@ -435,11 +435,27 @@ class User extends CI_Controller {
             $is_logged_in = $this->session->userdata('user_id');
             $dropdown['sh'] = $this->User_model->qualification_by_id($id);
 
-            $dropdown['dropdowns'] = isset($dropdown['sh']['qualification']) ? $this->Master_model->getQualification($dropdown['sh']['qualification'],$dropdown['sh']['specialization']) : $this->Master_model->getQualification();
-            $dropdown['institute'] =isset($dropdown['sh']['institute']) ? $this->Master_model->institute($dropdown['sh']['institute']) :  $this->Master_model->institute();
+            $dropdown['dropdowns'] = isset($dropdown['sh']['qualification']) ? $this->Master_model->getQualification($dropdown['sh']['qualification'], $dropdown['sh']['specialization']) : $this->Master_model->getQualification();
+            $dropdown['institute'] = isset($dropdown['sh']['institute']) ? $this->Master_model->institute($dropdown['sh']['institute']) : $this->Master_model->institute();
 
-            
+
             $data = array('title' => 'Basic Qualification', 'content' => 'User/edit_qualification', 'view_data' => $dropdown);
+            $this->load->view('template1', $data);
+        } else {
+            redirect('User/login', 'refresh');
+        }
+    }
+
+    public function SearchJob() {
+        if ($this->is_logged_in() == TRUE) {
+            $this->load->model('Master_model');
+            if ($this->input->post()) {
+                
+            }
+            $data['job']=  $this->User_model->all_job();
+            $data['dropdowns'] = $this->Master_model->getLocation();
+            
+            $data = array('title' => 'Job Search', 'content' => 'User/SearchForm', 'view_data' => $data);
             $this->load->view('template1', $data);
         } else {
             redirect('User/login', 'refresh');
