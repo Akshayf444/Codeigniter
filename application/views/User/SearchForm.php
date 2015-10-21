@@ -10,7 +10,7 @@
             </div>
             <div class="col-sm-3">
                 <select name="location" style="width: 243px;height: 36px;" class="form-control">
-                    <?php echo $dropdowns; ?>
+                    <?php// echo $dropdowns; ?>
                 </select>
             </div>
             <div class="col-sm-3">
