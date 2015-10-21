@@ -230,5 +230,9 @@ class User_model extends CI_Model {
         $this->db->where(array('id' => $this->input->post('id')));
         return $this->db->update('user_project', $data);
     }
+    public function update_qualification($data,$id) {
+        $this->db->where(array('id'=>$id));
+        return $this->db->update('user_qualification', $data);
+    }
 
 }

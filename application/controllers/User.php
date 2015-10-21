@@ -409,6 +409,7 @@ class User extends CI_Controller {
                 $user_id = $this->session->userdata("user_id");
                 $this->form_validation->set_rules('qualification[]', 'qualification', 'trim|required');
                 $this->form_validation->set_rules('specialization[]', 'specialization', 'trim|required');
+               $this->form_validation->set_rules('id', 'id', 'trim|required');
                 $this->form_validation->set_rules('institute[]', 'institute', 'trim|required');
                 $this->form_validation->set_rules('year[]', 'year', 'trim|required');
 
@@ -423,21 +424,21 @@ class User extends CI_Controller {
                             'institute' => $this->input->post('institute')[$i],
                             'year' => $this->input->post('year')[$i],
                             'updated_at' => date('Y-m-d H:i:s'),
-                            'created' => date('Y-m-d H:i:s'),
                             'auth_id' => $user_id,
                         );
 
-                        $add = $this->User_model->user_qualification($data);
+                        $add = $this->User_model->user_qualification($data,$this->input->post('id'));
+                        redirect('User/view', 'refresh');
                     }
                 }
             }
             $is_logged_in = $this->session->userdata('user_id');
             $dropdown['sh'] = $this->User_model->qualification_by_id($id);
 
-            $dropdown['dropdowns'] = isset($dropdown['current_location']) ? $this->Master_model->getQualification($dropdown['current_location']) : $this->Master_model->getQualification();
-            $dropdown['institute'] = $this->Master_model->institute();
+            $dropdown['dropdowns'] = isset($dropdown['sh']['qualification']) ? $this->Master_model->getQualification($dropdown['sh']['qualification'],$dropdown['sh']['specialization']) : $this->Master_model->getQualification();
+            $dropdown['institute'] =isset($dropdown['sh']['institute']) ? $this->Master_model->institute($dropdown['sh']['institute']) :  $this->Master_model->institute();
 
-            echo $id;
+            
             $data = array('title' => 'Basic Qualification', 'content' => 'User/edit_qualification', 'view_data' => $dropdown);
             $this->load->view('template1', $data);
         } else {

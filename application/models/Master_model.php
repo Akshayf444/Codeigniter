@@ -2,7 +2,7 @@
 
 class Master_model extends CI_Model {
 
-    function getQualification($edu_id = 0, $spec_id = 0) {
+    function getQualification($edu_id = 0, $spec1_id = 0) {
         $qualification = '<select class="form-control" name="qualification[]" id = "categories">';
         $specialization = '<select class="form-control" name="specialization[]" id ="subcats">';
         $script = '';
@@ -26,7 +26,7 @@ class Master_model extends CI_Model {
 
 
             for ($i = 0; $i < count($spec_id); $i++) {
-                if ($spec_id == $spec_id[$i]) {
+                if ($spec1_id == $spec_id[$i]) {
                     $specialization .= '<option value = "' . $spec_id[$i] . '" selected>' . $specializearray[$i] . '</option>';
                 }  else {
                     $specialization .= '<option value = "' . $spec_id[$i] . '" >' . $specializearray[$i] . '</option>';
