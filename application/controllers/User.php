@@ -327,7 +327,7 @@ class User extends CI_Controller {
 
     public function resume() {
         if ($this->is_logged_in() == TRUE) {
-
+            $user_id = $this->session->userdata('user_id');
             $config['upload_path'] = 'C:\wamp\www\jobportal\application\Resume';
             $config['allowed_types'] = 'pdf|doc|docx';
             $config['max_size'] = '4096';
@@ -340,7 +340,9 @@ class User extends CI_Controller {
                 $this->data['error'] = array('error' => $this->upload->display_errors());
             } else {
                 $upload_result = $this->upload->data();
+                
                 print_r($upload_result['file_name']); //or print any valid
+                $this->User_model->resume($upload_result['file_name'],$user_id);
             }
 
 

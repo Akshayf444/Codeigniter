@@ -184,7 +184,9 @@ class User_model extends CI_Model {
         $query = $this->db->query($query);
 
         return $query->result();
-    }public function qualification_view($id) {
+    }
+
+    public function qualification_view($id) {
         $query = "SELECT * FROM user u
                     LEFT JOIN `user_qualification` uq
                     ON uq.`auth_id`=u.`auth_id`
@@ -198,6 +200,16 @@ class User_model extends CI_Model {
         $query = $this->db->query($query);
 
         return $query->result();
+    }
+
+    public function resume($name, $id) {
+        $data = array(
+            'resume' => $name,
+            'detail' => $this->input->post('detail'),
+            'created' => date('Y-m-d H:i:s'),
+            'auth_id' => $id,
+        );
+        return $query = $this->db->insert('user_resume',$data);
     }
 
 }
