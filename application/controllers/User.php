@@ -452,7 +452,8 @@ class User extends CI_Controller {
             if ($this->input->post()) {
                 
             }
-            $data['job']=  $this->User_model->all_job();
+            $data['check']=  $this->User_model->find_by_user_id();
+            $data['job']=  $this->User_model->all_job($data['check']['key_skill'],$data['function_area']);
             $data['dropdowns'] = $this->Master_model->getLocation();
             
             $data = array('title' => 'Job Search', 'content' => 'User/SearchForm', 'view_data' => $data);
