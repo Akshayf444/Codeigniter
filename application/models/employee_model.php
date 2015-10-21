@@ -46,7 +46,7 @@ class employee_model extends CI_Model {
             'updated_at' => date('Y-m-d H:i:s'),
         );
 
-        if (!empty($query->num_rows() > 0)) {
+        if ($query->num_rows() > 0) {
             $this->db->where('auth_id', $id);
             return $this->db->update('emp_profile', $field_array);
         } else {

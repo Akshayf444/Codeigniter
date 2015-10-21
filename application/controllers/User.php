@@ -109,14 +109,14 @@ class User extends CI_Controller {
                 $this->session->set_userdata("user_type", $check['type']);
                 $check1['User'] = $this->User_model->find_by_id($check['auth_id']);
                 //$this->load->view('User/success');
-                redirect('User/Add_profile', 'refresh');
+                redirect('User/view', 'refresh');
             } else {
                 $data['user'] = "Incorrect Login";
                 $this->load->view('User/login', $data);
             }
         }
 
-        $data = array('title' => 'Login', 'content' => 'User/login');
+        $data = array('title' => 'Login', 'content' => 'User/login', 'view_data' => 'blank');
         $this->load->view('template2', $data);
     }
 
