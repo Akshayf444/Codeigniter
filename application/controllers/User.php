@@ -449,13 +449,19 @@ class User extends CI_Controller {
     public function SearchJob() {
         if ($this->is_logged_in() == TRUE) {
             $this->load->model('Master_model');
+            $user_id = $this->session->userdata("user_id");
             if ($this->input->post()) {
-                
+                $this->form_validation->set_rules('skill', 'skill', 'trim|required');
+                $this->form_validation->set_rules('location', 'location', 'trim|required');
+                $this->form_validation->set_rules('experince', 'experince', 'trim|required');
+                if ($this->form_validation->run() === True) {
+                    
+                }
             }
-            $data['check']=  $this->User_model->find_by_user_id();
-            $data['job']=  $this->User_model->all_job($data['check']['key_skill'],$data['function_area']);
+            $data = $this->User_model->find_by_user_id2($user_id);
+            $data['job'] = $this->User_model->all_job($data['function_area'], $data['key_skill']);
             $data['dropdowns'] = $this->Master_model->getLocation();
-            
+
             $data = array('title' => 'Job Search', 'content' => 'User/SearchForm', 'view_data' => $data);
             $this->load->view('template1', $data);
         } else {

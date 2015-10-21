@@ -38,14 +38,11 @@ class User_model extends CI_Model {
     }
     public function find_by_user_id2($id) {
         
-        $query = "SELECT *FROM jobs j
-                    LEFT JOIN emp_profile ep
-                    ON j.auth_id=ep.`auth_id`
-                    LEFT JOIN `location_master` lm
-                    ON lm.loc_id=j.location";
+        $query = "SELECT *FROM user u
+                    WHERE u.auth_id=$id";
         $query = $this->db->query($query);
 
-        return $query->result();
+        return $query->row_array();
     }
 
     public function user_qualification_by_id($id) {
@@ -250,15 +247,25 @@ class User_model extends CI_Model {
         return $this->db->update('user_qualification', $data);
     }
 
-    public function all_job() {
+    public function all_job($id,$skill) {
         $query = "SELECT *FROM jobs j
-                    LEFT JOIN emp_profile ep
-                    ON j.auth_id=ep.`auth_id`
-                    LEFT JOIN `location_master` lm
-                    ON lm.loc_id=j.location";
+                LEFT JOIN emp_profile ep
+                ON j.auth_id=ep.`auth_id`
+                LEFT JOIN `location_master` lm
+                ON lm.loc_id=j.location
+                WHERE j.functional_area=$id AND j.`keyword` LIKE '$skill%'";
         $query = $this->db->query($query);
 
         return $query->result();
+    }
+    public function search() {
+        $query = "SELECT *FROM jobs j
+                LEFT JOIN emp_profile ep
+                ON j.auth_id=ep.`auth_id`
+                LEFT JOIN `location_master` lm
+                ON lm.loc_id=j.location
+                WHERE j.functional_area=$id AND j.`keyword` LIKE '$skill%'";
+        $query = $this->db->query($query);
     }
 
 }
