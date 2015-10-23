@@ -35,7 +35,7 @@
     <?php foreach ($job as $j): ?>
     
         <div class="col-lg-10 panel panel-default">
-            <h5><?php echo $j->title ?></h5>
+            <h5><a href="../User/view_search2/?id=<?php echo $j->job_id ?>"><?php echo $j->title ?></a></h5>
             <h6><?php echo $j->name ?></h6>
             <div class="row">
                 <dl>
