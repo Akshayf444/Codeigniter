@@ -38,8 +38,8 @@
         <div class="row">
             <div class=" col-lg-6 ">
                 <div class="">
-                    <h6>Job Description</h6>
-                    <span><?php echo $view['description']; ?></span>
+                    <h5><b>Job Description</b></h5>
+                    <h6><?php echo $view['description']; ?></h6>
                 </div>
             </div>
         </div>
@@ -51,9 +51,10 @@
                 <div class="col-sm-4">
                     <h6><?php
                         if ($view['hide_ctc'] == 1) {
-                            echo "not disclose";
+
+                            echo $view['ctc_min'] . " PA";
                         } else {
-                            echo $view['ctc_min'];
+                            echo "not disclose";
                         }
                         ?></h6>
                 </div>
@@ -86,8 +87,11 @@
 
             </div>
         </div>
+        <div class="row" style="margin-top: 58px;margin-bottom: 18px;">
+            <div class="col-sm-4">
+                <button class="btn btn-success">Log In To Apply</button>
+            </div>
+        </div>
     </div>
-</div>
-</div>
-</div>
+
 </div>
