@@ -461,6 +461,7 @@ class User extends CI_Controller {
             $data = $this->User_model->find_by_user_id2($user_id);
             $data['job'] = $this->User_model->all_job($data['function_area'], $data['key_skill']);
             $data['dropdowns'] = $this->Master_model->getLocation();
+           
 
             $data = array('title' => 'Job Search', 'content' => 'User/SearchForm', 'view_data' => $data);
             $this->load->view('template1', $data);
@@ -478,23 +479,23 @@ class User extends CI_Controller {
 //            $this->form_validation->set_rules('location', 'location', 'trim|required');
 //            $this->form_validation->set_rules('experince', 'experince', 'trim|required');
 //            if ($this->form_validation->run() === True) {
-                //$data['job']=  $this->User_model->search($this->input->post('skill'),$this->input->post('location'),$this->input->post('experince'));
+            //$data['job']=  $this->User_model->search($this->input->post('skill'),$this->input->post('location'),$this->input->post('experince'));
 
-                $conditions = array();
-                if ($this->input->post('skill') != '') {
-                    $skill = $this->input->post('skill');
-                    $conditions[] = "j.`keyword` LIKE '$skill%'";
-                }
-                if ($this->input->post('location') != '') {
-                    $location = $this->input->post('location');
-                    $conditions[] = "j.`location` ='$location'";
-                }
-                if ($this->input->post('experince') != '') {
-                    $experince = $this->input->post('experince');
-                    $conditions[] = "j.exp_max =$experince ";
-                }
+            $conditions = array();
+            if ($this->input->post('skill') != '') {
+                $skill = $this->input->post('skill');
+                $conditions[] = "j.`keyword` LIKE '$skill%'";
+            }
+            if ($this->input->post('location') != '') {
+                $location = $this->input->post('location');
+                $conditions[] = "j.`location` ='$location'";
+            }
+            if ($this->input->post('experince') != '') {
+                $experince = $this->input->post('experince');
+                $conditions[] = "j.exp_max =$experince ";
+            }
 
-                $data['job'] = $this->User_model->search($conditions);
+            $data['job'] = $this->User_model->search($conditions);
 //                   var_dump($data);
 //            }
         }
@@ -504,6 +505,46 @@ class User extends CI_Controller {
 
         $data = array('title' => 'Job Search', 'content' => 'User/JobSearch', 'view_data' => $data);
         $this->load->view('template2', $data);
+    }
+
+    public function view_search() {
+        $id = $_GET['id'];
+        $data['view'] = $this->User_model->view_search($id);
+        $data = array('title' => 'View Search', 'content' => 'User/viewsearch', 'view_data' => $data);
+        $this->load->view('template2', $data);
+    }
+
+    public function view_search2() {
+        if ($this->is_logged_in() == TRUE) {
+            $this->load->model('Master_model');
+            $user_id = $this->session->userdata("user_id");
+            $id = $_GET['id'];
+            $data['view'] = $this->User_model->view_search($id);
+            $data['applied'] = $this->User_model->applied($id, $user_id);
+             $data['show'] = $this->User_model->applied($id,$user_id);
+            $data = array('title' => 'Job Search', 'content' => 'User/viewsearch2', 'view_data' => $data);
+            $this->load->view('template1', $data);
+        } else {
+            redirect('User/login', 'refresh');
+        }
+    }
+
+    public function apply() {
+        if ($this->is_logged_in() == TRUE) {
+
+            $user_id = $this->session->userdata("user_id");
+            $id = $_GET['id'];
+            $data['job'] = $this->User_model->apply_id($id, $user_id);
+            if (!empty($data['job'])) {
+                redirect('User/SearchJob');
+            } else {
+                $this->User_model->apply($id, $user_id);
+                //redirect('User/SearchJob', 'refresh');
+                $this->load->view('User/success');
+            }
+        } else {
+            redirect('User/login', 'refresh');
+        }
     }
 
 }
