@@ -1,6 +1,9 @@
-
-<h2 class="page-header">Job View</h2>
 <div class="row">
+    <h2 class="page-header">Job View</h2>
+
+</div>
+
+<div class="row" style="margin-top: 48px">
     <div class="col-lg-1"></div>
     <div class="col-lg-10 panel panel-default">
         <h5 ><?php echo $view['title'] ?></h5>
@@ -91,7 +94,20 @@
         </div>
         <div class="row" style="margin-top: 58px;margin-bottom: 18px;">
             <div class="col-sm-4">
-                <a href="#"><button class="btn btn-success">Apply</button></a>
+<!--                <a href="apply/?id=<?php echo $view['job_id'];?>"><button class="btn btn-success">Apply</button></a>-->
+                <?php if(empty($show))
+                {
+                    ?>
+                <a href="<?php echo  site_url('User/apply/?id='.$view['job_id']) ;?>"><button class="btn btn-success">Apply</button></a>
+                
+                <?php 
+                }
+                else
+                {
+                ?>
+                <button class="btn btn-success">Already Applied</button>
+                
+                <?php }?>
             </div>
         </div>
     </div>
