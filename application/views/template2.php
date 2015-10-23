@@ -16,7 +16,7 @@
                 position: absolute;
                 z-index: 1;
                 width: 85%;
-               text-align: center;             
+                text-align: center;             
             }
 
             .form-control{
@@ -26,6 +26,7 @@
             .btn-lg{
                 padding: 12px 16px;
             }
+
         </style>
     </head>
     <body>
@@ -75,11 +76,11 @@
                                 <div class="row">
                                     <h2 class="text-danger">Join us & Explore thousands of Jobs</h2>
                                 </div>
-                                <div class="row" style="opacity: 0.8; background: #fff;padding: 10px">  
-                                    <div class="col-lg-3"><input type="text" class="form-control btn-lg"></div>
-                                    <div class="col-lg-3"><input type="text" class="form-control btn-lg"></div>
-                                    <div class="col-lg-3"><input type="text" class="form-control btn-lg"></div>
-                                    <div class="col-lg-3"><input type="submit" class="btn btn-success btn-lg btn-block" value="Search"></div>
+                                <div class="row" style="background: rgba(255, 255, 255, 0.49);padding: 10px;">  
+                                    <div class="col-lg-4 zeroleftpadding"><input type="text" class="form-control btn-lg"></div>
+                                    <div class="col-lg-3 zeroleftpadding"><input type="text" class="form-control btn-lg"></div>
+                                    <div class="col-lg-3 zeroleftpadding"><input type="text" class="form-control btn-lg"></div>
+                                    <div class="col-lg-1 zeroleftpadding"><input type="submit" class="btn btn-danger btn-lg" value="Search"></div>
                                 </div>
                             </div>
                         </div>
@@ -94,8 +95,6 @@
         </div>
         <?php $this->load->view('footer'); ?>
 
-
-        <!-- Bootstrap Core JavaScript -->
         <script src="<?php echo asset_url() ?>/js/bootstrap.min.js"></script>    
     </body>
 </html>
