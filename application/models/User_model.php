@@ -37,6 +37,15 @@ class User_model extends CI_Model {
         return $query->row_array();
     }
 
+    public function find_by_user_id2($id) {
+
+        $query = "SELECT *FROM user u
+                    WHERE u.auth_id=$id";
+        $query = $this->db->query($query);
+
+        return $query->row_array();
+    }
+
     public function user_qualification_by_id($id) {
 
         $query = $this->db->get_where('user_qualification', array('auth_id' => $id));
@@ -161,31 +170,15 @@ class User_model extends CI_Model {
     }
 
     public function view2($id) {
-        $query = "SELECT *,(l.location) AS loc,(up.location) AS ploc,(up.role) AS prole  FROM user u
-                    LEFT JOIN work_exp we
-                    ON u.auth_id=we.auth_id
-                    LEFT JOIN `location_master`lm
-                    ON lm.loc_id=u.current_location
-                    LEFT JOIN user_qualification uq
-                    ON uq.auth_id=u.auth_id
-                    LEFT JOIN education_master em
-                    ON em.edu_id=uq.qualification
-                    LEFT JOIN location_master l
-                    ON l.loc_id=u.`current_location`
-                    LEFT JOIN functional_area fa
-                    ON fa.fun_id=u.`function_area`
-                    LEFT JOIN industry_master ind
-                    ON ind.indus_id=u.`industry`
-                    LEFT JOIN address_master am
-                    ON am.`auth_id`=u.`auth_id`
-                    LEFT JOIN user_project up
-                    ON up.`auth_id`=u.`auth_id`
-                    WHERE u.auth_id=$id";
+        $query = "SELECT * FROM user_project
+                   WHERE auth_id=$id";
         $query = $this->db->query($query);
 
         return $query->result();
-    }public function qualification_view($id) {
-        $query = "SELECT * FROM user u
+    }
+
+    public function qualification_view($id) {
+        $query = "SELECT *,(uq.id) AS idd FROM user u
                     LEFT JOIN `user_qualification` uq
                     ON uq.`auth_id`=u.`auth_id`
                     LEFT JOIN `specialization_master` sp
@@ -198,6 +191,117 @@ class User_model extends CI_Model {
         $query = $this->db->query($query);
 
         return $query->result();
+    }
+
+    public function resume($name, $id) {
+        $data = array(
+            'resume' => $name,
+            'detail' => $this->input->post('detail'),
+            'created' => date('Y-m-d H:i:s'),
+            'auth_id' => $id,
+        );
+        return $query = $this->db->insert('user_resume', $data);
+    }
+
+    public function resume_view($id) {
+        $query = "SELECT * FROM user_resume 
+                    WHERE auth_id=$id
+                    ORDER BY auth_id DESC LIMIT 1
+                    ";
+        $query = $this->db->query($query);
+
+        return $query->result();
+    }
+
+    public function project_by_id2($id) {
+        $query = $this->db->get_where('user_project', array('id' => $id));
+        return $query->row_array();
+    }
+
+    public function qualification_by_id($id) {
+        $query = $this->db->get_where('user_qualification', array('id' => $id));
+        return $query->row_array();
+    }
+
+    public function project_update2() {
+        $data = array(
+            'client' => $this->input->post('client'),
+            'projects_title' => $this->input->post('projects_title'),
+            'to' => $this->input->post('to'),
+            'from' => $this->input->post('from'),
+            'location' => $this->input->post('location'),
+            'site' => $this->input->post('site'),
+            'type' => $this->input->post('type'),
+            'detail' => $this->input->post('detail'),
+            'role' => $this->input->post('role'),
+            'role_description' => $this->input->post('role_description'),
+            'team_size' => $this->input->post('team_size'),
+            'skill' => $this->input->post('skill'),
+        );
+
+        $this->db->where(array('id' => $this->input->post('id')));
+        return $this->db->update('user_project', $data);
+    }
+
+    public function update_qualification($data, $id) {
+        $this->db->where(array('id' => $id));
+        return $this->db->update('user_qualification', $data);
+    }
+
+    public function all_job($id, $skill) {
+        $query = "SELECT *FROM jobs j
+                LEFT JOIN emp_profile ep
+                ON j.auth_id=ep.`auth_id`
+                LEFT JOIN `location_master` lm
+                ON lm.loc_id=j.location
+                WHERE j.functional_area=$id AND j.`keyword` LIKE '$skill%'";
+        $query = $this->db->query($query);
+
+        return $query->result();
+    }
+
+    public function search($conditions) {
+        $query = "SELECT * ,(lm.`location`) AS loc FROM jobs j
+                LEFT JOIN emp_profile ep
+                ON j.auth_id=ep.`auth_id`
+                LEFT JOIN `location_master` lm
+                ON lm.loc_id=j.location
+                LEFT JOIN `functional_area` fa
+                ON fa.`fun_id`=j.`functional_area`";
+        if (!empty($conditions)) {
+            $query .= ' WHERE ' . join(' OR ', $conditions);
+        }
+//        echo $query;
+        $query = $this->db->query($query);
+
+        return $query->result();
+    }
+
+    public function all_job2() {
+        $query = "SELECT *FROM jobs j
+                LEFT JOIN emp_profile ep
+                ON j.auth_id=ep.`auth_id`
+                LEFT JOIN `location_master` lm
+                ON lm.loc_id=j.location";
+        $query = $this->db->query($query);
+
+        return $query->result();
+    }
+
+    public function view_search($id) {
+        $query = "SELECT *,(lm.`location`) AS loc FROM jobs j
+                LEFT JOIN emp_profile ep
+                ON j.auth_id=ep.`auth_id`
+                LEFT JOIN `location_master` lm
+                ON lm.loc_id=j.location
+                LEFT JOIN `functional_area` fa
+                ON fa.`fun_id`=j.`functional_area`
+                LEFT JOIN `industry_master` im
+                ON j.`industry`=im.`indus_id`
+                WHERE j.`job_id`=$id";
+        $query = $this->db->query($query);
+
+        return $query->row_array();
     }
 
 }

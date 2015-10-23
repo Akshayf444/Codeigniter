@@ -328,23 +328,198 @@ class User extends CI_Controller {
     public function resume() {
         if ($this->is_logged_in() == TRUE) {
 
+            $data = array('title' => 'Resume Upload', 'content' => 'User/resume', 'view_data' => 'blank');
+            $this->load->view('template1', $data);
+        } else {
+            redirect('User/login', 'refresh');
+        }
+    }
+
+    public function resume_add() {
+        if ($this->is_logged_in() == TRUE) {
+//            if ($this->input->post()) {
+            $user_id = $this->session->userdata('user_id');
             $config['upload_path'] = 'C:\wamp\www\jobportal\application\Resume';
             $config['allowed_types'] = 'pdf|doc|docx';
             $config['max_size'] = '4096';
+            $new_name = time();
+            $config['file_name'] = $new_name;
             $this->load->library('upload', $config);
             $this->upload->display_errors('', '');
-
+            $this->form_validation->set_rules('detail', 'client', 'trim|required');
             if (!$this->upload->do_upload("resume")) {
                 echo $this->upload->display_errors();
                 die();
                 $this->data['error'] = array('error' => $this->upload->display_errors());
             } else {
                 $upload_result = $this->upload->data();
+
                 print_r($upload_result['file_name']); //or print any valid
+                $this->User_model->resume($upload_result['file_name'], $user_id);
             }
 
 
-            $data = array('title' => 'Other Detail', 'content' => 'User/resume', 'view_data' => 'blank');
+//            $data = array('title' => 'Resume Upload', 'content' => 'User/resume', 'view_data' => 'blank');
+//            $this->load->view('template1', $data);
+            redirect('User/resume', 'refresh');
+        } else {
+            redirect('User/login', 'refresh');
+        }
+    }
+
+    public function edit_project() {
+        if ($this->is_logged_in() == TRUE) {
+
+            $id = $_GET['id'];
+
+            if ($this->input->post()) {
+                $id = $this->form_validation->set_rules('id', 'id', 'trim|required');
+                $this->form_validation->set_rules('client', 'client', 'trim|required');
+                $this->form_validation->set_rules('projects_title', 'projects_title', 'trim|required');
+                $this->form_validation->set_rules('to', 'to', 'trim|required');
+                $this->form_validation->set_rules('from', 'from', 'trim|required');
+                $this->form_validation->set_rules('location', 'location', 'trim|required');
+                $this->form_validation->set_rules('site', 'site', 'trim|required');
+                $this->form_validation->set_rules('type', 'type', 'trim|required');
+                $this->form_validation->set_rules('detail', 'detail', 'trim|required');
+                $this->form_validation->set_rules('role', 'role', 'trim|required');
+                $this->form_validation->set_rules('role_description', 'role_description', 'trim|required');
+                $this->form_validation->set_rules('team_size', 'team_size', 'trim|required');
+                $this->form_validation->set_rules('skill', 'skill', 'required');
+                if ($this->form_validation->run() === True) {
+                    $this->User_model->project_update2();
+                    redirect('User/view', 'refresh');
+                    //$this->load->view('User/success');
+                }
+            }
+            $show['sh'] = $this->User_model->project_by_id2($id);
+            $data = array('title' => 'Project Edit', 'content' => 'User/edit_project', 'view_data' => $show);
+            $this->load->view('template1', $data);
+        } else {
+            redirect('User/login', 'refresh');
+        }
+    }
+
+    public function edit_qualification() {
+        $this->load->model('Master_model');
+        $id = $_GET['id'];
+
+        if ($this->is_logged_in() == TRUE) {
+            if ($this->input->post()) {
+                $user_id = $this->session->userdata("user_id");
+                $this->form_validation->set_rules('qualification[]', 'qualification', 'trim|required');
+                $this->form_validation->set_rules('specialization[]', 'specialization', 'trim|required');
+                $this->form_validation->set_rules('id', 'id', 'trim|required');
+                $this->form_validation->set_rules('institute[]', 'institute', 'trim|required');
+                $this->form_validation->set_rules('year[]', 'year', 'trim|required');
+
+
+                $qual = $this->User_model->user_qualification_by_id($user_id);
+
+                if ($this->form_validation->run() === True) {
+                    for ($i = 0; $i < count($this->input->post('qualification')); $i++) {
+                        $data = array(
+                            'qualification' => $this->input->post('qualification')[$i],
+                            'specialization' => $this->input->post('specialization')[$i],
+                            'institute' => $this->input->post('institute')[$i],
+                            'year' => $this->input->post('year')[$i],
+                            'updated_at' => date('Y-m-d H:i:s'),
+                            'auth_id' => $user_id,
+                        );
+
+                        $add = $this->User_model->user_qualification($data, $this->input->post('id'));
+                        redirect('User/view', 'refresh');
+                    }
+                }
+            }
+            $is_logged_in = $this->session->userdata('user_id');
+            $dropdown['sh'] = $this->User_model->qualification_by_id($id);
+
+            $dropdown['dropdowns'] = isset($dropdown['sh']['qualification']) ? $this->Master_model->getQualification($dropdown['sh']['qualification'], $dropdown['sh']['specialization']) : $this->Master_model->getQualification();
+            $dropdown['institute'] = isset($dropdown['sh']['institute']) ? $this->Master_model->institute($dropdown['sh']['institute']) : $this->Master_model->institute();
+
+
+            $data = array('title' => 'Basic Qualification', 'content' => 'User/edit_qualification', 'view_data' => $dropdown);
+            $this->load->view('template1', $data);
+        } else {
+            redirect('User/login', 'refresh');
+        }
+    }
+
+    public function SearchJob() {
+        if ($this->is_logged_in() == TRUE) {
+            $this->load->model('Master_model');
+            $user_id = $this->session->userdata("user_id");
+            if ($this->input->post()) {
+                $this->form_validation->set_rules('skill', 'skill', 'trim|required');
+                $this->form_validation->set_rules('location', 'location', 'trim|required');
+                $this->form_validation->set_rules('experince', 'experince', 'trim|required');
+                if ($this->form_validation->run() === True) {
+                    
+                }
+            }
+            $data = $this->User_model->find_by_user_id2($user_id);
+            $data['job'] = $this->User_model->all_job($data['function_area'], $data['key_skill']);
+            $data['dropdowns'] = $this->Master_model->getLocation();
+
+            $data = array('title' => 'Job Search', 'content' => 'User/SearchForm', 'view_data' => $data);
+            $this->load->view('template1', $data);
+        } else {
+            redirect('User/login', 'refresh');
+        }
+    }
+
+    public function SearchJob2() {
+
+        $this->load->model('Master_model');
+        $user_id = $this->session->userdata("user_id");
+        if ($this->input->post()) {
+//            $this->form_validation->set_rules('skill', 'skill', 'trim|required');
+//            $this->form_validation->set_rules('location', 'location', 'trim|required');
+//            $this->form_validation->set_rules('experince', 'experince', 'trim|required');
+//            if ($this->form_validation->run() === True) {
+            //$data['job']=  $this->User_model->search($this->input->post('skill'),$this->input->post('location'),$this->input->post('experince'));
+
+            $conditions = array();
+            if ($this->input->post('skill') != '') {
+                $skill = $this->input->post('skill');
+                $conditions[] = "j.`keyword` LIKE '$skill%'";
+            }
+            if ($this->input->post('location') != '') {
+                $location = $this->input->post('location');
+                $conditions[] = "j.`location` ='$location'";
+            }
+            if ($this->input->post('experince') != '') {
+                $experince = $this->input->post('experince');
+                $conditions[] = "j.exp_max =$experince ";
+            }
+
+            $data['job'] = $this->User_model->search($conditions);
+//                   var_dump($data);
+//            }
+        }
+        //$data = $this->User_model->find_by_user_id2($user_id);
+        // $data['job'] = $this->User_model->all_job2();
+        $data['dropdowns'] = $this->Master_model->getLocation();
+
+        $data = array('title' => 'Job Search', 'content' => 'User/JobSearch', 'view_data' => $data);
+        $this->load->view('template2', $data);
+    }
+
+    public function view_search() {
+        $id = $_GET['id'];
+        $data['view'] = $this->User_model->view_search($id);
+        $data = array('title' => 'View Search', 'content' => 'User/viewsearch', 'view_data' => $data);
+        $this->load->view('template2', $data);
+    }
+
+    public function view_search2() {
+        if ($this->is_logged_in() == TRUE) {
+            $this->load->model('Master_model');
+
+            $id = $_GET['id'];
+            $data['view'] = $this->User_model->view_search($id);
+            $data = array('title' => 'Job Search', 'content' => 'User/viewsearch2', 'view_data' => $data);
             $this->load->view('template1', $data);
         } else {
             redirect('User/login', 'refresh');
