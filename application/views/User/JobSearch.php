@@ -34,7 +34,7 @@ foreach ($job as $j){
     
     
         <div class="col-lg-10 panel panel-default">
-            <h5><?php echo $j->title ?></h5>
+            <h5 ><a href="../User/view_search/?id=<?php echo $j->job_id ?>"><?php echo $j->title ?></a></h5>
             <h6><?php echo $j->name ?></h6>
             <div class="row">
                 <dl>
@@ -42,7 +42,7 @@ foreach ($job as $j){
                     <h6><?php echo $j->exp_min ?>-<?php echo $j->exp_max ?>Yrs</h6>
                     </dt>
                     <dt class="col-sm-2">
-                    <h6><?php echo $j->loc ?></h6>
+                    <h6><?php echo $j->loc  ?></h6>
                     </dt>
                     <dt class="col-sm-2">
                     <h6>Key Skills :</h6>

@@ -505,5 +505,12 @@ class User extends CI_Controller {
         $data = array('title' => 'Job Search', 'content' => 'User/JobSearch', 'view_data' => $data);
         $this->load->view('template2', $data);
     }
+    public function view_search()
+    {
+        $id=$_GET['id'];
+        $data['view']=  $this->User_model->view_search($id);
+         $data = array('title' => 'View Search', 'content' => 'User/viewsearch', 'view_data' => $data);
+        $this->load->view('template2', $data);
+    }
 
 }

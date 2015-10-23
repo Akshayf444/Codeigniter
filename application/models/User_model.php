@@ -288,4 +288,20 @@ class User_model extends CI_Model {
         return $query->result();
     }
 
+    public function view_search($id) {
+        $query = "SELECT *,(lm.`location`) AS loc FROM jobs j
+                LEFT JOIN emp_profile ep
+                ON j.auth_id=ep.`auth_id`
+                LEFT JOIN `location_master` lm
+                ON lm.loc_id=j.location
+                LEFT JOIN `functional_area` fa
+                ON fa.`fun_id`=j.`functional_area`
+                LEFT JOIN `industry_master` im
+                ON j.`industry`=im.`indus_id`
+                WHERE j.`job_id`=$id";
+        $query = $this->db->query($query);
+
+        return $query->row_array();
+    }
+
 }
