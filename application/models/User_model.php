@@ -37,6 +37,15 @@ class User_model extends CI_Model {
         return $query->row_array();
     }
 
+    public function find_by_user_id2($id) {
+
+        $query = "SELECT *FROM user u
+                    WHERE u.auth_id=$id";
+        $query = $this->db->query($query);
+
+        return $query->row_array();
+    }
+
     public function user_qualification_by_id($id) {
 
         $query = $this->db->get_where('user_qualification', array('auth_id' => $id));
@@ -203,14 +212,17 @@ class User_model extends CI_Model {
 
         return $query->result();
     }
+
     public function project_by_id2($id) {
         $query = $this->db->get_where('user_project', array('id' => $id));
         return $query->row_array();
     }
+
     public function qualification_by_id($id) {
         $query = $this->db->get_where('user_qualification', array('id' => $id));
         return $query->row_array();
     }
+
     public function project_update2() {
         $data = array(
             'client' => $this->input->post('client'),
@@ -226,9 +238,54 @@ class User_model extends CI_Model {
             'team_size' => $this->input->post('team_size'),
             'skill' => $this->input->post('skill'),
         );
-      
+
         $this->db->where(array('id' => $this->input->post('id')));
         return $this->db->update('user_project', $data);
+    }
+
+    public function update_qualification($data, $id) {
+        $this->db->where(array('id' => $id));
+        return $this->db->update('user_qualification', $data);
+    }
+
+    public function all_job($id, $skill) {
+        $query = "SELECT *FROM jobs j
+                LEFT JOIN emp_profile ep
+                ON j.auth_id=ep.`auth_id`
+                LEFT JOIN `location_master` lm
+                ON lm.loc_id=j.location
+                WHERE j.functional_area=$id AND j.`keyword` LIKE '$skill%'";
+        $query = $this->db->query($query);
+
+        return $query->result();
+    }
+
+    public function search($conditions) {
+        $query = "SELECT * ,(lm.`location`) AS loc FROM jobs j
+                LEFT JOIN emp_profile ep
+                ON j.auth_id=ep.`auth_id`
+                LEFT JOIN `location_master` lm
+                ON lm.loc_id=j.location
+                LEFT JOIN `functional_area` fa
+                ON fa.`fun_id`=j.`functional_area`";
+        if (!empty($conditions)) {
+            $query .= ' WHERE ' . join(' OR ', $conditions);
+        }
+//        echo $query;
+        $query = $this->db->query($query);
+
+        return $query->result();
+    }
+
+    public function all_job2() {
+        $query = "SELECT *FROM jobs j
+                LEFT JOIN emp_profile ep
+                ON j.auth_id=ep.`auth_id`
+                LEFT JOIN `location_master` lm
+                ON lm.loc_id=j.location";
+        $query = $this->db->query($query);
+
+        return $query->result();
     }
 
 }
