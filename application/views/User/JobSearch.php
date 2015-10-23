@@ -42,7 +42,7 @@ foreach ($job as $j){
                     <h6><?php echo $j->exp_min ?>-<?php echo $j->exp_max ?>Yrs</h6>
                     </dt>
                     <dt class="col-sm-2">
-                    <h6><?php echo $j->location ?></h6>
+                    <h6><?php echo $j->loc ?></h6>
                     </dt>
                     <dt class="col-sm-2">
                     <h6>Key Skills :</h6>

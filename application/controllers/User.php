@@ -474,10 +474,10 @@ class User extends CI_Controller {
         $this->load->model('Master_model');
         $user_id = $this->session->userdata("user_id");
         if ($this->input->post()) {
-            $this->form_validation->set_rules('skill', 'skill', 'trim|required');
-            $this->form_validation->set_rules('location', 'location', 'trim|required');
-            $this->form_validation->set_rules('experince', 'experince', 'trim|required');
-            if ($this->form_validation->run() === True) {
+//            $this->form_validation->set_rules('skill', 'skill', 'trim|required');
+//            $this->form_validation->set_rules('location', 'location', 'trim|required');
+//            $this->form_validation->set_rules('experince', 'experince', 'trim|required');
+//            if ($this->form_validation->run() === True) {
                 //$data['job']=  $this->User_model->search($this->input->post('skill'),$this->input->post('location'),$this->input->post('experince'));
 
                 $conditions = array();
@@ -487,7 +487,7 @@ class User extends CI_Controller {
                 }
                 if ($this->input->post('location') != '') {
                     $location = $this->input->post('location');
-                    $conditions[] = "lm.location ='$location'";
+                    $conditions[] = "j.`location` ='$location'";
                 }
                 if ($this->input->post('experince') != '') {
                     $experince = $this->input->post('experince');
@@ -496,7 +496,7 @@ class User extends CI_Controller {
 
                 $data['job'] = $this->User_model->search($conditions);
 //                   var_dump($data);
-            }
+//            }
         }
         //$data = $this->User_model->find_by_user_id2($user_id);
         // $data['job'] = $this->User_model->all_job2();

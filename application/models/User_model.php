@@ -261,7 +261,7 @@ class User_model extends CI_Model {
     }
 
     public function search($conditions) {
-        $query = "SELECT *FROM jobs j
+        $query = "SELECT * ,(lm.`location`) AS loc FROM jobs j
                 LEFT JOIN emp_profile ep
                 ON j.auth_id=ep.`auth_id`
                 LEFT JOIN `location_master` lm
@@ -269,9 +269,9 @@ class User_model extends CI_Model {
                 LEFT JOIN `functional_area` fa
                 ON fa.`fun_id`=j.`functional_area`";
         if (!empty($conditions)) {
-            $query .= ' WHERE ' . join(' AND ', $conditions);
+            $query .= ' WHERE ' . join(' OR ', $conditions);
         }
-        echo $query;
+//        echo $query;
         $query = $this->db->query($query);
 
         return $query->result();
