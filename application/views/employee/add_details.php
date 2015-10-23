@@ -55,7 +55,7 @@
                 </div>
                  <div class="form-group">
                     <label class="control-label"> Designation </label>
-                    <input type="text" name="Designation" class="form-control"  value="<?php
+                    <input type="text" name="designation" class="form-control"  value="<?php
                     if (isset($user['designation'])) {
                         echo $user['designation'];
                     }

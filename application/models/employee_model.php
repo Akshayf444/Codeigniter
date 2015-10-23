@@ -38,12 +38,13 @@ class employee_model extends CI_Model {
         $query = $this->db->get_where('emp_profile', array('auth_id' => $id));
         $field_array = array(
             'auth_id' => $this->input->post('auth_id'),
-            'desi' => $this->input->post('desi'),
+            'designation' => $this->input->post('designation'),
             'name' => $this->input->post('name'),
             'type' => $this->input->post('type'),
             'industry_type' => $this->input->post('industry_type'),
             'contact_person' => $this->input->post('contact_person'),
             'updated_at' => date('Y-m-d H:i:s'),
+            
         );
 
         if ($query->num_rows() > 0) {
