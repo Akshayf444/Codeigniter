@@ -44,7 +44,7 @@ class Job_model extends CI_Model {
     public function update_job($id) {
 //        $query = $this->view_job($id);
         $field_array = array(
-            'job_id'=>  $this->input->post('id'),
+            'job_id' => $this->input->post('id'),
             'title' => $this->input->post('title'),
             'description' => $this->input->post('description'),
             'no_of_vacancy' => $this->input->post('no_of_vacancy'),
@@ -61,10 +61,26 @@ class Job_model extends CI_Model {
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
         );
-        
-            $this->db->where('jobs.job_id', $id);
-            return $this->db->update('jobs', $field_array);
-        
+
+        $this->db->where('jobs.job_id', $id);
+        return $this->db->update('jobs', $field_array);
+    }
+
+    public function search($conditions) {
+        $query = "SELECT * ,(lm.`location`) AS loc FROM jobs j
+                LEFT JOIN emp_profile ep
+                ON j.auth_id=ep.`auth_id`
+                LEFT JOIN `location_master` lm
+                ON lm.loc_id=j.location
+                LEFT JOIN `functional_area` fa
+                ON fa.`fun_id`=j.`functional_area`";
+        if (!empty($conditions)) {
+            $query .= ' WHERE ' . join(' OR ', $conditions);
+        }
+//        echo $query;
+        $query = $this->db->query($query);
+
+        return $query->result();
     }
 
 }

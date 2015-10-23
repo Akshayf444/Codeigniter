@@ -12,8 +12,7 @@ class Job extends CI_Controller {
     }
 
     function index() {
-        $data = array('title' => 'Search Job', 'content' => 'job/index', 'view_data' => 'blank' ,'frontImage' => 'search.jpg' ,'searchBar'=> TRUE);
-        $this->load->view('template2', $data);
+        $this->Search();
     }
 
     function add() {
@@ -90,7 +89,30 @@ class Job extends CI_Controller {
         $this->load->view('template1', $userdata);
     }
 
-//        } else {
-//            redirect('Employee/logout', 'refresh');
-//        }
+    public function Search() {
+        $this->load->model('Master_model');
+        $search = array();
+        $user_id = $this->session->userdata("user_id");
+        if ($this->input->post()) {
+            $conditions = array();
+            if ($this->input->post('skill') != '') {
+                $skill = $this->input->post('skill');
+                $conditions[] = "j.`keyword` LIKE '$skill%'";
+            }
+            if ($this->input->post('location') != '') {
+                $location = $this->input->post('location');
+                $conditions[] = "j.`location` ='$location'";
+            }
+            if ($this->input->post('experince') != '') {
+                $experince = $this->input->post('experince');
+                $conditions[] = "j.exp_max =$experince ";
+            }
+
+            $search['job'] = $this->Job_model->search($conditions);
+        }
+
+        $data = array('title' => 'Search Job', 'content' => 'job/index', 'view_data' => $search, 'frontImage' => 'search.jpg', 'searchBar' => TRUE, 'dropdowns' => $this->Master_model->getLocation());
+        $this->load->view('template2', $data);
+    }
+
 }

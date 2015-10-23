@@ -53,7 +53,7 @@
                                 <a href="#">Companies</a>
                             </li>
                             <li>
-                                <a href="">Login</a>
+                                <a href="<?php echo site_url('User/login')?>">Login</a>
                             </li>
                             <li>
                                 <a href="#"></a>
@@ -77,10 +77,12 @@
                                     <h2 class="text-danger">Join us & Explore thousands of Jobs</h2>
                                 </div>
                                 <div class="row" style="background: rgba(255, 255, 255, 0.49);padding: 10px;">  
-                                    <div class="col-lg-4 zeroleftpadding"><input type="text" class="form-control btn-lg"></div>
-                                    <div class="col-lg-3 zeroleftpadding"><input type="text" class="form-control btn-lg"></div>
-                                    <div class="col-lg-3 zeroleftpadding"><input type="text" class="form-control btn-lg"></div>
-                                    <div class="col-lg-1 zeroleftpadding"><input type="submit" class="btn btn-danger btn-lg" value="Search"></div>
+                                    <?php echo form_open('Job/Search') ?>
+                                    <div class="col-lg-4 zeroleftpadding"><input type="text" name="skill" class="form-control btn-lg" placeholder="Skill"></div>
+                                    <div class="col-lg-3 zeroleftpadding"><select name="location" class="form-control btn-lg"><?php echo $dropdowns; ?></select></div>
+                                    <div class="col-lg-3 zeroleftpadding"><input type="text" name="experience" class="form-control btn-lg" placeholder="Enter Experince"></div>
+                                    <div class="col-lg-2 zeroleftpadding"><input type="submit" class="btn btn-danger btn-lg btn-block" value="Search"></div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -98,4 +100,3 @@
         <script src="<?php echo asset_url() ?>/js/bootstrap.min.js"></script>    
     </body>
 </html>
-<script><?php echo $dropdowns[2]; ?></script>
