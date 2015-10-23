@@ -479,23 +479,23 @@ class User extends CI_Controller {
             $this->form_validation->set_rules('experince', 'experince', 'trim|required');
             if ($this->form_validation->run() === True) {
                 //$data['job']=  $this->User_model->search($this->input->post('skill'),$this->input->post('location'),$this->input->post('experince'));
-                
-                    $conditions = array();
-                    if ($this->input->post('skill') != '') {
-                        $skill = $this->input->post('skill');
-                        $conditions[] = "skill LIKE '$skill%'";
-                    }
-                    if ($this->input->post('location') != '') {
-                        $location = $this->input->post('location');
-                        $conditions[] = "location ='$location'";
-                    }
-                    if ($this->input->post('experince') != '') {
-                        $experince = $this->input->post('experince');
-                        $conditions[] = "exp_max ='$experince' ";
-                    }
 
-                   $data['job']= $this->User_model->search($conditions);
-                
+                $conditions = array();
+                if ($this->input->post('skill') != '') {
+                    $skill = $this->input->post('skill');
+                    $conditions[] = "j.`keyword` LIKE '$skill%'";
+                }
+                if ($this->input->post('location') != '') {
+                    $location = $this->input->post('location');
+                    $conditions[] = "lm.location ='$location'";
+                }
+                if ($this->input->post('experince') != '') {
+                    $experince = $this->input->post('experince');
+                    $conditions[] = "j.exp_max =$experince ";
+                }
+
+                $data['job'] = $this->User_model->search($conditions);
+//                   var_dump($data);
             }
         }
         //$data = $this->User_model->find_by_user_id2($user_id);

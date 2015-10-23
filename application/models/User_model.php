@@ -269,10 +269,11 @@ class User_model extends CI_Model {
                 LEFT JOIN `functional_area` fa
                 ON fa.`fun_id`=j.`functional_area`";
         if (!empty($conditions)) {
-            $query .= ' WHERE ' . join(' OR ', $conditions);
+            $query .= ' WHERE ' . join(' AND ', $conditions);
         }
-
+        echo $query;
         $query = $this->db->query($query);
+
         return $query->result();
     }
 
