@@ -11,6 +11,11 @@ class Job extends CI_Controller {
         
     }
 
+    function index() {
+        $data = array('title' => 'Search Job', 'content' => 'job/index', 'view_data' => 'blank' ,'frontImage' => 'search.jpg' ,'searchBar'=> TRUE);
+        $this->load->view('template2', $data);
+    }
+
     function add() {
         $data['auth_id'] = $this->session->userdata("user_id");
         if (isset($this->user_id) && $this->user_id != '' && $this->user_type == 'Employee') {
@@ -79,7 +84,7 @@ class Job extends CI_Controller {
         $data['industry'] = $this->Master_model->getFunctionArea($result['industry']);
         $data['location'] = $this->Master_model->getLocation($result['location']);
         $data['experience'] = $this->Master_model->getWorkExperience($result['exp_min']);
-        $data['experience1'] = $this->Master_model->getWorkExperience( $result['exp_max']);
+        $data['experience1'] = $this->Master_model->getWorkExperience($result['exp_max']);
         $data['functional_area'] = $this->Master_model->getFunctionArea($result['functional_area']);
         $userdata = array('title' => ' update Job', 'content' => 'job/edit', 'view_data' => $data);
         $this->load->view('template1', $userdata);
