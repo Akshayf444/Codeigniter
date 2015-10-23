@@ -36,8 +36,9 @@ class User_model extends CI_Model {
         $query = $this->db->get_where('user', array('auth_id' => $id));
         return $query->row_array();
     }
+
     public function find_by_user_id2($id) {
-        
+
         $query = "SELECT *FROM user u
                     WHERE u.auth_id=$id";
         $query = $this->db->query($query);
@@ -247,7 +248,7 @@ class User_model extends CI_Model {
         return $this->db->update('user_qualification', $data);
     }
 
-    public function all_job($id,$skill) {
+    public function all_job($id, $skill) {
         $query = "SELECT *FROM jobs j
                 LEFT JOIN emp_profile ep
                 ON j.auth_id=ep.`auth_id`
@@ -258,14 +259,32 @@ class User_model extends CI_Model {
 
         return $query->result();
     }
-    public function search() {
+
+    public function search($conditions) {
         $query = "SELECT *FROM jobs j
                 LEFT JOIN emp_profile ep
                 ON j.auth_id=ep.`auth_id`
                 LEFT JOIN `location_master` lm
                 ON lm.loc_id=j.location
-                WHERE j.functional_area=$id AND j.`keyword` LIKE '$skill%'";
+                LEFT JOIN `functional_area` fa
+                ON fa.`fun_id`=j.`functional_area`";
+        if (!empty($conditions)) {
+            $query .= ' WHERE ' . join(' OR ', $conditions);
+        }
+
         $query = $this->db->query($query);
+        return $query->result();
+    }
+
+    public function all_job2() {
+        $query = "SELECT *FROM jobs j
+                LEFT JOIN emp_profile ep
+                ON j.auth_id=ep.`auth_id`
+                LEFT JOIN `location_master` lm
+                ON lm.loc_id=j.location";
+        $query = $this->db->query($query);
+
+        return $query->result();
     }
 
 }

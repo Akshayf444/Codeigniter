@@ -469,4 +469,41 @@ class User extends CI_Controller {
         }
     }
 
+    public function SearchJob2() {
+
+        $this->load->model('Master_model');
+        $user_id = $this->session->userdata("user_id");
+        if ($this->input->post()) {
+            $this->form_validation->set_rules('skill', 'skill', 'trim|required');
+            $this->form_validation->set_rules('location', 'location', 'trim|required');
+            $this->form_validation->set_rules('experince', 'experince', 'trim|required');
+            if ($this->form_validation->run() === True) {
+                //$data['job']=  $this->User_model->search($this->input->post('skill'),$this->input->post('location'),$this->input->post('experince'));
+                
+                    $conditions = array();
+                    if ($this->input->post('skill') != '') {
+                        $skill = $this->input->post('skill');
+                        $conditions[] = "skill LIKE '$skill%'";
+                    }
+                    if ($this->input->post('location') != '') {
+                        $location = $this->input->post('location');
+                        $conditions[] = "location ='$location'";
+                    }
+                    if ($this->input->post('experince') != '') {
+                        $experince = $this->input->post('experince');
+                        $conditions[] = "exp_max ='$experince' ";
+                    }
+
+                   $data['job']= $this->User_model->search($conditions);
+                
+            }
+        }
+        //$data = $this->User_model->find_by_user_id2($user_id);
+        // $data['job'] = $this->User_model->all_job2();
+        $data['dropdowns'] = $this->Master_model->getLocation();
+
+        $data = array('title' => 'Job Search', 'content' => 'User/JobSearch', 'view_data' => $data);
+        $this->load->view('template2', $data);
+    }
+
 }
