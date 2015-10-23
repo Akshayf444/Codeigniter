@@ -29,6 +29,10 @@ body{
 
 }
 
+/****************** Btn override***************************/
+.btn{
+    border-radius: 0px;
+}
 /************** Section *******************/
 .section {
     position: relative;
