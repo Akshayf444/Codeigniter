@@ -1,4 +1,4 @@
-<div class="row" style="margin-top: 48px">
+<div class="row">
     <div class="col-lg-1"></div>
     <div class="col-lg-10 panel panel-default">
         <h5 ><?php echo $view['title'] ?></h5>
@@ -89,20 +89,7 @@
         </div>
         <div class="row" style="margin-top: 58px;margin-bottom: 18px;">
             <div class="col-sm-4">
-                <?php
-                if ($is_logged_in == FALSE) {
-                    ?>
-                    <a href="<?php echo site_url('Job/apply/' . $view['job_id']); ?>"><button class="btn btn-success">Login to Apply</button></a>
-                    <a href=""><button class="btn btn-info">Register to Apply</button></a>
-                    <?php
-                } elseif ($is_logged_in == TRUE && $is_applied == TRUE) {
-                    echo '<button class="btn btn-success">Already Applied</button>';
-                } else {
-                    ?>
-                    <a href="<?php echo site_url('Job/apply/' . $view['job_id']); ?>"><button class="btn btn-success">Apply</button></a>
-
-                <?php }  ?>
-
+                <a href="../User/login"><button class="btn btn-success">Log In To Apply</button></a>
             </div>
         </div>
     </div>

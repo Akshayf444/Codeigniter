@@ -6,7 +6,7 @@ if (isset($job)) {
         <div class="row">
             <div class="col-lg-1"></div>
             <div class="col-lg-10 panel panel-default">
-                <h5><a><?php echo $j->title ?></a></h5>
+                <h5><a href="<?php echo site_url('Job/viewDetails/'.$j->job_id)?>"><?php echo $j->title ?></a></h5>
                 <h6><?php echo $j->name ?></h6>
                 <div class="row">
                     <dl>

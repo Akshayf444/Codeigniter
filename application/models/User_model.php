@@ -286,29 +286,5 @@ class User_model extends CI_Model {
 
         return $query->row_array();
     }
-    public function apply($job_id,$auth_id) {
-        $data = array(
-            'job_id' => $job_id,
-            'auth_id' => $auth_id,
-            'created' => date('Y-m-d H:i:s'),
-        );
-        return $this->db->insert('apply_job', $data);
-    }
-    public function apply_id($job_id,$auth_id) {
-        $data = "SELECT * FROM apply_job
-                WHERE job_id=$job_id AND auth_id=$auth_id";
-        $query = $this->db->query($data);
-
-        return $query->row_array();
-    }
-    public function applied($job_id,$auth_id) {
-        $data = "SELECT * FROM jobs j
-                LEFT JOIN apply_job aj
-                ON j.job_id=aj.`job_id`
-                WHERE aj.`auth_id`=$auth_id AND j.`job_id`=$job_id";
-        $query = $this->db->query($data);
-
-        return $query->row_array();
-    }
 
 }

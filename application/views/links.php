@@ -4,6 +4,7 @@
 
 <!-- Custom CSS -->
 <link href="<?php echo asset_url() ?>/css/style.css" rel="stylesheet">
+<link href="<?php echo asset_url() ?>/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
 <!-- Custom CSS -->
 <!--        <link href="css/half-slider.css" rel="stylesheet">-->

@@ -53,7 +53,7 @@
                                 <a href="#">Companies</a>
                             </li>
                             <li>
-                                <a href="<?php echo site_url('User/login')?>">Login</a>
+                                <a href="<?php echo site_url('User/login') ?>">Login</a>
                             </li>
                             <li>
                                 <a href="#"></a>
@@ -66,12 +66,31 @@
             </div>
             <!-- /.container -->
         </nav>
-        <div class="section" style="top:30px" >
-            <div class="container" >
-                <?php $this->load->view($content, $view_data); ?>
+        <?php if (isset($frontImage) && $searchBar == TRUE) { ?>
+            <div class="container-fluid">
+                <div class="row">
+                    <img src="<?php echo asset_url() ?>images/<?php echo $frontImage ?>" class="img-responsive">
+                    <div class="row">
+                        <div class="container ">
+                            <div class="job-advanced-search" >
+                                <div class="row">
+                                    <h2 class="text-danger">Join us & Explore thousands of Jobs</h2>
+                                </div>
+                                <div class="row" style="background: rgba(255, 255, 255, 0.49);padding: 10px;">  
+                                    <?php echo form_open('Job/Search') ?>
+                                    <div class="col-lg-4 zeroleftpadding"><input type="text" name="skill" class="form-control btn-lg" placeholder="Skill"></div>
+                                    <div class="col-lg-3 zeroleftpadding"><select name="location" class="form-control btn-lg"><?php echo $dropdowns; ?></select></div>
+                                    <div class="col-lg-3 zeroleftpadding"><input type="text" name="experience" class="form-control btn-lg" placeholder="Enter Experince"></div>
+                                    <div class="col-lg-2 zeroleftpadding"><input type="submit" class="btn btn-danger btn-lg btn-block" value="Search"></div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <?php $this->load->view('footer'); ?>
+        <?php } 
+        $this->load->view('footer'); ?>
 
         <script src="<?php echo asset_url() ?>/js/bootstrap.min.js"></script>    
     </body>

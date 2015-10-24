@@ -12,7 +12,9 @@ class Job extends CI_Controller {
     }
 
     function index() {
-        $this->Search();
+        $this->load->model('Master_model');
+        $data = array('title' => 'Search Job', 'content' => 'job/index', 'view_data' => 'Blank', 'frontImage' => 'search.jpg', 'searchBar' => TRUE, 'dropdowns' => $this->Master_model->getLocation());
+        $this->load->view('searchTemplate', $data);
     }
 
     function add() {
@@ -109,10 +111,45 @@ class Job extends CI_Controller {
             }
 
             $search['job'] = $this->Job_model->search($conditions);
+            $data = array('title' => 'Search Job', 'content' => 'job/index', 'view_data' => $search);
+            $this->load->view('template2', $data);
         }
+    }
 
-        $data = array('title' => 'Search Job', 'content' => 'job/index', 'view_data' => $search, 'frontImage' => 'search.jpg', 'searchBar' => TRUE, 'dropdowns' => $this->Master_model->getLocation());
+    public function viewDetails($id) {
+
+        $this->load->model('Master_model');
+        $user_id = $this->session->userdata("user_id");
+        $is_logged_in = FALSE;
+        $is_applied = FALSE;
+        $data['view'] = $this->Job_model->view_job($id);
+        if (isset($this->user_id) && $this->user_id > 0 && $this->user_type == 'User') {
+            $is_logged_in = TRUE;
+            if (!empty($this->Job_model->applied($id, $user_id))) {
+                $is_applied = TRUE;
+            }
+        }
+        $data['is_applied'] = $is_applied;
+        $data['is_logged_in'] = $is_logged_in;
+
+        $data = array('title' => 'Job Search', 'content' => 'Job/viewsearch2', 'view_data' => $data);
         $this->load->view('template2', $data);
+    }
+
+    public function apply($id) {
+        if ($this->session->userdata("user_id")) {
+            $user_id = $this->session->userdata("user_id");
+            $data['job'] = $this->Job_model->apply_id($id, $user_id);
+            if (!empty($data['job'])) {
+                redirect('User/SearchJob');
+            } else {
+                $this->Job_model->apply($id, $user_id);
+                //redirect('User/SearchJob', 'refresh');
+                $this->load->view('User/success');
+            }
+        } else {
+            redirect('User/login', 'refresh');
+        }
     }
 
 }

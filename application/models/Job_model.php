@@ -31,11 +31,12 @@ class Job_model extends CI_Model {
     }
 
     public function view_job($id) {
-        $this->db->select('jobs.*,industry_master.industry as industry_name,functional_area.fun_area,location_master.location as loc');
+        $this->db->select('jobs.*,industry_master.industry as industry_name,functional_area.fun_area,location_master.location as loc,emp.*');
         $this->db->from('jobs');
-        $this->db->join('industry_master ', 'jobs.industry=industry_master.indus_id', 'left');
-        $this->db->join('location_master ', 'jobs.location=location_master.loc_id', 'left');
-        $this->db->join('functional_area', 'jobs.functional_area=functional_area.fun_id', 'left');
+        $this->db->join('industry_master ', 'jobs.industry = industry_master.indus_id', 'left');
+        $this->db->join('location_master ', 'jobs.location = location_master.loc_id', 'left');
+        $this->db->join('functional_area', 'jobs.functional_area = functional_area.fun_id', 'left');
+        $this->db->join('emp_profile emp', 'jobs.auth_id = emp.auth_id', 'left');
         $this->db->where('jobs.job_id', $id);
         $query = $this->db->get();
         return $query->row_array();
@@ -56,9 +57,8 @@ class Job_model extends CI_Model {
             'location' => $this->input->post('location'),
             'industry' => $this->input->post('industry'),
             'functional_area' => $this->input->post('functional_area'),
-            'auth_id' => $this->input->post('auth_id'),
+
             'keyword' => $this->input->post('keyword'),
-            'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
         );
 
@@ -81,6 +81,33 @@ class Job_model extends CI_Model {
         $query = $this->db->query($query);
 
         return $query->result();
+    }
+
+    public function applied($job_id, $auth_id = 0) {
+        $data = "SELECT j.*,aj.* FROM jobs j
+                LEFT JOIN apply_job aj
+                ON j.job_id=aj.job_id
+                WHERE aj.auth_id=$auth_id AND j.job_id=$job_id";
+        $query = $this->db->query($data);
+
+        return $query->row_array();
+    }
+
+    public function apply($job_id, $auth_id) {
+        $data = array(
+            'job_id' => $job_id,
+            'auth_id' => $auth_id,
+            'created' => date('Y-m-d H:i:s'),
+        );
+        return $this->db->insert('apply_job', $data);
+    }
+
+    public function apply_id($job_id, $auth_id) {
+        $data = "SELECT * FROM apply_job
+                WHERE job_id=$job_id AND auth_id=$auth_id";
+        $query = $this->db->query($data);
+
+        return $query->row_array();
     }
 
 }
