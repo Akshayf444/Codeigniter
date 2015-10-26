@@ -106,4 +106,31 @@ class Api extends CI_Controller {
         echo json_encode($output);
     }
 
+    public function changepassword() {
+        $this->load->model('User_model');
+        $this->load->model('address_model');
+        $auth_id = $_GET['auth_id'];
+        $password = md5($_GET['password']);
+        $old_password = md5($_GET['old_password']);
+        $check = $this->User_model->find_by_id($auth_id);
+//        $field_array=array();
+        $field_array = array(
+            'password' => $password,
+        );
+        if ($check['password'] == $old_password) {
+            if (!empty($field_array)) {
+                $id = $this->User_model->changepassword($field_array, $auth_id);
+                $output = array('status' => 'success', 'message' => 'successfully changed');
+            } else {
+                $output = array('status' => 'error', 'message' => 'Enter Password');
+            }
+        }
+         else {
+                $output = array('status' => 'error', 'message' => 'Details Not Found');
+            }
+
+        header('content-type: application/json');
+        echo json_encode($output);
+    }
+
 }
