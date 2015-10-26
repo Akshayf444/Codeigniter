@@ -132,5 +132,36 @@ class Api extends CI_Controller {
         header('content-type: application/json');
         echo json_encode($output);
     }
+    
+    
+    public function resume_add() {
+            $user_id = $_REQUEST['auth_id'];
+            $detail = $_REQUEST['detail'];
+            $config['upload_path'] = 'C:\wamp\www\jobportal\application\Resume';
+            $config['allowed_types'] = 'pdf|doc|docx';
+            $config['max_size'] = '4096';
+            $new_name = time();
+            $config['file_name'] = $new_name;
+            $this->load->library('upload', $config);
+            $this->upload->display_errors('', '');
+            $this->form_validation->set_rules('detail', 'client', 'trim|required');
+            if (!$this->upload->do_upload("resume")) {
+                echo $this->upload->display_errors();
+                die();
+                $this->data['error'] = array('error' => $this->upload->display_errors());
+                 $output = array('status' => 'error', 'message' => 'Details Not Found');
+            } else {
+                $upload_result = $this->upload->data();
+
+                print_r($upload_result['file_name']); //or print any valid
+                $this->User_model->resume($upload_result['file_name'], $user_id,$detail);
+                $output = array('status' => 'success', 'message' => 'Resume successfully added');
+            }
+
+
+//            $data = array('title' => 'Resume Upload', 'content' => 'User/resume', 'view_data' => 'blank');
+//            $this->load->view('template1', $data);
+            redirect('User/resume', 'refresh');
+    }
 
 }
