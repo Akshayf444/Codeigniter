@@ -1,25 +1,35 @@
 
-
 <div class="row">
+    <script src="<?php echo asset_url() ?>/js/bootstrap-multiselect.js" type="text/javascript"></script>
+    <link href="<?php echo asset_url() ?>/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css"/>
 
-    <div class="col-lg-3">
-        <div>
-            <h5>Location</h5>
+
+    <div class="col-lg-2">
+
+        <div class="row">
+            <select class="form-control multiselect " multiple="multiple">
+                <?php
+                foreach ($dropdowns as $drop) :
+                    // var_dump($drop);
+                    ?>
+                    <option><?php echo $drop->location; ?></option>
+                <?php endforeach; ?>
+            </select>
         </div>
-        <div class="panel panel-default" style="    padding: 9px;">
-            <?php
-            foreach ($dropdowns as $drop) :
-                // var_dump($drop);
-                ?>
-
-            <div>  
-                    <input type="checkbox" class="" value=""/><?php echo $drop->location; ?>
-                </div>
-            <?php endforeach; ?>
-
+        <div class="row">
+            <select class="form-control multiselect " multiple="multiple">
+                <?php
+                foreach ($industry as $indus) :
+                    // var_dump($drop);
+                    ?>
+                    <option><?php echo $indus->industry; ?></option>
+                <?php endforeach; ?>
+            </select>
         </div>
     </div>
 
+
+    <div class="col-lg-1"></div>
     <?php
     if (isset($job)) {
 
@@ -64,3 +74,12 @@
     }
     ?>
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('.multiselect').multiselect({
+            numberDisplayed: 1
+        });
+
+    });
+</script>

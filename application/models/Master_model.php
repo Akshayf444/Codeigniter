@@ -92,6 +92,13 @@ class Master_model extends CI_Model {
         return $query->result();
     }
 
+    public function listIndustry2() {
+        $query = "SELECT * FROM `industry_master`
+ LIMIT 5";
+        $query = $this->db->query($query);
+        return $query->result();
+    }
+
     public function listFunctionalArea() {
         $query = $this->db->get('functional_area');
         return $query->result();
