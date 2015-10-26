@@ -91,6 +91,9 @@
             <div class="col-sm-4">
                 <a href="../User/login"><button class="btn btn-success">Log In To Apply</button></a>
             </div>
+            <div class="col-sm-4">
+                <a href="../User/register"><button class="btn btn-primary">Register In To Apply</button></a>
+            </div>
         </div>
     </div>
 

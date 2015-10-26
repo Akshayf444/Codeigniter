@@ -495,7 +495,7 @@ class User extends CI_Controller {
                 $conditions[] = "j.exp_max =$experince ";
             }
 
-            $data['job'] = $this->User_model->search($conditions);
+            $data['job'] = $this->Job_model->search($conditions);
 //                   var_dump($data);
 //            }
         }
