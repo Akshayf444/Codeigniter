@@ -461,7 +461,7 @@ class User extends CI_Controller {
             $data = $this->User_model->find_by_user_id2($user_id);
             $data['job'] = $this->User_model->all_job($data['function_area'], $data['key_skill']);
             $data['dropdowns'] = $this->Master_model->getLocation();
-           
+
 
             $data = array('title' => 'Job Search', 'content' => 'User/SearchForm', 'view_data' => $data);
             $this->load->view('template1', $data);
@@ -521,7 +521,7 @@ class User extends CI_Controller {
             $id = $_GET['id'];
             $data['view'] = $this->User_model->view_search($id);
             $data['applied'] = $this->User_model->applied($id, $user_id);
-             $data['show'] = $this->User_model->applied($id,$user_id);
+            $data['show'] = $this->User_model->applied($id, $user_id);
             $data = array('title' => 'Job Search', 'content' => 'User/viewsearch2', 'view_data' => $data);
             $this->load->view('template1', $data);
         } else {
@@ -542,6 +542,30 @@ class User extends CI_Controller {
                 //redirect('User/SearchJob', 'refresh');
                 $this->load->view('User/success');
             }
+        } else {
+            redirect('User/login', 'refresh');
+        }
+    }
+
+    public function changepassword() {
+        if ($this->is_logged_in() == TRUE) {
+            $this->load->model('Master_model');
+            $user_id = $this->session->userdata("user_id");
+            if ($this->input->post()) {
+                $this->form_validation->set_rules('password', 'password', 'trim|required');
+                 if ($this->form_validation->run() === True) {
+                  
+                        $data = array(
+                            'password' => md5($this->input->post('password')),
+                        );
+
+                        $add = $this->User_model->changepassword($data,$user_id);
+                        redirect('User/changepassword', 'refresh');
+                  
+                }
+            }
+            $data = array('title' => 'Job Search', 'content' => 'User/changepassword', 'view_data' => 'blank');
+            $this->load->view('template1', $data);
         } else {
             redirect('User/login', 'refresh');
         }

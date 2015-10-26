@@ -287,4 +287,9 @@ class User_model extends CI_Model {
         return $query->row_array();
     }
 
+    public function changepassword($data,$id) {
+        $this->db->where(array('auth_id' => $id));
+        return $this->db->update('authentication', $data);
+    }
+
 }
