@@ -28,7 +28,7 @@ class Master_model extends CI_Model {
             for ($i = 0; $i < count($spec_id); $i++) {
                 if ($spec1_id == $spec_id[$i]) {
                     $specialization .= '<option value = "' . $spec_id[$i] . '" selected>' . $specializearray[$i] . '</option>';
-                }  else {
+                } else {
                     $specialization .= '<option value = "' . $spec_id[$i] . '" >' . $specializearray[$i] . '</option>';
                 }
 
@@ -70,6 +70,15 @@ class Master_model extends CI_Model {
 
     function listLocation() {
         $query = $this->db->get('location_master');
+        return $query->result();
+    }
+
+    function listLocation2() {
+
+        $query = "SELECT DISTINCT location FROM `location_master`
+                    WHERE location IN ('mumbai', 'delhi','Bengaluru/ Bangalore','pune')";
+        $query = $this->db->query($query);
+
         return $query->result();
     }
 

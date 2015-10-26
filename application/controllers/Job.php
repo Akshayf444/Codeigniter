@@ -109,6 +109,8 @@ class Job extends CI_Controller {
                 $experince = $this->input->post('experince');
                 $conditions[] = "j.exp_max =$experince ";
             }
+//            isset($user_profile['current_location']) ? $this->Master_model->getLocation($user_profile['current_location']) : 
+            $search['dropdowns'] = $this->Master_model->listLocation2();
 
             $search['job'] = $this->Job_model->search($conditions);
             $data = array('title' => 'Search Job', 'content' => 'job/index', 'view_data' => $search);

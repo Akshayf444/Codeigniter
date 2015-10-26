@@ -1,12 +1,33 @@
-<?php
-if (isset($job)) {
 
-    foreach ($job as $j) {
-        ?>
-        <div class="row">
-            <div class="col-lg-1"></div>
-            <div class="col-lg-10 panel panel-default">
-                <h5><a href="<?php echo site_url('Job/viewDetails/'.$j->job_id)?>"><?php echo $j->title ?></a></h5>
+
+<div class="row">
+
+    <div class="col-lg-3">
+        <div>
+            <h5>Location</h5>
+        </div>
+        <div class="panel panel-default" style="    padding: 9px;">
+            <?php
+            foreach ($dropdowns as $drop) :
+                // var_dump($drop);
+                ?>
+
+            <div>  
+                    <input type="checkbox" class="" value=""/><?php echo $drop->location; ?>
+                </div>
+            <?php endforeach; ?>
+
+        </div>
+    </div>
+
+    <?php
+    if (isset($job)) {
+
+        foreach ($job as $j) {
+            ?>
+
+            <div class="col-lg-8 panel panel-default">
+                <h5><a href="<?php echo site_url('Job/viewDetails/' . $j->job_id) ?>"><?php echo $j->title ?></a></h5>
                 <h6><?php echo $j->name ?></h6>
                 <div class="row">
                     <dl>
@@ -37,8 +58,9 @@ if (isset($job)) {
                 </div>
             </div>
 
-        </div>
-        <?php
+
+            <?php
+        }
     }
-}
-?>
+    ?>
+</div>
