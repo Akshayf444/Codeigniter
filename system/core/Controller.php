@@ -68,10 +68,10 @@ class CI_Controller {
                     'Application History' => '#'
                 ),
                 'Recruiters' => array(
-                    'Job & Updates' => '#'
+                    'Job & Updates' => 'User/SearchJob'
                 ),
                 'Settings' => array(
-                    'Change Password' => '#'
+                    'Change Password' => 'User/changepassword'
                 )
             );
         } else {
