@@ -570,5 +570,20 @@ class User extends CI_Controller {
             redirect('User/login', 'refresh');
         }
     }
+    
+    public function Applicationhistory() {
+        if ($this->is_logged_in() == TRUE) {
+            $this->load->model('Master_model');
+            $user_id = $this->session->userdata("user_id");
+            if ($this->input->post()) {
+                
+            }
+            $data['history']=$this->User_model->application();
+            $data = array('title' => 'Job Search', 'content' => 'User/Applicationhistory', 'view_data' => $data);
+            $this->load->view('template1', $data);
+        } else {
+            redirect('User/login', 'refresh');
+        }
+    }
 
 }
