@@ -427,7 +427,7 @@ class User extends CI_Controller {
                             'auth_id' => $user_id,
                         );
 
-                        $add = $this->User_model->user_qualification($data, $this->input->post('id'));
+                        $add = $this->User_model->user_qualification_update($data, $this->input->post('id'));
                         redirect('User/view', 'refresh');
                     }
                 }

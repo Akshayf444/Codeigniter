@@ -87,16 +87,16 @@ class User_model extends CI_Model {
         return $this->db->insert('user_qualification', $data);
     }
 
-    public function user_qualification_update($id) {
-        $data = array(
-            'qualification' => $this->input->post('qualification'),
-            'specialization' => $this->input->post('specialization'),
-            'institute' => $this->input->post('institute'),
-            'year' => $this->input->post('year'),
-            'updated_at' => date('Y-m-d H:i:s'),
-            'auth_id' => $id,
-        );
-        $this->db->where(array('auth_id' => $id));
+    public function user_qualification_update($data,$id) {
+//        $data = array(
+//            'qualification' => $this->input->post('qualification'),
+//            'specialization' => $this->input->post('specialization'),
+//            'institute' => $this->input->post('institute'),
+//            'year' => $this->input->post('year'),
+//            'updated_at' => date('Y-m-d H:i:s'),
+//            'auth_id' => $id,
+//        );
+        $this->db->where(array('id' => $id));
         return $this->db->update('user_qualification', $data);
     }
 
