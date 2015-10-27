@@ -497,21 +497,27 @@ class User extends CI_Controller {
             $this->load->model('Master_model');
             $this->load->model('Job_model');
             $is_logged_in = FALSE;
-        $is_applied = FALSE;
+            $is_applied = FALSE;
+            $is_applied2 = FALSE;
             $user_id = $this->session->userdata("user_id");
             $id = $_GET['id'];
             $data['view'] = $this->User_model->view_search($id);
             //$data['applied'] = $this->Job_model->apply($id, $user_id);
             $data['show'] = $this->Job_model->applied($id, $user_id);
-             if (isset($this->user_id) && $this->user_id > 0 && $this->user_type == 'User') {
-            $is_logged_in = TRUE;
-            $applied = $this->Job_model->applied($id, $user_id);
-            if (!empty($applied)) {
-                $is_applied = TRUE;
+            if (isset($this->user_id) && $this->user_id > 0 && $this->user_type == 'User') {
+                $is_logged_in = TRUE;
+                $applied = $this->Job_model->applied($id, $user_id);
+                $applied2 = $this->User_model->saved_jobs_by_id($id,$user_id);
+                if (!empty($applied)) {
+                    $is_applied = TRUE;
+                }
+                if (!empty($applied2)) {
+                    $is_applied2 = TRUE;
+                }
             }
-        }
-        $data['is_applied'] = $is_applied;
-        $data['is_logged_in'] = $is_logged_in;
+            $data['is_applied'] = $is_applied;
+            $data['is_applied2'] = $is_applied2;
+            $data['is_logged_in'] = $is_logged_in;
             $data = array('title' => 'Job Search', 'content' => 'User/viewsearch2', 'view_data' => $data);
             $this->load->view('template1', $data);
         } else {
@@ -543,15 +549,14 @@ class User extends CI_Controller {
             $user_id = $this->session->userdata("user_id");
             if ($this->input->post()) {
                 $this->form_validation->set_rules('password', 'password', 'trim|required');
-                 if ($this->form_validation->run() === True) {
-                  
-                        $data = array(
-                            'password' => md5($this->input->post('password')),
-                        );
+                if ($this->form_validation->run() === True) {
 
-                        $add = $this->User_model->changepassword($data,$user_id);
-                        redirect('User/changepassword', 'refresh');
-                  
+                    $data = array(
+                        'password' => md5($this->input->post('password')),
+                    );
+
+                    $add = $this->User_model->changepassword($data, $user_id);
+                    redirect('User/changepassword', 'refresh');
                 }
             }
             $data = array('title' => 'Job Search', 'content' => 'User/changepassword', 'view_data' => 'blank');
@@ -560,7 +565,7 @@ class User extends CI_Controller {
             redirect('User/login', 'refresh');
         }
     }
-    
+
     public function Applicationhistory() {
         if ($this->is_logged_in() == TRUE) {
             $this->load->model('Master_model');
@@ -568,7 +573,7 @@ class User extends CI_Controller {
             if ($this->input->post()) {
                 
             }
-            $data['history']=$this->User_model->application();
+            $data['history'] = $this->User_model->application($user_id);
             $data = array('title' => 'Job Search', 'content' => 'User/Applicationhistory', 'view_data' => $data);
             $this->load->view('template1', $data);
         } else {
@@ -576,4 +581,35 @@ class User extends CI_Controller {
         }
     }
 
+    public function saved_jobs($id) {
+        if ($this->is_logged_in() == TRUE) {
+            $this->load->model('Master_model');
+            $user_id = $this->session->userdata("user_id");
+
+            $data['check'] = $this->User_model->saved_jobs_by_id($id,$user_id);
+            if (empty($data['check'])) {
+                $this->User_model->saved_jobs($id, $user_id);
+                $this->load->view('User/Succesfully saved');
+            } else {
+                $this->load->view('User/Already Saved');
+            }
+        } else {
+            redirect('User/login', 'refresh');
+        }
+    }
+
+    public function viewsavedjobs() {
+        if ($this->is_logged_in() == TRUE) {
+            $this->load->model('Master_model');
+            $user_id = $this->session->userdata("user_id");
+            if ($this->input->post()) {
+                
+            }
+            $data['history'] = $this->User_model->viewsavedjobs($user_id);
+            $data = array('title' => 'Job Search', 'content' => 'User/savedjobs', 'view_data' => $data);
+            $this->load->view('template1', $data);
+        } else {
+            redirect('User/login', 'refresh');
+        }
+    }
 }

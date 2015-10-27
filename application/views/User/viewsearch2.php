@@ -3,6 +3,17 @@
     <div class="col-lg-10 panel panel-default">
         <h5 ><?php echo $view['title'] ?></h5>
         <h6><?php echo $view['name'] ?></h6>
+
+
+        <?php if ($is_logged_in == TRUE && $is_applied2 == TRUE) { ?>
+            <button class="btn btn-primary pull-right">Already Saved</button>
+
+        <?php } else {
+            ?>
+            <a href="<?php echo site_url('User/saved_jobs/' . $view['job_id']); ?>"><button class="btn btn-primary pull-right">Save This Job</button></a>
+
+
+        <?php } ?>
         <div class="row">
             <dl>
                 <dt class="col-sm-1">
@@ -36,7 +47,7 @@
     <div class="col-lg-1"></div>
     <div class="col-lg-10 panel panel-default">
         <div class="row">
-            <div class=" col-lg-6 ">
+            <div class=" col-lg-12 ">
                 <div class="">
                     <h5><b>Job Description</b></h5>
                     <h6><?php echo $view['description']; ?></h6>
@@ -101,7 +112,7 @@
                     ?>
                     <a href="<?php echo site_url('Job/apply/' . $view['job_id']); ?>"><button class="btn btn-success">Apply</button></a>
 
-                <?php }  ?>
+                <?php } ?>
 
             </div>
         </div>

@@ -64,7 +64,7 @@ class CI_Controller {
                     'Education' => 'User/user_qualification'
                 ),
                 'Jobs & Application' => array(
-                    'Saved Jobs' => '#',
+                    'Saved Jobs' => 'User/viewsavedjobs',
                     'Application History' => 'User/Applicationhistory'
                 ),
                 'Recruiters' => array(

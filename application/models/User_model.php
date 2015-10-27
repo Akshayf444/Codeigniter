@@ -303,7 +303,7 @@ class User_model extends CI_Model {
         return $this->db->update('authentication', $data);
     }
 
-    public function application() {
+    public function application($id) {
         $query = "SELECT * FROM apply_job aj
                 LEFT JOIN jobs j
                 ON aj.`job_id`=j.`job_id`
@@ -311,9 +311,38 @@ class User_model extends CI_Model {
                 ON ep.`auth_id` =j.`auth_id`
                 LEFT JOIN `location_master` lm
                 ON lm.`loc_id`=j.`location`
-                WHERE aj.auth_id=2";
+                WHERE aj.auth_id=$id";
         $query = $this->db->query($query);
         return $query->result();
     }
+    public function saved_jobs($job_id,$auth_id) {
+        $data=array(
+            'job_id'=>$job_id,
+            'auth_id'=>$auth_id,
+            'created'=>date('Y-m-d H:i:s'),
+        );
+        return $query = $this->db->insert('saved_jobs', $data);
+    }
+    public function saved_jobs_by_id($job_id,$auth_id) {
+        $query="SELECT * FROM saved_jobs sj
+                WHERE job_id=$job_id AND auth_id=$auth_id";
+        $query = $this->db->query($query);
+        return $query->row_array();
+    }
+    public function viewsavedjobs($id) {
+        $query = "SELECT *,(aj.`created`)AS creat FROM saved_jobs aj
+                LEFT JOIN jobs j
+                ON aj.`job_id`=j.`job_id`
+                LEFT JOIN `emp_profile` ep
+                ON ep.`auth_id` =j.`auth_id`
+                LEFT JOIN `location_master` lm
+                ON lm.`loc_id`=j.`location`
+                WHERE aj.auth_id=$id";
+        $query = $this->db->query($query);
+        return $query->result();
+    }
+    
+    
+
 
 }
