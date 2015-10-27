@@ -14,30 +14,6 @@ class User extends CI_Controller {
         $this->login();
     }
 
-//    public function register() {
-//        $this->form_validation->set_rules('email', 'email', 'trim|required');
-//        $this->form_validation->set_rules('password', 'password', 'trim|required');
-//        $this->form_validation->set_rules('mobile', 'mobile', 'trim|required');
-//        $data2 = array(
-//            'email' => $this->input->post('email'),
-//            'mobile' => $this->input->post('mobile'),
-//            'created_at' => date('Y-m-d H:i:s'),
-//            'updated_at' => date('Y-m-d H:i:s'),
-//            'type' => "User",
-//            'password' => md5($this->input->post('password')),
-//        );
-//        if ($this->form_validation->run() === FALSE) {
-//            // $this->loadFinalView(array('User/registration'));
-//            $data = array('title' => 'Login', 'content' => 'User/registration');
-//            $this->load->view('template2', $data);
-//        } else {
-//
-//            $this->User_model->create($data2);
-//            redirect('User/login_show', 'refresh');
-//            // $this->loadFinalView(array('User/login'));
-//            //redirect('news', 'refresh');
-//        }
-//    }
     public function register() {
         $this->load->model('User_model');
         $this->load->model('address_model');
@@ -53,6 +29,7 @@ class User extends CI_Controller {
 
             /////Create New User
             $id = $this->User_model->create($field_array);
+            //echo $id;
             $data = array(
                 'name' => $this->input->post('name'),
                 'dob' => $this->input->post('dob'),
@@ -90,7 +67,8 @@ class User extends CI_Controller {
             }
         }
         $dropdown['dropdowns'] = $this->Master_model->getQualification();
-        $dropdown['institute'] = $this->Master_model->institute();
+        $dropdown['institute'] = $this->Master_model->getInstitute();
+        $dropdown['location'] = $this->Master_model->getLocation();
         $data = array('title' => 'Registration', 'content' => 'User/registration', 'view_data' => $dropdown);
         $this->load->view('template2', $data);
     }

@@ -165,4 +165,20 @@ class Master_model extends CI_Model {
         return $area;
     }
 
+    function getInstitute($id = -1) {
+        $industry = '<option value = "" >Select Institute</option>';
+        $result = $this->institute();
+
+        if (!empty($result)) {
+            foreach ($result as $row) {
+                if ($id == $row->id) {
+                    $industry .= '<option value="' . $row->id . '" selected>' . $row->institute . '</option>';
+                } else {
+                    $industry .= '<option value="' . $row->id . '" >' . $row->institute . '</option>';
+                }
+            }
+        }
+        return $industry;
+    }
+
 }

@@ -69,6 +69,7 @@ class User_model extends CI_Model {
         $this->db->select('user.*,address_master.*');
         $this->db->from('user');
         $this->db->join('address_master', 'address_master.auth_id = user.auth_id', 'left');
+        $this->db->where('user.auth_id', $id);
         $query = $this->db->get();
         return $query->row_array();
     }

@@ -128,7 +128,8 @@ class Job extends CI_Controller {
         $data['view'] = $this->Job_model->view_job($id);
         if (isset($this->user_id) && $this->user_id > 0 && $this->user_type == 'User') {
             $is_logged_in = TRUE;
-            if (!empty($this->Job_model->applied($id, $user_id))) {
+            $applied = $this->Job_model->applied($id, $user_id);
+            if (!empty($applied)) {
                 $is_applied = TRUE;
             }
         }
