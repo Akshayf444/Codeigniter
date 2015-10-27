@@ -1,8 +1,8 @@
 
 <div class="panel panel-default" style="width: 197px;
-    margin: 0px 0px 0px 456px;
-    border-radius: 30px 30px 0px 0px;">
-<h2 align="center">Registration</h2>
+     margin: 0px 0px 0px 456px;
+     border-radius: 30px 30px 0px 0px;">
+    <h2 align="center">Registration</h2>
 </div>
 <?php echo validation_errors(); ?>
 
@@ -51,7 +51,9 @@
                 </div>
                 <div class="form-group">
                     <lable class="control-label">Where You Are Currently Located*</lable>
-                    <input type="text" required="required" class="form-control" name="current_location"/>
+                    <select class="form-control" name="current_location">
+                        <?php echo $location; ?>
+                    </select>
                 </div>
             </div>
             <div class="col-lg-3"></div>
@@ -76,7 +78,9 @@
                 </div>
                 <div class="form-group">
                     <lable class="control-label">Institute</lable>
-                    <input type="text" class="form-control" name="institute"/>
+                    <select class="form-control" name="institute">
+                        <?php echo $institute; ?>
+                    </select>
                 </div>
                 <div class="form-group">
                     <lable class="control-label">Year</lable>

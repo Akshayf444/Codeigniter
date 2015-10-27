@@ -67,16 +67,18 @@ class Api extends CI_Controller {
             $this->User_model->Add_detail($data);
 
             ////////Insert education Details
-            $education_details = array(
-                'qualification' => $this->input->post('qualification'),
-                'specialization' => $this->input->post('specialization'),
-                'institute' => $this->input->post('institute'),
-                'year' => $this->input->post('year'),
-                'created' => date('Y-m-d H:i:s'),
-                'auth_id' => $id,
-            );
+            for ($i = 0; $i < count($this->input->post('qualification')); $i++) {
+                $education_details = array(
+                    'qualification' => $this->input->post('qualification')[$i],
+                    'specialization' => $this->input->post('specialization')[$i],
+                    'institute' => $this->input->post('institute')[$i],
+                    'year' => $this->input->post('year')[$i],
+                    'created' => date('Y-m-d H:i:s'),
+                    'auth_id' => $id,
+                );
 
-            $this->User_model->user_qualification($data);
+                $this->User_model->user_qualification($education_details);
+            }
             $output = array('status' => 'success', 'message' => 'Error');
         } else {
             $output = array('status' => 'error', 'message' => 'Error');
@@ -90,8 +92,8 @@ class Api extends CI_Controller {
         $this->load->model('Master_model');
         $locations = $this->Master_model->listLocation();
         $content = array();
-        if (!empty($result)) {
-            foreach ($result as $loc) {
+        if (!empty($locations)) {
+            foreach ($locations as $loc) {
                 $content[] = array(
                     'loc_id' => $loc->loc_id,
                     'location' => $loc->location

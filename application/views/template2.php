@@ -8,26 +8,6 @@
 
         <title><?php echo $title ?></title>
         <?php $this->load->view('links'); ?>
-        <style>
-            .job-advanced-search {
-                top: 120px;
-                display: block;
-                padding: 10px;
-                position: absolute;
-                z-index: 1;
-                width: 85%;
-                text-align: center;             
-            }
-
-            .form-control{
-                height: 50px;
-                padding: 6px 12px;
-            }
-            .btn-lg{
-                padding: 12px 16px;
-            }
-
-        </style>
     </head>
     <body>
         <!-- Navigation -->
