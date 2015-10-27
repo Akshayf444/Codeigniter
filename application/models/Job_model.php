@@ -66,6 +66,18 @@ class Job_model extends CI_Model {
         return $this->db->update('jobs', $field_array);
     }
 
+
+    public function appiled_job($id) {
+        $this->db->select('user.name as name,jobs.title as title,user_resume.resume as resume ');
+        $this->db->from('apply_job');
+         $this->db->join('jobs', 'apply_job.job_id=jobs.job_id', 'left');
+         
+        $this->db->join('user', 'apply_job.auth_id=user.auth_id', 'left');
+              $this->db->join('user_resume', 'apply_job.auth_id=user_resume.auth_id', 'left');
+             $this->db->where('apply_job.auth_id', $id);
+        $query = $this->db->get();
+    }   
+
     public function search($conditions) {
         $query = "SELECT * ,(lm.`location`) AS loc FROM jobs j
                 LEFT JOIN emp_profile ep
@@ -106,7 +118,6 @@ class Job_model extends CI_Model {
         $data = "SELECT * FROM apply_job
                 WHERE job_id=$job_id AND auth_id=$auth_id";
         $query = $this->db->query($data);
-
         return $query->row_array();
     }
 

@@ -44,6 +44,7 @@ class employee_model extends CI_Model {
             'industry_type' => $this->input->post('industry_type'),
             'contact_person' => $this->input->post('contact_person'),
             'updated_at' => date('Y-m-d H:i:s'),
+            
         );
 
         if ($query->num_rows() > 0) {
