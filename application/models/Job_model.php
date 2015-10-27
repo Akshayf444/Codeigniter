@@ -68,14 +68,16 @@ class Job_model extends CI_Model {
 
 
     public function appiled_job($id) {
-        $this->db->select('user.name as name,jobs.title as title,user_resume.resume as resume ');
-        $this->db->from('apply_job');
-         $this->db->join('jobs', 'apply_job.job_id=jobs.job_id', 'left');
-         
-        $this->db->join('user', 'apply_job.auth_id=user.auth_id', 'left');
-              $this->db->join('user_resume', 'apply_job.auth_id=user_resume.auth_id', 'left');
-             $this->db->where('apply_job.auth_id', $id);
-        $query = $this->db->get();
+        $query="SELECT jobs.`job_id`, (u.name) AS NAME,(jobs.title) AS title,(user_resume.resume) AS res FROM apply_job
+                LEFT JOIN jobs 
+                ON apply_job.job_id=jobs.job_id
+                LEFT JOIN user u 
+                ON apply_job.auth_id=u.auth_id
+                LEFT JOIN user_resume
+                ON apply_job.auth_id=user_resume.auth_id
+                 WHERE jobs.auth_id=$id";
+     $query = $this->db->query($query);
+       return $query->result();
     }   
 
     public function search($conditions) {

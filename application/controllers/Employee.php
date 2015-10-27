@@ -113,5 +113,20 @@ class Employee extends CI_Controller {
         $data = array('title' => 'Basic Employee Profile', 'content' => 'employee/view', 'view_data' => $userData);
         $this->load->view('template1', $data);
     }
+    
+    public function Applied() {
+        if ($this->is_logged_in() == TRUE) {
+            $this->load->model('Master_model');
+            $user_id = $this->session->userdata("user_id");
+            if ($this->input->post()) {
+                
+            }
+          
+            $data = array('title' => 'Job Search', 'content' => 'employee/applied', 'view_data' => 'blank');
+            $this->load->view('template1', $data);
+        } else {
+            redirect('Employee/login', 'refresh');
+        }
+    }
 
 }

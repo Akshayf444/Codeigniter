@@ -3,15 +3,14 @@
         <h3 class="page-header"> Applied  Jobs List</h3>
 
     </div></div>
-
+<?php foreach($user as $u):?>
 <div class="col-lg-10">
-    <b>Title </b> &nbsp;  <?php echo $user['title']; ?>
+    <b>Title </b> &nbsp;  <?php echo $u->title; ?>
 </div>
    <div class="col-lg-10">
-       <b> Name</b> &nbsp;  <?php echo $user['name']; ?>
+       <b> Name</b> &nbsp;  <?php echo $u->NAME; ?>
 </div>
-   <div class="col-lg-10">
-         <b> Resume </b>  <iframe name="awindow" frameborder="2" width="580" height="440" src="../../Resume/"<?php   echo $user['resume']; ?>"></iframe>
-       <!--<b> Resume </b>   <img src="" lsrc="../../Resume/"<?php   echo $user['resume']; ?>" style="width:100%;" alt="" class="north rotate-image" />-->
-</div>
+ <?php endforeach;
+ //print_r($this->session->all_userdata());
+ ?>
    
