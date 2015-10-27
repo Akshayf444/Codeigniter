@@ -44,7 +44,7 @@ class Job_model extends CI_Model {
     public function update_job($id) {
 //        $query = $this->view_job($id);
         $field_array = array(
-            'job_id'=>  $this->input->post('id'),
+            'job_id' => $this->input->post('id'),
             'title' => $this->input->post('title'),
             'description' => $this->input->post('description'),
             'no_of_vacancy' => $this->input->post('no_of_vacancy'),
@@ -56,15 +56,26 @@ class Job_model extends CI_Model {
             'location' => $this->input->post('location'),
             'industry' => $this->input->post('industry'),
             'functional_area' => $this->input->post('functional_area'),
-            
             'keyword' => $this->input->post('keyword'),
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
         );
+
+        $this->db->where('jobs.job_id', $id);
+        return $this->db->update('jobs', $field_array);
+    }
+
+    public function appiled_job($id) {
+        $this->db->select('user.name as name,jobs.title as title,user_resume.resume as resume ');
+        $this->db->from('apply_job');
+         $this->db->join('jobs', 'apply_job.job_id=jobs.job_id', 'left');
+         
+        $this->db->join('user', 'apply_job.auth_id=user.auth_id', 'left');
+              $this->db->join('user_resume', 'apply_job.auth_id=user_resume.auth_id', 'left');
+             $this->db->where('apply_job.auth_id', $id);
+        $query = $this->db->get();
         
-            $this->db->where('jobs.job_id', $id);
-            return $this->db->update('jobs', $field_array);
-        
+        return $query->row_array();
     }
 
 }

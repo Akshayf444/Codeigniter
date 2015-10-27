@@ -84,7 +84,15 @@ class Job extends CI_Controller {
         $userdata = array('title' => ' update Job', 'content' => 'job/edit', 'view_data' => $data);
         $this->load->view('template1', $userdata);
     }
-
+ public function view_applied_job() {
+   $id = $this->session->userdata("user_id");
+        $userData['user'] = $this->Job_model->appiled_job($id);
+       
+//        $this->load->view('job/view_applied_job',$userData);
+    $data = array('title' => 'Applied Jobs List', 'content' => 'job/view_applied_job', 'view_data' => $userData);
+    
+        $this->load->view('template1', $data);
+    }
 //        } else {
 //            redirect('Employee/logout', 'refresh');
 //        }
