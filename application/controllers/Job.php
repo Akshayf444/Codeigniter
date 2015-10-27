@@ -11,6 +11,12 @@ class Job extends CI_Controller {
         
     }
 
+    function index() {
+        $this->load->model('Master_model');
+        $data = array('title' => 'Search Job', 'content' => 'job/index', 'view_data' => 'Blank', 'frontImage' => 'search.jpg', 'searchBar' => TRUE, 'dropdowns' => $this->Master_model->getLocation());
+        $this->load->view('searchTemplate', $data);
+    }
+
     function add() {
         $data['auth_id'] = $this->session->userdata("user_id");
         if (isset($this->user_id) && $this->user_id != '' && $this->user_type == 'Employee') {
@@ -79,21 +85,88 @@ class Job extends CI_Controller {
         $data['industry'] = $this->Master_model->getFunctionArea($result['industry']);
         $data['location'] = $this->Master_model->getLocation($result['location']);
         $data['experience'] = $this->Master_model->getWorkExperience($result['exp_min']);
-        $data['experience1'] = $this->Master_model->getWorkExperience( $result['exp_max']);
+        $data['experience1'] = $this->Master_model->getWorkExperience($result['exp_max']);
         $data['functional_area'] = $this->Master_model->getFunctionArea($result['functional_area']);
         $userdata = array('title' => ' update Job', 'content' => 'job/edit', 'view_data' => $data);
         $this->load->view('template1', $userdata);
     }
- public function view_applied_job() {
-   $id = $this->session->userdata("user_id");
+
+    public function view_applied_list() {
+        $id = $this->session->userdata("user_id");
         $userData['user'] = $this->Job_model->appiled_job($id);
-       
+
 //        $this->load->view('job/view_applied_job',$userData);
-    $data = array('title' => 'Applied Jobs List', 'content' => 'job/view_applied_job', 'view_data' => $userData);
-    
+        $data = array('title' => 'Applied Jobs List', 'content' => 'job/view_applied_job', 'view_data' => $userData);
+
         $this->load->view('template1', $data);
     }
-//        } else {
-//            redirect('Employee/logout', 'refresh');
-//        }
+
+
+
+
+    public function Search() {
+        $this->load->model('Master_model');
+        $search = array();
+        $user_id = $this->session->userdata("user_id");
+        if ($this->input->post()) {
+            $conditions = array();
+            if ($this->input->post('skill') != '') {
+                $skill = $this->input->post('skill');
+                $conditions[] = "j.`keyword` LIKE '$skill%'";
+            }
+            if ($this->input->post('location') != '') {
+                $location = $this->input->post('location');
+                $conditions[] = "j.`location` ='$location'";
+            }
+            if ($this->input->post('experince') != '') {
+                $experince = $this->input->post('experince');
+                $conditions[] = "j.exp_max =$experince ";
+            }
+//            isset($user_profile['current_location']) ? $this->Master_model->getLocation($user_profile['current_location']) : 
+            $search['dropdowns'] = $this->Master_model->listLocation();
+            $search['industry'] = $this->Master_model->listIndustry();
+
+            $search['job'] = $this->Job_model->search($conditions);
+            $data = array('title' => 'Search Job', 'content' => 'job/index', 'view_data' => $search);
+            $this->load->view('template2', $data);
+        }
+    }
+
+    public function viewDetails($id) {
+
+        $this->load->model('Master_model');
+        $user_id = $this->session->userdata("user_id");
+        $is_logged_in = FALSE;
+        $is_applied = FALSE;
+        $data['view'] = $this->Job_model->view_job($id);
+        if (isset($this->user_id) && $this->user_id > 0 && $this->user_type == 'User') {
+            $is_logged_in = TRUE;
+            $applied = $this->Job_model->applied($id, $user_id);
+            if (!empty($applied)) {
+                $is_applied = TRUE;
+            }
+        }
+        $data['is_applied'] = $is_applied;
+        $data['is_logged_in'] = $is_logged_in;
+
+        $data = array('title' => 'Job Search', 'content' => 'Job/viewsearch2', 'view_data' => $data);
+        $this->load->view('template2', $data);
+    }
+
+    public function apply($id) {
+        if ($this->session->userdata("user_id")) {
+            $user_id = $this->session->userdata("user_id");
+            $data['job'] = $this->Job_model->apply_id($id, $user_id);
+            if (!empty($data['job'])) {
+                redirect('User/SearchJob');
+            } else {
+                $this->Job_model->apply($id, $user_id);
+                //redirect('User/SearchJob', 'refresh');
+                $this->load->view('User/success');
+            }
+        } else {
+            redirect('User/login', 'refresh');
+        }
+    }
+
 }

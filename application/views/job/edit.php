@@ -16,15 +16,15 @@
                         <label class="control-label">No of vacancies</label>
                         <input type="text" name="no_of_vacancy" value="<?php echo  $user['no_of_vacancy']?>" class="form-control"/>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label">Job Description *</label>
-                        <textarea name="description" class="form-control"/><?php echo  $user['description']?></textarea>
-                    </div>
+                    
                     <div class="form-group">
                         <label class="control-label">keywords *</label>
                         <input type="text" name="keyword" value="<?php echo  $user['keyword'];?>" class="form-control"/>
                     </div>
-
+                    <div class="form-group">
+                        <label class="control-label">Work Experience *</label><br>
+                        <select class="form-control half-formcontrol"  name="exp_min"><?php echo $experience ?></select><select class="form-control half-formcontrol" name="exp_max"><?php echo $experience1 ?></select>
+                    </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group">
@@ -55,10 +55,7 @@
                                
                                
                     </div>
-                    <div class="form-group">
-                        <label class="control-label">Work Experience *</label><br>
-                        <select class="form-control half-formcontrol"  name="exp_min"><?php echo $experience ?></select><select class="form-control half-formcontrol" name="exp_max"><?php echo $experience1 ?></select>
-                    </div>
+                    
                     <div class="form-group">
                         <label class="control-label">Location </label>
                         <select class="form-control" name="location">
@@ -75,6 +72,12 @@
                       
                     </div>
 
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label class="control-label">Job Description *</label>
+                        <textarea name="description" class="form-control"/><?php echo  $user['description']?></textarea>
+                    </div>
                 </div>
             </div>
             <div class="panel-footer">

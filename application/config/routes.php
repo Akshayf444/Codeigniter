@@ -38,7 +38,7 @@
 |
 */
 
-$route['default_controller'] = "User";
+$route['default_controller'] = "Job";
 $route['404_override'] = '';
 
 

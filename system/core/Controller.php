@@ -42,7 +42,7 @@ class CI_Controller {
                 'Inbox' => array(
                 ),
                 'Profle' => array(
-                    'view profile'=> 'Employee/profile'
+                    'view profile' => 'Employee/profile'
                 ),
                 'Jobs & Application' => array(
                     'Add Jobs' => 'job/add',
@@ -68,11 +68,32 @@ class CI_Controller {
                     'Application History' => '#'
                 ),
                 'Recruiters' => array(
-                    'Job & Updates' => '#'
+                    'Job & Updates' => 'User/SearchJob'
                 ),
                 'Settings' => array(
-                    'Change Password' => '#'
+                    'Change Password' => 'User/changepassword'
                 )
+            );
+        } else {
+            
+        }
+        return $menu;
+    }
+
+    function loadNavigation() {
+        $menu;
+        $user_type = $this->user_type;
+        if ($user_type == 'Employee') {
+            $menu['Navbar'] = array(
+                'About' => '#',
+                'Company' => '#',
+                'logout' => 'Employee/logout'
+            );
+        } elseif ($user_type == 'User') {
+            $menu['Navbar'] = array(
+                'About' => '#',
+                'Company' => '#',
+                'logout' => 'User/logout'
             );
         } else {
             

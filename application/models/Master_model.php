@@ -28,7 +28,7 @@ class Master_model extends CI_Model {
             for ($i = 0; $i < count($spec_id); $i++) {
                 if ($spec1_id == $spec_id[$i]) {
                     $specialization .= '<option value = "' . $spec_id[$i] . '" selected>' . $specializearray[$i] . '</option>';
-                }  else {
+                } else {
                     $specialization .= '<option value = "' . $spec_id[$i] . '" >' . $specializearray[$i] . '</option>';
                 }
 
@@ -73,6 +73,15 @@ class Master_model extends CI_Model {
         return $query->result();
     }
 
+    function listLocation2() {
+
+        $query = "SELECT DISTINCT location FROM `location_master`
+                    WHERE location IN ('mumbai', 'delhi','Bengaluru/ Bangalore','pune')";
+        $query = $this->db->query($query);
+
+        return $query->result();
+    }
+
     public function institute() {
         $query = $this->db->get('institute_master');
         return $query->result();
@@ -80,6 +89,13 @@ class Master_model extends CI_Model {
 
     public function listIndustry() {
         $query = $this->db->get('industry_master');
+        return $query->result();
+    }
+
+    public function listIndustry2() {
+        $query = "SELECT * FROM `industry_master`
+ LIMIT 5";
+        $query = $this->db->query($query);
         return $query->result();
     }
 
@@ -147,6 +163,22 @@ class Master_model extends CI_Model {
             }
         }
         return $area;
+    }
+
+    function getInstitute($id = -1) {
+        $industry = '<option value = "" >Select Institute</option>';
+        $result = $this->institute();
+
+        if (!empty($result)) {
+            foreach ($result as $row) {
+                if ($id == $row->id) {
+                    $industry .= '<option value="' . $row->id . '" selected>' . $row->institute . '</option>';
+                } else {
+                    $industry .= '<option value="' . $row->id . '" >' . $row->institute . '</option>';
+                }
+            }
+        }
+        return $industry;
     }
 
 }
