@@ -54,7 +54,7 @@
                     if ($is_logged_in == FALSE) {
                         ?>
                         <a href="<?php echo site_url('Job/apply/' . $view['job_id']); ?>"><button class="btn btn-success">Login to Apply</button></a>
-                        <a href=""><button class="btn btn-info">Register to Apply</button></a>
+                        <a href="<?php echo site_url('User/register/'); ?>"><button class="btn btn-info">Register to Apply</button></a>
                         <?php
                     } elseif ($is_logged_in == TRUE && $is_applied == TRUE) {
                         echo '<button class="btn btn-success">Already Applied</button>';

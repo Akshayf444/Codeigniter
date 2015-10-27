@@ -88,16 +88,16 @@ class User_model extends CI_Model {
         return $this->db->insert('user_qualification', $data);
     }
 
-    public function user_qualification_update($id) {
-        $data = array(
-            'qualification' => $this->input->post('qualification'),
-            'specialization' => $this->input->post('specialization'),
-            'institute' => $this->input->post('institute'),
-            'year' => $this->input->post('year'),
-            'updated_at' => date('Y-m-d H:i:s'),
-            'auth_id' => $id,
-        );
-        $this->db->where(array('auth_id' => $id));
+    public function user_qualification_update($data, $id) {
+//        $data = array(
+//            'qualification' => $this->input->post('qualification'),
+//            'specialization' => $this->input->post('specialization'),
+//            'institute' => $this->input->post('institute'),
+//            'year' => $this->input->post('year'),
+//            'updated_at' => date('Y-m-d H:i:s'),
+//            'auth_id' => $id,
+//        );
+        $this->db->where(array('id' => $id));
         return $this->db->update('user_qualification', $data);
     }
 
@@ -204,6 +204,16 @@ class User_model extends CI_Model {
         return $query = $this->db->insert('user_resume', $data);
     }
 
+    public function resume2($name, $id, $detail) {
+        $data = array(
+            'resume' => $name,
+            'detail' => $detail,
+            'created' => date('Y-m-d H:i:s'),
+            'auth_id' => $id,
+        );
+        return $query = $this->db->insert('user_resume', $data);
+    }
+
     public function resume_view($id) {
         $query = "SELECT * FROM user_resume 
                     WHERE auth_id=$id
@@ -286,6 +296,24 @@ class User_model extends CI_Model {
         $query = $this->db->query($query);
 
         return $query->row_array();
+    }
+
+    public function changepassword($data, $id) {
+        $this->db->where(array('auth_id' => $id));
+        return $this->db->update('authentication', $data);
+    }
+
+    public function application() {
+        $query = "SELECT * FROM apply_job aj
+                LEFT JOIN jobs j
+                ON aj.`job_id`=j.`job_id`
+                LEFT JOIN `emp_profile` ep
+                ON ep.`auth_id` =j.`auth_id`
+                LEFT JOIN `location_master` lm
+                ON lm.`loc_id`=j.`location`
+                WHERE aj.auth_id=2";
+        $query = $this->db->query($query);
+        return $query->result();
     }
 
 }

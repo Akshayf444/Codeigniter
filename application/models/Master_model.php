@@ -73,6 +73,15 @@ class Master_model extends CI_Model {
         return $query->result();
     }
 
+    function listLocation2() {
+
+        $query = "SELECT DISTINCT location FROM `location_master`
+                    WHERE location IN ('mumbai', 'delhi','Bengaluru/ Bangalore','pune')";
+        $query = $this->db->query($query);
+
+        return $query->result();
+    }
+
     public function institute() {
         $query = $this->db->get('institute_master');
         return $query->result();
@@ -80,6 +89,13 @@ class Master_model extends CI_Model {
 
     public function listIndustry() {
         $query = $this->db->get('industry_master');
+        return $query->result();
+    }
+
+    public function listIndustry2() {
+        $query = "SELECT * FROM `industry_master`
+ LIMIT 5";
+        $query = $this->db->query($query);
         return $query->result();
     }
 

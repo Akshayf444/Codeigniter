@@ -405,7 +405,7 @@ class User extends CI_Controller {
                             'auth_id' => $user_id,
                         );
 
-                        $add = $this->User_model->user_qualification($data, $this->input->post('id'));
+                        $add = $this->User_model->user_qualification_update($data, $this->input->post('id'));
                         redirect('User/view', 'refresh');
                     }
                 }
@@ -473,7 +473,7 @@ class User extends CI_Controller {
                 $conditions[] = "j.exp_max =$experince ";
             }
 
-            $data['job'] = $this->User_model->search($conditions);
+            $data['job'] = $this->Job_model->search($conditions);
 //                   var_dump($data);
 //            }
         }
@@ -520,6 +520,45 @@ class User extends CI_Controller {
                 //redirect('User/SearchJob', 'refresh');
                 $this->load->view('User/success');
             }
+        } else {
+            redirect('User/login', 'refresh');
+        }
+    }
+
+    public function changepassword() {
+        if ($this->is_logged_in() == TRUE) {
+            $this->load->model('Master_model');
+            $user_id = $this->session->userdata("user_id");
+            if ($this->input->post()) {
+                $this->form_validation->set_rules('password', 'password', 'trim|required');
+                 if ($this->form_validation->run() === True) {
+                  
+                        $data = array(
+                            'password' => md5($this->input->post('password')),
+                        );
+
+                        $add = $this->User_model->changepassword($data,$user_id);
+                        redirect('User/changepassword', 'refresh');
+                  
+                }
+            }
+            $data = array('title' => 'Job Search', 'content' => 'User/changepassword', 'view_data' => 'blank');
+            $this->load->view('template1', $data);
+        } else {
+            redirect('User/login', 'refresh');
+        }
+    }
+    
+    public function Applicationhistory() {
+        if ($this->is_logged_in() == TRUE) {
+            $this->load->model('Master_model');
+            $user_id = $this->session->userdata("user_id");
+            if ($this->input->post()) {
+                
+            }
+            $data['history']=$this->User_model->application();
+            $data = array('title' => 'Job Search', 'content' => 'User/Applicationhistory', 'view_data' => $data);
+            $this->load->view('template1', $data);
         } else {
             redirect('User/login', 'refresh');
         }
