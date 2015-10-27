@@ -153,7 +153,7 @@
             </div>
             <div class="panel-footer">
                 <div class="form-group">
-                    <input type="submit" class="btn btn-success" value="Register" />
+                    <input type="submit" class="btn btn-success" value="Update" />
                 </div>
             </div>
         </div>

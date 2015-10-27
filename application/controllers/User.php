@@ -129,7 +129,26 @@ class User extends CI_Controller {
                 $this->form_validation->set_rules('address1', 'address1', 'trim|required');
                 //$check1['User'] = $this->User_model->find_by_id($user_id);
                 if ($this->form_validation->run() === True) {
-                    $check2['User1'] = $this->User_model->Add_detail($user_id, $user_email, $user_mobile);
+                    $data = array(
+                        'name' => $this->input->post('name'),
+                        'dob' => $this->input->post('dob'),
+                        'email' => $user_email,
+                        'mobile' => $user_mobile,
+                        'auth_id' => $user_id,
+                        'updated_at' => date('Y-m_d H:i:s'),
+                        'gender' => $this->input->post('sex'),
+                        'exp_year' => $this->input->post('experince_year'),
+                        'experince_month' => $this->input->post('experince_month'),
+                        'current_location' => $this->input->post('current_location'),
+                        'prefred_location' => $this->input->post('prefred_location'),
+                        'industry' => $this->input->post('industry'),
+                        'function_area' => $this->input->post('function_area'),
+                        'role' => $this->input->post('role'),
+                        'key_skill' => $this->input->post('key_skill'),
+                        'marital_status' => $this->input->post('marital_status'),
+                        'resume_headline' => $this->input->post('resume_headline'),
+                    );
+                    $check2['User1'] = $this->User_model->Add_detail($user_id,$data);
                     $check3['User2'] = $this->address_model->add_address($user_id);
                     /* } else {
                       $data['user'] = $this->User_model->profile_update($user_id, $user_email, $user_mobile);
@@ -507,7 +526,7 @@ class User extends CI_Controller {
             if (isset($this->user_id) && $this->user_id > 0 && $this->user_type == 'User') {
                 $is_logged_in = TRUE;
                 $applied = $this->Job_model->applied($id, $user_id);
-                $applied2 = $this->User_model->saved_jobs_by_id($id,$user_id);
+                $applied2 = $this->User_model->saved_jobs_by_id($id, $user_id);
                 if (!empty($applied)) {
                     $is_applied = TRUE;
                 }
@@ -586,7 +605,7 @@ class User extends CI_Controller {
             $this->load->model('Master_model');
             $user_id = $this->session->userdata("user_id");
 
-            $data['check'] = $this->User_model->saved_jobs_by_id($id,$user_id);
+            $data['check'] = $this->User_model->saved_jobs_by_id($id, $user_id);
             if (empty($data['check'])) {
                 $this->User_model->saved_jobs($id, $user_id);
                 $this->load->view('User/Succesfully saved');
@@ -612,4 +631,5 @@ class User extends CI_Controller {
             redirect('User/login', 'refresh');
         }
     }
+
 }

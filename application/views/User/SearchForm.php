@@ -1,5 +1,5 @@
 
-<h2 class="page-header">Job Search</h2>
+<h2 class="page-header">Jobs Matching To Your Profile</h2>
 <div class="row"><?php echo validation_errors(); ?></div>
 <!--<div class="row" style="margin-top: 15px;">
     <?php echo form_open('User/SearchJob') ?>
@@ -26,12 +26,12 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <h4>Jobs Matching To Your Profile</h4>
+        <h4></h4>
     </div>
 </div>
 
 <div class="row">
-    <div class="col-lg-1"></div>
+    
     <?php foreach ($job as $j): ?>
     
         <div class="col-lg-10 panel panel-default">
