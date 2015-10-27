@@ -43,7 +43,7 @@
                 </div>
                 <div class="form-group">
                     <h6><b>Industry :</b></h6>
-                    <h6><?php echo $view['industry'] ?></h6>
+                    <h6><?php echo $view['industry_name'] ?></h6>
                 </div>
                 <div class="form-group">
                     <h6><b>Functional Area :</b></h6>
