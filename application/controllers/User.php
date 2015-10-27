@@ -495,11 +495,23 @@ class User extends CI_Controller {
     public function view_search2() {
         if ($this->is_logged_in() == TRUE) {
             $this->load->model('Master_model');
+            $this->load->model('Job_model');
+            $is_logged_in = FALSE;
+        $is_applied = FALSE;
             $user_id = $this->session->userdata("user_id");
             $id = $_GET['id'];
             $data['view'] = $this->User_model->view_search($id);
-            $data['applied'] = $this->User_model->applied($id, $user_id);
-            $data['show'] = $this->User_model->applied($id, $user_id);
+            //$data['applied'] = $this->Job_model->apply($id, $user_id);
+            $data['show'] = $this->Job_model->applied($id, $user_id);
+             if (isset($this->user_id) && $this->user_id > 0 && $this->user_type == 'User') {
+            $is_logged_in = TRUE;
+            $applied = $this->Job_model->applied($id, $user_id);
+            if (!empty($applied)) {
+                $is_applied = TRUE;
+            }
+        }
+        $data['is_applied'] = $is_applied;
+        $data['is_logged_in'] = $is_logged_in;
             $data = array('title' => 'Job Search', 'content' => 'User/viewsearch2', 'view_data' => $data);
             $this->load->view('template1', $data);
         } else {

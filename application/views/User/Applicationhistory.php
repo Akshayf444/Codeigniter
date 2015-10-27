@@ -13,7 +13,7 @@
                 <tr class=" panel panel-default">
                         <td style="width: 561px;padding: 9px;">
                            
-                               <a href="<?php echo site_url('Job/viewDetails/' . $application->job_id) ?>"> <?php echo $application->title; ?></a> (<?php echo $application->exp_min?>-<?php echo $application->exp_max?> yrs.)
+                               <a href="<?php echo site_url('User/view_search2/?id=' . $application->job_id) ?>"> <?php echo $application->title; ?></a> (<?php echo $application->exp_min?>-<?php echo $application->exp_max?> yrs.)
                            
                             <br>
                                 <span><?php echo $application->name; ?></span>
