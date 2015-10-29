@@ -39,29 +39,33 @@ class CI_Controller {
         $user_type = $this->user_type;
         if ($user_type == 'Employee') {
             $menu['Sidebar'] = array(
-                'Inbox' => array(
-                ),
-                'Profle' => array(
-                    'view profile' => 'Employee/profile'
+//                'Inbox' => array(
+//                ),
+                'Profile' => array(
+                    'View Profile' => 'Employee/profile'
                 ),
                 'Jobs & Application' => array(
                     'Add Jobs' => 'job/add',
-                    ' View Jobs' => 'job/job_list'
+                    ' View Jobs' => 'job/job_list',
+                    ' Applied Jobs' => 'Job/view_applied_list'
                 ),
                 'Recruiters' => array(
+                    'Search Resume' => 'Employee/resumesearch'
                 ),
                 'Settings' => array(
+                     'Change Password' => 'Employee/changepassword'
                 )
             );
         } elseif ($user_type == 'User') {
             $menu['Sidebar'] = array(
-                'Inbox' => array(
-                    'Message' => '#'
-                ),
-                'Profle' => array(
+//                'Inbox' => array(
+//                    'Message' => '#'
+//                ),
+                'Profile' => array(
                     'View Profile' => 'User/view',
                     'Project' => 'User/user_projects',
-                    'Education' => 'User/user_qualification'
+                    'Education' => 'User/user_qualification',
+                    'Upload Resume' => 'User/resume',
                 ),
                 'Jobs & Application' => array(
                     'Saved Jobs' => 'User/viewsavedjobs',

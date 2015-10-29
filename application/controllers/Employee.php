@@ -41,10 +41,12 @@ class Employee extends CI_Controller {
                 //$this->load->view('Employe/view');
                 redirect('Employee/profile', 'refresh');
             } else {
-                $this->load->view('employee/error');
+                $data1['user'] = "Incorrect Login";
+               // $this->load->view('employee/error');
             }
         }
-        $data = array('title' => 'Login', 'content' => 'employee/login', 'view_data' => 'blank');
+        $data1['user2'] = "";
+        $data = array('title' => 'Login', 'content' => 'employee/login', 'view_data' => $data1);
         $this->load->view('template2', $data);
 //         
     }
@@ -141,6 +143,7 @@ class Employee extends CI_Controller {
             $view['user2'] = $this->User_model->view2($id);
             $view['user3'] = $this->User_model->qualification_view($id);
             $view['user4'] = $this->User_model->user_resume($id);
+//            var_dump($view);
 //          $view['string'] = read_file('../../Resume/'.$view['user4']);
             $data = array('title' => 'User View', 'content' => 'employee/user_view', 'view_data' => $view);
             $this->load->view('template1', $data);
@@ -155,13 +158,77 @@ class Employee extends CI_Controller {
             $this->load->model('User_model');
             $this->load->model('Job_model');
             $id = $_GET['id'];
-            $data = file_get_contents(base_url()."assets/Resume/$id"); // Read the file's contents
+            $data = file_get_contents(base_url() . "assets/Resume/$id"); // Read the file's contents
             $name = $id;
-echo $name;
+            echo $name;
             force_download($name, $data);
             $this->load->view('donload complete');
         } else {
             redirect('Employee/login', 'refresh');
+        }
+    }
+
+    public function resumesearch() {
+        if ($this->is_logged_in() == TRUE) {
+            $this->load->model('Master_model');
+            $this->load->model('User_model');
+            $this->load->model('Job_model');
+
+            $data['dropdowns'] = $this->Master_model->getLocation();
+            $data = array('title' => 'User View', 'content' => 'employee/SearchResume', 'view_data' => $data);
+            $this->load->view('template1', $data);
+        } else {
+            redirect('Employee/login', 'refresh');
+        }
+    }
+
+    public function resumesearchview() {
+        if ($this->is_logged_in() == TRUE) {
+            $this->load->model('Master_model');
+            $this->load->model('Job_model');
+            $user_id = $this->session->userdata("user_id");
+            if ($this->input->post()) {
+                $this->form_validation->set_rules('location', 'location', 'required');
+                $this->form_validation->set_rules('skill', 'skill', 'required');
+                $check['view'] = $this->Job_model->resume_search_view($this->input->post('location'), $this->input->post('skill'));
+            }
+
+            $data = array('title' => 'Job Search', 'content' => 'employee/Resume_Search_View', 'view_data' => $check);
+            $this->load->view('template1', $data);
+        } else {
+            redirect('Employee/login', 'refresh');
+        }
+    }
+
+    public function changepassword() {
+        if ($this->is_logged_in() == TRUE) {
+            $this->load->model('Master_model');
+            $this->load->model('User_model');
+            $user_id = $this->session->userdata("user_id");
+            if ($this->input->post()) {
+                $this->form_validation->set_rules('old_password', 'password', 'trim|required');
+                $this->form_validation->set_rules('password', 'password', 'trim|required');
+                 $check = $this->User_model->find_by_id($user_id);
+                if ($this->form_validation->run() === True) {
+
+                    $data = array(
+                        'password' => md5($this->input->post('password')),
+                    );
+                   
+                    if ($check['password'] == md5($this->input->post('old_password'))) {
+                        $add = $this->User_model->changepassword($data, $user_id);
+                        redirect('Employee/changepassword', 'refresh');
+                    } else {
+                        $er['error']="Wrong Previous Password";
+                        
+                    }
+                }
+            }
+            $er['errrrr']="";
+            $data = array('title' => 'Job Search', 'content' => 'Employee/changepassword', 'view_data' => $er);
+            $this->load->view('template1', $data);
+        } else {
+            redirect('User/login', 'refresh');
         }
     }
 

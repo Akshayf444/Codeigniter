@@ -57,7 +57,6 @@ class Job_model extends CI_Model {
             'location' => $this->input->post('location'),
             'industry' => $this->input->post('industry'),
             'functional_area' => $this->input->post('functional_area'),
-
             'keyword' => $this->input->post('keyword'),
             'updated_at' => date('Y-m-d H:i:s'),
         );
@@ -66,17 +65,16 @@ class Job_model extends CI_Model {
         return $this->db->update('jobs', $field_array);
     }
 
-
     public function appiled_job($id) {
-        $query="SELECT jobs.`job_id`, (u.name) AS NAME,(jobs.title) AS title,u.`mobile`,(apply_job.`auth_id`) AS user_id,(u.`email`)AS email FROM apply_job
+        $query = "SELECT jobs.`job_id`, (u.name) AS NAME,(jobs.title) AS title,u.`mobile`,(apply_job.`auth_id`) AS user_id,(u.`email`)AS email FROM apply_job
                 LEFT JOIN jobs 
                 ON apply_job.job_id=jobs.job_id
                 LEFT JOIN user u 
                 ON apply_job.auth_id=u.auth_id
                 WHERE jobs.auth_id=$id";
-     $query = $this->db->query($query);
-       return $query->result();
-    }   
+        $query = $this->db->query($query);
+        return $query->result();
+    }
 
     public function search($conditions) {
         $query = "SELECT * ,(lm.`location`) AS loc FROM jobs j
@@ -120,6 +118,7 @@ class Job_model extends CI_Model {
         $query = $this->db->query($data);
         return $query->row_array();
     }
+
     public function user_applied($auth_id) {
         $data = "SELECT *,(l.location) AS loc,(up.location) AS ploc,(up.role) AS prole  FROM user u
                 LEFT JOIN work_exp we
@@ -143,6 +142,17 @@ class Job_model extends CI_Model {
                 WHERE u.auth_id=$auth_id";
         $query = $this->db->query($data);
         return $query->row_array();
+    }
+
+    public function resume_search_view($location,$skill) {
+        $data = "SELECT * FROM user u
+                    LEFT JOIN `location_master` lm
+                    ON lm.`loc_id`=u.`current_location`
+                    WHERE u.`current_location`='$location' AND u.`key_skill` LIKE '$skill%'";
+
+        $query = $this->db->query($data);
+        
+        return $query->result();
     }
 
 }

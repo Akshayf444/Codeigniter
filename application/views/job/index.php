@@ -24,7 +24,8 @@
             </select>
         </div>
     </div> 
-    <div class="col-lg-1"></div>
+
+
     <?php
     if (isset($job)) {
 
@@ -69,11 +70,13 @@
                 </div>
             </div>
 
+
             <?php
         }
     }
     ?>
 </div>
+
 
 <script type="text/javascript">
     $(document).ready(function () {

@@ -89,12 +89,12 @@ class User extends CI_Controller {
                 //$this->load->view('User/success');
                 redirect('User/view', 'refresh');
             } else {
-                $data['user'] = "Incorrect Login";
-                $this->load->view('User/login', $data);
+                $data1['user'] = "Incorrect Login";
+                //$this->load->view('User/login', $data);
             }
         }
-
-        $data = array('title' => 'Login', 'content' => 'User/login', 'view_data' => 'blank');
+        $data1['user1'] = "";
+        $data = array('title' => 'Login', 'content' => 'User/login', 'view_data' => $data1);
         $this->load->view('template2', $data);
     }
 
@@ -148,7 +148,7 @@ class User extends CI_Controller {
                         'marital_status' => $this->input->post('marital_status'),
                         'resume_headline' => $this->input->post('resume_headline'),
                     );
-                    $check2['User1'] = $this->User_model->Add_detail($user_id,$data);
+                    $check2['User1'] = $this->User_model->Add_detail($user_id, $data);
                     $check3['User2'] = $this->address_model->add_address($user_id);
                     /* } else {
                       $data['user'] = $this->User_model->profile_update($user_id, $user_email, $user_mobile);
