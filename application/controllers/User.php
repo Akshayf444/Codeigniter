@@ -470,6 +470,7 @@ class User extends CI_Controller {
     public function SearchJob2() {
 
         $this->load->model('Master_model');
+        $this->load->model('Job_model');
         $user_id = $this->session->userdata("user_id");
         if ($this->input->post()) {
 //            $this->form_validation->set_rules('skill', 'skill', 'trim|required');
