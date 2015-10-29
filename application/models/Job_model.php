@@ -68,13 +68,11 @@ class Job_model extends CI_Model {
 
 
     public function appiled_job($id) {
-        $query="SELECT jobs.`job_id`, (u.name) AS NAME,(jobs.title) AS title,u.`mobile`,(user_resume.resume) AS res,(apply_job.`auth_id`) AS user_id,(u.`email`)AS email FROM apply_job
+        $query="SELECT jobs.`job_id`, (u.name) AS NAME,(jobs.title) AS title,u.`mobile`,(apply_job.`auth_id`) AS user_id,(u.`email`)AS email FROM apply_job
                 LEFT JOIN jobs 
                 ON apply_job.job_id=jobs.job_id
                 LEFT JOIN user u 
                 ON apply_job.auth_id=u.auth_id
-                LEFT JOIN user_resume
-                ON apply_job.auth_id=user_resume.auth_id
                 WHERE jobs.auth_id=$id";
      $query = $this->db->query($query);
        return $query->result();

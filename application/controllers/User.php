@@ -336,7 +336,7 @@ class User extends CI_Controller {
         if ($this->is_logged_in() == TRUE) {
 //            if ($this->input->post()) {
             $user_id = $this->session->userdata('user_id');
-            $config['upload_path'] = 'C:\wamp\www\jobportal\application\Resume';
+            $config['upload_path'] = 'C:\wamp\www\jobportal\assets\Resume';
             $config['allowed_types'] = 'pdf|doc|docx';
             $config['max_size'] = '4096';
             $new_name = time();

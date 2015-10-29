@@ -177,8 +177,7 @@
 <div class="row">
     <h3 align="center"><u>Resume</u></h3>
 </div>
-<div class="row">
-    <?php echo $string['resume'];?>
-  
+<div align="center" class="row">
+    
+  <a href="<?php echo (base_url().'assets/Resume/'. $user4['resume'])  ?>"><button class="btn btn-success">Download Resume</button></a>
 </div>
-<a href="../../Resume/1446096318.doc"></a>
