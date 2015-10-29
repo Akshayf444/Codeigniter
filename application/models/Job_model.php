@@ -68,14 +68,14 @@ class Job_model extends CI_Model {
 
 
     public function appiled_job($id) {
-        $query="SELECT jobs.`job_id`, (u.name) AS NAME,(jobs.title) AS title,(user_resume.resume) AS res FROM apply_job
+        $query="SELECT jobs.`job_id`, (u.name) AS NAME,(jobs.title) AS title,u.`mobile`,(user_resume.resume) AS res,(apply_job.`auth_id`) AS user_id,(u.`email`)AS email FROM apply_job
                 LEFT JOIN jobs 
                 ON apply_job.job_id=jobs.job_id
                 LEFT JOIN user u 
                 ON apply_job.auth_id=u.auth_id
                 LEFT JOIN user_resume
                 ON apply_job.auth_id=user_resume.auth_id
-                 WHERE jobs.auth_id=$id";
+                WHERE jobs.auth_id=$id";
      $query = $this->db->query($query);
        return $query->result();
     }   
@@ -119,6 +119,30 @@ class Job_model extends CI_Model {
     public function apply_id($job_id, $auth_id) {
         $data = "SELECT * FROM apply_job
                 WHERE job_id=$job_id AND auth_id=$auth_id";
+        $query = $this->db->query($data);
+        return $query->row_array();
+    }
+    public function user_applied($auth_id) {
+        $data = "SELECT *,(l.location) AS loc,(up.location) AS ploc,(up.role) AS prole  FROM user u
+                LEFT JOIN work_exp we
+                ON u.auth_id=we.auth_id
+                LEFT JOIN `location_master`lm
+                ON lm.loc_id=u.current_location
+                LEFT JOIN user_qualification uq
+                ON uq.auth_id=u.auth_id
+                LEFT JOIN education_master em
+                ON em.edu_id=uq.qualification
+                LEFT JOIN location_master l
+                ON l.loc_id=u.`current_location`
+                LEFT JOIN functional_area fa
+                ON fa.fun_id=u.`function_area`
+                LEFT JOIN industry_master ind
+                ON ind.indus_id=u.`industry`
+                LEFT JOIN address_master am
+                ON am.`auth_id`=u.`auth_id`
+                LEFT JOIN user_project up
+                ON up.`auth_id`=u.`auth_id`
+                WHERE u.auth_id=$auth_id";
         $query = $this->db->query($data);
         return $query->row_array();
     }

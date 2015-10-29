@@ -36,7 +36,7 @@ class Api extends CI_Controller {
 
             $field_array = array(
                 'email' => $this->input->post('email'),
-                'password' => $this->input->post('password'),
+                'password' => md5($this->input->post('password')),
                 'mobile' => $this->input->post('mobile'),
                 'type' => 'User'
             );
@@ -64,7 +64,7 @@ class Api extends CI_Controller {
             );
 
             /////////Insert Basic Profile
-            $this->User_model->Add_detail($data);
+            $this->User_model->Add_detail($id,$data);
 
             ////////Insert education Details
             for ($i = 0; $i < count($this->input->post('qualification')); $i++) {
@@ -79,7 +79,7 @@ class Api extends CI_Controller {
 
                 $this->User_model->user_qualification($education_details);
             }
-            $output = array('status' => 'success', 'message' => 'Error');
+            $output = array('status' => 'success', 'message' => 'success');
         } else {
             $output = array('status' => 'error', 'message' => 'Error');
         }

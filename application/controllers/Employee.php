@@ -8,6 +8,7 @@ class Employee extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('employee_model');
+          $this->load->helper('file'); 
     }
 
     public function register() {
@@ -123,6 +124,23 @@ class Employee extends CI_Controller {
             }
           
             $data = array('title' => 'Job Search', 'content' => 'employee/applied', 'view_data' => 'blank');
+            $this->load->view('template1', $data);
+        } else {
+            redirect('Employee/login', 'refresh');
+        }
+    }
+    public function User_view() {
+        if ($this->is_logged_in() == TRUE) {
+            $this->load->model('Master_model');
+            $this->load->model('User_model');
+            $this->load->model('Job_model');
+            $id=$_GET['id'];
+           $view['user'] = $this->Job_model->user_applied($id);
+            $view['user2'] = $this->User_model->view2($id);
+            $view['user3'] = $this->User_model->qualification_view($id);
+            $view['user4'] = $this->User_model->user_resume($id);
+          $view['string'] = read_file('../../Resume/'.$view['user4']);
+            $data = array('title' => 'User View', 'content' => 'employee/user_view', 'view_data' => $view);
             $this->load->view('template1', $data);
         } else {
             redirect('Employee/login', 'refresh');

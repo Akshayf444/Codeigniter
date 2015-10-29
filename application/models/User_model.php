@@ -315,20 +315,23 @@ class User_model extends CI_Model {
         $query = $this->db->query($query);
         return $query->result();
     }
-    public function saved_jobs($job_id,$auth_id) {
-        $data=array(
-            'job_id'=>$job_id,
-            'auth_id'=>$auth_id,
-            'created'=>date('Y-m-d H:i:s'),
+
+    public function saved_jobs($job_id, $auth_id) {
+        $data = array(
+            'job_id' => $job_id,
+            'auth_id' => $auth_id,
+            'created' => date('Y-m-d H:i:s'),
         );
         return $query = $this->db->insert('saved_jobs', $data);
     }
-    public function saved_jobs_by_id($job_id,$auth_id) {
-        $query="SELECT * FROM saved_jobs sj
+
+    public function saved_jobs_by_id($job_id, $auth_id) {
+        $query = "SELECT * FROM saved_jobs sj
                 WHERE job_id=$job_id AND auth_id=$auth_id";
         $query = $this->db->query($query);
         return $query->row_array();
     }
+
     public function viewsavedjobs($id) {
         $query = "SELECT *,(aj.`created`)AS creat FROM saved_jobs aj
                 LEFT JOIN jobs j
@@ -341,8 +344,13 @@ class User_model extends CI_Model {
         $query = $this->db->query($query);
         return $query->result();
     }
-    
-    
 
+    public function user_resume($id) {
+        $query = "SELECT * FROM `user_resume`ur 
+                    WHERE ur.auth_id=$id
+                    ORDER BY ur.`auth_id` DESC LIMIT 1";
+        $query = $this->db->query($query);
+        return $query->row_array();
+    }
 
 }
