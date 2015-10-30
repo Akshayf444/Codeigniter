@@ -35,6 +35,7 @@ class Api extends CI_Controller {
                 'email' => $this->input->post('email'),
                 'password' => md5($this->input->post('password')),
                 'mobile' => $this->input->post('mobile'),
+                'created_at' => date('Y-m-d H:i:s'),
                 'type' => 'User'
             );
 
