@@ -76,7 +76,7 @@ class Api extends CI_Controller {
 
                 $this->User_model->user_qualification($education_details);
             }
-            $output = array('status' => 'success', 'message' => 'success');
+            $output = array('status' => 'success', 'message' => $id);
         } else {
             $output = array('status' => 'error', 'message' => 'Error');
         }

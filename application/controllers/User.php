@@ -89,12 +89,12 @@ class User extends CI_Controller {
                 //$this->load->view('User/success');
                 redirect('User/view', 'refresh');
             } else {
-                $data['user'] = "Incorrect Login";
-                $this->load->view('User/login', $data);
+                $data1['user'] = "Incorrect Login";
+                //$this->load->view('User/login', $data);
             }
         }
-
-        $data = array('title' => 'Login', 'content' => 'User/login', 'view_data' => 'blank');
+        $data1['user1'] = "";
+        $data = array('title' => 'Login', 'content' => 'User/login', 'view_data' => $data1);
         $this->load->view('template2', $data);
     }
 
@@ -148,7 +148,7 @@ class User extends CI_Controller {
                         'marital_status' => $this->input->post('marital_status'),
                         'resume_headline' => $this->input->post('resume_headline'),
                     );
-                    $check2['User1'] = $this->User_model->Add_detail($user_id,$data);
+                    $check2['User1'] = $this->User_model->Add_detail($user_id, $data);
                     $check3['User2'] = $this->address_model->add_address($user_id);
                     /* } else {
                       $data['user'] = $this->User_model->profile_update($user_id, $user_email, $user_mobile);
@@ -336,7 +336,7 @@ class User extends CI_Controller {
         if ($this->is_logged_in() == TRUE) {
 //            if ($this->input->post()) {
             $user_id = $this->session->userdata('user_id');
-            $config['upload_path'] = 'C:\wamp\www\jobportal\application\Resume';
+            $config['upload_path'] = 'C:\wamp\www\jobportal\assets\Resume';
             $config['allowed_types'] = 'pdf|doc|docx';
             $config['max_size'] = '4096';
             $new_name = time();
@@ -470,6 +470,7 @@ class User extends CI_Controller {
     public function SearchJob2() {
 
         $this->load->model('Master_model');
+        $this->load->model('Job_model');
         $user_id = $this->session->userdata("user_id");
         if ($this->input->post()) {
 //            $this->form_validation->set_rules('skill', 'skill', 'trim|required');

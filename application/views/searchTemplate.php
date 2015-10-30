@@ -77,7 +77,9 @@
                                     <h2 class="text-danger">Join us & Explore thousands of Jobs</h2>
                                 </div>
                                 <div class="row" style="background: rgba(255, 255, 255, 0.49);padding: 10px;">  
-                                    <?php echo form_open('Job/Search') ?>
+                                    <?php
+                                    $attribute=array('method'=>'get');
+                                    echo form_open('Job/Search',$attribute) ?>
                                     <div class="col-lg-4 zeroleftpadding"><input type="text" name="skill" class="form-control btn-lg" placeholder="Skill"></div>
                                     <div class="col-lg-3 zeroleftpadding"><select name="location" class="form-control btn-lg"><?php echo $dropdowns; ?></select></div>
                                     <div class="col-lg-3 zeroleftpadding"><input type="text" name="experience" class="form-control btn-lg" placeholder="Enter Experince"></div>
