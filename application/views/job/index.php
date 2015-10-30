@@ -2,34 +2,31 @@
     <script src="<?php echo asset_url() ?>/js/bootstrap-multiselect.js" type="text/javascript"></script>
     <link href="<?php echo asset_url() ?>/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css"/>
     <script src="<?php echo asset_url() ?>/js/bootstrap-typeahead.js" type="text/javascript"></script>
-  
-    <div class="col-lg-2">
+    <script src="<?php echo asset_url() ?>/js/jquery-migrate-1.2.1.js" type="text/javascript"></script>
+    <div class="col-lg-2 panel panel-default">
         <?php
         $attribute = array('method' => 'get');
         echo form_open('Job/filter', $attribute);
         ?>
-        <div class="row">
-            <select class="form-control multiselect " name="location[]" multiple="multiple">
-
+        <label>Select Location</label>
+        <select  class="form-control multiselect" name="location[]" multiple="multiple" >
                 <option value="Mumbai">Mumbai</option>
                 <option value="Delhi">Delhi</option>
                 <option value="Pune">Pune</option>
                 <option value="Bengaluru / Bangalore">Bengaluru / Bangalore</option>
                 <option value="Chandigarh">Chandigarh</option>
-
             </select>
-        </div>
-        <div class="row">
-
-
-            <input type="text" name="industry" class="form-control city1" id="city1" autocomplete="off" data-provide="typeahead"/> 
+ 
+<br>
+<label>Select Industry</label>
+            <input type="text" name="industry" class="form-control city1" style="width: 133px;" id="city1" autocomplete="off" data-provide="typeahead" placeholder="industry"/> 
             
 
-        </div>
-        <input type="submit" class="btn btn-success" value="search"/>
+     <br>   
+     <input type="submit"  class="btn btn-success" value="search"/>
     </div> 
 
-
+    <div class="col-lg-1"></div>
 
     <div class="col-lg-8 panel panel-default">
         <?php
