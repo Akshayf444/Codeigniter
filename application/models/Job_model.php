@@ -144,14 +144,41 @@ class Job_model extends CI_Model {
         return $query->row_array();
     }
 
-    public function resume_search_view($location,$skill) {
+    public function resume_search_view($location, $skill) {
         $data = "SELECT * FROM user u
                     LEFT JOIN `location_master` lm
                     ON lm.`loc_id`=u.`current_location`
                     WHERE u.`current_location`='$location' AND u.`key_skill` LIKE '$skill%'";
 
         $query = $this->db->query($data);
-        
+
+        return $query->result();
+    }
+
+    public function type($skill) {
+        $data = "SELECT * FROM industry_master
+                WHERE industry  LIKE '$skill%'";
+
+        $query = $this->db->query($data);
+
+        return $query->result();
+    }
+
+    public function filter($conditions) {
+        $query = "SELECT *,(lm.`location`)AS loc FROM jobs j
+            LEFT JOIN `location_master` lm
+            ON lm.`loc_id`=j.`location`
+            LEFT JOIN `industry_master` im
+            ON im.`indus_id`=j.`industry`
+            LEFT JOIN `emp_profile` ep
+            ON ep.`auth_id`=j.`auth_id`";
+
+        if (!empty($conditions)) {
+            $query .= ' WHERE ' . join(' AND ', $conditions);
+        }
+
+        $query = $this->db->query($query);
+
         return $query->result();
     }
 

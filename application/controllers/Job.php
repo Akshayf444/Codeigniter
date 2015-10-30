@@ -101,25 +101,26 @@ class Job extends CI_Controller {
         $this->load->view('template1', $data);
     }
 
-
-
-
     public function Search() {
         $this->load->model('Master_model');
         $search = array();
         $user_id = $this->session->userdata("user_id");
-        if ($this->input->post()) {
+        if ($this->input->get()) {
             $conditions = array();
-            if ($this->input->post('skill') != '') {
-                $skill = $this->input->post('skill');
+            if ($this->input->get('skill') != '') {
+                $skill = $this->input->get('skill');
                 $conditions[] = "j.`keyword` LIKE '$skill%'";
             }
-            if ($this->input->post('location') != '') {
-                $location = $this->input->post('location');
+            if ($this->input->get('skill') != '') {
+                $skill = $this->input->get('skill');
+                $conditions[] = "j.`title` LIKE '$skill%'";
+            }
+            if ($this->input->get('location') != '') {
+                $location = $this->input->get('location');
                 $conditions[] = "j.`location` ='$location'";
             }
-            if ($this->input->post('experince') != '') {
-                $experince = $this->input->post('experince');
+            if ($this->input->get('experince') != '') {
+                $experince = $this->input->get('experince');
                 $conditions[] = "j.exp_max =$experince ";
             }
 //            isset($user_profile['current_location']) ? $this->Master_model->getLocation($user_profile['current_location']) : 
@@ -161,12 +162,55 @@ class Job extends CI_Controller {
                 redirect('User/SearchJob');
             } else {
                 $this->Job_model->apply($id, $user_id);
-                //redirect('User/SearchJob', 'refresh');
+                //redirect('Job/Search', 'refresh');
                 $this->load->view('User/success');
             }
         } else {
             redirect('User/login', 'refresh');
         }
+    }
+
+    public function filter() {
+        if ($this->session->userdata("user_id")) {
+            $user_id = $this->session->userdata("user_id");
+            if ($this->input->get()) {
+                $conditions = array();
+                if ($this->input->get('location[]') != '') {
+                    $skill = $this->input->get('location[]');
+                    $join = implode("','", $skill);
+                    $conditions[] = "lm.`location` IN ('$join')";
+                    
+                }
+                if ($this->input->get('industry') != '') {
+                    $skill = $this->input->get('industry');
+                    $conditions[] = "im.`industry` LIKE '$skill%'";
+                }
+
+
+                $search['job'] = $this->Job_model->filter($conditions);
+                
+                $data = array('title' => 'Search Job', 'content' => 'job/filterresult', 'view_data' => $search);
+                $this->load->view('template2', $data);
+            }
+        }
+    }
+    
+    public function indus() {
+        if ($_POST) {
+    $q = $_POST['industry'];
+
+    $areaList = array();
+    $sql_res = $this->Job_model->type($q);
+
+    if (!empty($sql_res)) {
+        foreach ($sql_res as $res) {
+
+            $area_name = $res->industry;
+            array_push($areaList, $area_name);
+        }
+        echo json_encode($areaList);
+    }
+}
     }
 
 }
