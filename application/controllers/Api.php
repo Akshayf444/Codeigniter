@@ -7,6 +7,7 @@ class Api extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+        $this->load->model('User_model');
     }
 
     public function login() {
@@ -160,6 +161,26 @@ class Api extends CI_Controller {
 //            $data = array('title' => 'Resume Upload', 'content' => 'User/resume', 'view_data' => 'blank');
 //            $this->load->view('template1', $data);
         redirect('User/resume', 'refresh');
+    }
+    
+    public function view() {
+    
+            
+            $user_id = $_REQUEST['id'];
+            $view['profile'] = $this->User_model->view($user_id);
+    
+            $view['user3'] = $this->User_model->qualification_view($user_id);
+           if(!empty($view))
+           {
+               $output = array('status' => 'Success', 'message' => array('profile'=>$view['profile'],'Education'=>$view['user3']));
+           }
+           else {
+            $output = array('status' => 'error', 'message' => 'Details Not Found');
+        }
+
+        header('content-type: application/json');
+        echo json_encode($output);
+       
     }
 
 }
