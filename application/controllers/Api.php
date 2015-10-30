@@ -16,14 +16,11 @@ class Api extends CI_Controller {
         $check = $this->User_model->log($email, $password);
 
         if (!empty($check) && $check['type'] == 'User') {
-
-            $this->session->set_userdata("user_id", $check['auth_id']);
-            $this->session->set_userdata("user_email", $check['email']);
-            $this->session->set_userdata("user_mobile", $check['mobile']);
-            $this->session->set_userdata("user_type", $check['type']);
-            $check1 = $this->User_model->find_by_id($check['auth_id']);
+            $output = array('status' => 'success', 'message' => $check1);
+        }  else {
+            $output = array('status' => 'error', 'message' => 'Invalid Login');
         }
-        $output = array('status' => 'success', 'message' => $check1);
+        
         header('content-type: application/json');
         echo json_encode($output);
     }

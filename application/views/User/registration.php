@@ -6,7 +6,7 @@
 </div>
 <?php echo validation_errors(); ?>
 
-<?php echo form_open('User/register') ?>
+<?php echo form_open('Api/register') ?>
 <div class="row">
     <div class="panel panel-default" style="    padding: 17px;">
 
@@ -78,13 +78,13 @@
                 </div>
                 <div class="form-group">
                     <lable class="control-label">Institute</lable>
-                    <select class="form-control" name="institute">
+                    <select class="form-control" name="institute[]">
                         <?php echo $institute; ?>
                     </select>
                 </div>
                 <div class="form-group">
                     <lable class="control-label">Year</lable>
-                    <input type="text" class="form-control" name="year"/>
+                    <input type="text" class="form-control" name="year[]"/>
                 </div>
             </div>
             <div class="col-lg-3"></div>
