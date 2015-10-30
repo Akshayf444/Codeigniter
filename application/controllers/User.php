@@ -302,7 +302,7 @@ class User extends CI_Controller {
             $view['user'] = $this->User_model->view($user_id);
             $view['user2'] = $this->User_model->view2($user_id);
             $view['user3'] = $this->User_model->qualification_view($user_id);
-            $data = array('title' => 'Projects', 'content' => 'User/View', 'view_data' => $view);
+            $data = array('title' => 'Profile Snapshot', 'content' => 'User/View', 'view_data' => $view);
             $this->load->view('template1', $data);
         } else {
             redirect('User/login', 'refresh');
@@ -538,7 +538,7 @@ class User extends CI_Controller {
             $data['is_applied'] = $is_applied;
             $data['is_applied2'] = $is_applied2;
             $data['is_logged_in'] = $is_logged_in;
-            $data = array('title' => 'Job Search', 'content' => 'User/viewsearch2', 'view_data' => $data);
+            $data = array('title' => 'View Result', 'content' => 'User/viewsearch2', 'view_data' => $data);
             $this->load->view('template1', $data);
         } else {
             redirect('User/login', 'refresh');
@@ -568,18 +568,26 @@ class User extends CI_Controller {
             $this->load->model('Master_model');
             $user_id = $this->session->userdata("user_id");
             if ($this->input->post()) {
+                $this->form_validation->set_rules('old_password', 'password', 'trim|required');
                 $this->form_validation->set_rules('password', 'password', 'trim|required');
+                $check = $this->User_model->find_by_id($user_id);
                 if ($this->form_validation->run() === True) {
 
                     $data = array(
                         'password' => md5($this->input->post('password')),
                     );
-
-                    $add = $this->User_model->changepassword($data, $user_id);
-                    redirect('User/changepassword', 'refresh');
+                    if ($check['password'] == md5($this->input->post('old_password'))) {
+                        $add = $this->User_model->changepassword($data, $user_id);
+                        redirect('User/changepassword', 'refresh');
+                    }
+                    else {
+                        $er['error']="Wrong Previous Password";
+                        
+                    }
                 }
             }
-            $data = array('title' => 'Job Search', 'content' => 'User/changepassword', 'view_data' => 'blank');
+            $er['errrrr']="";
+            $data = array('title' => 'Change Password', 'content' => 'User/changepassword', 'view_data' => $er);
             $this->load->view('template1', $data);
         } else {
             redirect('User/login', 'refresh');
