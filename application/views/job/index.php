@@ -1,7 +1,7 @@
 <div class="row">
     <script src="<?php echo asset_url() ?>/js/bootstrap-multiselect.js" type="text/javascript"></script>
     <link href="<?php echo asset_url() ?>/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css"/>
-    <script src="../../../assets/js/bootstrap-typeahead.js" type="text/javascript"></script>
+    <script src="<?php echo asset_url() ?>/js/bootstrap-typeahead.js" type="text/javascript"></script>
   
     <div class="col-lg-2">
         <?php
@@ -24,7 +24,6 @@
 
             <input type="text" name="industry" class="form-control city1" id="city1" autocomplete="off" data-provide="typeahead"/> 
             
-            <input type="hidden"  name="city" class="check"/>
 
         </div>
         <input type="submit" class="btn btn-success" value="search"/>
@@ -95,14 +94,15 @@
 
     });
 
-    $('.city1').typeahead({
+    $('#city1').typeahead({
         source: function (typeahead, query) {
-            var industry = $('.city1').val();
+            var industry = $('#city1').val();
           
 //            $(".loader").show();
             $.ajax({
-                url: 'Job/indus',
+                url: 'indus',
                 type: 'POST',
+                dataType: 'JSON',
                 data: {
                     industry: industry,
                    
@@ -110,7 +110,7 @@
                 success: function (data) {
                     console.log(data);
                     typeahead.process(data);
-                    $(".loader").hide();
+                    
                 }
             });
         }

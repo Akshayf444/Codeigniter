@@ -179,7 +179,6 @@ class Job extends CI_Controller {
                     $skill = $this->input->get('location[]');
                     $join = implode("','", $skill);
                     $conditions[] = "lm.`location` IN ('$join')";
-                    
                 }
                 if ($this->input->get('industry') != '') {
                     $skill = $this->input->get('industry');
@@ -188,29 +187,29 @@ class Job extends CI_Controller {
 
 
                 $search['job'] = $this->Job_model->filter($conditions);
-                
+
                 $data = array('title' => 'Search Job', 'content' => 'job/filterresult', 'view_data' => $search);
                 $this->load->view('template2', $data);
             }
         }
     }
-    
+
     public function indus() {
         if ($_POST) {
-    $q = $_POST['industry'];
+            $q = $_POST['industry'];
 
-    $areaList = array();
-    $sql_res = $this->Job_model->type($q);
+            $areaList = array();
+            $sql_res = $this->Job_model->type($q);
 
-    if (!empty($sql_res)) {
-        foreach ($sql_res as $res) {
+            if (!empty($sql_res)) {
+                foreach ($sql_res as $res) {
 
-            $area_name = $res->industry;
-            array_push($areaList, $area_name);
+                    $area_name = $res->industry;
+                    array_push($areaList, $area_name);
+                }
+                echo json_encode($areaList);
+            }
         }
-        echo json_encode($areaList);
-    }
-}
     }
 
 }
