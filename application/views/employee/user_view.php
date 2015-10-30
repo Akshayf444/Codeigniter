@@ -83,7 +83,7 @@ if(!empty($user))
 else{
 //endforeach 
 ?>
-<h1>Erororwwwk;jdpoifk</h1>
+<h1><?php echo $user5;?></h1>
 <?php } ?>
 <hr class="page-header">
 <h3 align="center"><u>Project Detail</u></h3>
@@ -153,7 +153,7 @@ foreach ($user2 as $u) :
 }
 else{
 ?>
-<h1>Erroroldslkf</h1>
+<h1><?php echo $user5;?></h1>
 <?php } ?>
 <hr class="page-header">
 <h3 align="center"><u>Education Detail</u></h3>
@@ -199,9 +199,10 @@ endforeach;
 }
 else{
 ?>
-<h1>ddfadsfadsfaf</h1>
+<h1><?php echo $user5;?></h1>
 <?php } ?>
 <hr class="page-header">
+<?php if(!empty($user4['resume'])){?>
 <div class="row">
     <h3 align="center"><u>Resume</u></h3>
 </div>
@@ -209,4 +210,10 @@ else{
 
     <a href="<?php echo (base_url().'assets/Resume/'. $user4['resume']) ?>"><button class="btn btn-success">Download Resume</button></a>
 </div>
-
+<?php
+}
+else
+{
+?>
+<h1><?php echo $user5;?></h1>
+<?php }?>

@@ -14,10 +14,12 @@ class Api extends CI_Controller {
         $this->load->model('User_model');
         $email = $_GET['email'];
         $password = md5($_GET['password']);
+        $content=array();
         $check = $this->User_model->log($email, $password);
 
         if (!empty($check) && $check['type'] == 'User') {
-            $output = array('status' => 'success', 'message' => $check);
+            $content[]=$check;
+            $output = array('status' => 'success', 'message' => $content);
         } else {
             $output = array('status' => 'Error', 'message' => 'Error');
         }
@@ -167,12 +169,30 @@ class Api extends CI_Controller {
     
             
             $user_id = $_REQUEST['id'];
+             $content=array();
             $view['profile'] = $this->User_model->view($user_id);
     
-            $view['user3'] = $this->User_model->qualification_view($user_id);
+          $view['user3'] = array_shift($this->User_model->qualification_view($user_id));
+          
+          $content[]=array(
+              'email'=>$view['profile']['email'],
+              'name'=>$view['profile']['name'],
+              'user_id'=>$view['profile']['user_id'],
+              'mobile'=>$view['profile']['mobile'],
+              'location'=>$view['profile']['loc'],
+              'experince_month'=>$view['profile']['experince_month'],
+              'experince_year'=>$view['profile']['exp_year'],
+              'qualification'=>$view['user3']->qualification,
+             'specialization'=>$view['user3']->specialization,
+             'institute'=>$view['user3']->institute,
+              'year'=>$view['user3']->year,
+              'auth_id'=>$view['user3']->auth_id,
+              
+          );
            if(!empty($view))
            {
-               $output = array('status' => 'Success', 'message' => array('profile'=>$view['profile'],'Education'=>$view['user3']));
+          //$output = array('status' => 'Success', 'message' => array('profile'=>$view['profile'],'Education'=>$view['user3']));
+        $output = array('status' => 'Success', 'message' => $content);
            }
            else {
             $output = array('status' => 'error', 'message' => 'Details Not Found');

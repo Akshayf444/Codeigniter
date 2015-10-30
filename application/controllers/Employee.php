@@ -143,6 +143,7 @@ class Employee extends CI_Controller {
             $view['user2'] = $this->User_model->view2($id);
             $view['user3'] = $this->User_model->qualification_view($id);
             $view['user4'] = $this->User_model->user_resume($id);
+            $view['user5'] = "Detail not found";
 //            var_dump($view);
 //          $view['string'] = read_file('../../Resume/'.$view['user4']);
             $data = array('title' => 'User View', 'content' => 'employee/user_view', 'view_data' => $view);
