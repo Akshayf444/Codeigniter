@@ -17,24 +17,25 @@ class Api extends CI_Controller {
         $content = array();
         $check = $this->User_model->log($email, $password);
 
-        $view['user3'] = array_shift($this->User_model->qualification_view($check['auth_id']));
-        $view['profile'] = $this->User_model->view($check['auth_id']);
-        $content[] = array(
-            'email' => $view['profile']['email'],
-            'name' => $view['profile']['name'],
-            'user_id' => $view['profile']['user_id'],
-            'mobile' => $view['profile']['mobile'],
-            'location' => $view['profile']['loc'],
-            'experince_month' => $view['profile']['experince_month'],
-            'experince_year' => $view['profile']['exp_year'],
-            'qualification' => $view['user3']->qualification,
-            'specialization' => $view['user3']->specialization,
-            'institute' => $view['user3']->institute,
-            'year' => $view['user3']->year,
-            'auth_id' => $view['user3']->auth_id,
-        );
+
         if (!empty($check) && $check['type'] == 'User') {
             //$content[] = $check;
+            $view['user3'] = array_shift($this->User_model->qualification_view($check['auth_id']));
+            $view['profile'] = $this->User_model->view($check['auth_id']);
+            $content[] = array(
+                'email' => $view['profile']['email'],
+                'name' => $view['profile']['name'],
+                'user_id' => $view['profile']['user_id'],
+                'mobile' => $view['profile']['mobile'],
+                'location' => $view['profile']['loc'],
+                'experince_month' => $view['profile']['experince_month'],
+                'experince_year' => $view['profile']['exp_year'],
+                'qualification' => $view['user3']->qualification,
+                'specialization' => $view['user3']->specialization,
+                'institute' => $view['user3']->institute,
+                'year' => $view['user3']->year,
+                'auth_id' => $view['user3']->auth_id,
+            );
             $output = array('status' => 'success', 'message' => $content);
         } else {
             $output = array('status' => 'Error', 'message' => 'Error');
