@@ -187,7 +187,8 @@ class Api extends CI_Controller {
 
 //            $data = array('title' => 'Resume Upload', 'content' => 'User/resume', 'view_data' => 'blank');
 //            $this->load->view('template1', $data);
-        redirect('User/resume', 'refresh');
+        header('content-type: application/json');
+        echo json_encode($output);
     }
 
     public function view() {
