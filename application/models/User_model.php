@@ -150,7 +150,7 @@ class User_model extends CI_Model {
     }
 
     public function view($id) {
-        $query = "SELECT *,(l.location) AS loc,(up.location) AS ploc,(up.role) AS prole,(u.role) AS rol  FROM user u
+        $query = "SELECT *,(l.location) AS loc,(lmm.location) AS lo,(up.location) AS ploc,(up.role) AS prole,(u.role) AS rol  FROM user u
                     LEFT JOIN work_exp we
                     ON u.auth_id=we.auth_id
                     LEFT JOIN `location_master`lm
@@ -161,6 +161,8 @@ class User_model extends CI_Model {
                     ON em.edu_id=uq.qualification
                     LEFT JOIN location_master l
                     ON l.loc_id=u.`current_location`
+                    LEFT JOIN `location_master`lmm
+                    ON lmm.loc_id=u.`prefred_location`
                     LEFT JOIN functional_area fa
                     ON fa.fun_id=u.`function_area`
                     LEFT JOIN industry_master ind

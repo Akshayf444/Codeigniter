@@ -23,7 +23,7 @@
             <label style="    opacity: 0.5">Current Location :</label><span><?php echo $user['loc']; ?></span>
             </dt>
             <dt>
-            <label style="    opacity: 0.5">Prefered Location :</label><span><?php echo $user['location']; ?></span>
+            <label style="    opacity: 0.5">Prefered Location :</label><span><?php echo $user['lo']; ?></span>
             </dt>
             <dt>
             <label style="    opacity: 0.5">Function Area :</label><span><?php echo $user['fun_area']; ?></span>

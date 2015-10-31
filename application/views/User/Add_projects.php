@@ -2,13 +2,13 @@
 <h2 class="page-header">Enter Your Projects Details</h2>
 <div class="row"><?php echo validation_errors(); ?></div>
 <div class="row">
-    
+
     <div class="panel panel-default col-lg-12 ">
-<!--        <div class="form-group " style="text-align: center">
-                <h3>Enter Your Projects Detail</h3>
-            </div>-->
+        <!--        <div class="form-group " style="text-align: center">
+                        <h3>Enter Your Projects Detail</h3>
+                    </div>-->
         <div class="panel-body col-lg-6">
-            
+
             <div class="form-group">
                 <label class="control-label">Client*</label>
                 <input type="text" name="client" required="required" class="form-control"/>
@@ -38,7 +38,7 @@
                 <input type="radio" value="parttime" name="type"/> Part Time
                 <input type="radio" value="contract" name="type"/> Contract Projects
             </div>
-            
+
         </div>
         <div class="col-lg-6">
             <div class="form-group">
@@ -49,10 +49,11 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Role</label>
-                <select name="role" class="form-control">
+<!--                <select name="role" class="form-control">
                     <option>Programmer</option>
                     <option>other</option>
-                </select>
+                </select>-->
+                <input type="text" name="role" class="form-control"/>
             </div>
 
             <div class="form-group">
@@ -109,7 +110,7 @@
 
             </div>
         </div>
-        
+
 
     </div>
 </div>

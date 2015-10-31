@@ -40,7 +40,7 @@ class WorkExperince extends CI_Controller {
                 $this->form_validation->set_rules('to', 'to', 'trim|required');
                 $this->form_validation->set_rules('designation', 'designation', 'trim|required');
                 $this->form_validation->set_rules('job_profile', 'job_profile', 'trim|required');
-                $this->form_validation->set_rules('notice_period', 'notice_period', 'trim|required');
+                
                 if ($this->form_validation->run() === True) {
                 $data=$this->WorkExperince_model->add($user_id);
                 redirect('WorkExperince/work_exp', 'refresh');
