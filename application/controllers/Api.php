@@ -28,6 +28,7 @@ class Api extends CI_Controller {
                 'user_id' => $view['profile']['user_id'],
                 'mobile' => $view['profile']['mobile'],
                 'location' => $view['profile']['loc'],
+                'key skill' => $view['profile']['key_skill'],
                 'experince_month' => $view['profile']['experince_month'],
                 'experince_year' => $view['profile']['exp_year'],
                 'qualification' => $view['user3']->qualification,
