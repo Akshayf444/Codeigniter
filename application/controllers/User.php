@@ -19,51 +19,55 @@ class User extends CI_Controller {
         $this->load->model('address_model');
         $this->load->model('Master_model');
         if ($this->input->post()) {
-
-            $field_array = array(
-                'email' => $this->input->post('email'),
-                'password' => md5($this->input->post('password')),
-                'mobile' => $this->input->post('mobile'),
-                'type' => 'User'
-            );
-
-            /////Create New User
-            $id = $this->User_model->create($field_array);
-            //echo $id;
-            $data = array(
-                'name' => $this->input->post('name'),
-                'dob' => $this->input->post('dob'),
-                'email' => $this->input->post('email'),
-                'mobile' => $this->input->post('mobile'),
-                'auth_id' => $id,
-                'updated_at' => date('Y-m_d H:i:s'),
-                'gender' => $this->input->post('sex'),
-                'exp_year' => $this->input->post('experince_year'),
-                'experince_month' => $this->input->post('experince_month'),
-                'current_location' => $this->input->post('current_location'),
-                'prefred_location' => $this->input->post('prefred_location'),
-                'industry' => $this->input->post('industry'),
-                'function_area' => $this->input->post('function_area'),
-                'role' => $this->input->post('role'),
-                'key_skill' => $this->input->post('key_skill'),
-                'marital_status' => $this->input->post('marital_status'),
-                'resume_headline' => $this->input->post('resume_headline'),
-            );
-
-            /////////Insert Basic Profile
-            $this->User_model->Add_detail($id, $data);
-            for ($i = 0; $i < count($this->input->post('qualification')); $i++) {
-                ////////Insert education Details
-                $education_details = array(
-                    'qualification' => $this->input->post('qualification')[$i],
-                    'specialization' => $this->input->post('specialization')[$i],
-                    'institute' => $this->input->post('institute')[$i],
-                    'year' => $this->input->post('year')[$i],
-                    'created' => date('Y-m-d H:i:s'),
-                    'auth_id' => $id,
+            $check = $this->User_model->find_by_email($this->input->post('email'));
+            if (empty($check)) {
+                $field_array = array(
+                    'email' => $this->input->post('email'),
+                    'password' => md5($this->input->post('password')),
+                    'mobile' => $this->input->post('mobile'),
+                    'type' => 'User'
                 );
 
-                $this->User_model->user_qualification($education_details);
+                /////Create New User
+                $id = $this->User_model->create($field_array);
+                //echo $id;
+                $data = array(
+                    'name' => $this->input->post('name'),
+                    'dob' => $this->input->post('dob'),
+                    'email' => $this->input->post('email'),
+                    'mobile' => $this->input->post('mobile'),
+                    'auth_id' => $id,
+                    'updated_at' => date('Y-m_d H:i:s'),
+                    'gender' => $this->input->post('sex'),
+                    'exp_year' => $this->input->post('experince_year'),
+                    'experince_month' => $this->input->post('experince_month'),
+                    'current_location' => $this->input->post('current_location'),
+                    'prefred_location' => $this->input->post('prefred_location'),
+                    'industry' => $this->input->post('industry'),
+                    'function_area' => $this->input->post('function_area'),
+                    'role' => $this->input->post('role'),
+                    'key_skill' => $this->input->post('key_skill'),
+                    'marital_status' => $this->input->post('marital_status'),
+                    'resume_headline' => $this->input->post('resume_headline'),
+                );
+
+                /////////Insert Basic Profile
+                $this->User_model->Add_detail($id, $data);
+                for ($i = 0; $i < count($this->input->post('qualification')); $i++) {
+                    ////////Insert education Details
+                    $education_details = array(
+                        'qualification' => $this->input->post('qualification')[$i],
+                        'specialization' => $this->input->post('specialization')[$i],
+                        'institute' => $this->input->post('institute')[$i],
+                        'year' => $this->input->post('year')[$i],
+                        'created' => date('Y-m-d H:i:s'),
+                        'auth_id' => $id,
+                    );
+
+                    $this->User_model->user_qualification($education_details);
+                }
+            } else {
+                $dropdown['Error'] = 'Already Registered';
             }
         }
         $dropdown['dropdowns'] = $this->Master_model->getQualification();
@@ -579,14 +583,12 @@ class User extends CI_Controller {
                     if ($check['password'] == md5($this->input->post('old_password'))) {
                         $add = $this->User_model->changepassword($data, $user_id);
                         redirect('User/changepassword', 'refresh');
-                    }
-                    else {
-                        $er['error']="Wrong Previous Password";
-                        
+                    } else {
+                        $er['error'] = "Wrong Previous Password";
                     }
                 }
             }
-            $er['errrrr']="";
+            $er['errrrr'] = "";
             $data = array('title' => 'Change Password', 'content' => 'User/changepassword', 'view_data' => $er);
             $this->load->view('template1', $data);
         } else {

@@ -3,6 +3,15 @@
      margin: 0px 0px 0px 456px;
      border-radius: 30px 30px 0px 0px;">
     <h2 align="center">Registration</h2>
+    
+    <?php 
+    if(isset($Error))
+    {
+        echo $Error;
+    }
+    ?>
+    
+    
 </div>
 <?php echo validation_errors(); ?>
 

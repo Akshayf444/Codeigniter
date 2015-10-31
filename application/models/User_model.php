@@ -26,6 +26,11 @@ class User_model extends CI_Model {
         $query = $this->db->get_where('authentication', array('auth_id' => $id));
         return $query->row_array();
     }
+    public function find_by_email($id) {
+       
+        $query = $this->db->get_where('authentication', array('email' => $id));
+        return $query->row_array();
+    }
 
     public function find_by_user_id($id) {
         if ($id === FALSE) {

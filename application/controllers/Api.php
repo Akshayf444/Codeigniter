@@ -7,20 +7,42 @@ class Api extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+        $this->load->model('User_model');
     }
 
     public function login() {
         $this->load->model('User_model');
         $email = $_GET['email'];
         $password = md5($_GET['password']);
+        $content = array();
         $check = $this->User_model->log($email, $password);
 
+
         if (!empty($check) && $check['type'] == 'User') {
-            $output = array('status' => 'success', 'message' => $check1);
-        }  else {
-            $output = array('status' => 'error', 'message' => 'Invalid Login');
+            //$content[] = $check;
+            $view['user3'] = array_shift($this->User_model->qualification_view($check['auth_id']));
+            $view['profile'] = $this->User_model->view($check['auth_id']);
+            $content[] = array(
+                'email' => $view['profile']['email'],
+                'name' => $view['profile']['name'],
+                'user_id' => $view['profile']['user_id'],
+                'mobile' => $view['profile']['mobile'],
+                'location' => $view['profile']['loc'],
+                'key skill' => $view['profile']['key_skill'],
+                'experince_month' => $view['profile']['experince_month'],
+                'experince_year' => $view['profile']['exp_year'],
+                'qualification' => $view['user3']->qualification,
+                'specialization' => $view['user3']->specialization,
+                'institute' => $view['user3']->institute,
+                'year' => $view['user3']->year,
+                'auth_id' => $view['user3']->auth_id,
+            );
+            $output = array('status' => 'success', 'message' => $content);
+        } else {
+            $output = array('status' => 'Error', 'message' => 'Error');
         }
-        
+
+
         header('content-type: application/json');
         echo json_encode($output);
     }
@@ -35,6 +57,7 @@ class Api extends CI_Controller {
                 'email' => $this->input->post('email'),
                 'password' => md5($this->input->post('password')),
                 'mobile' => $this->input->post('mobile'),
+                'created_at' => date('Y-m-d H:i:s'),
                 'type' => 'User'
             );
 
@@ -61,7 +84,7 @@ class Api extends CI_Controller {
             );
 
             /////////Insert Basic Profile
-            $this->User_model->Add_detail($id,$data);
+            $this->User_model->Add_detail($id, $data);
 
             ////////Insert education Details
             $qualification = $this->input->post("qualification");
@@ -129,44 +152,76 @@ class Api extends CI_Controller {
             } else {
                 $output = array('status' => 'error', 'message' => 'Enter Password');
             }
+        } else {
+            $output = array('status' => 'error', 'message' => 'Details Not Found');
         }
-         else {
-                $output = array('status' => 'error', 'message' => 'Details Not Found');
-            }
 
         header('content-type: application/json');
         echo json_encode($output);
     }
-    
-    
-    public function resume_add() {
-            $user_id = $_REQUEST['auth_id'];
-            $detail = $_REQUEST['detail'];
-            $config['upload_path'] = 'C:\wamp\www\jobportal\application\Resume';
-            $config['allowed_types'] = 'pdf|doc|docx';
-            $config['max_size'] = '4096';
-            $new_name = time();
-            $config['file_name'] = $new_name;
-            $this->load->library('upload', $config);
-            $this->upload->display_errors('', '');
-            $this->form_validation->set_rules('detail', 'client', 'trim|required');
-            if (!$this->upload->do_upload("resume")) {
-                echo $this->upload->display_errors();
-                die();
-                $this->data['error'] = array('error' => $this->upload->display_errors());
-                 $output = array('status' => 'error', 'message' => 'Details Not Found');
-            } else {
-                $upload_result = $this->upload->data();
 
-                print_r($upload_result['file_name']); //or print any valid
-                $this->User_model->resume($upload_result['file_name'], $user_id,$detail);
-                $output = array('status' => 'success', 'message' => 'Resume successfully added');
-            }
+    public function resume_add() {
+        $user_id = $_REQUEST['auth_id'];
+        $detail = $_REQUEST['detail'];
+        $config['upload_path'] = 'C:\wamp\www\jobportal\application\Resume';
+        $config['allowed_types'] = 'pdf|doc|docx';
+        $config['max_size'] = '4096';
+        $new_name = time();
+        $config['file_name'] = $new_name;
+        $this->load->library('upload', $config);
+        $this->upload->display_errors('', '');
+        $this->form_validation->set_rules('detail', 'client', 'trim|required');
+        if (!$this->upload->do_upload("resume")) {
+            echo $this->upload->display_errors();
+            die();
+            $this->data['error'] = array('error' => $this->upload->display_errors());
+            $output = array('status' => 'error', 'message' => 'Details Not Found');
+        } else {
+            $upload_result = $this->upload->data();
+
+            print_r($upload_result['file_name']); //or print any valid
+            $this->User_model->resume($upload_result['file_name'], $user_id, $detail);
+            $output = array('status' => 'success', 'message' => 'Resume successfully added');
+        }
 
 
 //            $data = array('title' => 'Resume Upload', 'content' => 'User/resume', 'view_data' => 'blank');
 //            $this->load->view('template1', $data);
-            redirect('User/resume', 'refresh');
+        redirect('User/resume', 'refresh');
+    }
+
+    public function view() {
+
+
+        $user_id = $_REQUEST['id'];
+        $content = array();
+        $view['profile'] = $this->User_model->view($user_id);
+
+        $view['user3'] = array_shift($this->User_model->qualification_view($user_id));
+
+        $content[] = array(
+            'email' => $view['profile']['email'],
+            'name' => $view['profile']['name'],
+            'user_id' => $view['profile']['user_id'],
+            'mobile' => $view['profile']['mobile'],
+            'location' => $view['profile']['loc'],
+            'experince_month' => $view['profile']['experince_month'],
+            'experince_year' => $view['profile']['exp_year'],
+            'qualification' => $view['user3']->qualification,
+            'specialization' => $view['user3']->specialization,
+            'institute' => $view['user3']->institute,
+            'year' => $view['user3']->year,
+            'auth_id' => $view['user3']->auth_id,
+        );
+        if (!empty($view)) {
+            //$output = array('status' => 'Success', 'message' => array('profile'=>$view['profile'],'Education'=>$view['user3']));
+            $output = array('status' => 'Success', 'message' => $content);
+        } else {
+            $output = array('status' => 'error', 'message' => 'Details Not Found');
+        }
+
+        header('content-type: application/json');
+        echo json_encode($output);
     }
 
 }
