@@ -29,7 +29,7 @@
             <label style="    opacity: 0.5">Function Area :</label><span><?php echo $user['fun_area']; ?></span>
             </dt>
             <dt>
-            <label style="    opacity: 0.5">Role :</label><span><?php echo $user['role']; ?></span>
+            <label style="    opacity: 0.5">Role :</label><span><?php echo $user['rol']; ?></span>
             </dt>
             <dt>
             <label style="    opacity: 0.5">Industry :</label><span><?php echo $user['industry']; ?></span>
