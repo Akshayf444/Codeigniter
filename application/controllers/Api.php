@@ -34,7 +34,7 @@ class Api extends CI_Controller {
             'auth_id' => $view['user3']->auth_id,
         );
         if (!empty($check) && $check['type'] == 'User') {
-            $content[] = $check;
+            //$content[] = $check;
             $output = array('status' => 'success', 'message' => $content);
         } else {
             $output = array('status' => 'Error', 'message' => 'Error');
