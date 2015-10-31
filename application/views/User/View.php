@@ -3,7 +3,7 @@
     <h2 class="page-header">Profile Snapshot</h2>
 
 </div>
-<div class="row"><?php // echo form_open_multipart('Upload/resume');        ?></div>
+<div class="row"><?php // echo form_open_multipart('Upload/resume');         ?></div>
 <?php //foreach ($user as $u) : ?>
 <div class="row">
     <h3 align="center"><u>Basic Detail</u></h3>
@@ -12,7 +12,13 @@
     <div class="col-lg-6">
 
         <dl >
-            <dt><?php echo $user['name']; ?></dt>
+            <dt><?php
+            if ($user['name'] = '') {
+                echo "Not Mentioned";
+            } else {
+                echo $user['name'];
+            }
+            ?></dt>
             <dt  >
             <label style="    opacity: 0.5">Resume Headline :</label><?php echo $user['resume_headline']; ?>
             </dt>   
@@ -77,21 +83,21 @@
 </div>
 
 
-<?php //endforeach ?>
+<?php //endforeach  ?>
 <hr class="page-header">
 <h3 align="center"><u>Project Detail</u></h3>
 <a class="pull-right" href="../User/user_projects">ADD</a>&nbsp
 <?php foreach ($user2 as $u) : ?>
-<div class="row">
-    <div class="col-lg-12">
-        <div>
-            
-        </div>
-        <div>
-            <a class="pull-right" href="../User/edit_project/?id=<?php echo $u->id?>">Edit</a>
+    <div class="row">
+        <div class="col-lg-12">
+            <div>
+
+            </div>
+            <div>
+                <a class="pull-right" href="../User/edit_project/?id=<?php echo $u->id ?>">Edit</a>
+            </div>
         </div>
     </div>
-</div>
 
     <div class="row">
 
@@ -147,14 +153,14 @@
 <h3 align="center"><u>Education Detail</u></h3>
 <a class="pull-right" href="../User/user_qualification">ADD</a>
 <?php foreach ($user3 as $u) : ?>
-<div class="row">
-    <div class="col-lg-12">
-        
-        <div>
-            <a class="pull-right" href="../User/edit_qualification?id=<?php echo $u->idd?>">Edit</a>
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div>
+                <a class="pull-right" href="../User/edit_qualification?id=<?php echo $u->idd ?>">Edit</a>
+            </div>
         </div>
     </div>
-</div>
     <div class="row">
 
         <div class="col-lg-6">
