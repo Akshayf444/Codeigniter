@@ -64,18 +64,24 @@ class Api extends CI_Controller {
             $this->User_model->Add_detail($id,$data);
 
             ////////Insert education Details
+            $qualification = $this->input->post("qualification");
+            $specialization = $this->input->post("specialization");
+            $institute = $this->input->post("institute");
+            $year = $this->input->post("year");
+
             for ($i = 0; $i < count($this->input->post('qualification')); $i++) {
                 $education_details = array(
-                    'qualification' => $this->input->post('qualification')[$i],
-                    'specialization' => $this->input->post('specialization')[$i],
-                    'institute' => $this->input->post('institute')[$i],
-                    'year' => $this->input->post('year')[$i],
+                    'qualification' => $qualification[$i],
+                    'specialization' => $specialization[$i],
+                    'institute' => $institute[$i],
+                    'year' => $year[$i],
                     'created' => date('Y-m-d H:i:s'),
-                    'auth_id' => $id,
+                    'auth_id' => $id
                 );
 
                 $this->User_model->user_qualification($education_details);
             }
+            
             $output = array('status' => 'success', 'message' => $id);
         } else {
             $output = array('status' => 'error', 'message' => 'Error');
