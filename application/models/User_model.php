@@ -364,7 +364,7 @@ class User_model extends CI_Model {
     public function user_resume($id) {
         $query = "SELECT * FROM `user_resume`ur 
                     WHERE ur.auth_id=$id
-                    ORDER BY ur.`auth_id` DESC LIMIT 1";
+                    ORDER BY ur.`id` DESC LIMIT 1";
         $query = $this->db->query($query);
         return $query->row_array();
     }
