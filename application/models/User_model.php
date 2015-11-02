@@ -26,8 +26,9 @@ class User_model extends CI_Model {
         $query = $this->db->get_where('authentication', array('auth_id' => $id));
         return $query->row_array();
     }
+
     public function find_by_email($id) {
-       
+
         $query = $this->db->get_where('authentication', array('email' => $id));
         return $query->row_array();
     }
@@ -358,6 +359,15 @@ class User_model extends CI_Model {
                     ORDER BY ur.`auth_id` DESC LIMIT 1";
         $query = $this->db->query($query);
         return $query->row_array();
+    }
+
+    public function Add_skill($data,$id) {
+        
+        $this->db->where(array('auth_id' => $id));
+        return $this->db->update('user', $data);
+//        $query = "update user set `key_skill`=[$skill]  WHERE auth_id=$id";
+//       return  $query = $this->db->query($query);
+        //return $query->row_array();
     }
 
 }
