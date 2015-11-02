@@ -424,14 +424,17 @@ class User extends CI_Controller {
 
 
                 $qual = $this->User_model->user_qualification_by_id($user_id);
-
+                $qualification = $this->input->post("qualification");
+                $specialization = $this->input->post("specialization");
+                $institute = $this->input->post("institute");
+                $year = $this->input->post("year");
                 if ($this->form_validation->run() === True) {
                     for ($i = 0; $i < count($this->input->post('qualification')); $i++) {
                         $data = array(
-                            'qualification' => $this->input->post('qualification')[$i],
-                            'specialization' => $this->input->post('specialization')[$i],
-                            'institute' => $this->input->post('institute')[$i],
-                            'year' => $this->input->post('year')[$i],
+                            'qualification' => $qualification[$i],
+                            'specialization' => $specialization[$i],
+                            'institute' => $institute[$i],
+                            'year' => $year[$i],
                             'updated_at' => date('Y-m-d H:i:s'),
                             'auth_id' => $user_id,
                         );
