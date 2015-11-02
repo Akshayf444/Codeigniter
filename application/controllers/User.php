@@ -53,13 +53,17 @@ class User extends CI_Controller {
 
                 /////////Insert Basic Profile
                 $this->User_model->Add_detail($id, $data);
+                $qualification = $this->input->post("qualification");
+                $specialization = $this->input->post("specialization");
+                $institute = $this->input->post("institute");
+                $year = $this->input->post("year");
                 for ($i = 0; $i < count($this->input->post('qualification')); $i++) {
                     ////////Insert education Details
                     $education_details = array(
-                        'qualification' => $this->input->post('qualification')[$i],
-                        'specialization' => $this->input->post('specialization')[$i],
-                        'institute' => $this->input->post('institute')[$i],
-                        'year' => $this->input->post('year')[$i],
+                        'qualification' => $qualification[$i],
+                        'specialization' => $specialization[$i],
+                        'institute' => $institute[$i],
+                        'year' => $year[$i],
                         'created' => date('Y-m-d H:i:s'),
                         'auth_id' => $id,
                     );
