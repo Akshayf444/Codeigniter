@@ -273,7 +273,7 @@ class User_model extends CI_Model {
                 ON j.auth_id=ep.`auth_id`
                 LEFT JOIN `location_master` lm
                 ON lm.loc_id=j.location
-                WHERE j.functional_area=$id AND j.`keyword` LIKE '$skill%'";
+                WHERE j.functional_area=$id AND j.`keyword` LIKE '%$skill%'";
         $query = $this->db->query($query);
 
         return $query->result();
