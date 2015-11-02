@@ -274,6 +274,7 @@ class User_model extends CI_Model {
                 ON j.auth_id=ep.`auth_id`
                 LEFT JOIN `location_master` lm
                 ON lm.loc_id=j.location
+
                 WHERE j.functional_area=$id ";
 
         if (!empty($skills)) {
@@ -367,6 +368,15 @@ class User_model extends CI_Model {
                     ORDER BY ur.`auth_id` DESC LIMIT 1";
         $query = $this->db->query($query);
         return $query->row_array();
+    }
+
+    public function Add_skill($data, $id) {
+
+        $this->db->where(array('auth_id' => $id));
+        return $this->db->update('user', $data);
+//        $query = "update user set `key_skill`=[$skill]  WHERE auth_id=$id";
+//       return  $query = $this->db->query($query);
+        //return $query->row_array();
     }
 
 }

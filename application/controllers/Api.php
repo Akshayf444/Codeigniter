@@ -161,40 +161,29 @@ class Api extends CI_Controller {
     }
 
     public function resume_add() {
-        $user_id = $_REQUEST['auth_id'];
+
+//            if ($this->input->post()) {
+        $user_id = $_REQUEST['id'];
         $detail = $_REQUEST['detail'];
-        // $config['upload_path'] = 'C:\wamp\www\jobportal\application\Resume';
-        $file_name = $_FILES['resume']['name'][$key];
-        $file_size = $_FILES['resume']['size'][$key];
-        $file_tmp = $_FILES['resume']['tmp_name'][$key];
-        $file_type = $_FILES['resume']['type'][$key];
-        $extension = explode(".", $file_name);
-        $file_name = $count . time() . "." . end($extension);
-        $desired_dir = "Resume";
-        if (is_dir($desired_dir)) {
-            define('APPPATH', $desired_dir . '/');
-        } else {
-            if (!is_dir(BASEPATH . $desired_dir . '/')) {
-                exit("Your application folder path does not appear to be set correctly. Please open the following file and correct this: " . SELF);
-            }
 
-            define('APPPATH', BASEPATH . $desired_dir . '/');
-        }
-
-
-
-
-
-
-        // move_uploaded_file($file_tmp, "$desired_dir/" . $file_name);
-        if (empty($file_name)) {
+        $config['upload_path'] = ( $_SERVER['DOCUMENT_ROOT']) . 'jobportal/assets/Resume';
+        $config['allowed_types'] = 'pdf|doc|docx';
+        $config['max_size'] = '4096';
+        $new_name = time();
+        $config['file_name'] = $new_name;
+        $this->load->library('upload', $config);
+        $this->upload->display_errors('', '');
+        $this->form_validation->set_rules('detail', 'client', 'trim|required');
+        if (!$this->upload->do_upload("resume")) {
             echo $this->upload->display_errors();
             die();
             $this->data['error'] = array('error' => $this->upload->display_errors());
             $output = array('status' => 'error', 'message' => 'Details Not Found');
         } else {
-            move_uploaded_file($file_tmp, "$desired_dir/" . $file_name);
-            $this->User_model->resume($file_name, $user_id, $detail);
+            $upload_result = $this->upload->data();
+
+            print_r($upload_result['file_name']); //or print any valid
+            $this->User_model->resume($upload_result['file_name'], $user_id, $detail);
             $output = array('status' => 'success', 'message' => 'Resume successfully added');
         }
 
@@ -235,6 +224,29 @@ class Api extends CI_Controller {
             $output = array('status' => 'error', 'message' => 'Details Not Found');
         }
 
+        header('content-type: application/json');
+        echo json_encode($output);
+    }
+
+    public function show_skill() {
+        //.$skill = $_REQUEST['skill'];
+        $user_id = $_REQUEST['id'];
+        $find = $this->User_model->find_by_user_id($user_id);
+        $content = array();
+        $content[] = array(
+            'key skill' => $find['key_skill']
+        );
+        $output = array('status' => 'success', 'message' =>$content );
+        header('content-type: application/json');
+        echo json_encode($output);
+    }
+    public function edit_skill() {
+        $skill = $_REQUEST['skill'];
+        $user_id = $_REQUEST['id'];
+        $data=array('key_skill'=>$skill);
+        $find = $this->User_model->Add_skill($data,$user_id);
+        
+        $output = array('status' => 'success', 'message' =>'updated Successfully' );
         header('content-type: application/json');
         echo json_encode($output);
     }

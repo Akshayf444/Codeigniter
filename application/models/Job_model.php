@@ -148,7 +148,7 @@ class Job_model extends CI_Model {
         $data = "SELECT * FROM user u
                     LEFT JOIN `location_master` lm
                     ON lm.`loc_id`=u.`current_location`
-                    WHERE u.`current_location`='$location' AND u.`key_skill` LIKE '$skill%'";
+                    WHERE u.`current_location`='$location' AND u.`key_skill` LIKE '%$skill%'";
 
         $query = $this->db->query($data);
 
