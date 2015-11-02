@@ -26,8 +26,9 @@ class User_model extends CI_Model {
         $query = $this->db->get_where('authentication', array('auth_id' => $id));
         return $query->row_array();
     }
+
     public function find_by_email($id) {
-       
+
         $query = $this->db->get_where('authentication', array('email' => $id));
         return $query->row_array();
     }
@@ -267,12 +268,20 @@ class User_model extends CI_Model {
     }
 
     public function all_job($id, $skill) {
+        $skills = explode(",", $skill);
         $query = "SELECT *FROM jobs j
                 LEFT JOIN emp_profile ep
                 ON j.auth_id=ep.`auth_id`
                 LEFT JOIN `location_master` lm
                 ON lm.loc_id=j.location
-                WHERE j.functional_area=$id AND j.`keyword` LIKE '$skill%'";
+                WHERE j.functional_area=$id ";
+
+        if (!empty($skills)) {
+            foreach ($skills as $value) {
+                $query .= " OR j.keyword LIKE '%$value%' ";
+            }
+        }
+
         $query = $this->db->query($query);
 
         return $query->result();
