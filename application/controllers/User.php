@@ -53,13 +53,17 @@ class User extends CI_Controller {
 
                 /////////Insert Basic Profile
                 $this->User_model->Add_detail($id, $data);
+                $qualification = $this->input->post("qualification");
+                $specialization = $this->input->post("specialization");
+                $institute = $this->input->post("institute");
+                $year = $this->input->post("year");
                 for ($i = 0; $i < count($this->input->post('qualification')); $i++) {
                     ////////Insert education Details
                     $education_details = array(
-                        'qualification' => $this->input->post('qualification')[$i],
-                        'specialization' => $this->input->post('specialization')[$i],
-                        'institute' => $this->input->post('institute')[$i],
-                        'year' => $this->input->post('year')[$i],
+                        'qualification' => $qualification[$i],
+                        'specialization' => $specialization[$i],
+                        'institute' => $institute[$i],
+                        'year' => $year[$i],
                         'created' => date('Y-m-d H:i:s'),
                         'auth_id' => $id,
                     );
@@ -239,14 +243,17 @@ class User extends CI_Controller {
 
 
                 $qual = $this->User_model->user_qualification_by_id($user_id);
-
+                $qualification = $this->input->post("qualification");
+                $specialization = $this->input->post("specialization");
+                $institute = $this->input->post("institute");
+                $year = $this->input->post("year");
                 if ($this->form_validation->run() === True) {
                     for ($i = 0; $i < count($this->input->post('qualification')); $i++) {
                         $data = array(
-                            'qualification' => $this->input->post('qualification')[$i],
-                            'specialization' => $this->input->post('specialization')[$i],
-                            'institute' => $this->input->post('institute')[$i],
-                            'year' => $this->input->post('year')[$i],
+                            'qualification' => $qualification[$i],
+                            'specialization' => $specialization[$i],
+                            'institute' => $institute[$i],
+                            'year' => $year[$i],
                             'updated_at' => date('Y-m-d H:i:s'),
                             'created' => date('Y-m-d H:i:s'),
                             'auth_id' => $user_id,
@@ -339,6 +346,7 @@ class User extends CI_Controller {
         if ($this->is_logged_in() == TRUE) {
 //            if ($this->input->post()) {
             $user_id = $this->session->userdata('user_id');
+
             $config['upload_path'] = 'C:\wamp\www\jobportal\assets\Resume';
             $config['allowed_types'] = 'pdf|doc|docx';
             $config['max_size'] = '4096';
@@ -415,14 +423,17 @@ class User extends CI_Controller {
 
 
                 $qual = $this->User_model->user_qualification_by_id($user_id);
-
+                $qualification = $this->input->post("qualification");
+                $specialization = $this->input->post("specialization");
+                $institute = $this->input->post("institute");
+                $year = $this->input->post("year");
                 if ($this->form_validation->run() === True) {
                     for ($i = 0; $i < count($this->input->post('qualification')); $i++) {
                         $data = array(
-                            'qualification' => $this->input->post('qualification')[$i],
-                            'specialization' => $this->input->post('specialization')[$i],
-                            'institute' => $this->input->post('institute')[$i],
-                            'year' => $this->input->post('year')[$i],
+                            'qualification' => $qualification[$i],
+                            'specialization' => $specialization[$i],
+                            'institute' => $institute[$i],
+                            'year' => $year[$i],
                             'updated_at' => date('Y-m-d H:i:s'),
                             'auth_id' => $user_id,
                         );

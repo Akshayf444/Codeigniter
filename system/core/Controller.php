@@ -66,6 +66,7 @@ class CI_Controller {
                     'Project' => 'User/user_projects',
                     'Education' => 'User/user_qualification',
                     'Upload Resume' => 'User/resume',
+                    'Enter Work Experince' => 'WorkExperince/work_exp',
                 ),
                 'Jobs & Application' => array(
                     'Saved Jobs' => 'User/viewsavedjobs',

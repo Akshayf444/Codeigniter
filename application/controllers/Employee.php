@@ -8,6 +8,7 @@ class Employee extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('employee_model');
+        $this->load->model('User_model');
         $this->load->helper('file');
         $this->load->helper('download');
     }
@@ -17,13 +18,23 @@ class Employee extends CI_Controller {
         $this->form_validation->set_rules('email', 'email', 'required');
         $this->form_validation->set_rules('password', 'password', 'required');
         $this->form_validation->set_rules('mobile', 'mobile', 'required');
-
-        if ($this->form_validation->run() === FALSE) {
-            $this->loadFinalView(array('Employee/registration'));
-        } else {
-            $this->employee_model->create();
-            redirect('Employee/login', 'refresh');
+        $check1 = $this->User_model->find_by_email($this->input->post('email'));
+       
+            if ($this->form_validation->run() === FALSE) {
+                //$this->load->view('Employee/registration');
+            } else {
+                if (empty($check1)) {
+                $this->employee_model->create();
+                //redirect('Employee/login', 'refresh');
+                $check['error'] = "Registered Successfully";
+                } else {
+            $check['Error'] = 'Already Registered';
         }
+            }
+        
+        $check['error1'] = "";
+        $data = array('title' => 'Login', 'content' => 'employee/registration', 'view_data' => $check);
+        $this->load->view('template2', $data);
     }
 
     public function login() {
@@ -39,10 +50,10 @@ class Employee extends CI_Controller {
                 $this->session->set_userdata("user_type", $check['type']);
                 $check1['User'] = $this->employee_model->find_by_id($check['auth_id']);
                 //$this->load->view('Employe/view');
-                redirect('Employee/profile', 'refresh');
+                redirect('Employee/add_details', 'refresh');
             } else {
                 $data1['user'] = "Incorrect Login";
-               // $this->load->view('employee/error');
+                // $this->load->view('employee/error');
             }
         }
         $data1['user2'] = "";
@@ -113,6 +124,7 @@ class Employee extends CI_Controller {
     public function profile() {
 
         $user_id = $this->session->userdata("user_id");
+        //$userData['user2'] = $this->session->userdata("mobile");
         $userData['user'] = $this->employee_model->profile($user_id);
         $data = array('title' => 'Basic Employee Profile', 'content' => 'employee/view', 'view_data' => $userData);
         $this->load->view('template1', $data);
@@ -209,23 +221,22 @@ class Employee extends CI_Controller {
             if ($this->input->post()) {
                 $this->form_validation->set_rules('old_password', 'password', 'trim|required');
                 $this->form_validation->set_rules('password', 'password', 'trim|required');
-                 $check = $this->User_model->find_by_id($user_id);
+                $check = $this->User_model->find_by_id($user_id);
                 if ($this->form_validation->run() === True) {
 
                     $data = array(
                         'password' => md5($this->input->post('password')),
                     );
-                   
+
                     if ($check['password'] == md5($this->input->post('old_password'))) {
                         $add = $this->User_model->changepassword($data, $user_id);
                         redirect('Employee/changepassword', 'refresh');
                     } else {
-                        $er['error']="Wrong Previous Password";
-                        
+                        $er['error'] = "Wrong Previous Password";
                     }
                 }
             }
-            $er['errrrr']="";
+            $er['errrrr'] = "";
             $data = array('title' => 'Job Search', 'content' => 'Employee/changepassword', 'view_data' => $er);
             $this->load->view('template1', $data);
         } else {
