@@ -471,6 +471,7 @@ class User extends CI_Controller {
                 }
             }
             $data = $this->User_model->find_by_user_id2($user_id);
+            $explode=explode($data['key_skill']);
             $data['job'] = $this->User_model->all_job($data['function_area'], $data['key_skill']);
             $data['dropdowns'] = $this->Master_model->getLocation();
 
