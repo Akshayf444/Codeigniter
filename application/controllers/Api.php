@@ -281,9 +281,9 @@ class Api extends CI_Controller {
             $output = array('status' => 'success', 'message' => $check1);
         } else {
             if ($check['verified'] == 1) {
-                $output = array('status' => 'success', 'message' => 'Verified');
+                $output = array('status' => 'error', 'message' => 'Verified');
             } else {
-                $output = array('status' => 'success', 'message' => 'error');
+                $output = array('status' => 'error', 'message' => 'error');
             }
         }
         header('content-type: application/json');
