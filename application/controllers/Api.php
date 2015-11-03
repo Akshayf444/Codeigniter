@@ -280,10 +280,18 @@ class Api extends CI_Controller {
             $this->Sendsms->sendsms($number, $message);
             $output = array('status' => 'success', 'message' => $check1);
         } else {
+            $content=array();
             if ($check['verified'] == 1) {
-                $output = array('status' => 'error', 'message' => 'Verified');
+                
+                $content[]=array(
+                    'Message'=>'Verified'
+                );
+                $output = array('status' => 'error', 'message' => $content);
             } else {
-                $output = array('status' => 'error', 'message' => 'error');
+                $content[]=array(
+                    'Message'=>'Error'
+                );
+                $output = array('status' => 'error', 'message' => $content);
             }
         }
         header('content-type: application/json');
