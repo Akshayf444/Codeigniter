@@ -65,7 +65,7 @@ class Api extends CI_Controller {
             ///////Create New User
             $id = $this->User_model->create($field_array);
 
-            
+
 
 
             $data = array(
@@ -172,7 +172,7 @@ class Api extends CI_Controller {
         $detail = $_REQUEST['detail'];
 
         $config['upload_path'] = $_SERVER['DOCUMENT_ROOT'] . '\jobportal\assets\Resume';
-        $config['allowed_types'] = 'pdf|doc|docx';
+        $config['allowed_types'] = '*';
         $config['max_size'] = '4096';
         $new_name = time();
         $config['file_name'] = $new_name;
@@ -187,9 +187,13 @@ class Api extends CI_Controller {
         } else {
             $upload_result = $this->upload->data();
 
-            print_r($upload_result['file_name']); //or print any valid
+            // print_r($upload_result['file_name']); //or print any valid
+            $content = array();
+            $content[] = array(
+                'file name' => $upload_result['file_name'],
+            );
             $this->User_model->resume($upload_result['file_name'], $user_id, $detail);
-            $output = array('status' => 'success', 'message' => 'Resume successfully added');
+            $output = array('status' => 'success', 'message' => $content);
         }
 
 
@@ -280,16 +284,16 @@ class Api extends CI_Controller {
             $this->Sendsms->sendsms($number, $message);
             $output = array('status' => 'success', 'message' => $check1);
         } else {
-            $content=array();
+            $content = array();
             if ($check['verified'] == 1) {
-                
-                $content[]=array(
-                    'Message'=>'Verified'
+
+                $content[] = array(
+                    'Message' => 'Verified'
                 );
                 $output = array('status' => 'error', 'message' => $content);
             } else {
-                $content[]=array(
-                    'Message'=>'Error'
+                $content[] = array(
+                    'Message' => 'Error'
                 );
                 $output = array('status' => 'error', 'message' => $content);
             }
@@ -324,8 +328,72 @@ class Api extends CI_Controller {
         echo json_encode($output);
     }
 
-    public function work_experince() {
-        
+    public function Qualification() {
+        $qualification = $_REQUEST['qualification'];
+        $specialization = $_REQUEST['specialization'];
+        $id = $_REQUEST['id'];
+        $institute = $_REQUEST['institute'];
+        $year = $_REQUEST['year'];
+        $content = array();
+
+        $education_details = array(
+            'qualification' => $qualification,
+            'specialization' => $specialization,
+            'institute' => $institute,
+            'year' => $year,
+            'created' => date('Y-m-d H:i:s'),
+            'auth_id' => $id
+        );
+        if (!empty($education_details)) {
+            $this->User_model->user_qualification($education_details);
+            $content[] = array(
+                'Message' => 'Added Succesfully',
+            );
+            $output = array('status' => 'success', 'message' => $content);
+        } else {
+            $content[] = array(
+                'Message' => 'Error',
+            );
+            $output = array('status' => 'error', 'message' => $content);
+        }
+        header('content-type: application/json');
+        echo json_encode($output);
+    }
+
+    public function workexperince() {
+
+        $name = $_REQUEST['name'];
+        $type = $_REQUEST['type'];
+        $form = $_REQUEST['from'];
+        $to = $_REQUEST['to'];
+        $designation = $_REQUEST['designation'];
+        $profile = $_REQUEST['profile'];
+        $id = $_REQUEST['id'];
+
+        $content = array();
+        $data1 = array(
+            'employer_name' => $name,
+            'employer_type' => $type,
+            'from' => $form,
+            'to' => $to,
+            'auth_id' => $id,
+            'designation' => $designation,
+            'job_profile' => $profile,
+        );
+
+        if (!empty($data1)) {
+
+            $data = $this->WorkExperince_model->add2($data1);
+            $content[] = array(
+                'Message' => 'successfully Added'
+            );
+            $output = array('status' => 'succcess', 'message' => $content);
+        } else {
+            $content[] = array(
+                'Message' => 'Error'
+            );
+            $output = array('status' => 'error', 'message' => $content);
+        }
     }
 
 }

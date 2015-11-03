@@ -19,6 +19,9 @@ class WorkExperince_model extends CI_Model {
         );
         return $this->db->insert('work_exp', $data);
     }
+    public function add2($data) {
+        return $this->db->insert('work_exp', $data);
+    }
 
     public function update($id) {
         $data = array(
