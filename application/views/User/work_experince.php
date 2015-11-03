@@ -52,9 +52,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Job Profile</label>
-                <textarea class="form-control" name="job_profile">
-                    <?php echo $show['job_profile'] ?>
-                </textarea>
+                <textarea class="form-control" name="job_profile"><?php echo $show['job_profile'] ?></textarea>
             </div>
             <div class="form-group">
                 <label class="control-label notice" style="display: none" >Notice Period</label>

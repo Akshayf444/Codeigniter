@@ -64,6 +64,10 @@ class Api extends CI_Controller {
 
             ///////Create New User
             $id = $this->User_model->create($field_array);
+
+            
+
+
             $data = array(
                 'name' => $this->input->post('name'),
                 'dob' => $this->input->post('dob'),
@@ -254,8 +258,8 @@ class Api extends CI_Controller {
         $data = array('key_skill' => $skill);
         $find = $this->User_model->Add_skill($data, $user_id);
         $find1 = $this->User_model->find_by_user_id($user_id);
-        $data1[]=array(
-            'Key skill'=>$find1['key_skill'],
+        $data1[] = array(
+            'Key skill' => $find1['key_skill'],
         );
         $output = array('status' => 'success', 'message' => $data1);
         header('content-type: application/json');
@@ -281,10 +285,11 @@ class Api extends CI_Controller {
             $this->Sendsms->sendsms($number, $message);
             $output = array('status' => 'success', 'message' => $check1);
         } else {
-            $update = $this->User_model->verification_update($id, $data);
-            $check1[] = $this->User_model->verification_by_id($id);
-            $this->Sendsms->sendsms($number, $message);
-            $output = array('status' => 'success', 'message' => $check1);
+            if ($check['verified'] == 1) {
+                $output = array('status' => 'success', 'message' => 'Verified');
+            } else {
+                $output = array('status' => 'success', 'message' => 'error');
+            }
         }
         header('content-type: application/json');
         echo json_encode($output);
