@@ -263,6 +263,7 @@ class Api extends CI_Controller {
             'auth_id' => $id,
             'mobile' => $number,
             'code' => $code,
+            'created' => date('Y-m-d H:i:s'),
         );
         $check = $this->User_model->verification_by_id($id);
         if (empty($check)) {
