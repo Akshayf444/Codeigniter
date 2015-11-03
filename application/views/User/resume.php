@@ -1,7 +1,7 @@
 <h2 align="center">Resume Upload</h2>
 <?php echo validation_errors(); ?>
 <?php echo form_open_multipart('User/resume_add') ?>
-<?php print_r(realpath(dirname(__FILE__)));
+<?php 
 print_r ( $_SERVER['DOCUMENT_ROOT']);
 ?>
 <div class="row">
@@ -18,11 +18,6 @@ print_r ( $_SERVER['DOCUMENT_ROOT']);
             <input type="submit"  class="btn btn-success" value="Upload">
         </div>
     </div>
-    <?php//
- //if (isset($success))
- //echo "done";}?>
-    <?php
- //if (isset($error))
- //{echo "";}?>
+    
 </div>
 </form>

@@ -1,6 +1,6 @@
 <?php echo form_open('WorkExperince/work_exp') ?>
 <h2 align="center">Upload Resume</h2>
-<div class="row"><?php echo form_open_multipart('Upload/resume'); ?></div>
+<div class="row"><?php echo form_open_multipart('Api/resume'); ?></div>
 <div class="row">
     <div class="col-lg-3"></div>
             <div class="col-lg-6 panel panel-default">
