@@ -166,7 +166,7 @@ class Api extends CI_Controller {
         $user_id = $_REQUEST['id'];
         $detail = $_REQUEST['detail'];
 
-        $config['upload_path'] = ( $_SERVER['DOCUMENT_ROOT']).'jobportal\assets\Resume';
+        $config['upload_path'] = $_SERVER['DOCUMENT_ROOT'].'\jobportal\assets\Resume';
         $config['allowed_types'] = 'pdf|doc|docx';
         $config['max_size'] = '4096';
         $new_name = time();
