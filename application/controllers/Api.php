@@ -8,6 +8,7 @@ class Api extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('User_model');
+        $this->load->model('Sendsms');
     }
 
     public function login() {
@@ -165,7 +166,7 @@ class Api extends CI_Controller {
         $user_id = $_REQUEST['id'];
         $detail = $_REQUEST['detail'];
 
-        $config['upload_path'] = asset_url() . 'Resume';
+        $config['upload_path'] = $_SERVER['DOCUMENT_ROOT'] . '\jobportal\assets\Resume';
         $config['allowed_types'] = 'pdf|doc|docx';
         $config['max_size'] = '4096';
         $new_name = time();
@@ -243,12 +244,79 @@ class Api extends CI_Controller {
     public function edit_skill() {
         $skill = $_REQUEST['skill'];
         $user_id = $_REQUEST['id'];
+
         $data = array('key_skill' => $skill);
         $find = $this->User_model->Add_skill($data, $user_id);
 
         $output = array('status' => 'success', 'message' => 'updated Successfully');
+
+        $data1 = array();
+        $data = array('key_skill' => $skill);
+        $find = $this->User_model->Add_skill($data, $user_id);
+        $find1 = $this->User_model->find_by_user_id($user_id);
+        $data1[]=array(
+            'Key skill'=>$find1['key_skill'],
+        );
+        $output = array('status' => 'success', 'message' => $data1);
         header('content-type: application/json');
         echo json_encode($output);
+    }
+
+    public function verification() {
+        $id = $_REQUEST['id'];
+        $number = $_REQUEST['mobile'];
+        $code = rand(0, 9999);
+        $message = 'This Is Your Verification Code ' . $code;
+        $check1 = array();
+        $data = array(
+            'auth_id' => $id,
+            'mobile' => $number,
+            'code' => $code,
+            'created' => date('Y-m-d H:i:s'),
+        );
+        $check = $this->User_model->verification_by_id($id);
+        if (empty($check)) {
+            $enter = $this->User_model->verification($data);
+            $check1[] = $this->User_model->verification_by_id($id);
+            $this->Sendsms->sendsms($number, $message);
+            $output = array('status' => 'success', 'message' => $check1);
+        } else {
+            $update = $this->User_model->verification_update($id, $data);
+            $check1[] = $this->User_model->verification_by_id($id);
+            $this->Sendsms->sendsms($number, $message);
+            $output = array('status' => 'success', 'message' => $check1);
+        }
+        header('content-type: application/json');
+        echo json_encode($output);
+    }
+
+    public function verified() {
+        $code = $_REQUEST['code'];
+        $id = $_REQUEST['id'];
+        $check = $this->User_model->verification_by_id($id);
+        if (!empty($check)) {
+            if ($check['code'] == $code) {
+
+                if ($check['verified'] == 1) {
+                    $output = array('status' => 'success', 'message' => 'Already Verified');
+                } else {
+                    $data = array(
+                        'verified' => 1
+                    );
+                    $update = $this->User_model->verification_update($id, $data);
+                    $output = array('status' => 'success', 'message' => 'Verified');
+                }
+            } else {
+                $output = array('status' => 'success', 'message' => 'Wrong Verification Code');
+            }
+        }
+
+        header('content-type: application/json');
+        echo json_encode($output);
+    }
+
+    public function work_experince() {
+        
     }
 
 }
