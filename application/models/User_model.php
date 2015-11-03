@@ -377,5 +377,27 @@ class User_model extends CI_Model {
 //       return  $query = $this->db->query($query);
         //return $query->row_array();
     }
+    public function verification($data) {
+        
+        return $query = $this->db->insert('user_verification', $data);
+    }
+    public function verification_update($id,$data) {
+        
+        $this->db->where(array('auth_id' => $id));
+        return $this->db->update('user_verification', $data);
+    }
+    public function verification_by_id($id) {
+        
+        $query = "SELECT *FROM user_verification u
+                    WHERE u.auth_id=$id";
+        $query = $this->db->query($query);
+
+        return $query->row_array();
+    }
+    public function check_code($id,$data) {
+        
+        $this->db->where(array('auth_id' => $id));
+        return $this->db->update('user_verification', $data);
+    }
 
 }
