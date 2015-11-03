@@ -347,7 +347,7 @@ class User extends CI_Controller {
 //            if ($this->input->post()) {
             $user_id = $this->session->userdata('user_id');
 
-            $config['upload_path'] = ( $_SERVER['DOCUMENT_ROOT']).'jobportal/assets/Resume';
+            $config['upload_path'] = $_SERVER['DOCUMENT_ROOT'] . '\jobportal\assets\Resume';
             $config['allowed_types'] = 'pdf|doc|docx';
             $config['max_size'] = '4096';
             $new_name = time();

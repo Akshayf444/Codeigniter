@@ -161,12 +161,11 @@ class Api extends CI_Controller {
     }
 
     public function resume_add() {
-
 //            if ($this->input->post()) {
         $user_id = $_REQUEST['id'];
         $detail = $_REQUEST['detail'];
 
-        $config['upload_path'] = ( $_SERVER['DOCUMENT_ROOT']).'jobportal\assets\Resume';
+        $config['upload_path'] = asset_url() . 'Resume';
         $config['allowed_types'] = 'pdf|doc|docx';
         $config['max_size'] = '4096';
         $new_name = time();
@@ -236,17 +235,18 @@ class Api extends CI_Controller {
         $content[] = array(
             'key skill' => $find['key_skill']
         );
-        $output = array('status' => 'success', 'message' =>$content );
+        $output = array('status' => 'success', 'message' => $content);
         header('content-type: application/json');
         echo json_encode($output);
     }
+
     public function edit_skill() {
         $skill = $_REQUEST['skill'];
         $user_id = $_REQUEST['id'];
-        $data=array('key_skill'=>$skill);
-        $find = $this->User_model->Add_skill($data,$user_id);
-        
-        $output = array('status' => 'success', 'message' =>'updated Successfully' );
+        $data = array('key_skill' => $skill);
+        $find = $this->User_model->Add_skill($data, $user_id);
+
+        $output = array('status' => 'success', 'message' => 'updated Successfully');
         header('content-type: application/json');
         echo json_encode($output);
     }
