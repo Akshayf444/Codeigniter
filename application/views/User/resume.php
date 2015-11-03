@@ -1,7 +1,7 @@
 <h2 align="center">Resume Upload</h2>
 <?php echo validation_errors(); ?>
 <?php echo form_open_multipart('User/resume_add') ?>
-<?php 
+<?php
 print_r ( $_SERVER['DOCUMENT_ROOT']);
 ?>
 <div class="row">
