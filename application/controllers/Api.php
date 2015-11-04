@@ -488,7 +488,7 @@ class Api extends CI_Controller {
             'industry' => $industry,
             'function_area' => $function_area,
             'role' => $role,
-            'prefred_location' => $prefred_location,
+            'pgender' => $gender,
         );
         if (!empty($data)) {
             $upadte = $this->User_model->personal_detail($id, $data);
