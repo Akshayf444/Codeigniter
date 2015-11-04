@@ -24,7 +24,7 @@
 
                 <input type="radio" id="one" name="employer_type" required="required" value="0"
                 <?php
-                if ($show['type'] = '') {
+                if (empty($show['type'])) {
                     echo "";
                 } else {
                     if ($show['type'] == 0) {
@@ -35,7 +35,7 @@
                        />Current Employer
                 <input type="radio" id="two" name="employer_type" required="required" value="1"
                 <?php
-                if ($show['type'] = '') {
+                if (empty($show['type'])) {
                     echo "";
                 } else {
                     if ($show['type'] == 1) {
@@ -46,7 +46,7 @@
                        />Previous Employer
                 <input type="radio" id="three" name="employer_type" required="required" value="2"
                 <?php
-                if ($show['type'] = '') {
+                if (empty($show['type'])) {
                     echo "";
                 } else {
                     if ($show['type'] == 2) {
@@ -60,14 +60,14 @@
             <div class="form-group">
                 <label class="control-label">Duration*</label>
                 <input type="date" name="from" required="required" class="form-control" value="<?php
-                if ($show['from'] = '') {
+                if (empty($show['from'])) {
                     echo "";
                 } else {
                     echo $show['from'];
                 }
                 ?>"/>to 
                 <input type="date" name="to" required="required" class="form-control" value="<?php
-                if ($show['to'] = '') {
+                if (empty($show['to'])) {
                     echo "";
                 } else {
                     echo $show['to'];
@@ -78,7 +78,7 @@
             <div class="form-group">
                 <label class="control-label">Designation</label>
                 <input type="text" name="designation" required="required" class="form-control"value="<?php
-                if ($show['designation'] = '') {
+                if (empty($show['designation'])) {
                     echo "";
                 } else {
                     echo $show['designation'];
@@ -89,7 +89,7 @@
             <div class="form-group">
                 <label class="control-label">Job Profile</label>
                 <textarea class="form-control" name="job_profile"><?php
-                    if ($show['job_profile'] = '') {
+                    if (empty($show['job_profile'])) {
                         echo "";
                     } else {
                         echo $show['job_profile'];
@@ -103,7 +103,7 @@
                     <option value="">None</option>
                     <option value="15 Days Or Less"
                     <?php
-                    if ($show['type'] = '') {
+                    if (empty($show['type'])) {
                         echo "";
                     } else {
                         if ($show['type'] == "15 Days Or Less") {
@@ -114,7 +114,7 @@
                             >15 Days Or Less</option>
                     <option value="1 Month"
                     <?php
-                    if ($show['type'] = '') {
+                    if (empty($show['type'])) {
                         echo "";
                     } else {
                         if ($show['type'] == "1 Month") {
@@ -125,7 +125,7 @@
                             >1 Month</option>
                     <option value="2 Month"
                     <?php
-                    if ($show['type'] = '') {
+                    if (empty($show['type'])) {
                         echo "";
                     } else {
                         if ($show['type'] == "2 Month") {
@@ -136,7 +136,7 @@
                             >2 Month</option>
                     <option value="3 Month"
                     <?php
-                    if ($show['type'] = '') {
+                    if (empty($show['type'])) {
                         echo "";
                     } else {
                         if ($show['type'] == "3 Month") {
@@ -148,7 +148,7 @@
                     <option value="More Than 3 Month"
 
                             <?php
-                            if ($show['type'] = '') {
+                            if (empty($show['type'])) {
                                 echo "";
                             } else {
                                 if ($show['type'] == "More Than 3 Month") {
