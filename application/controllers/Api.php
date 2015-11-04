@@ -476,4 +476,38 @@ class Api extends CI_Controller {
         echo json_encode($output);
     }
 
+    public function work_detail() {
+        $industry = $_REQUEST['industry'];
+        $id = $_REQUEST['id'];
+        $function_area = $_REQUEST['function_area'];
+        $role = $_REQUEST['role'];
+        $prefred_location = $_REQUEST['preferd_location'];
+        
+        $content=array();
+        $data = array(
+            'industry' => $industry,
+            'function_area' => $function_area,
+            'role' => $role,
+            'prefred_location' => $prefred_location,
+        );
+        if (!empty($data)) {
+            $upadte = $this->User_model->personal_detail($id, $data);
+            $content[] = array(
+                'Message' => 'Successfully Added'
+            );
+            $output = array('status' => 'success', 'message' => $content);
+            
+        }
+        else
+        {
+            $content[] = array(
+                'Message' => 'Error'
+            );
+            $output = array('status' => 'error', 'message' => $content);
+        }
+        
+        header('content-type: application/json');
+        echo json_encode($output);
+    }
+
 }
