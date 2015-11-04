@@ -53,7 +53,7 @@ class WorkExperince extends CI_Controller {
                 }
             }
             $check['show'] = $this->WorkExperince_model->work_by_id($user_id);
-            //var_dump($check);
+            var_dump($check);
             $data = array('title' => 'Basic Profile', 'content' => 'User/work_experince', 'view_data' => $check);
             $this->load->view('template1', $data);
         } else {

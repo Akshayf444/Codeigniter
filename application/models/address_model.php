@@ -30,5 +30,17 @@ class address_model extends CI_Model {
         $query = $this->db->get_where('address_master', array('auth_id' => $id));
         return $query->row_array();
     }
+    public function add_address2($id,$data) {
+        $query = $this->db->get_where('address_master', array('auth_id' => $id));
+        
+
+        if ($query->num_rows() > 0) {
+            $this->db->where('auth_id', $id);
+            return $this->db->update('address_master', $data);
+        } else {
+            $data['created_at'] = date('Y-m-d H:i:s');
+            return $this->db->insert('address_master', $data);
+        }
+    }
 
 }

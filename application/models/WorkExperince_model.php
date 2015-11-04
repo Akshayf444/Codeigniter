@@ -41,7 +41,8 @@ class WorkExperince_model extends CI_Model {
     public function work_by_id($id) {
 
         $query = "SELECT *FROM work_exp u
-                    WHERE u.auth_id=$id";
+
+                    WHERE u.auth_id=$id ORDER BY u.emp_id DESC  LIMIT 1";
         $query = $this->db->query($query);
 
         return $query->row_array();

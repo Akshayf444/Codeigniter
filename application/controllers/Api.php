@@ -9,6 +9,8 @@ class Api extends CI_Controller {
         parent::__construct();
         $this->load->model('User_model');
         $this->load->model('Sendsms');
+        $this->load->model('WorkExperince_model');
+        $this->load->model('address_model');
     }
 
     public function login() {
@@ -370,10 +372,10 @@ class Api extends CI_Controller {
         $profile = $_REQUEST['profile'];
         $id = $_REQUEST['id'];
 
-        $content = array();
+
         $data1 = array(
-            'employer_name' => $name,
-            'employer_type' => $type,
+            'emp_name' => $name,
+            'type' => $type,
             'from' => $form,
             'to' => $to,
             'auth_id' => $id,
@@ -382,6 +384,7 @@ class Api extends CI_Controller {
         );
 
         if (!empty($data1)) {
+            $content = array();
 
             $data = $this->WorkExperince_model->add2($data1);
             $content[] = array(
@@ -389,11 +392,88 @@ class Api extends CI_Controller {
             );
             $output = array('status' => 'succcess', 'message' => $content);
         } else {
+            $content = array();
             $content[] = array(
                 'Message' => 'Error'
             );
             $output = array('status' => 'error', 'message' => $content);
         }
+        header('content-type: application/json');
+        echo json_encode($output);
+    }
+
+    public function projects() {
+        $this->load->model('Master_model');
+        $client = $_REQUEST['client'];
+        $id = $_REQUEST['id'];
+        $projects_title = $_REQUEST['title'];
+        $from = $_REQUEST['from'];
+        $to = $_REQUEST['to'];
+        $detail = $_REQUEST['detail'];
+        $content = array();
+        $data = array(
+            'client' => $client,
+            'auth_id' => $id,
+            'projects_title' => $projects_title,
+            'to' => $to,
+            'from' => $from,
+            'detail' => $detail,
+        );
+        if (!empty($data)) {
+
+            $this->User_model->project_add2($data);
+            $content[] = array(
+                'Message' => 'Successfully Added'
+            );
+            $output = array('status' => 'success', 'message' => $content);
+        } else {
+            $content[] = array(
+                'Message' => 'Error'
+            );
+            $output = array('status' => 'error', 'message' => $content);
+        }
+        header('content-type: application/json');
+        echo json_encode($output);
+    }
+
+    public function Personal_detail() {
+        $dob = $_REQUEST['dob'];
+        $id = $_REQUEST['id'];
+        $pincode = $_REQUEST['pincode'];
+        $maritial = $_REQUEST['Maritialstatus'];
+        $address = $_REQUEST['address'];
+        $gender = $_REQUEST['gender'];
+        
+        $content=array();
+        $data = array(
+            'dob' => $dob,
+            'marital_status' => $maritial,
+            'gender' => $gender,
+        );
+        $data2 = array(
+            'address1' => $address,
+            'auth_id' => $id,
+            'pincode' => $pincode,
+        );
+        if (!empty($data) && !empty($data2)) {
+            $upadte = $this->User_model->personal_detail($id, $data);
+            $upadte2 =  $this->address_model->add_address2($id, $data2);
+            $content[] = array(
+                'Message' => 'Successfully Added'
+            );
+            $output = array('status' => 'success', 'message' => $content);
+            
+        }
+        else
+        {
+            $content[] = array(
+                'Message' => 'Error'
+            );
+            $output = array('status' => 'error', 'message' => $content);
+        }
+        
+        header('content-type: application/json');
+        echo json_encode($output);
     }
 
 }

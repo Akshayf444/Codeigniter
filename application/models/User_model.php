@@ -172,7 +172,8 @@ class User_model extends CI_Model {
                     ON am.`auth_id`=u.`auth_id`
                     LEFT JOIN user_project up
                     ON up.`auth_id`=u.`auth_id`
-                    WHERE u.auth_id=$id";
+                    WHERE u.auth_id=$id
+                    ORDER BY we.emp_id DESC  LIMIT 1";
         $query = $this->db->query($query);
 
         return $query->row_array();
@@ -377,27 +378,42 @@ class User_model extends CI_Model {
 //       return  $query = $this->db->query($query);
         //return $query->row_array();
     }
+
     public function verification($data) {
-        
+
         return $query = $this->db->insert('user_verification', $data);
     }
-    public function verification_update($id,$data) {
-        
+
+    public function verification_update($id, $data) {
+
         $this->db->where(array('auth_id' => $id));
         return $this->db->update('user_verification', $data);
     }
+
     public function verification_by_id($id) {
-        
+
         $query = "SELECT *FROM user_verification u
                     WHERE u.auth_id=$id";
         $query = $this->db->query($query);
 
         return $query->row_array();
     }
-    public function check_code($id,$data) {
-        
+
+    public function check_code($id, $data) {
+
         $this->db->where(array('auth_id' => $id));
         return $this->db->update('user_verification', $data);
+    }
+
+    public function project_add2($data) {
+
+        return $this->db->insert('user_project', $data);
+    }
+
+    public function personal_detail($id,$data) {
+
+        $this->db->where(array('auth_id' => $id));
+            return $this->db->update('user', $data);
     }
 
 }
