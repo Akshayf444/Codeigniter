@@ -443,8 +443,8 @@ class Api extends CI_Controller {
         $maritial = $_REQUEST['Maritialstatus'];
         $address = $_REQUEST['address'];
         $gender = $_REQUEST['gender'];
-        
-        $content=array();
+
+        $content = array();
         $data = array(
             'dob' => $dob,
             'marital_status' => $maritial,
@@ -457,21 +457,18 @@ class Api extends CI_Controller {
         );
         if (!empty($data) && !empty($data2)) {
             $upadte = $this->User_model->personal_detail($id, $data);
-            $upadte2 =  $this->address_model->add_address2($id, $data2);
+            $upadte2 = $this->address_model->add_address2($id, $data2);
             $content[] = array(
                 'Message' => 'Successfully Added'
             );
             $output = array('status' => 'success', 'message' => $content);
-            
-        }
-        else
-        {
+        } else {
             $content[] = array(
                 'Message' => 'Error'
             );
             $output = array('status' => 'error', 'message' => $content);
         }
-        
+
         header('content-type: application/json');
         echo json_encode($output);
     }
@@ -482,13 +479,13 @@ class Api extends CI_Controller {
         $function_area = $_REQUEST['function_area'];
         $role = $_REQUEST['role'];
         $prefred_location = $_REQUEST['preferd_location'];
-        
-        $content=array();
+
+        $content = array();
         $data = array(
             'industry' => $industry,
             'function_area' => $function_area,
             'role' => $role,
-            'pgender' => $gender,
+            'gender' => $gender,
         );
         if (!empty($data)) {
             $upadte = $this->User_model->personal_detail($id, $data);
@@ -496,16 +493,54 @@ class Api extends CI_Controller {
                 'Message' => 'Successfully Added'
             );
             $output = array('status' => 'success', 'message' => $content);
-            
-        }
-        else
-        {
+        } else {
             $content[] = array(
                 'Message' => 'Error'
             );
             $output = array('status' => 'error', 'message' => $content);
         }
-        
+
+        header('content-type: application/json');
+        echo json_encode($output);
+    }
+
+    public function SearchJob() {
+
+        $this->load->model('Master_model');
+        $this->load->model('Job_model');
+        $skill = $_REQUEST['skill'];
+        $location = $_REQUEST['location'];
+        $experince = $_REQUEST['experince'];
+        if ($skill || $location || $experince) {
+            $conditions = array();
+            if ($_REQUEST['skill'] != '') {
+                $skill = $_REQUEST['skill'];
+                $conditions[] = "j.`keyword` LIKE '%$skill%'";
+            }
+            if ($_REQUEST['skill'] != '') {
+                $skill = $_REQUEST['skill'];
+                $conditions[] = "j.`title` LIKE '%$skill%'";
+            }
+            if ($_REQUEST['location'] != '') {
+                $location = $_REQUEST['location'];
+                $conditions[] = "j.`location` ='$location'";
+            }
+            if ($_REQUEST['experince'] != '') {
+                $experince = $_REQUEST['experince'];
+                $conditions[] = "j.exp_max =$experince ";
+            }
+            //$data = array();
+            $data = $this->Job_model->search($conditions);
+            if (!empty($data)) {
+                $output = array('status' => 'success', 'message' => $data);
+            } else {
+                $content = array();
+                $content[] = array(
+                    'Message' => 'Error'
+                );
+                $output = array('status' => 'error', 'message' => $content);
+            }
+        }
         header('content-type: application/json');
         echo json_encode($output);
     }

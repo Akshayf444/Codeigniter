@@ -109,11 +109,11 @@ class Job extends CI_Controller {
             $conditions = array();
             if ($this->input->get('skill') != '') {
                 $skill = $this->input->get('skill');
-                $conditions[] = "j.`keyword` LIKE '$skill%'";
+                $conditions[] = "j.`keyword` LIKE '%$skill%'";
             }
             if ($this->input->get('skill') != '') {
                 $skill = $this->input->get('skill');
-                $conditions[] = "j.`title` LIKE '$skill%'";
+                $conditions[] = "j.`title` LIKE '%$skill%'";
             }
             if ($this->input->get('location') != '') {
                 $location = $this->input->get('location');

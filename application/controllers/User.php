@@ -496,7 +496,7 @@ class User extends CI_Controller {
             $conditions = array();
             if ($this->input->post('skill') != '') {
                 $skill = $this->input->post('skill');
-                $conditions[] = "j.`keyword` LIKE '$skill%'";
+                $conditions[] = "j.`keyword` LIKE '%$skill%'";
             }
             if ($this->input->post('location') != '') {
                 $location = $this->input->post('location');
