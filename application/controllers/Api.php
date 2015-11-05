@@ -11,6 +11,7 @@ class Api extends CI_Controller {
         $this->load->model('Sendsms');
         $this->load->model('WorkExperince_model');
         $this->load->model('address_model');
+        $this->load->model('Job_model');
     }
 
     public function login() {
@@ -218,8 +219,7 @@ class Api extends CI_Controller {
         $view['qualification'][] = $this->User_model->qualification_view($user_id);
         $check = $this->User_model->user_resume($user_id);
         $view['resume'][] = array(
-            'resume'=>(base_url().'assets/Resume/'. $check['resume']),
-          
+            'resume' => (base_url() . 'assets/Resume/' . $check['resume']),
         );
 //        $content[] = array(
 //            'email' => $view['profile']['email'],
@@ -567,6 +567,48 @@ class Api extends CI_Controller {
                 'Message' => 'Error'
             );
             $output = array('status' => 'error', 'message' => $content);
+        }
+        header('content-type: application/json');
+        echo json_encode($output);
+    }
+
+    public function jobview() {
+
+        $this->load->model('Master_model');
+        $id = $_REQUEST['id'];
+
+
+        $data[] = $this->Job_model->view_job($id);
+        if (!empty($data)) {
+            $output = array('status' => 'success', 'message' => $data);
+        } else {
+            $content = array();
+            $content[] = array(
+                'Message' => 'Error'
+            );
+            $output = array('status' => 'error', 'message' => $content);
+        }
+        header('content-type: application/json');
+        echo json_encode($output);
+    }
+
+    public function apply() {
+        $user_id = $_REQUEST['user'];
+        $id = $_REQUEST['job'];
+        $data = $this->Job_model->apply_id($id,$user_id);
+        if (!empty($data)) {
+            $content = array();
+            $content[] = array(
+                'Message' => 'Allready Applied',
+            );
+            $output = array('status' => 'success', 'message' => $content);
+        } else {
+            $this->Job_model->apply($id, $user_id);
+            $content = array();
+            $content[] = array(
+                'Message' => 'Succesfully Applied',
+            );
+            $output = array('status' => 'success', 'message' => $content);
         }
         header('content-type: application/json');
         echo json_encode($output);
