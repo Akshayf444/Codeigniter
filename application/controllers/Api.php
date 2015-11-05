@@ -215,8 +215,12 @@ class Api extends CI_Controller {
         $view['profile'][] = $this->User_model->view($user_id);
         $view['projects'] = $this->User_model->view2($user_id);
         $view['verified'][] = $this->User_model->veiw3($user_id);
-        $view['qualification'][] = array_shift($this->User_model->qualification_view($user_id));
-
+        $view['qualification'][] = $this->User_model->qualification_view($user_id);
+        $check = $this->User_model->user_resume($user_id);
+        $view['resume'][] = array(
+            'resume'=>(base_url().'assets/Resume/'. $check['resume']),
+          
+        );
 //        $content[] = array(
 //            'email' => $view['profile']['email'],
 //            'name' => $view['profile']['name'],
@@ -488,7 +492,7 @@ class Api extends CI_Controller {
             'industry' => $industry,
             'function_area' => $function_area,
             'role' => $role,
-            'gender' => $gender,
+            'prefred_location' => $prefred_location,
         );
         if (!empty($data)) {
             $upadte = $this->User_model->personal_detail($id, $data);
@@ -554,8 +558,8 @@ class Api extends CI_Controller {
         $user_id = $_REQUEST['id'];
 
         $data1 = $this->User_model->find_by_user_id2($user_id);
-        $data['job'][] = $this->User_model->all_job($data1['function_area'], $data1['key_skill']);
-        if (!empty($data)) {
+        $data['job'] = $this->User_model->all_job($data1['function_area'], $data1['key_skill']);
+        if (!empty($data['job'])) {
             $output = array('status' => 'success', 'message' => $data);
         } else {
             $content = array();
