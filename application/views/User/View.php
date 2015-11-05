@@ -210,6 +210,18 @@
             <div>
                 <a class="pull-right" href="../User/edit_project/?id=<?php echo $u->id ?>">Edit</a>
             </div>
+            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div>
+
+            </div>
+            <div>
+                <a class="pull-right" href="../User/delete_project/?id=<?php echo $u->id ?>">Delete</a>
+            </div>
+            
         </div>
     </div>
 
@@ -272,6 +284,14 @@
 
             <div>
                 <a class="pull-right" href="../User/edit_qualification?id=<?php echo $u->idd ?>">Edit</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div>
+                <a class="pull-right" href="../User/delete_qualification?id=<?php echo $u->idd ?>">Delete</a>
             </div>
         </div>
     </div>

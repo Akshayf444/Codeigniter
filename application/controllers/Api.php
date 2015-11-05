@@ -25,6 +25,7 @@ class Api extends CI_Controller {
             //$content[] = $check;
             $view['user3'] = array_shift($this->User_model->qualification_view($check['auth_id']));
             $view['profile'] = $this->User_model->view($check['auth_id']);
+            $view['verify'] = $this->User_model->veiw3($check['auth_id']);
             $content[] = array(
                 'email' => $view['profile']['email'],
                 'name' => $view['profile']['name'],
@@ -39,6 +40,7 @@ class Api extends CI_Controller {
                 'institute' => $view['user3']->institute,
                 'year' => $view['user3']->year,
                 'auth_id' => $view['user3']->auth_id,
+                'verified' => $view['verify']['verified'],
             );
             $output = array('status' => 'success', 'message' => $content);
         } else {
@@ -210,27 +212,28 @@ class Api extends CI_Controller {
 
         $user_id = $_REQUEST['id'];
         $content = array();
-        $view['profile'] = $this->User_model->view($user_id);
+        $view['profile'][] = $this->User_model->view($user_id);
+        $view['projects'] = $this->User_model->view2($user_id);
+        $view['verified'][] = $this->User_model->veiw3($user_id);
+        $view['qualification'][] = array_shift($this->User_model->qualification_view($user_id));
 
-        $view['user3'] = array_shift($this->User_model->qualification_view($user_id));
-
-        $content[] = array(
-            'email' => $view['profile']['email'],
-            'name' => $view['profile']['name'],
-            'user_id' => $view['profile']['user_id'],
-            'mobile' => $view['profile']['mobile'],
-            'location' => $view['profile']['loc'],
-            'experince_month' => $view['profile']['experince_month'],
-            'experince_year' => $view['profile']['exp_year'],
-            'qualification' => $view['user3']->qualification,
-            'specialization' => $view['user3']->specialization,
-            'institute' => $view['user3']->institute,
-            'year' => $view['user3']->year,
-            'auth_id' => $view['user3']->auth_id,
-        );
+//        $content[] = array(
+//            'email' => $view['profile']['email'],
+//            'name' => $view['profile']['name'],
+//            'user_id' => $view['profile']['user_id'],
+//            'mobile' => $view['profile']['mobile'],
+//            'location' => $view['profile']['loc'],
+//            'experince_month' => $view['profile']['experince_month'],
+//            'experince_year' => $view['profile']['exp_year'],
+//            'qualification' => $view['user3']->qualification,
+//            'specialization' => $view['user3']->specialization,
+//            'institute' => $view['user3']->institute,
+//            'year' => $view['user3']->year,
+//            'auth_id' => $view['user3']->auth_id,
+//        );
         if (!empty($view)) {
             //$output = array('status' => 'Success', 'message' => array('profile'=>$view['profile'],'Education'=>$view['user3']));
-            $output = array('status' => 'Success', 'message' => $content);
+            $output = array('status' => 'Success', 'message' => $view);
         } else {
             $output = array('status' => 'error', 'message' => 'Details Not Found');
         }
@@ -544,5 +547,7 @@ class Api extends CI_Controller {
         header('content-type: application/json');
         echo json_encode($output);
     }
+
+    
 
 }

@@ -410,10 +410,29 @@ class User_model extends CI_Model {
         return $this->db->insert('user_project', $data);
     }
 
-    public function personal_detail($id,$data) {
+    public function personal_detail($id, $data) {
 
         $this->db->where(array('auth_id' => $id));
-            return $this->db->update('user', $data);
+        return $this->db->update('user', $data);
+    }
+
+    public function veiw3($id) {
+
+        $query = "SELECT * FROM `user_verification`
+                    WHERE auth_id=$id";
+        $query = $this->db->query($query);
+
+        return $query->row_array();
+    }
+    public function project_delete($id) {
+
+         $this->db->where('id', $id);
+      return $this->db->delete('user_project'); 
+    }
+    public function delete_qualification($id) {
+
+         $this->db->where('id', $id);
+      return $this->db->delete('user_qualification'); 
     }
 
 }
