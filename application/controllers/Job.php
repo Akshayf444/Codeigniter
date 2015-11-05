@@ -175,8 +175,8 @@ class Job extends CI_Controller {
             $user_id = $this->session->userdata("user_id");
             if ($this->input->get()) {
                 $conditions = array();
-                if ($this->input->get('location[]') != '') {
-                    $skill = $this->input->get('location[]');
+                if ($this->input->get('location') != '') {
+                    $skill = $this->input->get('location');
                     $join = implode("','", $skill);
                     $conditions[] = "lm.`location` IN ('$join')";
                 }

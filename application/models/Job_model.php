@@ -176,7 +176,6 @@ class Job_model extends CI_Model {
         if (!empty($conditions)) {
             $query .= ' WHERE ' . join(' AND ', $conditions);
         }
-
         $query = $this->db->query($query);
 
         return $query->result();
