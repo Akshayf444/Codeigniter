@@ -548,6 +548,24 @@ class Api extends CI_Controller {
         echo json_encode($output);
     }
 
-    
+    public function SearchJob2() {
+
+        $this->load->model('Master_model');
+        $user_id = $_REQUEST['id'];
+
+        $data1 = $this->User_model->find_by_user_id2($user_id);
+        $data['job'][] = $this->User_model->all_job($data1['function_area'], $data1['key_skill']);
+        if (!empty($data)) {
+            $output = array('status' => 'success', 'message' => $data);
+        } else {
+            $content = array();
+            $content[] = array(
+                'Message' => 'Error'
+            );
+            $output = array('status' => 'error', 'message' => $content);
+        }
+        header('content-type: application/json');
+        echo json_encode($output);
+    }
 
 }
