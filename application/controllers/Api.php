@@ -575,7 +575,7 @@ class Api extends CI_Controller {
     public function jobview() {
 
         $this->load->model('Master_model');
-        $id = $_REQUEST['id'];
+        $id = $_REQUEST['jobid'];
 
 
         $data[] = $this->Job_model->view_job($id);
@@ -586,7 +586,7 @@ class Api extends CI_Controller {
             $content[] = array(
                 'Message' => 'Error'
             );
-            $output = array('status' => 'error', 'message' => $content);
+            $output = array('status' => 'error', 'message' => 'error');
         }
         header('content-type: application/json');
         echo json_encode($output);
