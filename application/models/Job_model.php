@@ -31,12 +31,13 @@ class Job_model extends CI_Model {
     }
 
     public function view_job($id) {
-        $this->db->select('jobs.*,industry_master.industry as industry_name,functional_area.fun_area,location_master.location as loc,emp.*');
+        $this->db->select('jobs.*,u.mobile as contact,industry_master.industry as industry_name,functional_area.fun_area,location_master.location as loc,emp.*');
         $this->db->from('jobs');
         $this->db->join('industry_master ', 'jobs.industry = industry_master.indus_id', 'left');
         $this->db->join('location_master ', 'jobs.location = location_master.loc_id', 'left');
         $this->db->join('functional_area', 'jobs.functional_area = functional_area.fun_id', 'left');
         $this->db->join('emp_profile emp', 'jobs.auth_id = emp.auth_id', 'left');
+        $this->db->join('authentication u', 'jobs.auth_id = u.auth_id', 'left');
         $this->db->where('jobs.job_id', $id);
         $query = $this->db->get();
         return $query->row_array();
