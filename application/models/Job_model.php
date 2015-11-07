@@ -121,11 +121,13 @@ class Job_model extends CI_Model {
     }
 
     public function user_applied($auth_id) {
-        $data = "SELECT *,(l.location) AS loc,(up.location) AS ploc,(up.role) AS prole  FROM user u
+        $data = "SELECT *,(l.location) AS loc,(lmm.location) AS location,(up.location) AS ploc,(up.role) AS prole  FROM user u
                 LEFT JOIN work_exp we
                 ON u.auth_id=we.auth_id
                 LEFT JOIN `location_master`lm
                 ON lm.loc_id=u.current_location
+                LEFT JOIN `location_master`lmm
+                ON lmm.loc_id=u.prefred_location
                 LEFT JOIN user_qualification uq
                 ON uq.auth_id=u.auth_id
                 LEFT JOIN education_master em
