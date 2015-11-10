@@ -1,8 +1,8 @@
 <?php echo form_open('WorkExperince/work_exp') ?>
-<h2 align="center">Enter Your Work Experince Details</h2>
+<h3 class="page-header"> Enter Your Work Experince Details</h3>
 <div class="row"><?php echo validation_errors(); ?></div>
 <div class="row">
-    <div class="col-lg-3"></div>
+<!--    <div class="col-lg-3"></div>-->
     <div class="panel panel-default col-lg-6 " >
         <div class="form-group " style="text-align: center">
             <!--                <h3>Enter Your Projects Detail</h3>-->
