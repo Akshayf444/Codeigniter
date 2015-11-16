@@ -601,7 +601,7 @@ class Api extends CI_Controller {
             $content[] = array(
                 'Message' => 'Allready Applied',
             );
-            $output = array('status' => 'success', 'message' => $content);
+            $output = array('status' => 'error', 'message' => $content);
         } else {
             $this->Job_model->apply($id, $user_id);
             $content = array();
