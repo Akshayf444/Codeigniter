@@ -270,13 +270,17 @@ class User_model extends CI_Model {
 
     public function all_job($id, $skill) {
         $skills = explode(",", $skill);
-        $query = "SELECT * ,CASE  WHEN ap.`job_id` IS NOT NULL THEN 1 ELSE 0 END AS applied_status FROM jobs j
+        $query = "SELECT * ,CASE  WHEN ap.`job_id` IS NOT NULL THEN 1 ELSE 0 END AS applied_status,(fa.fun_area) AS functional_area,(im.industry) AS industry FROM jobs j
                 LEFT JOIN emp_profile ep
                 ON j.auth_id=ep.`auth_id`
                 LEFT JOIN `location_master` lm
                 ON lm.loc_id=j.location
                 LEFT JOIN apply_job ap
                 ON ap.`job_id`=j.`job_id`
+                LEFT JOIN `functional_area` fa
+                ON j.functional_area=fa.fun_id 
+                LEFT JOIN `industry_master` im
+                ON im.indus_id=j.industry
                 WHERE j.functional_area=$id ";
 
         if (!empty($skills)) {
