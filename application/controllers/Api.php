@@ -613,5 +613,24 @@ class Api extends CI_Controller {
         header('content-type: application/json');
         echo json_encode($output);
     }
+    
+    public function applicationhistory() {
+        $user_id = $_REQUEST['user'];
+        $data= $this->User_model->application($user_id);
+        if (!empty($data)) {
+//            $content = array();
+//            $content[] = array(
+//                'Message' => 'Allready Applied',
+//            );
+            $output = array('status' => 'success', 'message' => $data);
+        } else {
+           
+            $output = array('status' => 'error', 'message' => $data);
+        }
+        header('content-type: application/json');
+        echo json_encode($output);
+    }
+    
+    
 
 }
