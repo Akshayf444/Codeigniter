@@ -32,7 +32,7 @@ class Job extends CI_Controller {
                 $this->form_validation->set_rules('industry', 'Industry', 'trim|required');
 
                 if ($this->form_validation->run() == TRUE) {
-                    $this->Job_model->add();
+                    $this->Job_model->add($data['auth_id']);
                 }
             }
 
@@ -109,11 +109,11 @@ class Job extends CI_Controller {
             $conditions = array();
             if ($this->input->get('skill') != '') {
                 $skill = $this->input->get('skill');
-                $conditions[] = "j.`keyword` LIKE '$skill%'";
+                $conditions[] = "j.`keyword` LIKE '%$skill%'";
             }
             if ($this->input->get('skill') != '') {
                 $skill = $this->input->get('skill');
-                $conditions[] = "j.`title` LIKE '$skill%'";
+                $conditions[] = "j.`title` LIKE '%$skill%'";
             }
             if ($this->input->get('location') != '') {
                 $location = $this->input->get('location');
@@ -175,8 +175,8 @@ class Job extends CI_Controller {
             $user_id = $this->session->userdata("user_id");
             if ($this->input->get()) {
                 $conditions = array();
-                if ($this->input->get('location[]') != '') {
-                    $skill = $this->input->get('location[]');
+                if ($this->input->get('location') != '') {
+                    $skill = $this->input->get('location');
                     $join = implode("','", $skill);
                     $conditions[] = "lm.`location` IN ('$join')";
                 }

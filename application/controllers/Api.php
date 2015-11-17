@@ -9,6 +9,9 @@ class Api extends CI_Controller {
         parent::__construct();
         $this->load->model('User_model');
         $this->load->model('Sendsms');
+        $this->load->model('WorkExperince_model');
+        $this->load->model('address_model');
+        $this->load->model('Job_model');
     }
 
     public function login() {
@@ -23,6 +26,7 @@ class Api extends CI_Controller {
             //$content[] = $check;
             $view['user3'] = array_shift($this->User_model->qualification_view($check['auth_id']));
             $view['profile'] = $this->User_model->view($check['auth_id']);
+            $view['verify'] = $this->User_model->veiw3($check['auth_id']);
             $content[] = array(
                 'email' => $view['profile']['email'],
                 'name' => $view['profile']['name'],
@@ -37,6 +41,7 @@ class Api extends CI_Controller {
                 'institute' => $view['user3']->institute,
                 'year' => $view['user3']->year,
                 'auth_id' => $view['user3']->auth_id,
+                'verified' => $view['verify']['verified'],
             );
             $output = array('status' => 'success', 'message' => $content);
         } else {
@@ -65,7 +70,7 @@ class Api extends CI_Controller {
             ///////Create New User
             $id = $this->User_model->create($field_array);
 
-            
+
 
 
             $data = array(
@@ -171,7 +176,7 @@ class Api extends CI_Controller {
         $detail = $_REQUEST['detail'];
 
         $config['upload_path'] = $_SERVER['DOCUMENT_ROOT'] . '\jobportal\assets\Resume';
-        $config['allowed_types'] = 'pdf|doc|docx';
+        $config['allowed_types'] = '*';
         $config['max_size'] = '4096';
         $new_name = time();
         $config['file_name'] = $new_name;
@@ -186,9 +191,13 @@ class Api extends CI_Controller {
         } else {
             $upload_result = $this->upload->data();
 
-            print_r($upload_result['file_name']); //or print any valid
+            // print_r($upload_result['file_name']); //or print any valid
+            $content = array();
+            $content[] = array(
+                'file name' => $upload_result['file_name'],
+            );
             $this->User_model->resume($upload_result['file_name'], $user_id, $detail);
-            $output = array('status' => 'success', 'message' => 'Resume successfully added');
+            $output = array('status' => 'success', 'message' => $content);
         }
 
 
@@ -203,27 +212,31 @@ class Api extends CI_Controller {
 
         $user_id = $_REQUEST['id'];
         $content = array();
-        $view['profile'] = $this->User_model->view($user_id);
-
-        $view['user3'] = array_shift($this->User_model->qualification_view($user_id));
-
-        $content[] = array(
-            'email' => $view['profile']['email'],
-            'name' => $view['profile']['name'],
-            'user_id' => $view['profile']['user_id'],
-            'mobile' => $view['profile']['mobile'],
-            'location' => $view['profile']['loc'],
-            'experince_month' => $view['profile']['experince_month'],
-            'experince_year' => $view['profile']['exp_year'],
-            'qualification' => $view['user3']->qualification,
-            'specialization' => $view['user3']->specialization,
-            'institute' => $view['user3']->institute,
-            'year' => $view['user3']->year,
-            'auth_id' => $view['user3']->auth_id,
+        $view['profile'][] = $this->User_model->view($user_id);
+        $view['projects'] = $this->User_model->view2($user_id);
+        $view['verified'][] = $this->User_model->veiw3($user_id);
+        $view['qualification'][] = $this->User_model->qualification_view($user_id);
+        $check = $this->User_model->user_resume($user_id);
+        $view['resume'][] = array(
+            'resume' => (base_url() . 'assets/Resume/' . $check['resume']),
         );
+//        $content[] = array(
+//            'email' => $view['profile']['email'],
+//            'name' => $view['profile']['name'],
+//            'user_id' => $view['profile']['user_id'],
+//            'mobile' => $view['profile']['mobile'],
+//            'location' => $view['profile']['loc'],
+//            'experince_month' => $view['profile']['experince_month'],
+//            'experince_year' => $view['profile']['exp_year'],
+//            'qualification' => $view['user3']->qualification,
+//            'specialization' => $view['user3']->specialization,
+//            'institute' => $view['user3']->institute,
+//            'year' => $view['user3']->year,
+//            'auth_id' => $view['user3']->auth_id,
+//        );
         if (!empty($view)) {
             //$output = array('status' => 'Success', 'message' => array('profile'=>$view['profile'],'Education'=>$view['user3']));
-            $output = array('status' => 'Success', 'message' => $content);
+            $output = array('status' => 'Success', 'message' => $view);
         } else {
             $output = array('status' => 'error', 'message' => 'Details Not Found');
         }
@@ -285,10 +298,18 @@ class Api extends CI_Controller {
             $this->Sendsms->sendsms($number, $message);
             $output = array('status' => 'success', 'message' => $check1);
         } else {
+            $content = array();
             if ($check['verified'] == 1) {
-                $output = array('status' => 'success', 'message' => 'Verified');
+
+                $content[] = array(
+                    'Message' => 'Verified'
+                );
+                $output = array('status' => 'error', 'message' => $content);
             } else {
-                $output = array('status' => 'success', 'message' => 'error');
+                $content[] = array(
+                    'Message' => 'Error'
+                );
+                $output = array('status' => 'error', 'message' => $content);
             }
         }
         header('content-type: application/json');
@@ -320,8 +341,436 @@ class Api extends CI_Controller {
         echo json_encode($output);
     }
 
-    public function work_experince() {
-        
+    public function Qualification() {
+        $qualification = $_REQUEST['qualification'];
+        $specialization = $_REQUEST['specialization'];
+        $id = $_REQUEST['id'];
+        $institute = $_REQUEST['institute'];
+        $year = $_REQUEST['year'];
+        $content = array();
+
+        $education_details = array(
+            'qualification' => $qualification,
+            'specialization' => $specialization,
+            'institute' => $institute,
+            'year' => $year,
+            'created' => date('Y-m-d H:i:s'),
+            'auth_id' => $id
+        );
+        if (!empty($education_details)) {
+            $this->User_model->user_qualification($education_details);
+            $content[] = array(
+                'Message' => 'Added Succesfully',
+            );
+            $output = array('status' => 'success', 'message' => $content);
+        } else {
+            $content[] = array(
+                'Message' => 'Error',
+            );
+            $output = array('status' => 'error', 'message' => $content);
+        }
+        header('content-type: application/json');
+        echo json_encode($output);
+    }
+
+    public function workexperince() {
+
+        $name = $_REQUEST['name'];
+        $type = $_REQUEST['type'];
+        $form = $_REQUEST['from'];
+        $to = $_REQUEST['to'];
+        $designation = $_REQUEST['designation'];
+        $profile = $_REQUEST['profile'];
+        $id = $_REQUEST['id'];
+
+
+        $data1 = array(
+            'emp_name' => $name,
+            'type' => $type,
+            'from' => $form,
+            'to' => $to,
+            'auth_id' => $id,
+            'designation' => $designation,
+            'job_profile' => $profile,
+        );
+
+        if (!empty($data1)) {
+            $content = array();
+
+            $data = $this->WorkExperince_model->add2($data1);
+            $content[] = array(
+                'Message' => 'successfully Added'
+            );
+            $output = array('status' => 'succcess', 'message' => $content);
+        } else {
+            $content = array();
+            $content[] = array(
+                'Message' => 'Error'
+            );
+            $output = array('status' => 'error', 'message' => $content);
+        }
+        header('content-type: application/json');
+        echo json_encode($output);
+    }
+
+    public function projects() {
+        $this->load->model('Master_model');
+        $client = $_REQUEST['client'];
+        $id = $_REQUEST['id'];
+        $projects_title = $_REQUEST['title'];
+        $from = $_REQUEST['from'];
+        $to = $_REQUEST['to'];
+        $detail = $_REQUEST['detail'];
+        $content = array();
+        $data = array(
+            'client' => $client,
+            'auth_id' => $id,
+            'projects_title' => $projects_title,
+            'to' => $to,
+            'from' => $from,
+            'detail' => $detail,
+        );
+        if (!empty($data)) {
+
+            $this->User_model->project_add2($data);
+            $content[] = array(
+                'Message' => 'Successfully Added'
+            );
+            $output = array('status' => 'success', 'message' => $content);
+        } else {
+            $content[] = array(
+                'Message' => 'Error'
+            );
+            $output = array('status' => 'error', 'message' => $content);
+        }
+        header('content-type: application/json');
+        echo json_encode($output);
+    }
+
+    public function Personal_detail() {
+        $dob = $_REQUEST['dob'];
+        $id = $_REQUEST['id'];
+        $pincode = $_REQUEST['pincode'];
+        $maritial = $_REQUEST['Maritialstatus'];
+        $address = $_REQUEST['address'];
+        $gender = $_REQUEST['gender'];
+
+        $content = array();
+        $data = array(
+            'dob' => $dob,
+            'marital_status' => $maritial,
+            'gender' => $gender,
+        );
+        $data2 = array(
+            'address1' => $address,
+            'auth_id' => $id,
+            'pincode' => $pincode,
+        );
+        if (!empty($data) && !empty($data2)) {
+            $upadte = $this->User_model->personal_detail($id, $data);
+            $upadte2 = $this->address_model->add_address2($id, $data2);
+            $content[] = array(
+                'Message' => 'Successfully Added'
+            );
+            $output = array('status' => 'success', 'message' => $content);
+        } else {
+            $content[] = array(
+                'Message' => 'Error'
+            );
+            $output = array('status' => 'error', 'message' => $content);
+        }
+
+        header('content-type: application/json');
+        echo json_encode($output);
+    }
+
+    public function work_detail() {
+        $industry = $_REQUEST['industry'];
+        $id = $_REQUEST['id'];
+        $function_area = $_REQUEST['function_area'];
+        $role = $_REQUEST['role'];
+        $prefred_location = $_REQUEST['preferd_location'];
+
+        $content = array();
+        $data = array(
+            'industry' => $industry,
+            'function_area' => $function_area,
+            'role' => $role,
+            'prefred_location' => $prefred_location,
+        );
+        if (!empty($data)) {
+            $upadte = $this->User_model->personal_detail($id, $data);
+            $content[] = array(
+                'Message' => 'Successfully Added'
+            );
+            $output = array('status' => 'success', 'message' => $content);
+        } else {
+            $content[] = array(
+                'Message' => 'Error'
+            );
+            $output = array('status' => 'error', 'message' => $content);
+        }
+
+        header('content-type: application/json');
+        echo json_encode($output);
+    }
+
+    public function SearchJob() {
+
+        $this->load->model('Master_model');
+        $this->load->model('Job_model');
+        $skill = $_REQUEST['skill'];
+        $location = $_REQUEST['location'];
+        $experince = $_REQUEST['experince'];
+        if ($skill || $location || $experince) {
+            $conditions = array();
+            if ($_REQUEST['skill'] != '') {
+                $skill = $_REQUEST['skill'];
+                $conditions[] = "j.`keyword` LIKE '%$skill%'";
+            }
+            if ($_REQUEST['skill'] != '') {
+                $skill = $_REQUEST['skill'];
+                $conditions[] = "j.`title` LIKE '%$skill%'";
+            }
+            if ($_REQUEST['location'] != '') {
+                $location = $_REQUEST['location'];
+                $conditions[] = "j.`location` ='$location'";
+            }
+            if ($_REQUEST['experince'] != '') {
+                $experince = $_REQUEST['experince'];
+                $conditions[] = "j.exp_max =$experince ";
+            }
+            //$data = array();
+            $data = $this->Job_model->search($conditions);
+            if (!empty($data)) {
+                $output = array('status' => 'success', 'message' => $data);
+            } else {
+                $content = array();
+                $content[] = array(
+                    'Message' => 'Error'
+                );
+                $output = array('status' => 'error', 'message' => $content);
+            }
+        }
+        header('content-type: application/json');
+        echo json_encode($output);
+    }
+
+    public function SearchJob2() {
+
+        $this->load->model('Master_model');
+        $user_id = $_REQUEST['id'];
+
+        $data1 = $this->User_model->find_by_user_id2($user_id);
+        $data = $this->User_model->all_job3($data1['function_area'], $data1['key_skill']);
+        if (!empty($data)) {
+            $output = array('status' => 'success', 'message' => $data);
+        } else {
+            $content = array();
+            $content[] = array(
+                'Message' => 'Error'
+            );
+            $output = array('status' => 'error', 'message' => $content);
+        }
+        header('content-type: application/json');
+        echo json_encode($output);
+    }
+
+    public function jobview() {
+
+        $this->load->model('Master_model');
+        $id = $_REQUEST['jobid'];
+
+
+        $data[] = $this->Job_model->view_job($id);
+        if (!empty($data)) {
+            $output = array('status' => 'success', 'message' => $data);
+        } else {
+            $content = array();
+            $content[] = array(
+                'Message' => 'Error'
+            );
+            $output = array('status' => 'error', 'message' => 'error');
+        }
+        header('content-type: application/json');
+        echo json_encode($output);
+    }
+
+    public function apply() {
+        $user_id = $_REQUEST['user'];
+        $id = $_REQUEST['job'];
+        $data = $this->Job_model->apply_id($id, $user_id);
+        if (!empty($data)) {
+            $content = array();
+            $content[] = array(
+                'Message' => 'Allready Applied',
+            );
+            $output = array('status' => 'error', 'message' => $content);
+        } else {
+            $this->Job_model->apply($id, $user_id);
+            $content = array();
+            $content[] = array(
+                'Message' => 'Succesfully Applied',
+            );
+            $output = array('status' => 'success', 'message' => $content);
+        }
+        header('content-type: application/json');
+        echo json_encode($output);
+    }
+
+    public function applicationhistory() {
+        $user_id = $_REQUEST['user'];
+        $data = $this->User_model->application($user_id);
+        if (!empty($data)) {
+//            $content = array();
+//            $content[] = array(
+//                'Message' => 'Allready Applied',
+//            );
+            $output = array('status' => 'success', 'message' => $data);
+        } else {
+            $content = array();
+            $content[] = array(
+                'Message' => 'error',
+            );
+            $output = array('status' => 'error', 'message' => $content);
+        }
+        header('content-type: application/json');
+        echo json_encode($output);
+    }
+
+    public function show_alljobs() {
+        $job_id = $_REQUEST['job_id'];
+        $user_id = $_REQUEST['user_id'];
+        $data = $this->User_model->show_alljobs($job_id, $user_id);
+        if (!empty($data)) {
+            $output = array('status' => 'success', 'message' => $data);
+        } else {
+            $content = array();
+            $content[] = array(
+                'Message' => 'error',
+            );
+            $output = array('status' => 'error', 'message' => $content);
+        }
+        header('content-type: application/json');
+        echo json_encode($output);
+    }
+
+    public function profile_update() {
+        $user_id = $_REQUEST['user_id'];
+        $data = array(
+            'name' => $_REQUEST['name'],
+            'dob' => $_REQUEST['dob'],
+            'email' => $_REQUEST['email'],
+            'mobile' => $_REQUEST['mobile'],
+            'auth_id' => $user_id,
+            'updated_at' => date('Y-m_d H:i:s'),
+            'gender' => $_REQUEST['gender'],
+            'exp_year' => $_REQUEST['experince_year'],
+            'experince_month' => $_REQUEST['experince_month'],
+            'current_location' => $_REQUEST['current_location'],
+            'prefred_location' => $_REQUEST['prefred_location'],
+            'industry' => $_REQUEST['industry'],
+            'function_area' => $_REQUEST['function_area'],
+            'role' => $_REQUEST['role'],
+            'key_skill' => $_REQUEST['key_skill'],
+            'marital_status' => $_REQUEST['marital_status'],
+            'resume_headline' => $_REQUEST['resume_headline'],
+        );
+        $field_array = array(
+            'auth_id' => $user_id,
+            'address1' => $_REQUEST['address1'],
+            'pincode' => $_REQUEST['pincode'],
+            'state' => $_REQUEST['state'],
+            'city' => $_REQUEST['city'],
+            'updated_at' => date('Y-m-d H:i:s'),
+        );
+
+
+
+        $check['User1'] = $this->User_model->Add_detail($user_id, $data);
+        $check['User2'] = $this->address_model->add_address3($user_id, $field_array);
+        if (!empty($data)) {
+            $content = array();
+            $content[] = array(
+                'Message' => 'Successfully Updated',
+            );
+            $output = array('status' => 'success', 'message' => $content);
+        } else {
+            $content = array();
+            $content[] = array(
+                'Message' => 'error',
+            );
+            $output = array('status' => 'error', 'message' => $content);
+        }
+        header('content-type: application/json');
+        echo json_encode($output);
+    }
+
+    public function project_update() {
+        $project_id = $_REQUEST['project_id'];
+        $data = array(
+            'client' => $_REQUEST['client'],
+            'projects_title' => $_REQUEST['projects_title'],
+            'to' => $_REQUEST['to'],
+            'from' => $_REQUEST['from'],
+            'location' => $_REQUEST['location'],
+            'site' => $_REQUEST['site'],
+            'type' => $_REQUEST['type'],
+            'detail' => $_REQUEST['detail'],
+            'role' => $_REQUEST['role'],
+            'role_description' => $_REQUEST['role_description'],
+            'team_size' => $_REQUEST['team_size'],
+            'skill' => $_REQUEST['skill'],
+        );
+        $data1 = $this->User_model->project_update3($project_id, $data);
+        if (!empty($data1)) {
+            $content = array();
+            $content[] = array(
+                'Message' => 'Successfully Updated Project Detail   ',
+            );
+            $output = array('status' => 'success', 'message' => $content);
+        } else {
+            $content = array();
+            $content[] = array(
+                'Message' => 'error',
+            );
+            $output = array('status' => 'error', 'message' => $content);
+        }
+        header('content-type: application/json');
+        echo json_encode($output);
+    }
+
+    public function qualification_update() {
+        $qualification_id = $_REQUEST['qualification_id'];
+        $qualification = $_REQUEST['qualification'];
+        $specialization = $_REQUEST['specialization'];
+        $institute = $_REQUEST['institute'];
+        $year = $_REQUEST['year'];
+        $user_id = $_REQUEST['user_id'];
+        $data = array(
+            'qualification' => $qualification,
+            'specialization' => $specialization,
+            'institute' => $institute,
+            'year' => $year,
+            'updated_at' => date('Y-m-d H:i:s'),
+            'auth_id' => $user_id,
+        );
+        $data1 = $this->User_model->user_qualification_update($data, $qualification_id);
+        if (!empty($data1)) {
+            $content = array();
+            $content[] = array(
+                'Message' => 'Successfully Updated Qualification Detail   ',
+            );
+            $output = array('status' => 'success', 'message' => $content);
+        } else {
+            $content = array();
+            $content[] = array(
+                'Message' => 'error',
+            );
+            $output = array('status' => 'error', 'message' => $content);
+        }
+        header('content-type: application/json');
+        echo json_encode($output);
     }
 
 }

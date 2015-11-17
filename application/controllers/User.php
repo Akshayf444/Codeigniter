@@ -497,7 +497,7 @@ class User extends CI_Controller {
             $conditions = array();
             if ($this->input->post('skill') != '') {
                 $skill = $this->input->post('skill');
-                $conditions[] = "j.`keyword` LIKE '$skill%'";
+                $conditions[] = "j.`keyword` LIKE '%$skill%'";
             }
             if ($this->input->post('location') != '') {
                 $location = $this->input->post('location');
@@ -653,5 +653,32 @@ class User extends CI_Controller {
             redirect('User/login', 'refresh');
         }
     }
+    
+    public function delete_project() {
+        if ($this->is_logged_in() == TRUE) {
+
+            $id = $_GET['id'];
+
+            
+            $show = $this->User_model->project_delete($id);
+             redirect('User/view', 'refresh');
+        } else {
+            redirect('User/login', 'refresh');
+        }
+    }
+    public function delete_qualification() {
+        if ($this->is_logged_in() == TRUE) {
+
+            $id = $_GET['id'];
+
+            
+            $show = $this->User_model->delete_qualification($id);
+             redirect('User/view', 'refresh');
+        } else {
+            redirect('User/login', 'refresh');
+        }
+    }
+    
+    
 
 }

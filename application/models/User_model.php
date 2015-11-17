@@ -172,7 +172,8 @@ class User_model extends CI_Model {
                     ON am.`auth_id`=u.`auth_id`
                     LEFT JOIN user_project up
                     ON up.`auth_id`=u.`auth_id`
-                    WHERE u.auth_id=$id";
+                    WHERE u.auth_id=$id
+                    ORDER BY we.emp_id DESC  LIMIT 1";
         $query = $this->db->query($query);
 
         return $query->row_array();
@@ -261,6 +262,11 @@ class User_model extends CI_Model {
         $this->db->where(array('id' => $this->input->post('id')));
         return $this->db->update('user_project', $data);
     }
+    
+    public function project_update3($id,$data) {
+        $this->db->where(array('id' =>$id));
+        return $this->db->update('user_project', $data);
+    }
 
     public function update_qualification($data, $id) {
         $this->db->where(array('id' => $id));
@@ -269,11 +275,15 @@ class User_model extends CI_Model {
 
     public function all_job($id, $skill) {
         $skills = explode(",", $skill);
-        $query = "SELECT *FROM jobs j
+        $query = "SELECT * FROM jobs j
                 LEFT JOIN emp_profile ep
                 ON j.auth_id=ep.`auth_id`
                 LEFT JOIN `location_master` lm
                 ON lm.loc_id=j.location
+                LEFT JOIN `functional_area` fa
+                ON j.functional_area=fa.fun_id 
+                LEFT JOIN `industry_master` im
+                ON im.indus_id=j.industry
                 WHERE j.functional_area=$id ";
 
         if (!empty($skills)) {
@@ -286,7 +296,29 @@ class User_model extends CI_Model {
 
         return $query->result();
     }
+public function all_job3($id, $skill) {
+        $skills = explode(",", $skill);
+        $query = "SELECT *,(j.job_id) as job_id ,(fa.fun_area) AS functional_area,(im.industry) AS industry FROM jobs j
+                LEFT JOIN emp_profile ep
+                ON j.auth_id=ep.`auth_id`
+                LEFT JOIN `location_master` lm
+                ON lm.loc_id=j.location
+                LEFT JOIN `functional_area` fa
+                ON j.functional_area=fa.fun_id 
+                LEFT JOIN `industry_master` im
+                ON im.indus_id=j.industry
+                WHERE j.functional_area=$id";
 
+        if (!empty($skills)) {
+            foreach ($skills as $value) {
+                $query .= " OR j.keyword LIKE '%$value%' ";
+            }
+        }
+
+        $query = $this->db->query($query);
+
+        return $query->result();
+    }
     public function all_job2() {
         $query = "SELECT *FROM jobs j
                 LEFT JOIN emp_profile ep
@@ -325,6 +357,10 @@ class User_model extends CI_Model {
                 ON aj.`job_id`=j.`job_id`
                 LEFT JOIN `emp_profile` ep
                 ON ep.`auth_id` =j.`auth_id`
+                LEFT JOIN `functional_area` fa
+                ON j.functional_area=fa.fun_id 
+                LEFT JOIN `industry_master` im
+                ON im.indus_id=j.industry
                 LEFT JOIN `location_master` lm
                 ON lm.`loc_id`=j.`location`
                 WHERE aj.auth_id=$id";
@@ -377,27 +413,79 @@ class User_model extends CI_Model {
 //       return  $query = $this->db->query($query);
         //return $query->row_array();
     }
+
     public function verification($data) {
-        
+
         return $query = $this->db->insert('user_verification', $data);
     }
-    public function verification_update($id,$data) {
-        
+
+    public function verification_update($id, $data) {
+
         $this->db->where(array('auth_id' => $id));
         return $this->db->update('user_verification', $data);
     }
+
     public function verification_by_id($id) {
-        
+
         $query = "SELECT *FROM user_verification u
                     WHERE u.auth_id=$id";
         $query = $this->db->query($query);
 
         return $query->row_array();
     }
-    public function check_code($id,$data) {
-        
+
+    public function check_code($id, $data) {
+
         $this->db->where(array('auth_id' => $id));
         return $this->db->update('user_verification', $data);
+    }
+
+    public function project_add2($data) {
+
+        return $this->db->insert('user_project', $data);
+    }
+
+    public function personal_detail($id, $data) {
+
+        $this->db->where(array('auth_id' => $id));
+        return $this->db->update('user', $data);
+    }
+
+    public function veiw3($id) {
+
+        $query = "SELECT * FROM `user_verification`
+                    WHERE auth_id=$id";
+        $query = $this->db->query($query);
+
+        return $query->row_array();
+    }
+    public function show_alljobs($data,$user_id) {
+
+        $query = "SELECT * ,CASE  WHEN ap.`job_id` IS NOT NULL THEN 1 ELSE 0 END AS applied_status,(fa.fun_area) AS functional_area,(im.industry) AS industry FROM jobs j
+                LEFT JOIN emp_profile ep
+                ON j.auth_id=ep.`auth_id`
+                LEFT JOIN `location_master` lm
+                ON lm.loc_id=j.location
+                LEFT JOIN apply_job ap
+                ON ap.`job_id`=j.`job_id`
+                LEFT JOIN `functional_area` fa
+                ON j.functional_area=fa.fun_id 
+                LEFT JOIN `industry_master` im
+                ON im.indus_id=j.industry
+                WHERE j.`job_id` IN($data) AND ap.auth_id=$user_id";
+        $query = $this->db->query($query);
+
+        return $query->result();
+    }
+    public function project_delete($id) {
+
+         $this->db->where('id', $id);
+      return $this->db->delete('user_project'); 
+    }
+    public function delete_qualification($id) {
+
+         $this->db->where('id', $id);
+      return $this->db->delete('user_qualification'); 
     }
 
 }
