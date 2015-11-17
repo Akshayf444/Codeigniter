@@ -262,9 +262,9 @@ class User_model extends CI_Model {
         $this->db->where(array('id' => $this->input->post('id')));
         return $this->db->update('user_project', $data);
     }
-    
-    public function project_update3($id,$data) {
-        $this->db->where(array('id' =>$id));
+
+    public function project_update3($id, $data) {
+        $this->db->where(array('id' => $id));
         return $this->db->update('user_project', $data);
     }
 
@@ -296,9 +296,10 @@ class User_model extends CI_Model {
 
         return $query->result();
     }
-public function all_job3($id, $skill) {
+
+    public function all_job3($id, $skill, $user_id = 0) {
         $skills = explode(",", $skill);
-        $query = "SELECT *,(j.job_id) as job_id ,(fa.fun_area) AS functional_area,(im.industry) AS industry FROM jobs j
+        $query = "SELECT *,(j.job_id) as job_id ,(fa.fun_area) AS functional_area,(im.industry) AS industry,(CASE WHEN ap.job_id IS NOT NULL THEN 1 ELSE 0 END) AS applied_status FROM jobs j
                 LEFT JOIN emp_profile ep
                 ON j.auth_id=ep.`auth_id`
                 LEFT JOIN `location_master` lm
@@ -306,19 +307,25 @@ public function all_job3($id, $skill) {
                 LEFT JOIN `functional_area` fa
                 ON j.functional_area=fa.fun_id 
                 LEFT JOIN `industry_master` im
-                ON im.indus_id=j.industry
-                WHERE j.functional_area=$id";
+                ON im.indus_id=j.industry ";
+        if ($user_id > 0) {
+            $query .= "LEFT JOIN apply_job ap ON ap.job_id = j.job_id AND ap.auth_id = '$user_id'";
+        }
+        $query .= " WHERE j.functional_area=$id";
 
         if (!empty($skills)) {
             foreach ($skills as $value) {
                 $query .= " OR j.keyword LIKE '%$value%' ";
             }
         }
+        
+        //echo $query;
 
         $query = $this->db->query($query);
 
         return $query->result();
     }
+
     public function all_job2() {
         $query = "SELECT *FROM jobs j
                 LEFT JOIN emp_profile ep
@@ -459,7 +466,8 @@ public function all_job3($id, $skill) {
 
         return $query->row_array();
     }
-    public function show_alljobs($data,$user_id) {
+
+    public function show_alljobs($data, $user_id) {
 
         $query = "SELECT * ,CASE  WHEN ap.`job_id` IS NOT NULL THEN 1 ELSE 0 END AS applied_status,(fa.fun_area) AS functional_area,(im.industry) AS industry FROM jobs j
                 LEFT JOIN emp_profile ep
@@ -477,15 +485,17 @@ public function all_job3($id, $skill) {
 
         return $query->result();
     }
+
     public function project_delete($id) {
 
-         $this->db->where('id', $id);
-      return $this->db->delete('user_project'); 
+        $this->db->where('id', $id);
+        return $this->db->delete('user_project');
     }
+
     public function delete_qualification($id) {
 
-         $this->db->where('id', $id);
-      return $this->db->delete('user_qualification'); 
+        $this->db->where('id', $id);
+        return $this->db->delete('user_qualification');
     }
 
 }

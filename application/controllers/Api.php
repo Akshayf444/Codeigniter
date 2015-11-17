@@ -562,7 +562,7 @@ class Api extends CI_Controller {
         $user_id = $_REQUEST['id'];
 
         $data1 = $this->User_model->find_by_user_id2($user_id);
-        $data = $this->User_model->all_job3($data1['function_area'], $data1['key_skill']);
+        $data = $this->User_model->all_job3($data1['function_area'], $data1['key_skill'],$user_id);
         if (!empty($data)) {
             $output = array('status' => 'success', 'message' => $data);
         } else {
