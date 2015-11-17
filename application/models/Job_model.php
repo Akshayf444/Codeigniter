@@ -2,7 +2,7 @@
 
 class Job_model extends CI_Model {
 
-    function add() {
+    function add($auth_id) {
         $field_array = array(
             'title' => $this->input->post('title'),
             'description' => $this->input->post('description'),
@@ -15,7 +15,7 @@ class Job_model extends CI_Model {
             'location' => $this->input->post('location'),
             'industry' => $this->input->post('industry'),
             'functional_area' => $this->input->post('functional_area'),
-            'auth_id' => $this->input->post('auth_id'),
+            'auth_id' => $auth_id,
             'keyword' => $this->input->post('keyword'),
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),

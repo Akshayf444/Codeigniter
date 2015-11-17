@@ -32,7 +32,7 @@ class Job extends CI_Controller {
                 $this->form_validation->set_rules('industry', 'Industry', 'trim|required');
 
                 if ($this->form_validation->run() == TRUE) {
-                    $this->Job_model->add();
+                    $this->Job_model->add($data['auth_id']);
                 }
             }
 

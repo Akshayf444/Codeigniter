@@ -558,7 +558,7 @@ class Api extends CI_Controller {
         $user_id = $_REQUEST['id'];
 
         $data1 = $this->User_model->find_by_user_id2($user_id);
-        $data = $this->User_model->all_job($data1['function_area'], $data1['key_skill']);
+        $data = $this->User_model->all_job3($data1['function_area'], $data1['key_skill']);
         if (!empty($data)) {
             $output = array('status' => 'success', 'message' => $data);
         } else {
@@ -703,7 +703,7 @@ class Api extends CI_Controller {
     }
 
     public function project_update() {
-        $project_id=$_REQUEST['project_id'];
+        $project_id = $_REQUEST['project_id'];
         $data = array(
             'client' => $_REQUEST['client'],
             'projects_title' => $_REQUEST['projects_title'],
@@ -717,13 +717,45 @@ class Api extends CI_Controller {
             'role_description' => $_REQUEST['role_description'],
             'team_size' => $_REQUEST['team_size'],
             'skill' => $_REQUEST['skill'],
-            
         );
-        $data1=$this->User_model->project_update3($project_id,$data);
+        $data1 = $this->User_model->project_update3($project_id, $data);
         if (!empty($data1)) {
             $content = array();
             $content[] = array(
-                'Message' => 'Successfully Updated Project Detail',
+                'Message' => 'Successfully Updated Project Detail   ',
+            );
+            $output = array('status' => 'success', 'message' => $content);
+        } else {
+            $content = array();
+            $content[] = array(
+                'Message' => 'error',
+            );
+            $output = array('status' => 'error', 'message' => $content);
+        }
+        header('content-type: application/json');
+        echo json_encode($output);
+    }
+
+    public function qualification_update() {
+        $qualification_id = $_REQUEST['qualification_id'];
+        $qualification = $_REQUEST['qualification'];
+        $specialization = $_REQUEST['specialization'];
+        $institute = $_REQUEST['institute'];
+        $year = $_REQUEST['year'];
+        $user_id = $_REQUEST['user_id'];
+        $data = array(
+            'qualification' => $qualification,
+            'specialization' => $specialization,
+            'institute' => $institute,
+            'year' => $year,
+            'updated_at' => date('Y-m-d H:i:s'),
+            'auth_id' => $user_id,
+        );
+        $data1 = $this->User_model->user_qualification_update($data, $qualification_id);
+        if (!empty($data1)) {
+            $content = array();
+            $content[] = array(
+                'Message' => 'Successfully Updated Project Detail   ',
             );
             $output = array('status' => 'success', 'message' => $content);
         } else {
