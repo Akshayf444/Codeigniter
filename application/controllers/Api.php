@@ -759,7 +759,7 @@ class Api extends CI_Controller {
         if (!empty($data1)) {
             $content = array();
             $content[] = array(
-                'Message' => 'Successfully Updated Qualification Detail   ',
+                'Message' => 'Successfully Updated Qualification Detail',
             );
             $output = array('status' => 'success', 'message' => $content);
         } else {
