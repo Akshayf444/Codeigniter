@@ -624,8 +624,11 @@ class Api extends CI_Controller {
 //            );
             $output = array('status' => 'success', 'message' => $data);
         } else {
-           
-            $output = array('status' => 'error', 'message' => $data);
+           $content = array();
+            $content[] = array(
+                'Message' => 'error',
+            );
+            $output = array('status' => 'error', 'message' => $content);
         }
         header('content-type: application/json');
         echo json_encode($output);
