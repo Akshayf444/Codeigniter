@@ -262,6 +262,11 @@ class User_model extends CI_Model {
         $this->db->where(array('id' => $this->input->post('id')));
         return $this->db->update('user_project', $data);
     }
+    
+    public function project_update3($id,$data) {
+        $this->db->where(array('id' =>$id));
+        return $this->db->update('user_project', $data);
+    }
 
     public function update_qualification($data, $id) {
         $this->db->where(array('id' => $id));
@@ -429,6 +434,24 @@ class User_model extends CI_Model {
         $query = $this->db->query($query);
 
         return $query->row_array();
+    }
+    public function show_alljobs($data,$user_id) {
+
+        $query = "SELECT * ,CASE  WHEN ap.`job_id` IS NOT NULL THEN 1 ELSE 0 END AS applied_status,(fa.fun_area) AS functional_area,(im.industry) AS industry FROM jobs j
+                LEFT JOIN emp_profile ep
+                ON j.auth_id=ep.`auth_id`
+                LEFT JOIN `location_master` lm
+                ON lm.loc_id=j.location
+                LEFT JOIN apply_job ap
+                ON ap.`job_id`=j.`job_id`
+                LEFT JOIN `functional_area` fa
+                ON j.functional_area=fa.fun_id 
+                LEFT JOIN `industry_master` im
+                ON im.indus_id=j.industry
+                WHERE j.`job_id` IN($data) AND ap.auth_id=$user_id";
+        $query = $this->db->query($query);
+
+        return $query->result();
     }
     public function project_delete($id) {
 
