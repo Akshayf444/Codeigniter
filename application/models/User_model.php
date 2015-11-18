@@ -151,7 +151,7 @@ class User_model extends CI_Model {
     }
 
     public function view($id) {
-        $query = "SELECT *,(l.location) AS loc,(lmm.location) AS lo,(up.location) AS ploc,(up.role) AS prole,(u.role) AS rol  FROM user u
+        $query = "SELECT *,(l.location) AS cuurentloc,(lmm.location) AS preloc,(up.location) AS ploc,(up.role) AS prole,(u.role) AS rol  FROM user u
                     LEFT JOIN work_exp we
                     ON u.auth_id=we.auth_id
                     LEFT JOIN `location_master`lm

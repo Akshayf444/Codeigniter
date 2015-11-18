@@ -43,13 +43,14 @@ class WorkExperince extends CI_Controller {
                 $this->form_validation->set_rules('job_profile', 'job_profile', 'trim|required');
                 $check['show'] = $this->WorkExperince_model->work_by_id($user_id);
                 if ($this->form_validation->run() === True) {
-                    if (empty($check)) {
+                    if (!empty($check)) {
                         $data = $this->WorkExperince_model->add($user_id);
                         redirect('WorkExperince/work_exp', 'refresh');
-                    } else {
-                        $data = $this->WorkExperince_model->update($user_id);
-                        redirect('WorkExperince/work_exp', 'refresh');
                     }
+//                    else {
+//                        $data = $this->WorkExperince_model->update($user_id);
+//                        redirect('WorkExperince/work_exp', 'refresh');
+//                    }
                 }
             }
             $check['show'] = $this->WorkExperince_model->work_by_id($user_id);

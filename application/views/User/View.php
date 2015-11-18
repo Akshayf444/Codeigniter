@@ -39,19 +39,19 @@
             </dt>   
             <dt>
             <label style="    opacity: 0.5">Current Location :</label><span><?php
-                if ($user['loc'] == '') {
+                if ($user['cuurentloc'] == '') {
                     echo "Not Mentioned";
                 } else {
-                    echo $user['loc'];
+                    echo $user['cuurentloc'];
                 }
                 ?></span>
             </dt>
             <dt>
             <label style="    opacity: 0.5">Prefered Location :</label><span><?php
-                if ($user['lo'] == '') {
+                if ($user['preloc'] == '') {
                     echo "Not Mentioned";
                 } else {
-                    echo $user['lo'];
+                    echo $user['preloc'];
                 }
                 ?></span>
             </dt>
