@@ -691,7 +691,7 @@ class Api extends CI_Controller {
 
         $check['User1'] = $this->User_model->Add_detail($user_id, $data);
         $check['User2'] = $this->address_model->add_address3($user_id, $field_array);
-        if (!empty($data)) {
+        if (!empty($check)) {
             $content = array();
             $content[] = array(
                 'Message' => 'Successfully Updated',
