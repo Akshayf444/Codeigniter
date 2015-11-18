@@ -36,9 +36,7 @@
                             <li>
                                 <a href="<?php echo site_url('Employee/login')?>">Employee Login</a>
                             </li>
-                            <li>
-                                <a href="#"></a>
-                            </li>
+                            
                         </ul>
                     </div>
 

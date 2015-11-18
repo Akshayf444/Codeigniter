@@ -18,6 +18,11 @@
             <label class="control-label">Password</label>
             <input type="password" class="form-control input-lg" name="password"/>
         </div>
+        <div class="form-group" >
+
+            <a href="<?php echo site_url('User/register') ?>">Register ?</a>
+
+        </div>
         <input type="submit" class="btn btn-info btn-lg" value="Log In" />
 
         </form>

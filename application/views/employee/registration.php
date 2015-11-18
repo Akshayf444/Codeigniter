@@ -27,7 +27,7 @@ if(isset($Error))
         </div>
         <div class="form-group">
             <label class="control-label">Password</label>
-            <input type="text" class="form-control" name="password"/>
+            <input type="password" class="form-control" name="password"/>
         </div>
         <div class="form-group">
             <label class="control-label">mobile</label>
