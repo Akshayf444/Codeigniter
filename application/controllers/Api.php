@@ -658,11 +658,12 @@ class Api extends CI_Controller {
 
     public function profile_update() {
         $user_id = $_REQUEST['user_id'];
+        $chk['chk']=  $this->User_model->find_by_id($user_id);
         $data = array(
             'name' => $_REQUEST['name'],
             'dob' => $_REQUEST['dob'],
-            'email' => $_REQUEST['email'],
-            'mobile' => $_REQUEST['mobile'],
+            'email' => $chk['chk']['email'],
+            'mobile' => $chk['chk']['mobile'],
             'auth_id' => $user_id,
             'updated_at' => date('Y-m_d H:i:s'),
             'gender' => $_REQUEST['gender'],
