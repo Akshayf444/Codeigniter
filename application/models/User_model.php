@@ -466,6 +466,14 @@ class User_model extends CI_Model {
 
         return $query->row_array();
     }
+    public function work_exp_show($id) {
+
+        $query = "SELECT * FROM `work_exp`
+                    WHERE auth_id=$id";
+        $query = $this->db->query($query);
+
+        return $query->row_array();
+    }
 
     public function show_alljobs($data, $user_id) {
 
