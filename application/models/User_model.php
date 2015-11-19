@@ -202,6 +202,7 @@ class User_model extends CI_Model {
 
         return $query->result();
     }
+
     public function qualification_view2($id) {
         $query = "SELECT (uq.id) AS id ,(edu.`qualification`) AS qualification,(sp.`specialization`) AS specialization,(ins.`institute`)  AS institute,(uq.`year`) AS year FROM user u
                     LEFT JOIN `user_qualification` uq
@@ -333,7 +334,7 @@ class User_model extends CI_Model {
                 $query .= " OR j.keyword LIKE '%$value%' ";
             }
         }
-        
+
         //echo $query;
 
         $query = $this->db->query($query);
@@ -481,6 +482,7 @@ class User_model extends CI_Model {
 
         return $query->row_array();
     }
+
     public function work_exp_show($id) {
 
         $query = "SELECT * FROM `work_exp`
@@ -519,6 +521,15 @@ class User_model extends CI_Model {
 
         $this->db->where('id', $id);
         return $this->db->delete('user_qualification');
+    }
+
+    public function show_workexp($id) {
+
+        $query = "SELECT * FROM `work_exp` we
+                    WHERE auth_id=$id";
+        $query = $this->db->query($query);
+
+        return $query->result();
     }
 
 }

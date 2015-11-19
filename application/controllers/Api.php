@@ -29,7 +29,7 @@ class Api extends CI_Controller {
             $view['verify'] = $this->User_model->veiw3($check['auth_id']);
            // $verify = $view['verify']['verified'];
 //           var_dump($view['verify']);
-            $verify = is_null($view['verify']) ? 1 : 0;
+            $verify = is_null($view['verify']) ? '1' : '0';
             $content[] = array(
             'email' => $view['profile']['email'],
             'name' => $view['profile']['name'],
@@ -219,6 +219,7 @@ class Api extends CI_Controller {
         $view['projects'] = $this->User_model->view2($user_id);
         $view['verified'][] = $this->User_model->veiw3($user_id);
         $view['qualification'] = $this->User_model->qualification_view2($user_id);
+        $view['workexperince'] = $this->User_model->show_workexp($user_id);
         // $view['work_exp'][] = $this->User_model->work_exp_show($user_id);
         $check = $this->User_model->user_resume($user_id);
         if (!empty($check)) {
