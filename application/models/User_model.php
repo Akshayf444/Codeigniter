@@ -531,5 +531,27 @@ class User_model extends CI_Model {
 
         return $query->result();
     }
+public function view4($id) {
+        $query = "SELECT *,(l.location) AS cuurentloc,(lmm.location) AS preloc,(u.role) AS rol  FROM user u
+                    
+                    LEFT JOIN `location_master`lm
+                    ON lm.loc_id=u.current_location
+                    
+                    LEFT JOIN location_master l
+                    ON l.loc_id=u.`current_location`
+                    LEFT JOIN `location_master`lmm
+                    ON lmm.loc_id=u.`prefred_location`
+                    LEFT JOIN functional_area fa
+                    ON fa.fun_id=u.`function_area`
+                    LEFT JOIN industry_master ind
+                    ON ind.indus_id=u.`industry`
+                    LEFT JOIN address_master am
+                    ON am.`auth_id`=u.`auth_id`
+                    
+                    WHERE u.auth_id=$id
+                    ";
+        $query = $this->db->query($query);
 
+        return $query->row_array();
+    }
 }
