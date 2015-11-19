@@ -27,21 +27,24 @@ class Api extends CI_Controller {
             $view['user3'] = array_shift($this->User_model->qualification_view($check['auth_id']));
             $view['profile'] = $this->User_model->view($check['auth_id']);
             $view['verify'] = $this->User_model->veiw3($check['auth_id']);
+           // $verify = $view['verify']['verified'];
+//           var_dump($view['verify']);
+            $verify = is_null($view['verify']) ? 1 : 0;
             $content[] = array(
-                'email' => $view['profile']['email'],
-                'name' => $view['profile']['name'],
-                'user_id' => $view['profile']['user_id'],
-                'mobile' => $view['profile']['mobile'],
-                'location' => $view['profile']['loc'],
-                'key skill' => $view['profile']['key_skill'],
-                'experince_month' => $view['profile']['experince_month'],
-                'experince_year' => $view['profile']['exp_year'],
-                'qualification' => $view['user3']->qualification,
-                'specialization' => $view['user3']->specialization,
-                'institute' => $view['user3']->institute,
-                'year' => $view['user3']->year,
-                'auth_id' => $view['user3']->auth_id,
-                'verified' => $view['verify']['verified'],
+            'email' => $view['profile']['email'],
+            'name' => $view['profile']['name'],
+            'user_id' => $view['profile']['user_id'],
+            'mobile' => $view['profile']['mobile'],
+            'location' => $view['profile']['cuurentloc'],
+            'key skill' => $view['profile']['key_skill'],
+            'experince_month' => $view['profile']['experince_month'],
+            'experince_year' => $view['profile']['exp_year'],
+            'qualification' => $view['user3']->qualification,
+            'specialization' => $view['user3']->specialization,
+            'institute' => $view['user3']->institute,
+            'year' => $view['user3']->year,
+            'auth_id' => $view['user3']->auth_id,
+            'verified' =>$verify,
             );
             $output = array('status' => 'success', 'message' => $content);
         } else {
@@ -216,11 +219,13 @@ class Api extends CI_Controller {
         $view['projects'] = $this->User_model->view2($user_id);
         $view['verified'][] = $this->User_model->veiw3($user_id);
         $view['qualification'] = $this->User_model->qualification_view2($user_id);
-       // $view['work_exp'][] = $this->User_model->work_exp_show($user_id);
+        // $view['work_exp'][] = $this->User_model->work_exp_show($user_id);
         $check = $this->User_model->user_resume($user_id);
-        $view['resume'][] = array(
-            'resume' => (base_url() . 'assets/Resume/' . $check['resume']),
-        );
+        if (!empty($check)) {
+            $view['resume'][] = array(
+                'resume' => (base_url() . 'assets/Resume/' . $check['resume']),
+            );
+        }
 //        $content[] = array(
 //            'email' => $view['profile']['email'],
 //            'name' => $view['profile']['name'],
@@ -235,11 +240,14 @@ class Api extends CI_Controller {
 //            'year' => $view['user3']->year,
 //            'auth_id' => $view['user3']->auth_id,
 //        );
-        if (!empty($view)) {
+        if (!empty($view['profile'])) {
             //$output = array('status' => 'Success', 'message' => array('profile'=>$view['profile'],'Education'=>$view['user3']));
-            $output = array('status' => 'Success', 'message' => $view);
+            $output = array('status' => 'Success', 'message' => array($view));
         } else {
-            $output = array('status' => 'error', 'message' => 'Details Not Found');
+            $content[] = array(
+                'Message' => 'Details Not Found'
+            );
+            $output = array('status' => 'error', 'message' => $content);
         }
 
         header('content-type: application/json');
@@ -563,7 +571,7 @@ class Api extends CI_Controller {
         $user_id = $_REQUEST['id'];
 
         $data1 = $this->User_model->find_by_user_id2($user_id);
-        $data = $this->User_model->all_job3($data1['function_area'], $data1['key_skill'],$user_id);
+        $data = $this->User_model->all_job3($data1['function_area'], $data1['key_skill'], $user_id);
         if (!empty($data)) {
             $output = array('status' => 'success', 'message' => $data);
         } else {
@@ -658,7 +666,7 @@ class Api extends CI_Controller {
 
     public function profile_update() {
         $user_id = $_REQUEST['user_id'];
-        $chk['chk']=  $this->User_model->find_by_id($user_id);
+        $chk['chk'] = $this->User_model->find_by_id($user_id);
         $data = array(
             'name' => $_REQUEST['name'],
             'dob' => $_REQUEST['dob'],
