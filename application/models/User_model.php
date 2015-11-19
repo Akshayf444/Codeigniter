@@ -202,6 +202,21 @@ class User_model extends CI_Model {
 
         return $query->result();
     }
+    public function qualification_view2($id) {
+        $query = "SELECT (uq.id) AS id ,(edu.`qualification`) AS qualification,(sp.`specialization`) AS specialization,(ins.`institute`)  AS institute,(uq.`year`) AS year FROM user u
+                    LEFT JOIN `user_qualification` uq
+                    ON uq.`auth_id`=u.`auth_id`
+                    LEFT JOIN `specialization_master` sp
+                    ON sp.spec_id=uq.`specialization`
+                    LEFT JOIN `institute_master`ins
+                    ON ins.id=uq.`institute`
+                    LEFT JOIN `education_master` edu 
+                    ON edu.`edu_id`=uq.`qualification`
+                    WHERE u.auth_id=$id";
+        $query = $this->db->query($query);
+
+        return $query->result();
+    }
 
     public function resume($name, $id) {
         $data = array(

@@ -215,7 +215,7 @@ class Api extends CI_Controller {
         $view['profile'][] = $this->User_model->view($user_id);
         $view['projects'] = $this->User_model->view2($user_id);
         $view['verified'][] = $this->User_model->veiw3($user_id);
-        $view['qualification'] = $this->User_model->qualification_view($user_id);
+        $view['qualification'] = $this->User_model->qualification_view2($user_id);
        // $view['work_exp'][] = $this->User_model->work_exp_show($user_id);
         $check = $this->User_model->user_resume($user_id);
         $view['resume'][] = array(
