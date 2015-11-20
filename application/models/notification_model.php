@@ -9,7 +9,7 @@ class notification_model extends CI_Model {
     function pushNotification($message, $registrationIds,$auth_id) {
 
 // prep the bundle
-        $api_key = "AIzaSyDy5iMkePSnmkxbGsollVwNBOzd-3SJhMg";
+        $api_key = "AIzaSyBioJOZXv_StQyhEDtnVhZk3E9loTVbF4o";
         $msg = array(
             'message' => $message,
             'title' => 'PocketDrug Notification',

@@ -535,7 +535,7 @@ class User_model extends CI_Model {
 public function view4($id) {
         $query = "SELECT u.user_id,u.name,u.resume_headline,u.exp_year,u.experince_month,u.mobile,u.email,(fa.fun_area) AS FunctionArea,am.address1,
             u.role,ind.industry,am.city,am.pincode,u.dob,u.gender,u.key_skill,u.marital_status,u.auth_id,
-            (we.designation)as Designation ,(l.location) AS cuurentloc,(lmm.location) AS preloc  FROM user u
+            (CASE WHEN we.designation IS NULL THEN '' ELSE we.designation END)as Designation ,(l.location) AS cuurentloc,(lmm.location) AS preloc  FROM user u
                     
                     LEFT JOIN `location_master`lm
                     ON lm.loc_id=u.current_location
