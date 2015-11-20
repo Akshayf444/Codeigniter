@@ -532,11 +532,14 @@ class User_model extends CI_Model {
         return $query->result();
     }
 public function view4($id) {
-        $query = "SELECT *,(l.location) AS cuurentloc,(lmm.location) AS preloc,(u.role) AS rol  FROM user u
+        $query = "SELECT u.user_id,u.name,u.resume_headline,u.exp_year,u.experince_month,u.mobile,u.email,(fa.fun_area) AS FunctionArea,am.address1,
+            u.role,ind.industry,am.city,am.pincode,u.dob,u.gender,u.key_skill,u.marital_status,u.auth_id,
+            (we.designation)as Designation ,(l.location) AS cuurentloc,(lmm.location) AS preloc  FROM user u
                     
                     LEFT JOIN `location_master`lm
                     ON lm.loc_id=u.current_location
-                    
+                    LEFT JOIN work_exp we
+                    ON we.auth_id=u.auth_id
                     LEFT JOIN location_master l
                     ON l.loc_id=u.`current_location`
                     LEFT JOIN `location_master`lmm
@@ -549,9 +552,14 @@ public function view4($id) {
                     ON am.`auth_id`=u.`auth_id`
                     
                     WHERE u.auth_id=$id
-                    ";
+                    ORDER BY we.emp_id DESC  LIMIT 1";
         $query = $this->db->query($query);
 
         return $query->row_array();
+    }
+    public function device_id($id,$data) {
+
+        $this->db->where('id', $id);
+        return $this->db->update('authentication',$data);
     }
 }

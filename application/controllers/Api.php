@@ -12,6 +12,7 @@ class Api extends CI_Controller {
         $this->load->model('WorkExperince_model');
         $this->load->model('address_model');
         $this->load->model('Job_model');
+        $this->load->model('notification_model');
     }
 
     public function login() {
@@ -20,32 +21,39 @@ class Api extends CI_Controller {
         $password = md5($_GET['password']);
         $content = array();
         $check = $this->User_model->log($email, $password);
-
+        $device_id = $_REQUEST['device_id'];
 
         if (!empty($check) && $check['type'] == 'User') {
             //$content[] = $check;
             $view['user3'] = array_shift($this->User_model->qualification_view($check['auth_id']));
             $view['profile'] = $this->User_model->view($check['auth_id']);
             $view['verify'] = $this->User_model->veiw3($check['auth_id']);
-           // $verify = $view['verify']['verified'];
+            // $verify = $view['verify']['verified'];
 //           var_dump($view['verify']);
             $verify = is_null($view['verify']) ? '1' : '0';
             $content[] = array(
-            'email' => $view['profile']['email'],
-            'name' => $view['profile']['name'],
-            'user_id' => $view['profile']['user_id'],
-            'mobile' => $view['profile']['mobile'],
-            'location' => $view['profile']['cuurentloc'],
-            'key skill' => $view['profile']['key_skill'],
-            'experince_month' => $view['profile']['experince_month'],
-            'experince_year' => $view['profile']['exp_year'],
-            'qualification' => $view['user3']->qualification,
-            'specialization' => $view['user3']->specialization,
-            'institute' => $view['user3']->institute,
-            'year' => $view['user3']->year,
-            'auth_id' => $view['user3']->auth_id,
-            'verified' =>$verify,
+                'email' => $view['profile']['email'],
+                'name' => $view['profile']['name'],
+                'user_id' => $view['profile']['user_id'],
+                'mobile' => $view['profile']['mobile'],
+                'location' => $view['profile']['cuurentloc'],
+                'key skill' => $view['profile']['key_skill'],
+                'experince_month' => $view['profile']['experince_month'],
+                'experince_year' => $view['profile']['exp_year'],
+                'qualification' => $view['user3']->qualification,
+                'specialization' => $view['user3']->specialization,
+                'institute' => $view['user3']->institute,
+                'year' => $view['user3']->year,
+                'auth_id' => $view['user3']->auth_id,
+                'verified' => $verify,
             );
+            $id = $view['user3']->auth_id;
+
+            $data = array(
+                'id' => $id,
+                'device_id' => $device_id,
+            );
+            $this->User_model->device_id($id, $data);
             $output = array('status' => 'success', 'message' => $content);
         } else {
             $output = array('status' => 'Error', 'message' => 'Error');
@@ -609,6 +617,7 @@ class Api extends CI_Controller {
     public function apply() {
         $user_id = $_REQUEST['user'];
         $id = $_REQUEST['job'];
+        $message = $_REQUEST['message'];
         $data = $this->Job_model->apply_id($id, $user_id);
         if (!empty($data)) {
             $content = array();
@@ -622,6 +631,8 @@ class Api extends CI_Controller {
             $content[] = array(
                 'Message' => 'Succesfully Applied',
             );
+            $notification['noti']=  $this->User_model->find_by_id($user_id);
+            $not=  $this->notification_model->pushNotification($message, $notification['noti']['device_id'],$user_id);
             $output = array('status' => 'success', 'message' => $content);
         }
         header('content-type: application/json');
