@@ -229,12 +229,13 @@ class User_model extends CI_Model {
         return $query = $this->db->insert('user_resume', $data);
     }
 
-    public function resume2($name, $id, $detail) {
+    public function resume2($name, $id, $detail,$old) {
         $data = array(
             'resume' => $name,
             'detail' => $detail,
             'created' => date('Y-m-d H:i:s'),
             'auth_id' => $id,
+            'old' => $old,
         );
         return $query = $this->db->insert('user_resume', $data);
     }
