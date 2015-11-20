@@ -189,7 +189,7 @@ class Api extends CI_Controller {
         $config['upload_path'] = $_SERVER['DOCUMENT_ROOT'] . '\jobportal\assets\Resume';
         $config['allowed_types'] = '*';
         $config['max_size'] = '4096';
-       $old= $_FILES['resume']['name'];
+       $old=$_FILES['resume']['name'];
         $new_name = time();
         $config['file_name'] = $new_name;
         $this->load->library('upload', $config);
@@ -206,7 +206,7 @@ class Api extends CI_Controller {
             // print_r($upload_result['file_name']); //or print any valid
             $content = array();
             $content[] = array(
-                'file name' => $upload_result['file_name'],
+                'Success' => 'Successfully Uploded',
             );
             $this->User_model->resume2($upload_result['file_name'], $user_id, $detail,$old);
             $output = array('status' => 'success', 'message' => $content);
@@ -215,8 +215,8 @@ class Api extends CI_Controller {
         
 //            $data = array('title' => 'Resume Upload', 'content' => 'User/resume', 'view_data' => 'blank');
 //            $this->load->view('template1', $data);
-//        header('content-type: application/json');
-//        echo json_encode($output);
+        header('content-type: application/json');
+        echo json_encode($output);
     }
 
     public function view() {
