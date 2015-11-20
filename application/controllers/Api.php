@@ -234,22 +234,11 @@ class Api extends CI_Controller {
             $view['resume'][] = array(
                 'resume' => (base_url() . 'assets/Resume/' . $check['resume']),
             );
+        }else
+        {
+            $view['resume'][]=array('message'=>'Error');
         }
-//        $content[] = array(
-//            'email' => $view['profile']['email'],
-//            'name' => $view['profile']['name'],
-//            'user_id' => $view['profile']['user_id'],
-//            'mobile' => $view['profile']['mobile'],
-//            'location' => $view['profile']['loc'],
-//            'experince_month' => $view['profile']['experince_month'],
-//            'experince_year' => $view['profile']['exp_year'],
-//            'qualification' => $view['user3']->qualification,
-//            'specialization' => $view['user3']->specialization,
-//            'institute' => $view['user3']->institute,
-//            'year' => $view['user3']->year,
-//            'auth_id' => $view['user3']->auth_id,
-//        );
-        if (!empty($view['profile'])) {
+        if (!empty($view['profile']) || !empty($view['projects']) || !empty($view['verified']) || !empty($view['qualification']) || !empty($view['workexperince'])) {
             //$output = array('status' => 'Success', 'message' => array('profile'=>$view['profile'],'Education'=>$view['user3']));
             $output = array('status' => 'Success', 'message' => array($view));
         } else {
@@ -258,7 +247,6 @@ class Api extends CI_Controller {
             );
             $output = array('status' => 'error', 'message' => $content);
         }
-
         header('content-type: application/json');
         echo json_encode($output);
     }
