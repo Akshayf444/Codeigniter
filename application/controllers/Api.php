@@ -13,6 +13,7 @@ class Api extends CI_Controller {
         $this->load->model('address_model');
         $this->load->model('Job_model');
         $this->load->model('notification_model');
+        $this->load->model('employee_model');
     }
 
     public function login() {
@@ -79,11 +80,13 @@ class Api extends CI_Controller {
                 'created_at' => date('Y-m-d H:i:s'),
                 'type' => 'User'
             );
-
+            $check = $this->User_model->find_by_email($this->input->post('email'), $this->input->post('mobile'));
             ///////Create New User
-            $id = $this->User_model->create($field_array);
-
-
+            if (empty($check)) {
+                $id = $this->User_model->create($field_array);
+            } else {
+                $id = 'Already register';
+            }
 
 
             $data = array(
@@ -220,7 +223,7 @@ class Api extends CI_Controller {
         header('content-type: application/json');
         echo json_encode($output);
     }
-   
+
     public function view() {
 
 
@@ -233,7 +236,7 @@ class Api extends CI_Controller {
         $view['workexperince'] = $this->User_model->show_workexp($user_id);
         // $view['work_exp'][] = $this->User_model->work_exp_show($user_id);
         $check = $this->User_model->user_resume($user_id);
-        
+
         if (!empty($check)) {
             $view['resume'][] = array(
                 'resume' => (base_url() . 'assets/Resume/' . $check['resume']),
@@ -788,12 +791,39 @@ class Api extends CI_Controller {
         header('content-type: application/json');
         echo json_encode($output);
     }
-    
+
     public function percentage() {
         $user_id = $_REQUEST['user_id'];
-        $data = $this->User_model->percentage($user_id);
+        $data['per'] = $this->User_model->percentage($user_id);
+        $data1['up']= $this->User_model->find_by_user_id($user_id);
+        $data = array(
+            'updated_at'=>$data1['up']['updated_at'],
+                'percentage'=>''.$data['per'].''
+        );
         if (!empty($data)) {
-            $output = array('status' => 'success', 'message' => ''.$data.'');
+            $output = array('status' => 'success', 'message' => $data );
+        } else {
+            $content = array();
+            $content[] = array(
+                'Message' => 'error',
+            );
+            $output = array('status' => 'error', 'message' => $content);
+        }
+        header('content-type: application/json');
+        echo json_encode($output);
+    }
+
+    public function visitor_count() {
+        $user_id = $_REQUEST['auth_id'];
+        $data['count'] = $this->employee_model->visitor_visit($user_id);
+
+        if (!empty($data)) {
+            $dataq = array();
+            $dataq['count'][] = array(
+                'count' => $data['count']['count']
+            );
+            $dataq['visitor detail'] = $this->Job_model->visitor_detail($user_id);
+            $output = array('status' => 'success', 'message' => $dataq);
         } else {
             $content = array();
             $content[] = array(

@@ -193,5 +193,17 @@ class Job_model extends CI_Model {
 
         return $query->row_array();
     }
+     public function visitor_detail($id) {
+        $data = "SELECT(pv.visited_at) AS visited_date,ep.`name`,im.`industry` FROM profile_visit pv
+                    LEFT JOIN `emp_profile` ep
+                    ON ep.`auth_id`=pv.visitor_id
+                    LEFT JOIN `industry_master` im
+                    ON im.`indus_id`=ep.`industry_type`
+                    WHERE pv.jobseeker_id=$id";
+
+        $query = $this->db->query($data);
+
+        return $query->result();
+    }
 
 }

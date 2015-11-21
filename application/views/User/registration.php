@@ -15,7 +15,7 @@
 </div>
 <?php echo validation_errors(); ?>
 
-<?php echo form_open('Api/register') ?>
+<?php echo form_open('User/register') ?>
 <div class="row">
     <div class="panel panel-default" style="    padding: 17px;">
 

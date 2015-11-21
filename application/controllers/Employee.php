@@ -18,11 +18,12 @@ class Employee extends CI_Controller {
         $this->form_validation->set_rules('email', 'email', 'required');
         $this->form_validation->set_rules('password', 'password', 'required');
         $this->form_validation->set_rules('mobile', 'mobile', 'required');
-        $check1 = $this->User_model->find_by_email($this->input->post('email'));
+        
        
             if ($this->form_validation->run() === FALSE) {
                 //$this->load->view('Employee/registration');
             } else {
+                $check1 = $this->User_model->find_by_email($this->input->post('email'),$this->input->post('mobile'));
                 if (empty($check1)) {
                 $this->employee_model->create();
                 //redirect('Employee/login', 'refresh');

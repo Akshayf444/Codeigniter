@@ -27,9 +27,12 @@ class User_model extends CI_Model {
         return $query->row_array();
     }
 
-    public function find_by_email($id) {
-
-        $query = $this->db->get_where('authentication', array('email' => $id));
+    public function find_by_email($id, $mobile) {
+        $sql = "select * from authentication
+        where email='$id' OR mobile='$mobile'";
+//        $query = $this->db->get_where('authentication', array('email' => $id,'mobile'=>$mobile));
+        echo $sql;
+        $query = $this->db->query($sql);
         return $query->row_array();
     }
 
@@ -580,14 +583,14 @@ class User_model extends CI_Model {
         $view['profile'] = $this->User_model->view4($user_id);
         $view['projects'] = array_shift($this->User_model->view2($user_id));
         $view['qualification'] = array_shift($this->User_model->qualification_view2($user_id));
-        $view['workexperince'] =array_shift($this->User_model->show_workexp($user_id));
-        $maximumn = 34;
+        $view['workexperince'] = array_shift($this->User_model->show_workexp($user_id));
+        $maximumn = 31;
         $count = 0;
-        $exclude_profile = array('name', 'resume_headline', 'exp_year', 'experince_month', 'mobile', 'email', 'FunctionArea', 'address1',
-            'role', 'industry', 'city', 'pincode', 'dob', 'gender', 'key_skill', 'marital_status', 'Designation', 'cuurentloc', 'preloc');
-        $exclude_projects=array('projects_title','to','from','client','detail');
-        $exclude_qualification=array('qualification','specialization','institute','year');
-        $exclude_workexperince=array('emp_name','to','from','designation','job_profile','type');
+        $exclude_profile = array('name', 'exp_year', 'mobile', 'email', 'FunctionArea', 'address1',
+            'role', 'industry', 'pincode', 'dob', 'gender', 'key_skill', 'marital_status', 'Designation', 'cuurentloc', 'preloc');
+        $exclude_projects = array('projects_title', 'to', 'from', 'client', 'detail');
+        $exclude_qualification = array('qualification', 'specialization', 'institute', 'year');
+        $exclude_workexperince = array('emp_name', 'to', 'from', 'designation', 'job_profile', 'type');
         if (!empty($view)) {
             foreach ($exclude_profile as $value) {
                 if ($view['profile'][$value] == '' || $view['profile'][$value] == '0' || $view['profile'][$value] == '0000-00-00') {
@@ -617,9 +620,10 @@ class User_model extends CI_Model {
                     $count++;
                 }
             }
-            
-          $total=($count/$maximumn)*100;
-          return $total;
+
+            $total = ($count / $maximumn) * 100;
+           
+            return $total;
         }
     }
 

@@ -19,7 +19,7 @@ class User extends CI_Controller {
         $this->load->model('address_model');
         $this->load->model('Master_model');
         if ($this->input->post()) {
-            $check = $this->User_model->find_by_email($this->input->post('email'));
+            $check = $this->User_model->find_by_email($this->input->post('email'),$this->input->post('mobile'));
             if (empty($check)) {
                 $field_array = array(
                     'email' => $this->input->post('email'),

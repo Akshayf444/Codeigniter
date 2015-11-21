@@ -44,7 +44,6 @@ class employee_model extends CI_Model {
             'industry_type' => $this->input->post('industry_type'),
             'contact_person' => $this->input->post('contact_person'),
             'updated_at' => date('Y-m-d H:i:s'),
-            
         );
 
         if ($query->num_rows() > 0) {
@@ -74,13 +73,24 @@ class employee_model extends CI_Model {
         $query = $this->db->get();
         return $query->row_array();
     }
+
     public function email_verification($data) {
-        return $this->db->insert('profile_visit',$data);
+        return $this->db->insert('profile_visit', $data);
     }
-    public function vefication_check($id,$auth_id) {
-       $sql="select * from profile_visit where visitor_id=$auth_id AND jobseeker_id=$id";
-       
-       $query=$this->db->query($sql);
-       return $query->row_array();
+
+    public function vefication_check($id, $auth_id) {
+        $sql = "select * from profile_visit where visitor_id=$auth_id AND jobseeker_id=$id";
+
+        $query = $this->db->query($sql);
+        return $query->row_array();
     }
+
+    public function visitor_visit($auth_id) {
+        $sql = "SELECT COUNT(jobseeker_id) AS count FROM profile_visit
+                WHERE jobseeker_id=$auth_id";
+
+        $query = $this->db->query($sql);
+        return $query->row_array();
+    }
+
 }
