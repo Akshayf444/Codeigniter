@@ -158,6 +158,21 @@ class Employee extends CI_Controller {
             $view['user5'] = "Detail not found";
 //            var_dump($view);
 //          $view['string'] = read_file('../../Resume/'.$view['user4']);
+            $user_id = $this->session->userdata("user_id");
+            $data_new=array(
+                'visitor_id'=>$user_id,
+                'jobseeker_id'=>$id,
+                'visited_at'=>date('Y-m-d H:i:s'),
+            );
+            $check=  $this->employee_model->vefication_check($id,$user_id);
+            if(empty($check))
+            {
+               $insert=  $this->employee_model->email_verification($data_new); 
+            }
+            else
+            {
+                
+            }
             $data = array('title' => 'User View', 'content' => 'employee/user_view', 'view_data' => $view);
             $this->load->view('template1', $data);
         } else {

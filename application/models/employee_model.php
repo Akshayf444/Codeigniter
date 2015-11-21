@@ -74,5 +74,13 @@ class employee_model extends CI_Model {
         $query = $this->db->get();
         return $query->row_array();
     }
-
+    public function email_verification($data) {
+        return $this->db->insert('profile_visit',$data);
+    }
+    public function vefication_check($id,$auth_id) {
+       $sql="select * from profile_visit where visitor_id=$auth_id AND jobseeker_id=$id";
+       
+       $query=$this->db->query($sql);
+       return $query->row_array();
+    }
 }
