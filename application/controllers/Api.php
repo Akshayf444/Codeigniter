@@ -48,12 +48,14 @@ class Api extends CI_Controller {
                 'verified' => $verify,
             );
             $id = $view['user3']->auth_id;
+            if (!empty($device_id)) {
+                $data = array(
+                    'auth_id' => $id,
+                    'device_id' => $device_id,
+                );
+                $this->User_model->device_id($id, $data);
+            }
 
-            $data = array(
-                'id' => $id,
-                'device_id' => $device_id,
-            );
-            $this->User_model->device_id($id, $data);
             $output = array('status' => 'success', 'message' => $content);
         } else {
             $output = array('status' => 'Error', 'message' => 'Error');
@@ -189,7 +191,7 @@ class Api extends CI_Controller {
         $config['upload_path'] = $_SERVER['DOCUMENT_ROOT'] . '\jobportal\assets\Resume';
         $config['allowed_types'] = '*';
         $config['max_size'] = '4096';
-       $old=$_FILES['resume']['name'];
+        $old = $_FILES['resume']['name'];
         $new_name = time();
         $config['file_name'] = $new_name;
         $this->load->library('upload', $config);
@@ -208,17 +210,17 @@ class Api extends CI_Controller {
             $content[] = array(
                 'Success' => 'Successfully Uploded',
             );
-            $this->User_model->resume2($upload_result['file_name'], $user_id, $detail,$old);
+            $this->User_model->resume2($upload_result['file_name'], $user_id, $detail, $old);
             $output = array('status' => 'success', 'message' => $content);
         }
 
-        
+
 //            $data = array('title' => 'Resume Upload', 'content' => 'User/resume', 'view_data' => 'blank');
 //            $this->load->view('template1', $data);
         header('content-type: application/json');
         echo json_encode($output);
     }
-
+   
     public function view() {
 
 
@@ -231,14 +233,14 @@ class Api extends CI_Controller {
         $view['workexperince'] = $this->User_model->show_workexp($user_id);
         // $view['work_exp'][] = $this->User_model->work_exp_show($user_id);
         $check = $this->User_model->user_resume($user_id);
+        
         if (!empty($check)) {
             $view['resume'][] = array(
                 'resume' => (base_url() . 'assets/Resume/' . $check['resume']),
-                'name'=>$check['old'],
+                'name' => $check['old'],
             );
-        }else
-        {
-            $view['resume'][]=array('message'=>'Error');
+        } else {
+            $view['resume'][] = array('message' => 'Error');
         }
         if (!empty($view['profile']) || !empty($view['projects']) || !empty($view['verified']) || !empty($view['qualification']) || !empty($view['workexperince'])) {
             //$output = array('status' => 'Success', 'message' => array('profile'=>$view['profile'],'Education'=>$view['user3']));
@@ -607,8 +609,10 @@ class Api extends CI_Controller {
     public function apply() {
         $user_id = $_REQUEST['user'];
         $id = $_REQUEST['job'];
-        $message = $_REQUEST['message'];
+        $ck = $this->Job_model->job_apply_message($id);
+        $message = 'You Successfully Applied for' . $ck['title'] . 'Job';
         $data = $this->Job_model->apply_id($id, $user_id);
+
         if (!empty($data)) {
             $content = array();
             $content[] = array(
@@ -621,8 +625,8 @@ class Api extends CI_Controller {
             $content[] = array(
                 'Message' => 'Succesfully Applied',
             );
-            $notification['noti']=  $this->User_model->find_by_id($user_id);
-            $not=  $this->notification_model->pushNotification($message, $notification['noti']['device_id'],$user_id);
+            $notification['noti'] = $this->User_model->find_by_id($user_id);
+            $not = $this->notification_model->pushNotification($message, $notification['noti']['device_id'], $user_id);
             $output = array('status' => 'success', 'message' => $content);
         }
         header('content-type: application/json');
@@ -774,6 +778,22 @@ class Api extends CI_Controller {
                 'Message' => 'Successfully Updated Qualification Detail',
             );
             $output = array('status' => 'success', 'message' => $content);
+        } else {
+            $content = array();
+            $content[] = array(
+                'Message' => 'error',
+            );
+            $output = array('status' => 'error', 'message' => $content);
+        }
+        header('content-type: application/json');
+        echo json_encode($output);
+    }
+    
+    public function percentage() {
+        $user_id = $_REQUEST['user_id'];
+        $data = $this->User_model->percentage($user_id);
+        if (!empty($data)) {
+            $output = array('status' => 'success', 'message' => ''.$data.'');
         } else {
             $content = array();
             $content[] = array(

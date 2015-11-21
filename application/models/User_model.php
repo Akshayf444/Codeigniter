@@ -215,7 +215,7 @@ class User_model extends CI_Model {
                     ON edu.`edu_id`=uq.`qualification`
                     WHERE u.auth_id=$id";
         $query = $this->db->query($query);
-       
+
         return $query->result();
     }
 
@@ -229,7 +229,7 @@ class User_model extends CI_Model {
         return $query = $this->db->insert('user_resume', $data);
     }
 
-    public function resume2($name, $id, $detail,$old) {
+    public function resume2($name, $id, $detail, $old) {
         $data = array(
             'resume' => $name,
             'detail' => $detail,
@@ -532,10 +532,21 @@ class User_model extends CI_Model {
 
         return $query->result();
     }
-public function view4($id) {
-        $query = "SELECT u.user_id,u.name,u.resume_headline,u.exp_year,u.experince_month,u.mobile,u.email,(fa.fun_area) AS FunctionArea,am.address1,
-            u.role,ind.industry,am.city,am.pincode,u.dob,u.gender,u.key_skill,u.marital_status,u.auth_id,
-            (CASE WHEN we.designation IS NULL THEN '' ELSE we.designation END)as Designation ,(l.location) AS cuurentloc,(lmm.location) AS preloc  FROM user u
+
+    public function view4($id) {
+        $query = "SELECT u.user_id,u.name,
+            (CASE WHEN u.resume_headline='0' THEN '' ELSE u.resume_headline END) AS resume_headline,
+            u.exp_year,u.experince_month,u.mobile,u.email,
+            (CASE WHEN fa.fun_area IS NULL THEN '' ELSE fa.fun_area END) AS FunctionArea,
+            (CASE WHEN am.address1 IS NULL THEN '' ELSE am.address1 END) AS address1,
+            (CASE WHEN u.role='0' THEN '' ELSE u.role END) AS role,(CASE WHEN ind.industry IS NULL THEN '' ELSE ind.industry END) AS industry,
+            (CASE WHEN am.city IS NULL THEN '' ELSE am.city END) AS city,
+            (CASE WHEN am.pincode IS NULL THEN '' ELSE am.pincode END) AS pincode,
+            (CASE WHEN u.dob='0000-00-00' THEN '' ELSE u.dob END) AS dob,
+            (CASE WHEN u.gender='0' THEN '' ELSE u.gender END) AS gender,u.key_skill,
+            (CASE WHEN u.marital_status='0' THEN '' ELSE u.marital_status END) AS marital_status,u.auth_id,
+            (CASE WHEN we.designation IS NULL THEN '' ELSE we.designation END)as Designation ,(l.location) AS cuurentloc,
+            (CASE WHEN lmm.location IS NULL THEN '' ELSE lmm.location END) AS preloc  FROM user u
                     
                     LEFT JOIN `location_master`lm
                     ON lm.loc_id=u.current_location
@@ -558,9 +569,58 @@ public function view4($id) {
 
         return $query->row_array();
     }
-    public function device_id($id,$data) {
 
-        $this->db->where('id', $id);
-        return $this->db->update('authentication',$data);
+    public function device_id($id, $data) {
+
+        $this->db->where('auth_id', $id);
+        return $this->db->update('authentication', $data);
     }
+
+    public function percentage($user_id) {
+        $view['profile'] = $this->User_model->view4($user_id);
+        $view['projects'] = array_shift($this->User_model->view2($user_id));
+        $view['qualification'] = array_shift($this->User_model->qualification_view2($user_id));
+        $view['workexperince'] =array_shift($this->User_model->show_workexp($user_id));
+        $maximumn = 34;
+        $count = 0;
+        $exclude_profile = array('name', 'resume_headline', 'exp_year', 'experince_month', 'mobile', 'email', 'FunctionArea', 'address1',
+            'role', 'industry', 'city', 'pincode', 'dob', 'gender', 'key_skill', 'marital_status', 'Designation', 'cuurentloc', 'preloc');
+        $exclude_projects=array('projects_title','to','from','client','detail');
+        $exclude_qualification=array('qualification','specialization','institute','year');
+        $exclude_workexperince=array('emp_name','to','from','designation','job_profile','type');
+        if (!empty($view)) {
+            foreach ($exclude_profile as $value) {
+                if ($view['profile'][$value] == '' || $view['profile'][$value] == '0' || $view['profile'][$value] == '0000-00-00') {
+                    
+                } else {
+                    $count++;
+                }
+            }
+            foreach ($exclude_projects as $value1) {
+                if (!isset($view['projects']->{$value1}) || $view['projects']->{$value1} == '' || $view['projects']->{$value1} == 'NULL') {
+                    
+                } else {
+                    $count++;
+                }
+            }
+            foreach ($exclude_qualification as $value2) {
+                if (!isset($view['qualification']->{$value2 }) || $view['qualification']->{$value2 } == '') {
+                    
+                } else {
+                    $count++;
+                }
+            }
+            foreach ($exclude_workexperince as $value3) {
+                if (!isset($view['workexperince']->{$value3}) || $view['workexperince']->{$value3} == '') {
+                    
+                } else {
+                    $count++;
+                }
+            }
+            
+          $total=($count/$maximumn)*100;
+          return $total;
+        }
+    }
+
 }

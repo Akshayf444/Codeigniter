@@ -185,5 +185,13 @@ class Job_model extends CI_Model {
 
         return $query->result();
     }
+     public function job_apply_message($id) {
+        $data = "SELECT * FROM jobs j
+                WHERE j.`job_id`=$id";
+
+        $query = $this->db->query($data);
+
+        return $query->row_array();
+    }
 
 }
