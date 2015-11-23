@@ -794,11 +794,11 @@ class Api extends CI_Controller {
 
     public function percentage() {
         $user_id = $_REQUEST['user_id'];
-        $data['per'] = $this->User_model->percentage($user_id);
-        $data1['up']= $this->User_model->find_by_user_id($user_id);
-        $data = array(
-            'updated_at'=>$data1['up']['updated_at'],
-                'percentage'=>''.$data['per'].''
+        $percentage = $this->User_model->percentage($user_id);
+        $updateDate= $this->User_model->find_by_user_id($user_id);
+        $data[] = array(
+            'updated_at'=>$updateDate['updated_at'],
+                'percentage'=>''.$percentage.''
         );
         if (!empty($data)) {
             $output = array('status' => 'success', 'message' => $data );
