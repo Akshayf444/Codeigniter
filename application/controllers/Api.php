@@ -795,13 +795,13 @@ class Api extends CI_Controller {
     public function percentage() {
         $user_id = $_REQUEST['user_id'];
         $percentage = $this->User_model->percentage($user_id);
-        $updateDate= $this->User_model->find_by_user_id($user_id);
+        $updateDate = $this->User_model->find_by_user_id($user_id);
         $data[] = array(
-            'updated_at'=>$updateDate['updated_at'],
-                'percentage'=>''.$percentage.''
+            'updated_at' => $updateDate['updated_at'],
+            'percentage' => '' . $percentage . ''
         );
         if (!empty($data)) {
-            $output = array('status' => 'success', 'message' => $data );
+            $output = array('status' => 'success', 'message' => $data);
         } else {
             $content = array();
             $content[] = array(
@@ -816,14 +816,15 @@ class Api extends CI_Controller {
     public function visitor_count() {
         $user_id = $_REQUEST['auth_id'];
         $data['count'] = $this->employee_model->visitor_visit($user_id);
-
+        $content = array();
         if (!empty($data)) {
             $dataq = array();
             $dataq['count'][] = array(
                 'count' => $data['count']['count']
             );
             $dataq['visitor detail'] = $this->Job_model->visitor_detail($user_id);
-            $output = array('status' => 'success', 'message' => $dataq);
+            $content[] = $dataq;
+            $output = array('status' => 'success', 'message' => $content);
         } else {
             $content = array();
             $content[] = array(
