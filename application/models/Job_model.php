@@ -93,7 +93,7 @@ class Job_model extends CI_Model {
         
         return $query->result();
     }
-    public function search3($conditions,$id) {
+    public function search3($conditions,$user_id=0) {
         $query = "SELECT * ,(lm.`location`) AS loc,CASE  WHEN ap.`job_id` IS NOT NULL THEN 0 ELSE 1 END AS applied_status,(j.job_id) AS job_id,(j.auth_id) AS auth_id FROM jobs j
                 LEFT JOIN emp_profile ep
                 ON j.auth_id=ep.`auth_id`
@@ -104,8 +104,10 @@ class Job_model extends CI_Model {
                 LEFT JOIN apply_job ap
                 ON ap.`job_id`=j.`job_id`
                 LEFT JOIN user u
-                ON u.auth_id=ap.auth_id 
-                or ap.auth_id='$id'";
+                ON u.auth_id=ap.auth_id";
+        if ($user_id > 0) {
+            $query .= "LEFT JOIN apply_job ap ON ap.job_id = j.job_id AND ap.auth_id = '$user_id'";
+        }
         if (!empty($conditions)) {
             $query .= ' WHERE ' . join(' And ', $conditions);
         }
