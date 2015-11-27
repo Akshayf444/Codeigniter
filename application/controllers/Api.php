@@ -882,14 +882,12 @@ class Api extends CI_Controller {
     public function workexp_update() {
         $emp_id = $_REQUEST['emp_id'];
         $emp_name = $_REQUEST['emp_name'];
-        $designation = $_REQUEST['designation'];
         $from = $_REQUEST['from'];
         $to = $_REQUEST['to'];
         $job_profile = $_REQUEST['job_profile'];
         $type = $_REQUEST['type'];
         $data = array(
             'emp_name' => $emp_name,
-            'designation' => $designation,
             'from' => $from,
             'to' => $to,
             'job_profile' => $job_profile,
@@ -918,7 +916,7 @@ class Api extends CI_Controller {
         if (!empty($mobile)) {
             $code = rand(0, 9999);
             $message = 'This Is Your Verification Code ' . $code;
-            //$this->Sendsms->sendsms($mobile, $message);
+            $this->Sendsms->sendsms($mobile, $message);
             $data=array(
                 'code'=>$code,
                 'mobile'=>$mobile,
