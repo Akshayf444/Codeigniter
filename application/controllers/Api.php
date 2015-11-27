@@ -556,7 +556,7 @@ class Api extends CI_Controller {
             //$data = array();
             $data = $this->Job_model->search($conditions);
             if (!empty($data)) {
-                
+
                 $output = array('status' => 'success', 'message' => $data);
             } else {
                 $content = array();
@@ -569,6 +569,7 @@ class Api extends CI_Controller {
         header('content-type: application/json');
         echo json_encode($output);
     }
+
     public function SearchJob3() {
 
         $this->load->model('Master_model');
@@ -596,7 +597,7 @@ class Api extends CI_Controller {
                 $conditions[] = "j.exp_max =$experince ";
             }
             //$data = array();
-            $data = $this->Job_model->search3($conditions,$id);
+            $data = $this->Job_model->search3($conditions, $id);
             if (!empty($data)) {
                 $output = array('status' => 'success', 'message' => $data);
             } else {
@@ -607,9 +608,9 @@ class Api extends CI_Controller {
                 $output = array('status' => 'error', 'message' => $content);
             }
         }
-        
-//        header('content-type: application/json');
-//        echo json_encode($output);
+
+        header('content-type: application/json');
+        echo json_encode($output);
     }
 
     public function SearchJob2() {

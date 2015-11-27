@@ -88,13 +88,14 @@ class Job_model extends CI_Model {
         if (!empty($conditions)) {
             $query .= ' WHERE ' . join(' And ', $conditions);
         }
-      //var_dump($query);
+        //var_dump($query);
         $query = $this->db->query($query);
-        
+
         return $query->result();
     }
-    public function search3($conditions,$user_id=0) {
-        $query = "SELECT * ,(lm.`location`) AS loc,CASE  WHEN ap.`job_id` IS NOT NULL THEN 0 ELSE 1 END AS applied_status,(j.job_id) AS job_id,(j.auth_id) AS auth_id FROM jobs j
+
+    public function search3($conditions, $user_id = 0) {
+        $query = "SELECT * ,(lm.`location`) AS loc,CASE  WHEN ap.`job_id` IS NOT NULL THEN 1 ELSE 0 END AS applied_status,(j.job_id) AS job_id,(j.auth_id) AS auth_id FROM jobs j
                 LEFT JOIN emp_profile ep
                 ON j.auth_id=ep.`auth_id`
                 LEFT JOIN `location_master` lm
@@ -102,19 +103,15 @@ class Job_model extends CI_Model {
                 LEFT JOIN `functional_area` fa
                 ON fa.`fun_id`=j.`functional_area`
                 LEFT JOIN apply_job ap
-                ON ap.`job_id`=j.`job_id`
-                LEFT JOIN user u
-                ON u.auth_id=ap.auth_id";
-        if ($user_id > 0) {
-            $query .= "LEFT JOIN apply_job ap ON ap.job_id = j.job_id AND ap.auth_id = '$user_id'";
-        }
+                ON ap.`job_id`=j.`job_id` AND ap.auth_id = '$user_id' ";
+
         if (!empty($conditions)) {
             $query .= ' WHERE ' . join(' And ', $conditions);
         }
-//        $query.="";
-      echo($query);
+
+        //echo($query);
         $query = $this->db->query($query);
-        
+
         return $query->result();
     }
 
@@ -207,7 +204,8 @@ class Job_model extends CI_Model {
 
         return $query->result();
     }
-     public function job_apply_message($id) {
+
+    public function job_apply_message($id) {
         $data = "SELECT * FROM jobs j
                 WHERE j.`job_id`=$id";
 
@@ -215,7 +213,8 @@ class Job_model extends CI_Model {
 
         return $query->row_array();
     }
-     public function visitor_detail($id) {
+
+    public function visitor_detail($id) {
         $data = "SELECT(pv.visited_at) AS visited_date,ep.`name`,im.`industry` FROM profile_visit pv
                     LEFT JOIN `emp_profile` ep
                     ON ep.`auth_id`=pv.visitor_id
