@@ -78,7 +78,23 @@ class Job_model extends CI_Model {
     }
 
     public function search($conditions) {
-        $query = "SELECT * ,(lm.`location`) AS loc,CASE  WHEN ap.`job_id` IS NOT NULL THEN 1 ELSE 0 END AS applied_status,(j.job_id) AS job_id,(j.auth_id) AS auth_id FROM jobs j
+        $query = "SELECT * ,(lm.`location`) AS loc,(2)as applied_status,(j.job_id) AS job_id,(j.auth_id) AS auth_id FROM jobs j
+                LEFT JOIN emp_profile ep
+                ON j.auth_id=ep.`auth_id`
+                LEFT JOIN `location_master` lm
+                ON lm.loc_id=j.location
+                LEFT JOIN `functional_area` fa
+                ON fa.`fun_id`=j.`functional_area`";
+        if (!empty($conditions)) {
+            $query .= ' WHERE ' . join(' And ', $conditions);
+        }
+      //var_dump($query);
+        $query = $this->db->query($query);
+        
+        return $query->result();
+    }
+    public function search3($conditions,$id) {
+        $query = "SELECT * ,(lm.`location`) AS loc,CASE  WHEN ap.`job_id` IS NOT NULL THEN 0 ELSE 1 END AS applied_status,(j.job_id) AS job_id,(j.auth_id) AS auth_id FROM jobs j
                 LEFT JOIN emp_profile ep
                 ON j.auth_id=ep.`auth_id`
                 LEFT JOIN `location_master` lm
@@ -86,11 +102,15 @@ class Job_model extends CI_Model {
                 LEFT JOIN `functional_area` fa
                 ON fa.`fun_id`=j.`functional_area`
                 LEFT JOIN apply_job ap
-                ON ap.`job_id`=j.`job_id`";
+                ON ap.`job_id`=j.`job_id`
+                LEFT JOIN user u
+                ON u.auth_id=ap.auth_id 
+                or ap.auth_id='$id'";
         if (!empty($conditions)) {
             $query .= ' WHERE ' . join(' And ', $conditions);
         }
-      //var_dump($query);
+//        $query.="";
+      echo($query);
         $query = $this->db->query($query);
         
         return $query->result();

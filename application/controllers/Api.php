@@ -556,6 +556,7 @@ class Api extends CI_Controller {
             //$data = array();
             $data = $this->Job_model->search($conditions);
             if (!empty($data)) {
+                
                 $output = array('status' => 'success', 'message' => $data);
             } else {
                 $content = array();
@@ -567,6 +568,48 @@ class Api extends CI_Controller {
         }
         header('content-type: application/json');
         echo json_encode($output);
+    }
+    public function SearchJob3() {
+
+        $this->load->model('Master_model');
+        $this->load->model('Job_model');
+        $skill = $_REQUEST['skill'];
+        $location = $_REQUEST['location'];
+        $experince = $_REQUEST['experince'];
+        $id = $_REQUEST['id'];
+        if ($skill || $location || $experince) {
+            $conditions = array();
+            if ($_REQUEST['skill'] != '') {
+                $skill = $_REQUEST['skill'];
+                $conditions[] = "j.`keyword` LIKE '%$skill%'";
+            }
+            if ($_REQUEST['skill'] != '') {
+                $skill = $_REQUEST['skill'];
+                $conditions[] = "j.`title` LIKE '%$skill%'";
+            }
+            if ($_REQUEST['location'] != '') {
+                $location = $_REQUEST['location'];
+                $conditions[] = "j.`location` ='$location'";
+            }
+            if ($_REQUEST['experince'] != '') {
+                $experince = $_REQUEST['experince'];
+                $conditions[] = "j.exp_max =$experince ";
+            }
+            //$data = array();
+            $data = $this->Job_model->search3($conditions,$id);
+            if (!empty($data)) {
+                $output = array('status' => 'success', 'message' => $data);
+            } else {
+                $content = array();
+                $content[] = array(
+                    'Message' => 'Error'
+                );
+                $output = array('status' => 'error', 'message' => $content);
+            }
+        }
+        
+//        header('content-type: application/json');
+//        echo json_encode($output);
     }
 
     public function SearchJob2() {
