@@ -893,13 +893,17 @@ class Api extends CI_Controller {
             'job_profile' => $job_profile,
             'type' => $type,
         );
-        $data1 = $this->User_model->user_workexp_update($data, $emp_id);
-        if (!empty($data1)) {
-            $content = array();
-            $content[] = array(
-                'Message' => 'Successfully Updated Work Experince Detail',
-            );
-            $output = array('status' => 'success', 'message' => $content);
+        $find = $this->User_model->find_by_emp_id($emp_id);
+        if(!empty($find)) {
+
+            $data1 = $this->User_model->user_workexp_update($data, $emp_id);
+            if (!empty($data1)) {
+                $content = array();
+                $content[] = array(
+                    'Message' => 'Successfully Updated Work Experince Detail',
+                );
+                $output = array('status' => 'success', 'message' => $content);
+            }
         } else {
             $content = array();
             $content[] = array(
@@ -917,19 +921,16 @@ class Api extends CI_Controller {
             $code = rand(0, 9999);
             $message = 'This Is Your Verification Code ' . $code;
             $this->Sendsms->sendsms($mobile, $message);
-            $data=array(
-                'code'=>$code,
-                'mobile'=>$mobile,
-                'created'=>date('Y-m-d H:i:s'),
+            $data = array(
+                'code' => $code,
+                'mobile' => $mobile,
+                'created' => date('Y-m-d H:i:s'),
             );
-            $check=  $this->User_model->find_by_mobile($mobile);
-            if(!empty($check))
-            {
-                $update=  $this->User_model->update_code($data,$check['id']);
-            }
-            else
-            {
-                $create=  $this->User_model->insert_code($data);
+            $check = $this->User_model->find_by_mobile($mobile);
+            if (!empty($check)) {
+                $update = $this->User_model->update_code($data, $check['id']);
+            } else {
+                $create = $this->User_model->insert_code($data);
             }
             $content = array();
             $content[] = array(
@@ -950,23 +951,21 @@ class Api extends CI_Controller {
     public function forget_password_verify() {
 
 
-        $code=$_REQUEST['code'];
-        $mobile=$_REQUEST['mobile'];
-        $password=$_REQUEST['password'];
-        $check=  $this->User_model->find_by_mobile($mobile);
-        if($code==$check['code'])
-        {
-            $data=array(
-                'password'=>md5($password),
+        $code = $_REQUEST['code'];
+        $mobile = $_REQUEST['mobile'];
+        $password = $_REQUEST['password'];
+        $check = $this->User_model->find_by_mobile($mobile);
+        if ($code == $check['code']) {
+            $data = array(
+                'password' => md5($password),
             );
-            $update_password=  $this->User_model->update_password($data,$mobile);
+            $update_password = $this->User_model->update_password($data, $mobile);
             $content = array();
             $content[] = array(
                 'Message' => 'Succefully updated Password',
             );
             $output = array('status' => 'error', 'message' => $content);
-        }
-        else {
+        } else {
             $content = array();
             $content[] = array(
                 'Message' => 'Please Enter Correct Password',

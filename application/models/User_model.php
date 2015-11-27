@@ -26,6 +26,10 @@ class User_model extends CI_Model {
         $query = $this->db->get_where('authentication', array('auth_id' => $id));
         return $query->row_array();
     }
+    public function find_by_emp_id($id) {
+        $query = $this->db->get_where('work_exp', array('emp_id' => $id));
+        return $query->row_array();
+    }
     public function find_by_mobile($mobile) {
         $query = $this->db->get_where('forgetpassword', array('mobile' => $mobile));
         return $query->row_array();
