@@ -31,7 +31,7 @@ class User_model extends CI_Model {
         $sql = "select * from authentication
         where email='$id' OR mobile='$mobile'";
 //        $query = $this->db->get_where('authentication', array('email' => $id,'mobile'=>$mobile));
-        echo $sql;
+       // echo $sql;
         $query = $this->db->query($sql);
         return $query->row_array();
     }

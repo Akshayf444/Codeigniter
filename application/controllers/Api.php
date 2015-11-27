@@ -676,6 +676,7 @@ class Api extends CI_Controller {
     public function profile_update() {
         $user_id = $_REQUEST['user_id'];
         $chk['chk'] = $this->User_model->find_by_id($user_id);
+        //$field
         $data = array(
             'name' => $_REQUEST['name'],
             'dob' => $_REQUEST['dob'],
@@ -703,8 +704,6 @@ class Api extends CI_Controller {
             'city' => $_REQUEST['city'],
             'updated_at' => date('Y-m-d H:i:s'),
         );
-
-
 
         $check['User1'] = $this->User_model->Add_detail($user_id, $data);
         $check['User2'] = $this->address_model->add_address3($user_id, $field_array);

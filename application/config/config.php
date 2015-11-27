@@ -16,7 +16,7 @@
 | environments.
 |
 */
-$config['base_url'] = '';
+$config['base_url'] = $_SERVER['SERVER_NAME'].'/instacom';
 
 /*
 |--------------------------------------------------------------------------
