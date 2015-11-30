@@ -26,6 +26,25 @@ class User_model extends CI_Model {
         $query = $this->db->get_where('authentication', array('auth_id' => $id));
         return $query->row_array();
     }
+    public function find_by_emp_id($id) {
+        $query = $this->db->get_where('work_exp', array('emp_id' => $id));
+        return $query->row_array();
+    }
+    public function find_by_mobile($mobile) {
+        $query = $this->db->get_where('forgetpassword', array('mobile' => $mobile));
+        return $query->row_array();
+    }
+    public function update_code($data,$id) {
+        $this->db->where(array('id' => $id));
+        return $this->db->update('forgetpassword', $data);
+    }
+    public function update_password($data,$mobile) {
+        $this->db->where(array('mobile' => $mobile));
+        return $this->db->update('authentication', $data);
+    }
+    public function insert_code($data) {
+        return $this->db->insert('forgetpassword', $data);
+    }
 
     public function find_by_email($id, $mobile) {
         $sql = "select * from authentication
@@ -108,6 +127,11 @@ class User_model extends CI_Model {
 //        );
         $this->db->where(array('id' => $id));
         return $this->db->update('user_qualification', $data);
+    }
+    public function user_workexp_update($data, $id) {
+   
+        $this->db->where(array('emp_id' => $id));
+        return $this->db->update('work_exp', $data);
     }
 
     public function project_add($id) {
