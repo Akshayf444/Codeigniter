@@ -775,14 +775,7 @@ class Api extends CI_Controller {
             'projects_title' => $_REQUEST['projects_title'],
             'to' => $_REQUEST['to'],
             'from' => $_REQUEST['from'],
-            'location' => $_REQUEST['location'],
-            'site' => $_REQUEST['site'],
-            'type' => $_REQUEST['type'],
             'detail' => $_REQUEST['detail'],
-            'role' => $_REQUEST['role'],
-            'role_description' => $_REQUEST['role_description'],
-            'team_size' => $_REQUEST['team_size'],
-            'skill' => $_REQUEST['skill'],
         );
         $data1 = $this->User_model->project_update3($project_id, $data);
         if (!empty($data1)) {
