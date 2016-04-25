@@ -1,87 +1,149 @@
-<div class="row">
-    <script src="<?php echo asset_url() ?>/js/bootstrap-multiselect.js" type="text/javascript"></script>
-    <link href="<?php echo asset_url() ?>/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css"/>
-    <script src="<?php echo asset_url() ?>/js/bootstrap-typeahead.js" type="text/javascript"></script>
-    <script src="<?php echo asset_url() ?>/js/jquery-migrate-1.2.1.js" type="text/javascript"></script>
-    <div class="col-lg-2 panel panel-default">
+<style>
+    .btn{
+        padding: 5px;
+        border-radius: 0px;
+    }
+</style>
+<div class="document-title">
+    <div class="container">
+        <h1 class="center">Open Positions</h1>
+    </div><!-- /.container -->
+</div><!-- /.document-title -->
+<div class="container">    
+    <h2 class="page-header"><strong>212</strong> jobs from 9 232 matches your search criteria</h2>
+    <div class="row">
+        <script src="<?php echo asset_url() ?>/js/bootstrap-multiselect.js" type="text/javascript"></script>
+        <link href="<?php echo asset_url() ?>/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css"/>
+        <script src="<?php echo asset_url() ?>/js/bootstrap-typeahead.js" type="text/javascript"></script>
+        <script src="<?php echo asset_url() ?>/js/jquery-migrate-1.2.1.js" type="text/javascript"></script>
+
         <?php
         $attribute = array('method' => 'get');
         echo form_open('Job/filter', $attribute);
         ?>
-        <label>Select Location</label>
-        <select  class="form-control multiselect" name="location[]" multiple="multiple" >
-                <option value="Mumbai">Mumbai</option>
-                <option value="Delhi">Delhi</option>
-                <option value="Pune">Pune</option>
-                <option value="Bengaluru / Bangalore">Bengaluru / Bangalore</option>
-                <option value="Chandigarh">Chandigarh</option>
-            </select>
- 
-<br>
-<label>Select Industry</label>
-            <input type="text" name="industry" class="form-control city1" style="width: 133px;" id="city1" autocomplete="off" data-provide="typeahead" placeholder="industry"/> 
-            
+        <div class="col-sm-3">
+            <div class="filter-stacked">
+                <form method="post" action="http://preview.byaviators.com/template/profession/positions.html?">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Keyword">
+                    </div>
 
-     <br>   
-     <input type="submit"  class="btn btn-success" value="search"/>
-    </div> 
+                    <h3>Salary <a href="#"><i class="fa fa-close"></i></a></h3>
 
-    <div class="col-lg-1"></div>
+                    <div class="split-forms">
+                        <div class="form-group">
+                            <input type="number" class="form-control" placeholder="Min.">
+                        </div>
 
-    <div class="col-lg-8 panel panel-default">
-        <?php
-        if (isset($job)) {
+                        <div class="form-group">
+                            <input type="number" class="form-control" placeholder="Max.">
+                        </div>
+                    </div>
 
-            foreach ($job as $j) {
-                ?>
+                    <h3>Contract <a href="#"><i class="fa fa-close"></i></a></h3>
 
-                <h5><a href="<?php echo site_url('Job/viewDetails/' . $j->job_id) ?>"><?php echo $j->title ?></a></h5>
-                <h6><?php echo $j->name ?></h6>
+                    <div class="checkbox">
+                        <label><input type="checkbox"> Full-time</label>
+                    </div><!-- /.checkbox -->
 
-                <div class="row">
-                    <dl>
-                        <dt class="col-sm-2">
-                        <h6><i class="fa fa-suitcase"> </i><?php echo ' ' . $j->exp_min; ?>-<?php echo $j->exp_max ?> Yrs</h6>
-                        </dt>
-                        <dt class="col-sm-2">
-                        <h6><i class="fa fa-map-marker"> </i><?php echo ' ' . $j->loc ?></h6>
-                        </dt>
-                        <dt class="col-sm-8">
-                        <h6>Key Skills : <?php echo $j->keyword ?></h6>
-                        </dt>
-                    </dl>
-                </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox"> Part-time</label>
+                    </div><!-- /.checkbox -->
 
-                <div class="row">
-                    <dl>
-                        <dt class="col-sm-1">
-                        <h6><i class="fa fa-inr"></i></h6>
-                        </dt>
-                        <dt class="col-sm-2">
-                        <h6><?php
-                            if ($j->hide_ctc == 1) {
-                                echo $j->ctc_min;
-                                echo isset($j->ctc_type) && $j->ctc_type == 0 ? ' P.M.' : ' P.A.';
-                            } else {
-                                echo 'Not to be disclosed';
-                            }
-                            ?>
-                        </h6>
-                        </dt>
-                    </dl>
-                </div>
-                <hr class="page-header">
+                    <div class="checkbox">
+                        <label><input type="checkbox"> One-time project</label>
+                    </div><!-- /.checkbox -->
+
+                    <a href="#" class="filter-stacked-show-more">Show More ...</a>
+
+                    <h3>Location <a href="#"><i class="fa fa-close"></i></a></h3>
+
+                    <div class="checkbox">
+                        <label><input type="radio" name="radio-test" value="1"> San Francisco</label>
+                    </div><!-- /.checkbox -->
+
+                    <div class="checkbox">
+                        <label><input type="radio" name="radio-test" value="2"> Sacramento</label>
+                    </div><!-- /.checkbox -->
+
+                    <div class="checkbox">
+                        <label><input type="radio" name="radio-test" value="3"> Los Angeles</label>
+                    </div><!-- /.checkbox -->
+
+                    <a href="#" class="filter-stacked-show-more">Show More ...</a>
+
+                    <h3>Status <a href="#"><i class="fa fa-close"></i></a></h3>
+
+                    <div class="checkbox">
+                        <label><input type="checkbox"> Most Recent</label>
+                    </div><!-- /.checkbox -->
+
+                    <div class="checkbox">
+                        <label><input type="checkbox"> Featured</label>
+                    </div><!-- /.checkbox -->
+
+                    <div class="checkbox">
+                        <label><input type="checkbox"> Urgent</label>
+                    </div><!-- /.checkbox -->
+
+                    <a href="#" class="filter-stacked-show-more">Show More ...</a>
+
+                    <button type="submit" class="btn btn-secondary btn-block"><i class="fa fa-refresh"></i> Reset Filter</button>
+                </form>
+            </div><!-- /.filter-stacked -->
+
+        </div><!-- /.col-* -->
+
+        <div class="col-sm-9">
+            <div class="positions-list">
                 <?php
-            }
-        }
-        ?>
+                if (isset($job)) {
+
+                    foreach ($job as $j) {
+                        ?>
+                        <div class="positions-list-item">
+                            <h2>
+                                <a href="<?php echo site_url('Job/viewDetails/' . $j->job_id) ?>"><?php echo $j->title ?></a>
+                                <small class="pull-right"><a href="" class="btn btn-warning">Apply</a></small>
+                            </h2>
+                            <p><?php echo $j->name ?></p>
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <h6><i class="fa fa-suitcase"> </i><?php echo ' ' . $j->exp_min; ?>-<?php echo $j->exp_max ?> Yrs</h6>
+                                </div>
+                                <div class="col-sm-2">
+                                    <h6><i class="fa fa-map-marker"> </i><?php echo ' ' . $j->loc ?></h6>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h6><i class="fa fa-inr"></i> : <?php
+                                        if ($j->hide_ctc == 1) {
+                                            echo $j->ctc_min;
+                                            echo isset($j->ctc_type) && $j->ctc_type == 0 ? ' P.M.' : ' P.A.';
+                                        } else {
+                                            echo 'Not to be disclosed';
+                                        }
+                                        ?></h6>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <p><?php echo $j->description ?></p>
+                                    <h6><b>Key Skills : </b><?php echo $j->keyword ?><small class="pull-right"><?php echo date('d-m-Y', strtotime($j->posted_at)) ?></small></h6>
+                                </div>
+                            </div>
+
+                            <!--                        <div class="position-list-item-date">10/11/2015</div> /.position-list-item-date 
+                                                    <div class="position-list-item-action"><a href="#">Save Position</a></div> /.position-list-item-action -->
+                        </div><!-- /.position-list-item -->
+                        <?php
+                    }
+                }
+                ?>
+            </div>
+        </div>
     </div>
-
-
-
 </div>
-
-
 <script type="text/javascript">
     $(document).ready(function () {
 
@@ -94,25 +156,21 @@
     $('#city1').typeahead({
         source: function (typeahead, query) {
             var industry = $('#city1').val();
-          
-//            $(".loader").show();
+
+            //            $(".loader").show();
             $.ajax({
                 url: 'indus',
                 type: 'POST',
                 dataType: 'JSON',
                 data: {
                     industry: industry,
-                   
                 },
                 success: function (data) {
                     console.log(data);
                     typeahead.process(data);
-                    
+
                 }
             });
         }
     });
-   
-
-
 </script>

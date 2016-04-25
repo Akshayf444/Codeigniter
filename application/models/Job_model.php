@@ -78,7 +78,7 @@ class Job_model extends CI_Model {
     }
 
     public function search($conditions) {
-        $query = "SELECT * ,(lm.`location`) AS loc,(2)as applied_status,(j.job_id) AS job_id,(j.auth_id) AS auth_id FROM jobs j
+        $query = "SELECT * ,(lm.`location`) AS loc,(2)as applied_status,(j.job_id) AS job_id,(j.auth_id) AS auth_id,j.created_at as posted_at FROM jobs j
                 LEFT JOIN emp_profile ep
                 ON j.auth_id=ep.`auth_id`
                 LEFT JOIN `location_master` lm
@@ -86,9 +86,10 @@ class Job_model extends CI_Model {
                 LEFT JOIN `functional_area` fa
                 ON fa.`fun_id`=j.`functional_area`";
         if (!empty($conditions)) {
-            $query .= ' WHERE ' . join(' And ', $conditions);
+            $query .= ' WHERE ' . join(' OR ', $conditions);
         }
         //var_dump($query);
+        //echo $query;
         $query = $this->db->query($query);
 
         return $query->result();

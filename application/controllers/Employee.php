@@ -35,7 +35,7 @@ class Employee extends CI_Controller {
         
         $check['error1'] = "";
         $data = array('title' => 'Login', 'content' => 'employee/registration', 'view_data' => $check);
-        $this->load->view('template2', $data);
+        $this->load->view('frontTemplate', $data);
     }
 
     public function login() {
@@ -59,7 +59,7 @@ class Employee extends CI_Controller {
         }
         $data1['user2'] = "";
         $data = array('title' => 'Login', 'content' => 'employee/login', 'view_data' => $data1);
-        $this->load->view('template2', $data);
+        $this->load->view('frontTemplate', $data);
 //         
     }
 

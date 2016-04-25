@@ -2,7 +2,7 @@
 
 class MY_model extends CI_Model {
 
-    const TABLE_PK = 'abstract';
+    /*const TABLE_PK = 'abstract';
     const TABLE_NAME = 'abstract';
 
     public function __construct() {
@@ -17,5 +17,5 @@ class MY_model extends CI_Model {
     public function update(){
         $this->db->where('');
         $this->db->update();
-    }
+    }*/
 }

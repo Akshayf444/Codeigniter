@@ -1,30 +1,63 @@
-<div class="row">
-    <div class="col-lg-4 col-lg-offset-8 panel signin">
-        <h3 class="page-header">Sign In</h3>
-        <h3 style="color:red;"><?php
-            if (isset($user)) {
-                echo $user;
-            }
-            ?></h3>
-        <?php echo validation_errors(); ?>
+<style>
+    .form-control {
+        background: #e8ebed;
+        color: #657380;
+        font-size: 15px;
+        font-weight: 700;
+        padding: 16px;
+        width: 100%;
+        height: auto;
+        outline: 0;
+        border: 2px solid #e8ebed;
+        box-shadow: none;
+        -webkit-transition: all 0.2s;
+        -moz-transition: all 0.2s;
+        -ms-transition: all 0.2s;
+        -o-transition: all 0.2s;
+        transition: all 0.2s;
+    }
+</style>
+<div class="document-title">
+    <div class="container">
+        <h1 class="center">Login</h1>
+    </div><!-- /.container -->
+</div><!-- /.document-title -->
+<h3 style="color:red;"><?php
+    if (isset($user)) {
+        echo $user;
+    }
+    ?></h3>
+<?php echo validation_errors(); ?>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
 
-        <?php echo form_open('User/login') ?>
+            <?php echo form_open('User/login') ?>
 
-        <div class="form-group">
-            <label class="control-label">Email</label>
-            <input type="text" class="form-control input-lg" name="email"/>
-        </div>
-        <div class="form-group">
-            <label class="control-label">Password</label>
-            <input type="password" class="form-control input-lg" name="password"/>
-        </div>
-        <div class="form-group" >
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3><b>Welcome to Pharma Talent</b></h3>
+                    <p>LOGIN HERE USING YOUR USERNAME AND PASSWORD</p>
+                   <br/>
+                    <div class="form-group">
+                        <label >E-mail</label>
+                        <input type="text" class="form-control" name="email"/>
+                    </div><!-- /.form-group -->
 
-            <a href="<?php echo site_url('User/register') ?>">Register ?</a>
+                    <div class="form-group " >
+                        <label >Password</label>
+                        <input type="password" class="form-control" name="password"/>
+                    </div><!-- /.form-group -->
+                    <div class="form-group " >
+                        <button type="submit" class="btn btn-secondary btn-block">LOGIN</button>
+                        <br/>
+                        <a href="<?php echo site_url('User/register') ?>">Click Here To Register</a>
+                    </div>
+                </div><!-- /.col-* -->
+            </div><!-- /.row -->
 
-        </div>
-        <input type="submit" class="btn btn-info btn-lg" value="Log In" />
+            </form>
 
-        </form>
-    </div>
-</div>
+        </div><!-- /.col-* -->
+    </div><!-- /.row -->
+</div><!-- /.container -->

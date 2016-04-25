@@ -53,7 +53,7 @@ class CI_Controller {
                     'Search Resume' => 'Employee/resumesearch'
                 ),
                 'Settings' => array(
-                     'Change Password' => 'Employee/changepassword'
+                    'Change Password' => 'Employee/changepassword'
                 )
             );
         } elseif ($user_type == 'User') {
@@ -61,7 +61,10 @@ class CI_Controller {
 //                'Inbox' => array(
 //                    'Message' => '#'
 //                ),
-                'Profile' => array(
+                'Home' => 'User/home',
+                'Profile' => 'User/view',
+                'Logout'=> 'User/logout'
+                /*'Profile' => array(
                     'View Profile' => 'User/view',
                     'Project' => 'User/user_projects',
                     'Education' => 'User/user_qualification',
@@ -76,8 +79,9 @@ class CI_Controller {
                     'Job & Updates' => 'User/SearchJob'
                 ),
                 'Settings' => array(
-                    'Change Password' => 'User/changepassword'
-                )
+                    'Change Password' => 'User/changepassword',
+                    'Logout' => 'User/logout'
+                ),*/
             );
         } else {
             

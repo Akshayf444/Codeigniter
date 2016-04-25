@@ -181,4 +181,73 @@ class Master_model extends CI_Model {
         return $industry;
     }
 
+    function getUserSkill($conditions = array(), $conditions2 = array()) {
+        $sql = "SELECT skm.*,sk.* FROM skill_master skm LEFT JOIN (SELECT * FROM skills ";
+        if (!empty($conditions)) {
+            $sql .= " WHERE " . join(" AND ", $conditions);
+        }
+
+        $sql .= "  ) AS sk ON skm.skm_id = sk.skill  ";
+        if (!empty($conditions2)) {
+            $sql .= " WHERE " . join(" AND ", $conditions2);
+        }
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+
+    function getcomputerSkill($conditions = array()) {
+        $sql = "SELECT * FROM computer_skill ";
+        if (!empty($conditions)) {
+            $sql .= " WHERE " . join(" AND ", $conditions);
+        }
+
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+
+    function getlanguage($conditions = array()) {
+        $sql = "SELECT * FROM language ";
+        if (!empty($conditions)) {
+            $sql .= " WHERE " . join(" AND ", $conditions);
+        }
+
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+    
+    function getlanguageMaster($conditions = array()) {
+        $sql = "SELECT * FROM language_master ";
+        if (!empty($conditions)) {
+            $sql .= " WHERE " . join(" AND ", $conditions);
+        }
+
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+
+    function generateDropdown($result, $fieldid, $fieldname, $id = 0, $custom_attribute = array()) {
+        $dropdown = '';
+        $custom_field = '';
+        if (!empty($result)) {
+            foreach ($result as $item) {
+                if (!empty($custom_attribute)) {
+                    foreach ($custom_attribute as $key => $value) {
+                        $custom_field .= 'data-' . $key . '="' . $item->{$value} . '" ';
+                    }
+                    //echo $custom_field."<br/>";
+                }
+                if ($id === $item->{$fieldid}) {
+                    $dropdown .= '<option value="' . $item->{$fieldid} . '" selected ' . $custom_field . ' >' . $item->{$fieldname} . '</option>';
+                } else {
+                    $dropdown .= '<option value="' . $item->{$fieldid} . '" ' . $custom_field . '>' . $item->{$fieldname} . '</option>';
+                }
+
+                $custom_field = '';
+            }
+        }
+
+        $dropdown .= '';
+        return $dropdown;
+    }
+
 }

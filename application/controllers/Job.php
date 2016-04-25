@@ -13,8 +13,8 @@ class Job extends CI_Controller {
 
     function index() {
         $this->load->model('Master_model');
-        $data = array('title' => 'Search Job', 'content' => 'job/index', 'view_data' => 'Blank', 'frontImage' => 'search.jpg', 'searchBar' => TRUE, 'dropdowns' => $this->Master_model->getLocation());
-        $this->load->view('searchTemplate', $data);
+        $data = array('title' => 'Search Job', 'content' => 'job/searchJob', 'view_data' => 'Blank', 'frontImage' => 'search.jpg', 'searchBar' => TRUE, 'dropdowns' => $this->Master_model->getLocation());
+        $this->load->view('frontTemplate', $data);
     }
 
     function add() {
@@ -50,11 +50,8 @@ class Job extends CI_Controller {
     }
 
     public function Job_list() {
-
         $user_id = $this->session->userdata("user_id");
-
         $userdata['users'] = $this->Job_model->job_list($user_id);
-
         $data = array('title' => 'List Of Jobs ', 'content' => 'job/job_list', 'view_data' => $userdata);
         $this->load->view('template1', $data);
     }
@@ -115,21 +112,28 @@ class Job extends CI_Controller {
                 $skill = $this->input->get('skill');
                 $conditions[] = "j.`title` LIKE '%$skill%'";
             }
-            if ($this->input->get('location') != '') {
+            $location = $this->input->get('location');
+            
+            if (!empty($location)) {
                 $location = $this->input->get('location');
-                $conditions[] = "j.`location` ='$location'";
+                foreach ($location as $value) {
+                    $conditions[] = "lm.`location` ='$value'";
+                }
             }
+
             if ($this->input->get('experince') != '') {
                 $experince = $this->input->get('experince');
                 $conditions[] = "j.exp_max =$experince ";
             }
+
+            
 //            isset($user_profile['current_location']) ? $this->Master_model->getLocation($user_profile['current_location']) : 
             $search['dropdowns'] = $this->Master_model->listLocation();
             $search['industry'] = $this->Master_model->listIndustry();
 
             $search['job'] = $this->Job_model->search($conditions);
             $data = array('title' => 'Search Job', 'content' => 'job/index', 'view_data' => $search);
-            $this->load->view('template2', $data);
+            $this->load->view('frontTemplate', $data);
         }
     }
 
@@ -203,7 +207,6 @@ class Job extends CI_Controller {
 
             if (!empty($sql_res)) {
                 foreach ($sql_res as $res) {
-
                     $area_name = $res->industry;
                     array_push($areaList, $area_name);
                 }

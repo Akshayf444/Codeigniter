@@ -1,166 +1,166 @@
-<div class="row"><?php echo validation_errors(); ?></div>
-<div class="row">
-    <div class="col-lg-12 ">
-        <h3 class="page-header">Basic Profile</h3>
-        <?php echo form_open('User/Add_profile') ?>
-        <div class="panel">
-            <div class="panel-body">
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label class="control-label">Name*</label><input type="text" required="required" class="form-control" placeholder="Enter Name" name="name" value="<?php
-                        if (isset($user['name'])) {
-                            echo $user['name'];
-                        }
-                        ?>" />
+<div id="fullCalModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Basic Profile</h4>
+            </div>
 
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">dob*</label>
-                        <input type="date"  class="form-control" required="required" name="dob" value="<?php
-                        if (isset($user['dob'])) {
-                            echo $user['dob'];
-                        }
-                        ?>"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Gender*</label>
-                        <input type="radio" required="required"  name="sex" <?php
-                        if (isset($user['gender']) && $user['gender'] == 'Male') {
-                            echo "checked";
-                        }
-                        ?> value="Male"/>Male
-                        <input type="radio" required="required" <?php
-                        if (isset($user['gender']) && $user['gender'] == 'Female') {
-                            echo "checked";
-                        }
-                        ?>  name="sex" value="Female "/>Female
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Experience*</label><br>
-                        <input type="text" class="form-control half-formcontrol"  required="required" placeholder="In Years" name="experince_year" value="<?php
-                        if (isset($user['exp_year'])) {
-                            echo $user['exp_year'];
-                        }
-                        ?>"/>
-                        <input type="text" class="form-control half-formcontrol"  placeholder="In Months" required="required" name="experince_month" value="<?php
-                        if (isset($user['experince_month'])) {
-                            echo $user['experince_month'];
-                        }
-                        ?>"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Current Location*</label>
+            <?php echo form_open('User/Add_profile') ?>
+            <div class="modal-body">
+                <div class="row"><?php echo validation_errors(); ?></div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div id="section1" style="display: none">
+                            <div class="form-group">
+                                <label class="control-label">Name*</label><input type="text"  class="form-control" placeholder="Enter Name" name="name" value="<?php
+                                if (isset($user['name'])) {
+                                    echo $user['name'];
+                                }
+                                ?>" />
 
-                        <select class="form-control" required="required" name="current_location">
-                            <?php echo $dropdowns; ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Prefered Location</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Role*</label>
+                                <input type="text" class="form-control"   name="role" value="<?php
+                                if (isset($user['role'])) {
+                                    echo $user['role'];
+                                }
+                                ?>"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Permanent Address</label>
+                                <textarea name="address1" class="form-control"><?php
+                                    if (isset($user['address1'])) {
+                                        echo $user['address1'];
+                                    }
+                                    ?></textarea>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label class="control-label">Pincode</label>
+                                        <input type="text" name="pincode" class="form-control"  id="pincode"value="<?php
+                                        if (isset($user['pincode'])) {
+                                            echo $user['pincode'];
+                                        }
+                                        ?>">
 
-                        <select class="form-control" required="required" name="prefred_location">
-                            <?php echo $dropdowns; ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Industry*</label>
+                                        <img src="<?php echo asset_url() ?>images/38-1.gif" id="img" style="display: none"/>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="control-label">City </label>
+                                        <input type="text" name="city" class="form-control"  id="city" value="<?php
+                                        if (isset($user['city'])) {
+                                            echo $user['city'];
+                                        }
+                                        ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">State </label>
+                                <input type="text" name="state" class="form-control" id="state" value="<?php
+                                if (isset($user['state'])) {
+                                    echo $user['state'];
+                                }
+                                ?>">
 
-                        <select class="form-control" required="required" name="industry">
-                            <?php echo $industry; ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Function Area</label>
+                            </div>
+                        </div>
+                        <div id="section4"  style="display: none">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label class="control-label">Date Of Birth*</label>
+                                        <input type="text"  class="form-control datepicker"  name="dob" value="<?php
+                                        if (isset($user['dob'])) {
+                                            echo $user['dob'];
+                                        }
+                                        ?>"/>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="control-label">Gender*</label><br>
+                                        <input type="radio"   name="sex" <?php
+                                        if (isset($user['gender']) && $user['gender'] == 'Male') {
+                                            echo "checked";
+                                        }
+                                        ?> value="Male"/>Male
+                                        <input type="radio"  <?php
+                                        if (isset($user['gender']) && $user['gender'] == 'Female') {
+                                            echo "checked";
+                                        }
+                                        ?>  name="sex" value="Female "/>Female
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label class="control-label">Marital Status</label>
+                                        <select class="form-control"  name="marital_status">
+                                            <option value="single">Single</option>
+                                            <option value="married">Married</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="control-label">Function Area</label>
+                                        <select class="form-control"  name="function_area">
+                                            <?php echo $function; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label class="control-label">Prefered Location</label>
 
-                        <select class="form-control"  name="function_area">
-                            <?php echo $function; ?>
-                        </select>
+                                        <select class="form-control"  name="prefred_location">
+                                            <?php echo $dropdowns; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="section5"  style="display: none">
+                            <div class="form-group">
+                                <label class="control-label">Key Skills</label>
+                                <input type="text" class="form-control"  name="key_skill" value="<?php
+                                if (isset($user['key_skill'])) {
+                                    echo $user['key_skill'];
+                                }
+                                ?>"/>
+                            </div>
+                        </div>
+                        <div id="section2"  style="display: none">
+                            <div class="form-group">
+                                <label class="control-label">Summary</label>
+                                <textarea class="form-control"  name="resume_headline" ><?php
+                                    if (isset($user['resume_headline'])) {
+                                        echo $user['resume_headline'];
+                                    }
+                                    ?></textarea>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label">Role*</label>
-                        <input type="text" class="form-control"  required="required" name="role" value="<?php
-                        if (isset($user['role'])) {
-                            echo $user['role'];
-                        }
-                        ?>"/>
-                    </div>
-                    <br>
-                </div>
-
-                <div class="col-lg-6" >
-
-
-                    <div class="form-group">
-                        <label class="control-label">Key Skills</label>
-                        <input type="text" class="form-control"  name="key_skill" value="<?php
-                        if (isset($user['key_skill'])) {
-                            echo $user['key_skill'];
-                        }
-                        ?>"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Marital Status</label>
-                        <select class="form-control"  name="marital_status">
-                            <option value="single">Single</option>
-                            <option value="married">Married</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Permanent Address</label>
-                        <textarea name="address1" class="form-control"><?php
-                        if (isset($user['address1'])) {
-                            echo $user['address1'];
-                        }
-                        ?></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Pincode</label>
-                        <input type="text" name="pincode" class="form-control"  id="pincode"value="<?php
-                        if (isset($user['pincode'])) {
-                            echo $user['pincode'];
-                        }
-                        ?>">
-
-                        <img src="../../assets/images/38-1.gif" id="img" style="display: none"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">State </label>
-                        <input type="text" name="state" class="form-control" id="state" value="<?php
-                        if (isset($user['state'])) {
-                            echo $user['state'];
-                        }
-                        ?>">
-
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">City </label>
-                        <input type="text" name="city" class="form-control"  id="city" value="<?php
-                        if (isset($user['city'])) {
-                            echo $user['city'];
-                        }
-                        ?>">
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Resume Headline</label>
-                        <input type="text" class="form-control"  name="resume_headline" value="<?php
-                        if (isset($user['resume_headline'])) {
-                            echo $user['resume_headline'];
-                        }
-                        ?>"/>
-                    </div>
-
                 </div>
             </div>
-            <div class="panel-footer">
-                <div class="form-group">
-                    <input type="submit" class="btn btn-success" value="Update" />
-                </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-success" value="Update" />
             </div>
+            </form>
         </div>
-        </form>
-    </div>
+    </div>  
 </div>
+
+
 <script>
+
+    $("#<?php echo isset($_GET['section']) ? $_GET['section'] : 'section1'; ?>").show();
+
+
     jQuery(function () {
 
         var typingTimer; //timer identifier

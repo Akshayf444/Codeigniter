@@ -14,6 +14,7 @@ class User_model extends CI_Model {
 
     public function log($email, $pass) {
         $query = $this->db->get_where('authentication', array('email' => $email, 'password' => $pass,));
+        //echo $this->db->last_query();
         return $query->row_array();
     }
 
@@ -26,31 +27,54 @@ class User_model extends CI_Model {
         $query = $this->db->get_where('authentication', array('auth_id' => $id));
         return $query->row_array();
     }
+
     public function find_by_emp_id($id) {
         $query = $this->db->get_where('work_exp', array('emp_id' => $id));
         return $query->row_array();
     }
+
     public function find_by_mobile($mobile) {
         $query = $this->db->get_where('forgetpassword', array('mobile' => $mobile));
         return $query->row_array();
     }
-    public function update_code($data,$id) {
+
+    public function update_code($data, $id) {
         $this->db->where(array('id' => $id));
         return $this->db->update('forgetpassword', $data);
     }
-    public function update_password($data,$mobile) {
+
+    public function update_password($data, $mobile) {
         $this->db->where(array('mobile' => $mobile));
         return $this->db->update('authentication', $data);
     }
+
     public function insert_code($data) {
         return $this->db->insert('forgetpassword', $data);
     }
 
-    public function find_by_email($id, $mobile) {
+    public function find_by_email($id, $mobile = 0) {
         $sql = "select * from authentication
         where email='$id' OR mobile='$mobile'";
 //        $query = $this->db->get_where('authentication', array('email' => $id,'mobile'=>$mobile));
-       // echo $sql;
+        //echo $sql;
+        $query = $this->db->query($sql);
+        return $query->row_array();
+    }
+
+    public function find_by_email3($id, $mobile = 0) {
+        $sql = "select * from user
+        where email='$id' OR mobile='$mobile'";
+//        $query = $this->db->get_where('authentication', array('email' => $id,'mobile'=>$mobile));
+        //echo $sql;
+        $query = $this->db->query($sql);
+        return $query->row_array();
+    }
+
+    public function find_by_email2($id, $mobile = 0) {
+        $sql = "select * from authentication
+        where email='$id' ";
+//        $query = $this->db->get_where('authentication', array('email' => $id,'mobile'=>$mobile));
+        // echo $sql;
         $query = $this->db->query($sql);
         return $query->row_array();
     }
@@ -128,19 +152,24 @@ class User_model extends CI_Model {
         $this->db->where(array('id' => $id));
         return $this->db->update('user_qualification', $data);
     }
+
     public function user_workexp_update($data, $id) {
-   
+
         $this->db->where(array('emp_id' => $id));
         return $this->db->update('work_exp', $data);
     }
 
     public function project_add($id) {
+        $from = $this->input->post('from');
+        $from = $from[1] . '-' . $from[0] . '-1';
+        $to = $this->input->post('to');
+        $to = $to[1] . '-' . $to[0] . '-1';
         $data = array(
             'client' => $this->input->post('client'),
             'auth_id' => $id,
             'projects_title' => $this->input->post('projects_title'),
-            'to' => $this->input->post('to'),
-            'from' => $this->input->post('from'),
+            'to' => $to,
+            'from' => $from,
             'location' => $this->input->post('location'),
             'site' => $this->input->post('site'),
             'type' => $this->input->post('type'),
@@ -159,11 +188,16 @@ class User_model extends CI_Model {
     }
 
     public function project_update($id) {
+        $from = $this->input->post('from');
+        $from = $from[1] . '-' . $from[0] . '-1';
+        $to = $this->input->post('to');
+        $to = $to[1] . '-' . $to[0] . '-1';
+
         $data = array(
             'client' => $this->input->post('client'),
             'projects_title' => $this->input->post('projects_title'),
-            'to' => $this->input->post('to'),
-            'from' => $this->input->post('from'),
+            'to' => $to,
+            'from' => $from,
             'location' => $this->input->post('location'),
             'site' => $this->input->post('site'),
             'type' => $this->input->post('type'),
@@ -288,11 +322,15 @@ class User_model extends CI_Model {
     }
 
     public function project_update2() {
+        $from = $this->input->post('from');
+        $from = $from[1] . '-' . $from[0] . '-1';
+        $to = $this->input->post('to');
+        $to = $to[1] . '-' . $to[0] . '-1';
         $data = array(
             'client' => $this->input->post('client'),
             'projects_title' => $this->input->post('projects_title'),
-            'to' => $this->input->post('to'),
-            'from' => $this->input->post('from'),
+            'to' => $to,
+            'from' => $from,
             'location' => $this->input->post('location'),
             'site' => $this->input->post('site'),
             'type' => $this->input->post('type'),
@@ -393,7 +431,6 @@ class User_model extends CI_Model {
                 ON j.`industry`=im.`indus_id`
                 WHERE j.`job_id`=$id";
         $query = $this->db->query($query);
-
         return $query->row_array();
     }
 
@@ -646,9 +683,54 @@ class User_model extends CI_Model {
             }
 
             $total = ($count / $maximumn) * 100;
-           
+
             return $total;
         }
+    }
+
+    function getMonthObject() {
+        $Parameter = array();
+        ///Parameter array
+        $array = array(
+            '1' => 'Jan',
+            '2' => 'Feb',
+            '3' => 'Mar',
+            '4' => 'Apr',
+            '5' => 'May',
+            '6' => 'Jun',
+            '7' => 'Jul',
+            '8' => 'Aug',
+            '9' => 'sep',
+            '10' => 'Oct',
+            '11' => 'Nov',
+            '12' => 'Dec',
+        );
+
+        foreach ($array as $key => $value) {
+            $Object = new stdClass();
+            $Object->month = $key;
+            $Object->monthname = $value;
+            array_push($Parameter, $Object);
+        }
+        return $Parameter;
+    }
+
+    function getYearObject() {
+        $Parameter = array();
+        $array = array();
+
+        $current_month = 2016;
+        for ($i = 0; $i < 10; $i++) {
+            $array[$current_month] = $current_month;
+            $current_month ++;
+        }
+        foreach ($array as $key => $value) {
+            $Object = new stdClass();
+            $Object->Year = $key;
+            $Object->Yearname = $value;
+            array_push($Parameter, $Object);
+        }
+        return $Parameter;
     }
 
 }
