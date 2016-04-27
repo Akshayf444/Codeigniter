@@ -13,7 +13,7 @@
                     <div class="col-sm-12">
                         <div class="one">
                             <div class="form-group">
-                                <label class="control-label">Highest Qualification Held</label>
+                                <label class="control-label">Degree</label>
                                 <?php echo $dropdowns[0]; ?>
                             </div>
                             <div class="form-group">
@@ -33,36 +33,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="second" style="display: none">
-                            <div class="form-group " style="text-align: center">
-                                <h3>Highest Qualification</h3>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">Highest Qualification Held</label>
-                                <?php echo $dropdowns[0]; ?>
-
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">Specialization</label>
-                                <?php echo $dropdowns[1]; ?>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">Year</label>
-                                <input type="text" name="year[]" class="form-control"/>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">Institute</label>
-                                <select class="form-control" name="institute[]">
-                                    <?php foreach ($institute as $ins): ?>
-                                        <option value="<?php echo $ins->id ?>"><?php echo $ins->institute ?></option>
-                                    <?php endforeach ?>
-                                </select>
-                            </div>
-
-
-
-                        </div>
-                        <label id="add" class="pull-right add" >AddMore +</label>
+                                               
                         <label class="pull-right del" style="display: none">Delete -</label>
                     </div>
                 </div>

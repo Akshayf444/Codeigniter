@@ -1,5 +1,8 @@
 <div id="fullCalModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
+        <link href="<?php echo asset_url(); ?>assets/libraries/choosen/chosen.min.css" rel="stylesheet" type="text/css"/>
+        <script src="<?php echo asset_url(); ?>assets/libraries/choosen/chosen.jquery.min.js" type="text/javascript"></script>
+        <script src="<?php echo asset_url(); ?>assets/libraries/choosen/chosen.proto.js" type="text/javascript"></script>
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
@@ -22,8 +25,8 @@
 
                             </div>
                             <div class="form-group">
-                                <label class="control-label">Role*</label>
-                                <input type="text" class="form-control"   name="role" value="<?php
+                                <label class="control-label">Profile Headline*</label>
+                                <input type="text" class="form-control"  name="role" value="<?php
                                 if (isset($user['role'])) {
                                     echo $user['role'];
                                 }
@@ -40,16 +43,6 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <label class="control-label">Pincode</label>
-                                        <input type="text" name="pincode" class="form-control"  id="pincode"value="<?php
-                                        if (isset($user['pincode'])) {
-                                            echo $user['pincode'];
-                                        }
-                                        ?>">
-
-                                        <img src="<?php echo asset_url() ?>images/38-1.gif" id="img" style="display: none"/>
-                                    </div>
-                                    <div class="col-sm-6">
                                         <label class="control-label">City </label>
                                         <input type="text" name="city" class="form-control"  id="city" value="<?php
                                         if (isset($user['city'])) {
@@ -57,16 +50,26 @@
                                         }
                                         ?>">
                                     </div>
+                                    <div class="col-sm-6">
+
+                                        <label class="control-label">State </label>
+                                        <input type="text" name="state" class="form-control" id="state" value="<?php
+                                        if (isset($user['state'])) {
+                                            echo $user['state'];
+                                        }
+                                        ?>">
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">State </label>
-                                <input type="text" name="state" class="form-control" id="state" value="<?php
-                                if (isset($user['state'])) {
-                                    echo $user['state'];
+                                <label class="control-label">Pincode</label>
+                                <input type="text" name="pincode" class="form-control"  id="pincode"value="<?php
+                                if (isset($user['pincode'])) {
+                                    echo $user['pincode'];
                                 }
                                 ?>">
 
+                                <img src="<?php echo asset_url() ?>images/38-1.gif" id="img" style="display: none"/>
                             </div>
                         </div>
                         <div id="section4"  style="display: none">
@@ -74,11 +77,40 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <label class="control-label">Date Of Birth*</label>
-                                        <input type="text"  class="form-control datepicker"  name="dob" value="<?php
-                                        if (isset($user['dob'])) {
-                                            echo $user['dob'];
-                                        }
-                                        ?>"/>
+                                        <div class="row">
+                                            <?php
+                                            if (isset($user['dob']) && $user['dob'] != '0000-00-00') {
+                                                $dob = explode("-", $user['dob']);
+                                            }
+                                            if (!empty($dob)) {
+                                                $month = $this->Master_model->generateDropdown($this->User_model->getMonthObject(), 'month', 'monthname', (int) $dob[1]);
+                                                $day = $this->Master_model->generateDropdown($this->User_model->getDayObject(), 'month', 'monthname', (int) $dob[2]);
+                                            } else {
+                                                $month = $this->Master_model->generateDropdown($this->User_model->getMonthObject(), 'month', 'monthname');
+                                                $day = $this->Master_model->generateDropdown($this->User_model->getDayObject(), 'month', 'monthname');
+                                            }
+                                            ?>
+                                            <div class="col-sm-3" style="padding-right: 0px">
+                                                <select name="dob[]" class="form-control">
+                                                    <option value="">Select Day</option>
+                                                    <?php echo $day; ?>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-4" style="padding-right: 0px">
+                                                <select name="dob[]" class="form-control">
+                                                    <option value="">Select Month</option>
+                                                    <?php echo $month; ?> 
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <input type="text" class="form-control" placeholder="Year"  name="dob[]" value="<?php
+                                                if (isset($dob[0])) {
+                                                    echo $dob[0];
+                                                }
+                                                ?>"/>
+                                            </div>
+                                        </div>
+
                                     </div>
                                     <div class="col-sm-6">
                                         <label class="control-label">Gender*</label><br>
@@ -106,7 +138,7 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <label class="control-label">Function Area</label>
-                                        <select class="form-control"  name="function_area">
+                                        <select class="form-control "  name="function_area">
                                             <?php echo $function; ?>
                                         </select>
                                     </div>
@@ -116,9 +148,23 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <label class="control-label">Prefered Location</label>
-
-                                        <select class="form-control"  name="prefred_location">
-                                            <?php echo $dropdowns; ?>
+                                        <?php
+                                        $location_master = $this->Master_model->listLocation();
+                                        $location = array();
+                                        if (isset($user['prefred_location']) && $user['prefred_location'] != '') {
+                                            $location = explode(",", $user['prefred_location']);
+                                        }
+                                        ?>
+                                        <select class="form-control chosen-select-no-results" multiple="multiple" name="prefred_location[]">
+                                            <?php
+                                            foreach ($location_master as $value) {
+                                                if (in_array($value->location, $location)) {
+                                                    echo '<option value="' . $value->location . '" selected>' . $value->location . '</option>';
+                                                } else {
+                                                    echo '<option value="' . $value->location . '" >' . $value->location . '</option>';
+                                                }
+                                            }
+                                            ?>
                                         </select>
                                     </div>
                                 </div>
@@ -157,7 +203,16 @@
 
 
 <script>
-
+    var config = {
+        '.chosen-select': {},
+        '.chosen-select-deselect': {allow_single_deselect: true},
+        '.chosen-select-no-single': {disable_search_threshold: 10},
+        '.chosen-select-no-results': {no_results_text: 'Oops, nothing found!'},
+        '.chosen-select-width': {width: "95%"}
+    }
+    for (var selector in config) {
+        $(selector).chosen(config[selector]);
+    }
     $("#<?php echo isset($_GET['section']) ? $_GET['section'] : 'section1'; ?>").show();
 
 

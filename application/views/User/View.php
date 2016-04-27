@@ -18,11 +18,13 @@
         padding-bottom: 0px;
     }
     .workinghistory{
+        padding-top: 10px;
         border-bottom: 1px solid #F7F7F7;
-        padding-bottom: 5px;
+        padding-bottom: 10px;
     }
 
     .workinghistory:last-child{
+
         border-bottom: 0px;
         padding-bottom: 0px;
     }
@@ -48,7 +50,7 @@
 
                 </h2>
 
-                <h3><?php echo isset($user['designation']) && $user['designation'] != '' ? $user['designation'] : ''; ?></h3>
+                <h3><?php echo isset($user['rol']) && $user['rol'] != '' ? $user['rol'] : ''; ?></h3>
 
                 <p class="resume-main-contacts">
                     <?php echo isset($user['address1']) && $user['address1'] != '' ? $user['address1'] : ''; ?><?php echo isset($user['city']) && $user['city'] != '' ? ',' . $user['city'] : ''; ?><?php echo isset($user['pincode']) && $user['pincode'] != '' ? ',' . $user['pincode'] : ''; ?>
@@ -68,7 +70,9 @@
             <div class="resume-chapter-inner">
                 <div class="resume-chapter-content">
                     <h2 class="mb40">Summary<span class="pull-right" onclick="request('<?php echo site_url('User/Add_profile?section=section2'); ?>')"><i class="fa <?php echo isset($user['resume_headline']) && $user['resume_headline'] != '' ? 'fa-edit' : 'fa-plus'; ?>" ></i><?php echo isset($user['resume_headline']) && $user['resume_headline'] != '' ? '' : ' Add Summary'; ?></span></h2>
-                    <p><?php echo isset($user['resume_headline']) && $user['resume_headline'] != '' ? $user['resume_headline'] : ''; ?></p>
+                    <div class="col-sm-12">
+                        <p><?php echo isset($user['resume_headline']) && $user['resume_headline'] != '' ? $user['resume_headline'] : ''; ?></p>
+                    </div>
                 </div><!-- /.resume-chapter-content -->
             </div><!-- /.resume-chapter-inner -->
         </div><!-- /.resume-chapter -->
@@ -80,10 +84,10 @@
                     <div class="col-sm-12">
                         <?php foreach ($user2 as $u) : ?>
                             <div class="workinghistory">
-                                <h2><?php echo $u->role; ?></h2>
-                                <h2 style="color: #666666"><?php echo $u->client; ?><small class="pull-right"><a onclick="request('<?php echo site_url('User/edit_project') . '?id=' . $u->id; ?>')"><i class="fa fa-2x fa-edit"></i></a></small></h2>
+                                <h2 style="font-weight: 700;color: #666666"><?php echo $u->role; ?></h2>
+                                <h2 style="color: #666666;"><?php echo $u->client; ?><small class="pull-right"><a onclick="request('<?php echo site_url('User/edit_project') . '?id=' . $u->id; ?>')"><i class="fa fa-2x fa-edit"></i></a></small></h2>
                                 <h2 style="color: #666666;font-weight: 300"><?php echo date('M-Y', strtotime($u->from)); ?> - <?php echo date('M-Y', strtotime($u->to)); ?> | <?php echo $u->location; ?></h2>
-                                <p><?php echo $u->role_description; ?></p>
+                                <p style="padding-left: 3px"><?php echo $u->role_description; ?></p>
                             </div>
                         <?php endforeach; ?>
                     </div>
@@ -116,16 +120,16 @@
                     <h2 class="mb40">Other Details<small class="pull-right"><a class="btn btn-sm" onclick="request('<?php echo site_url('User/Add_profile?section=section4'); ?>')"><i class="fa fa-2x fa-edit" style="margin-right: 0px;font-size: 1.5em;"></i></a></small></h2>
                     <div class="col-sm-4">
                         <ul>
-                            <li>Preferred Location, <span><?php echo $user['preloc'] != '' ? $user['preloc'] : ''; ?></span></li>
+                            <li>Marital Status, <span><?php echo $user['marital_status'] != '' && $user['marital_status'] != '0000-00-00' ? $user['marital_status'] : ''; ?></span></li>
                             <li>Date Of Birth, <span><?php echo $user['dob'] != '' && $user['dob'] != '0000-00-00' ? $user['dob'] : ''; ?></span></li>
                             <li>Gender, <span><?php echo $user['gender'] != '' && $user['gender'] != '0000-00-00' ? $user['gender'] : ''; ?></span></li>
                         </ul>
                     </div><!-- /.col-* -->
                     <div class="col-sm-8">
                         <ul>
-                            <li>Marital Status, <span><?php echo $user['marital_status'] != '' && $user['marital_status'] != '0000-00-00' ? $user['marital_status'] : ''; ?></span></li>
-                            <li>Functional Area, <span><?php echo $user['fun_area'] != '' ? $user['fun_area'] : ''; ?></span></li>
 
+                            <li>Functional Area, <span><?php echo $user['fun_area'] != '' ? $user['fun_area'] : ''; ?></span></li>
+                            <li>Preferred Location, <span><?php echo $user['prefred_location'] != '' ? $user['prefred_location'] : ''; ?></span></li>
                         </ul>
                     </div><!-- /.col-* -->
 
@@ -168,8 +172,7 @@
                         <ul>
                             <?php
                             if (!empty($lang)) {
-                                $lang = array_shift($lang);
-                                $lang = explode(",", $lang->language);
+                                var_dump($lang);
                                 foreach ($lang as $value) {
                                     echo '<li>' . $value . '</li>';
                                 }

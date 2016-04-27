@@ -13,7 +13,15 @@ class Job extends CI_Controller {
 
     function index() {
         $this->load->model('Master_model');
-        $data = array('title' => 'Search Job', 'content' => 'job/searchJob', 'view_data' => 'Blank', 'frontImage' => 'search.jpg', 'searchBar' => TRUE, 'dropdowns' => $this->Master_model->getLocation());
+        $this->load->model('Job_model');
+        $result = $this->Job_model->countSearch(array(), array());
+
+        $data['trendingJob'] = $this->Job_model->trendingJob();
+        $data['companies'] = $this->Job_model->companies();
+        $data['totalCount'] = $result->jobsearch;
+        $data = array('title' => 'Search Job', 'content' => 'job/searchJob', 'view_data' => $data, 'frontImage' => 'search.jpg', 'searchBar' => TRUE, 'dropdowns' => $this->Master_model->listLocation());
+        $user_id = $this->session->userdata("user_id");
+
         $this->load->view('frontTemplate', $data);
     }
 
@@ -98,42 +106,69 @@ class Job extends CI_Controller {
         $this->load->view('template1', $data);
     }
 
-    public function Search() {
+    public function Search($page = 1) {
+        $page = isset($page) && $page > 0 ? $page : 1;
+        $perpage = 20;
+        $offset = 0;
         $this->load->model('Master_model');
         $search = array();
         $user_id = $this->session->userdata("user_id");
         if ($this->input->get()) {
             $conditions = array();
+            $conditions3 = array();
+            $conditions2 = array();
+            $location_condition = array();
+
             if ($this->input->get('skill') != '') {
-                $skill = $this->input->get('skill');
-                $conditions[] = "j.`keyword` LIKE '%$skill%'";
-            }
-            if ($this->input->get('skill') != '') {
-                $skill = $this->input->get('skill');
-                $conditions[] = "j.`title` LIKE '%$skill%'";
-            }
-            $location = $this->input->get('location');
-            
-            if (!empty($location)) {
-                $location = $this->input->get('location');
-                foreach ($location as $value) {
-                    $conditions[] = "lm.`location` ='$value'";
+                $skill = explode(",", $this->input->get('skill'));
+                $skill = array_filter(array_map('trim', $skill));
+                foreach ($skill as $value) {
+                    $conditions3[] = " ( j.`keyword` LIKE '%$value%'  OR j.`title` LIKE '%$value%' OR ep.`name` LIKE '%$value%' ) ";
                 }
+
+                $conditions[] = join(" OR ", $conditions3);
             }
+
+            if ($this->input->get('location') != '') {
+                $location = explode(",", $this->input->get('location'));
+                $location = array_filter(array_map('trim', $location));
+
+                foreach ($location as $value) {
+                    $conditions2[] = " `location` LIKE '%$value%'";
+                }
+                $location_condition[] = join(" OR ", $conditions2);
+            }
+
 
             if ($this->input->get('experince') != '') {
                 $experince = $this->input->get('experince');
                 $conditions[] = "j.exp_max =$experince ";
             }
 
-            
 //            isset($user_profile['current_location']) ? $this->Master_model->getLocation($user_profile['current_location']) : 
             $search['dropdowns'] = $this->Master_model->listLocation();
             $search['industry'] = $this->Master_model->listIndustry();
+            $total_count = $this->Job_model->countSearch($conditions, $location_condition);
 
-            $search['job'] = $this->Job_model->search($conditions);
+            if (isset($total_count->jobsearch)) {
+                $search['total_pages'] = ceil($total_count->jobsearch / $perpage);
+                $search['total_count'] = $total_count->jobsearch;
+                $offset = ($page - 1) * $perpage;
+            }
+
+            //$conditions[] = " LIMIT {$perpage}  OFFSET  {$offset} ";
+
+            $search['job'] = $this->Job_model->search($conditions, $perpage, $offset, $location_condition);
+
+            $search['page'] = $page;
             $data = array('title' => 'Search Job', 'content' => 'job/index', 'view_data' => $search);
-            $this->load->view('frontTemplate', $data);
+            $user_id = $this->session->userdata("user_id");
+            //echo $user_id;
+            if (isset($user_id) && $user_id > 0) {
+                $this->load->view('frontTemplate3', $data);
+            } else {
+                $this->load->view('frontTemplate', $data);
+            }
         }
     }
 
@@ -170,6 +205,11 @@ class Job extends CI_Controller {
                 $this->load->view('User/success');
             }
         } else {
+            if (isset($_GET['redirect_url']) && $_GET['redirect_url'] != '') {
+                $redirect_url = $_GET['redirect_url'];
+                $this->session->set_userdata("redirect_url", $redirect_url);
+            }
+
             redirect('User/login', 'refresh');
         }
     }
@@ -212,6 +252,23 @@ class Job extends CI_Controller {
                 }
                 echo json_encode($areaList);
             }
+        }
+    }
+
+    public function getSkills() {
+        $term = $_GET['term'];
+        $skills = array();
+        $sql = "SELECT DISTINCT(skill_name) as skill FROM skill_master where skill_name != '' AND skill_name LIKE '%$term%' UNION ALL SELECT DISTINCT(role) as skill FROM user where role != '' AND role LIKE '%$term%'  UNION ALL SELECT DISTINCT(name) as skill FROM emp_profile where name != ''  AND name LIKE '%$term%' ";
+        $query = $this->db->query($sql);
+        $result = $query->result();
+
+        if (!empty($result)) {
+            foreach ($result as $value) {
+                array_push($skills, $value->skill);
+            }
+            echo json_encode($skills);
+        } else {
+            echo '';
         }
     }
 

@@ -56,7 +56,12 @@ class User extends CI_Controller {
                     $this->session->set_userdata("user_email", $this->input->post('email'));
                     $this->session->set_userdata("user_mobile", $this->input->post('mobile'));
                     $this->session->set_userdata("user_type", 'User');
-                    redirect('User/home', 'refresh');
+                    $redirect_url = $this->session->userdata('redirect_url');
+                    if (isset($redirect_url) && $redirect_url != '') {
+                        header("Location:" . $redirect_url);
+                    } else {
+                        redirect('User/home', 'refresh');
+                    }
                 }
                 $dropdown['Error'] = '<p class="alert alert-success">Thank You . Registered Successfully</p>';
 
@@ -156,9 +161,14 @@ class User extends CI_Controller {
                 $this->session->set_userdata("user_type", $check['type']);
                 $check1['User'] = $this->User_model->find_by_id($check['auth_id']);
                 //$this->load->view('User/success');
-                redirect('User/home', 'refresh');
+                $redirect_url = $this->session->userdata('redirect_url');
+                if (isset($redirect_url) && $redirect_url != '') {
+                    header("Location:" . $redirect_url);
+                } else {
+                    redirect('User/home', 'refresh');
+                }
             } else {
-                $data1['user'] = "Incorrect Login";
+                $data1['user'] = '<p class="alert alert-danger">Incorrect Username / Password</p>';
                 //$this->load->view('User/login', $data);
             }
         }
@@ -199,9 +209,18 @@ class User extends CI_Controller {
                 $this->form_validation->set_rules('address1', 'address1', 'trim|required');
                 //$check1['User'] = $this->User_model->find_by_id($user_id);
                 //if ($this->form_validation->run() === True) {
+                $prefered_location = $this->input->post('prefred_location');
+                $dob = $this->input->post('dob');
+
+                $dob = $dob[2] . "-" . $dob[1] . "-" . $dob[0];
+                if (!empty($prefered_location)) {
+                    $prefered_location = join(",", $this->input->post('prefred_location'));
+                } else {
+                    $prefered_location = '';
+                }
                 $data = array(
                     'name' => $this->input->post('name'),
-                    'dob' => $this->input->post('dob'),
+                    'dob' => $dob,
                     'email' => $user_email,
                     'mobile' => $user_mobile,
                     'auth_id' => $user_id,
@@ -210,7 +229,7 @@ class User extends CI_Controller {
                     'exp_year' => $this->input->post('experince_year'),
                     'experince_month' => $this->input->post('experince_month'),
                     'current_location' => $this->input->post('current_location'),
-                    'prefred_location' => $this->input->post('prefred_location'),
+                    'prefred_location' => $prefered_location,
                     'industry' => $this->input->post('industry'),
                     'function_area' => $this->input->post('function_area'),
                     'role' => $this->input->post('role'),
@@ -378,7 +397,13 @@ class User extends CI_Controller {
             $view['user3'] = $this->User_model->qualification_view($user_id);
             $view['skill'] = $this->Master_model->getUserSkill(array('auth_id = ' . $user_id), array('sk.auth_id = ' . $user_id));
             $view['comskill'] = $this->Master_model->getcomputerSkill($condition);
-            $view['lang'] = $this->Master_model->getlanguage($condition);
+            $lang = $this->Master_model->getlanguage($condition);
+            $lang = array_shift($lang);
+            if (isset($lang->language)) {
+                $view['lang'] = json_decode($lang->language);
+            }
+
+
             $data = array('title' => 'Profile Snapshot', 'page_title' => 'Profile Snapshot', 'content' => 'User/View', 'view_data' => $view);
             $this->load->view('frontTemplate2', $data);
         } else {
@@ -475,28 +500,27 @@ class User extends CI_Controller {
             if ($this->input->get('id')) {
                 $id = $_GET['id'];
                 $show['sh'] = $this->User_model->project_by_id2($id);
-                
             }
 
             if ($this->input->post()) {
                 $id = $this->form_validation->set_rules('id', 'id', 'trim|required');
-                /*$this->form_validation->set_rules('client', 'client', 'trim|required');
-                $this->form_validation->set_rules('projects_title', 'projects_title', 'trim|required');
-                $this->form_validation->set_rules('to', 'to', 'trim|required');
-                $this->form_validation->set_rules('from', 'from', 'trim|required');
-                $this->form_validation->set_rules('location', 'location', 'trim|required');
-                $this->form_validation->set_rules('site', 'site', 'trim|required');
-                $this->form_validation->set_rules('type', 'type', 'trim|required');
-                $this->form_validation->set_rules('detail', 'detail', 'trim|required');
-                $this->form_validation->set_rules('role', 'role', 'trim|required');
-                $this->form_validation->set_rules('role_description', 'role_description', 'trim|required');
-                $this->form_validation->set_rules('team_size', 'team_size', 'trim|required');
-                $this->form_validation->set_rules('skill', 'skill', 'required'); */
+                /* $this->form_validation->set_rules('client', 'client', 'trim|required');
+                  $this->form_validation->set_rules('projects_title', 'projects_title', 'trim|required');
+                  $this->form_validation->set_rules('to', 'to', 'trim|required');
+                  $this->form_validation->set_rules('from', 'from', 'trim|required');
+                  $this->form_validation->set_rules('location', 'location', 'trim|required');
+                  $this->form_validation->set_rules('site', 'site', 'trim|required');
+                  $this->form_validation->set_rules('type', 'type', 'trim|required');
+                  $this->form_validation->set_rules('detail', 'detail', 'trim|required');
+                  $this->form_validation->set_rules('role', 'role', 'trim|required');
+                  $this->form_validation->set_rules('role_description', 'role_description', 'trim|required');
+                  $this->form_validation->set_rules('team_size', 'team_size', 'trim|required');
+                  $this->form_validation->set_rules('skill', 'skill', 'required'); */
                 //if ($this->form_validation->run() === True) {
-                    $this->User_model->project_update2();
-                    redirect('User/view', 'refresh');
-                    //$this->load->view('User/success');
-               // }
+                $this->User_model->project_update2();
+                redirect('User/view', 'refresh');
+                //$this->load->view('User/success');
+                // }
             }
 
             //$data = array('title' => 'Project Edit', 'content' => 'User/edit_project', 'view_data' => $show);
@@ -657,7 +681,13 @@ class User extends CI_Controller {
             }
 
             $data = array('title' => 'View Result', 'page_title' => 'View Details', 'content' => 'User/viewsearch2', 'view_data' => $data);
-            $this->load->view('frontTemplate2', $data);
+            $user_id = $this->session->userdata("user_id");
+            //echo $user_id;
+            if (isset($user_id) && $user_id > 0) {
+                $this->load->view('frontTemplate3', $data);
+            } else {
+                $this->load->view('frontTemplate', $data);
+            }
         } else {
             redirect('User/login', 'refresh');
         }
@@ -670,13 +700,13 @@ class User extends CI_Controller {
             $id = $_GET['id'];
             $data['job'] = $this->User_model->apply_id($id, $user_id);
             if (!empty($data['job'])) {
-                redirect('User/SearchJob');
+                redirect('Job/SearchJob');
             } else {
                 $this->User_model->apply($id, $user_id);
-                //redirect('User/SearchJob', 'refresh');
-                $this->load->view('User/success');
             }
         } else {
+            
+            $this->session->set_userdata("redirect_url",  site_url('Job/apply'));
             redirect('User/login', 'refresh');
         }
     }
@@ -789,6 +819,7 @@ class User extends CI_Controller {
 
     public function skill() {
         $user_id = $this->session->userdata('user_id');
+        $skills_master = array();
         $values = array();
         $condition = array();
         $data = array();
@@ -822,6 +853,12 @@ class User extends CI_Controller {
         $data['language_master'] = $language_master;
         //var_dump($skills);
         $data['skill'] = $skills;
+        $data['skill_master'] = $this->Master_model->listSkills();
+        if (!empty($data['skill_master'])) {
+            foreach ($data['skill_master'] as $value) {
+                array_push($array, $language_master);
+            }
+        }
         if ($this->input->post('section') == 'section1') {
             $skill = $this->input->post('skill');
 

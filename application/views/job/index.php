@@ -10,7 +10,7 @@
     </div><!-- /.container -->
 </div><!-- /.document-title -->
 <div class="container">    
-    <h2 class="page-header"><strong>212</strong> jobs from 9 232 matches your search criteria</h2>
+    <h2 class="page-header"><strong><?php echo isset($total_count) ? $total_count : 0; ?></strong> jobs matches your search criteria</h2>
     <div class="row">
         <script src="<?php echo asset_url() ?>/js/bootstrap-multiselect.js" type="text/javascript"></script>
         <link href="<?php echo asset_url() ?>/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css"/>
@@ -21,9 +21,9 @@
         $attribute = array('method' => 'get');
         echo form_open('Job/filter', $attribute);
         ?>
-        <div class="col-sm-3">
+        <div class="col-sm-3 hidden-xs">
             <div class="filter-stacked">
-                <form method="post" action="http://preview.byaviators.com/template/profession/positions.html?">
+                <form method="post" action="#">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Keyword">
                     </div>
@@ -102,19 +102,19 @@
                     foreach ($job as $j) {
                         ?>
                         <div class="positions-list-item">
-                            <h2>
+                            <h2 style="font-weight: 600;font-size: 16px">
                                 <a href="<?php echo site_url('Job/viewDetails/' . $j->job_id) ?>"><?php echo $j->title ?></a>
-                                <small class="pull-right"><a href="" class="btn btn-warning">Apply</a></small>
+                                <small class="pull-right"><a href="<?php echo site_url('User/view_search2') . '?id=' . $j->job_id . '&redirect_url=' . current_url() . '?skill=' . $_GET['skill'] . '&location=' . $_GET['location']; ?><?php //echo $j->link;  ?>" class="btn btn-warning">Apply</a></small>
                             </h2>
-                            <p><?php echo $j->name ?></p>
+                            <p style="color: #777;font-size: 14px"><?php echo $j->name ?></p>
                             <div class="row">
-                                <div class="col-sm-2">
+                                <div class="col-sm-2" style="padding-right: 1px; ">
                                     <h6><i class="fa fa-suitcase"> </i><?php echo ' ' . $j->exp_min; ?>-<?php echo $j->exp_max ?> Yrs</h6>
                                 </div>
-                                <div class="col-sm-2">
-                                    <h6><i class="fa fa-map-marker"> </i><?php echo ' ' . $j->loc ?></h6>
+                                <div class="col-sm-6">
+                                    <h6><i class="fa fa-map-marker"> </i><?php echo ' ' . $j->location ?></h6>
                                 </div>
-                                <div class="col-sm-8">
+                                <div class="col-sm-3">
                                     <h6><i class="fa fa-inr"></i> : <?php
                                         if ($j->hide_ctc == 1) {
                                             echo $j->ctc_min;
@@ -128,7 +128,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <p><?php echo $j->description ?></p>
+                                    <p style="color: #717171"><?php echo $j->description ?></p>
                                     <h6><b>Key Skills : </b><?php echo $j->keyword ?><small class="pull-right"><?php echo date('d-m-Y', strtotime($j->posted_at)) ?></small></h6>
                                 </div>
                             </div>
@@ -137,6 +137,17 @@
                                                     <div class="position-list-item-action"><a href="#">Save Position</a></div> /.position-list-item-action -->
                         </div><!-- /.position-list-item -->
                         <?php
+                    }
+                }
+                ?>
+                <?php
+                if (isset($total_pages)) {
+                    for ($i = 1; $i <= $total_pages; $i++) {
+                        if (isset($page) && $page == $i) {
+                            echo '<a href="' . site_url('Job/search/' . $i) . '?skill=' . $_GET['skill'] . '&location=' . $_GET['location'] . '" class="active btn btn-xs">' . $i . '</a>';
+                        } else {
+                            echo '<a href="' . site_url('Job/search/' . $i) . '?skill=' . $_GET['skill'] . '&location=' . $_GET['location'] . '" class="btn btn-xs">' . $i . '</a>';
+                        }
                     }
                 }
                 ?>

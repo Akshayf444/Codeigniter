@@ -3,7 +3,7 @@
         font-weight: 700;
     }
 </style>
-<div class="container-fluid">
+<div class="container">
     <div class="row" >
         <div class="col-sm-12 panel panel-default">
             <h5 ><?php echo $view['title'] ?></h5>

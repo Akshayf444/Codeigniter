@@ -51,13 +51,17 @@
     .dropdown-toggle{
         height: 60px;
     }
+
+    .stats {
+        margin: 0px 0px 20px 0px;
+    }
 </style>
 <div class="hero-content">
     <div class="container">
         <div class="row">
             <div class="col-sm-12 col-md-12 ">
                 <div class="col-lg-12" style="text-align: center">
-                    <h1 style="font-size: 30px;">We offer <span class="noofjob">1,259</span> job vacancies right now!</h1>
+                    <h1 style="font-size: 30px;">We offer <span class="noofjob"><?php echo $totalCount; ?></span> job vacancies right now!</h1>
                 </div>
 
                 <?php
@@ -66,12 +70,10 @@
                 ?>
                 <div class="row">
                     <div class="form-group col-sm-5 searchbox"  >
-                        <input type="text" class="form-control inputlg" name="skill" placeholder="Job / Skill / Company etc">
+                        <input type="text" required="required" class="form-control inputlg" id="skills" name="skill" placeholder="Job Title / Skills / Company etc">
                     </div><!-- /.form-group -->
                     <div class="form-group col-sm-5 searchbox" >
-                        <select name="location[]" class="inputlg form-control" data-role="tagsinput" multiple >
-                            <?php echo $dropdowns; ?>
-                        </select>
+                        <input type="text" class="form-control inputlg" id="location" name="location" placeholder="Type Location">
                     </div>
                     <div class="form-group col-sm-2 searchbox" >
                         <button type="submit" class="btn btn-block btn-secondary inputlg" style="font-size: 22px">Search</button>
@@ -86,7 +88,7 @@
 <div class="stats">
     <div class="container">
         <div class="row">
-            <div class="stat-item col-sm-4" data-to="123012">
+            <div class="stat-item col-sm-4" data-to="<?php echo $totalCount; ?>">
                 <strong id="stat-item-1">0</strong>
                 <span>Jobs Added</span>
             </div><!-- /.col-* -->
@@ -106,73 +108,56 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12 col-md-4">
-
         </div>
-
         <div class="col-sm-12 col-md-8">
             <div class="col-lg-12 col-sm-12">
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active" >
-                        <a href="<?php //echo site_url('User/login');                     ?>" aria-controls="personal" role="tab" data-toggle="tab">
-                            <strong>Top Companies</strong>
-
-                        </a>
-                    </li>
-                    <li role="presentation" >
-                        <a href="<?php //echo site_url('Employee/login');                     ?>" aria-controls="company" role="tab" data-toggle="tab">
-                            <strong>Top Consultancy</strong>
+                        <a href="<?php //echo site_url('User/login');  ?>" aria-controls="personal" role="tab" data-toggle="tab">
+                            <strong>Top Companies/Consultancy</strong>
                         </a>
                     </li>
                 </ul>
                 <div class="tab-content" style="margin-bottom: 10px">
                     <div role="tabpanel" class="tab-pane active col-sm-10 col-xs-10" id="personal">
                         <div class="candidate-boxes">
-                            <?php for ($i = 0; $i < 10; $i++) { ?>
-                                <div class="col-sm-3 col-md-2 col-xs-4">
-                                    <div class="candidate-boxes">
-                                        <div class="candidate-box-image">
-                                            <img src="http://static2.shine.com/media1/images/employerbranding/53dc42190ce94a1394f3f84b7057a252.png" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php }
-                            ?>
+                            <div class="footer-top-block">                                
+                                <?php
+                                if (!empty($companies)) {
+                                    foreach ($companies as $value) {
+                                        echo '<div class="col-lg-6" style="padding-bottom:5px"><a href="' . site_url('Job/search') . '?location=&skill=' . $value->title . '">' . $value->title . '</a></div>';
+                                    }
+                                }
+                                ?>                               
+                            </div>
                         </div>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="company">
                     </div>
                 </div>
             </div>
             <div class="col-lg-12 col-sm-12" style="margin-top: 20px">
-                <h2 class="page-header" >Browse Jobs</h2>
-                <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active" >
-                        <a href="<?php //echo site_url('User/login');                     ?>" aria-controls="industry" role="tab" data-toggle="tab">
-                            <strong>Industry</strong>
 
-                        </a>
-                    </li>
-                    <li role="presentation" >
-                        <a href="<?php //echo site_url('Employee/login');                     ?>" aria-controls="company" role="tab" data-toggle="tab">
-                            <strong>Functional Area</strong>
-                        </a>
-                    </li>
-                </ul>
-                <div class="tab-content">
-
-                    <div role="tabpanel" class="tab-pane active" id="industry">
-                        <div class="col-sm-12">
-                            <ul>
-                                <li>IT/Software Job</li>
-                                <li>BPO/Software Job</li>
-                                <li>IT/Software Job</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="company">
-
-                    </div>
-                </div>
+                <!--                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" >
+                                        <a href="<?php //echo site_url('Employee/login');                                         ?>" aria-controls="company" role="tab" data-toggle="tab">
+                                            <strong>Functional Area</strong>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                
+                                    <div role="tabpanel" class="tab-pane active" id="industry">
+                                        <div class="col-sm-12">
+                                            <ul>
+                                                <li>IT/Software Job</li>
+                                                <li>BPO/Software Job</li>
+                                                <li>IT/Software Job</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="company">
+                
+                                    </div>
+                                </div>-->
             </div>
         </div>
 
@@ -224,8 +209,7 @@
 <div class="container" style="background: #cccccc;padding-bottom: 10px">
     <div class="col-sm-12" style="border: 0;">
         <div class="row ">
-            <h2>Recruit smart, recruit right</h2>
-            <label class="label label-default pull-right" style="font-size: 14px" >Post a job for almost free</label>
+            <h2>Recruit smart, recruit right <small><span class="pull-right label label-default">Post a job for almost free</span> </small></h2>
         </div>
         <div class="row recruit">
             <div class="col-sm-4" style="text-align: center" >
@@ -279,3 +263,116 @@
         </div><!-- /.cta-text-inner -->
     </div><!-- /.container -->
 </div><!-- /.cta-text -->
+<script>
+    $(function () {
+<?php
+$skills = array();
+$sql = "SELECT DISTINCT(skill_name) as skill FROM skill_master where skill_name != ''  UNION ALL SELECT DISTINCT(role) as skill FROM user where role != '' UNION ALL SELECT DISTINCT(name) as skill FROM emp_profile where name != '' ";
+$query = $this->db->query($sql);
+$result = $query->result();
+?>
+        var availableTags =
+<?php
+if (!empty($result)) {
+    foreach ($result as $value) {
+        array_push($skills, $value->skill);
+    }
+    echo json_encode($skills);
+}
+?>
+        ;
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+        $("#skills")
+                // don't navigate away from the field on tab when selecting an item
+                .bind("keydown", function (event) {
+                    if (event.keyCode === $.ui.keyCode.TAB &&
+                            $(this).autocomplete("instance").menu.active) {
+                        event.preventDefault();
+                    }
+                })
+                .autocomplete({
+                    minLength: 0,
+                    source: function (request, response) {
+                        // delegate back to autocomplete, but extract the last term
+                        response($.ui.autocomplete.filter(
+                                availableTags, extractLast(request.term)));
+                    },
+                    focus: function () {
+                        // prevent value inserted on focus
+                        return false;
+                    },
+                    select: function (event, ui) {
+                        var terms = split(this.value);
+                        // remove the current input
+                        terms.pop();
+                        // add the selected item
+                        terms.push(ui.item.value);
+                        // add placeholder to get the comma-and-space at the end
+                        terms.push("");
+                        this.value = terms.join(", ");
+                        return false;
+                    }
+                });
+    });
+</script>
+<script>
+    $(function () {
+<?php
+$locations = array();
+?>
+        var availableTags2 =
+<?php
+if (!empty($dropdowns)) {
+    foreach ($dropdowns as $value) {
+        array_push($locations, $value->location);
+    }
+    echo json_encode($locations);
+}
+?>
+        ;
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+        $("#location")
+                // don't navigate away from the field on tab when selecting an item
+                .bind("keydown", function (event) {
+                    if (event.keyCode === $.ui.keyCode.TAB &&
+                            $(this).autocomplete("instance").menu.active) {
+                        event.preventDefault();
+                    }
+                })
+                .autocomplete({
+                    minLength: 0,
+                    source: function (request, response) {
+                        // delegate back to autocomplete, but extract the last term
+                        response($.ui.autocomplete.filter(
+                                availableTags2, extractLast(request.term)));
+                    },
+                    focus: function () {
+                        // prevent value inserted on focus
+                        return false;
+                    },
+                    select: function (event, ui) {
+                        var terms = split(this.value);
+                        // remove the current input
+                        terms.pop();
+                        // add the selected item
+                        terms.push(ui.item.value);
+                        // add placeholder to get the comma-and-space at the end
+                        terms.push("");
+                        this.value = terms.join(", ");
+                        return false;
+                    }
+                });
+    });
+</script>

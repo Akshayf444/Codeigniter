@@ -42,16 +42,16 @@
                         echo $user['name'];
                     }
                     ?>
-                
+
 
                 </h2>
 
-                <h3><?php echo isset($user['designation']) && $user['designation'] != '' ? $user['designation'] : ''; ?></h3>
+                <h3><?php echo isset($user['rol']) && $user['rol'] != '' ? $user['rol'] : ''; ?></h3>
 
                 <p class="resume-main-contacts">
                     <?php echo isset($user['address1']) && $user['address1'] != '' ? $user['address1'] : ''; ?><?php echo isset($user['city']) && $user['city'] != '' ? ',' . $user['city'] : ''; ?><?php echo isset($user['pincode']) && $user['pincode'] != '' ? ',' . $user['pincode'] : ''; ?>
                     <br>
-                    <b>Email: </b><a href="mailto:<?php echo isset($user['email']) && $user['email'] != '' ? $user['email'] : ''; ?>"><?php echo isset($user['email']) && $user['email'] != '' ? $user['email'] : ''; ?></a> <span class="resume-main-verified"><i class="fa fa-check"></i></span><b style="padding-left: 10px">Mobile :</b> <?php echo isset($user['mobile']) && $user['mobile'] != '' ? $user['mobile'] : ''; ?><span class="resume-main-verified"><i class="fa fa-check"></i></span>
+                    <b>Email: </b><a href="mailto:<?php echo isset($user['email']) && $user['email'] != '' ? $user['email'] : ''; ?>"><?php echo isset($user['email']) && $user['email'] != '' ? $user['email'] : ''; ?></a> <span class="resume-main-verified"><i class="fa fa-check"></i></span><br><b style="padding-left: 0px">Mobile :</b> <?php echo isset($user['mobile']) && $user['mobile'] != '' ? $user['mobile'] : ''; ?><span class="resume-main-verified"><i class="fa fa-check"></i></span>
                 </p><!-- /.resume-main-contact -->
 
 
@@ -70,7 +70,7 @@
                         <div class="positions-list-item">
                             <h3>
                                 <a href="<?php echo site_url('Job/viewDetails/' . $j->job_id) ?>"><?php echo $j->title ?></a>
-                                <small class="pull-right"><a href="<?php echo site_url('User/view_search2').'?id='.$j->job_id;?>" class="btn btn-warning btn-xs">Apply</a></small>
+                                <small class="pull-right"><a href="<?php echo site_url('User/view_search2') . '?id=' . $j->job_id; ?>" class="btn btn-warning btn-xs">Apply</a></small>
                             </h3>
                             <p style="margin: 0px"><?php echo $j->name ?></p>
                             <div class="row">
@@ -114,6 +114,7 @@
 <div id="ajaxcontainer">
 
 </div>
+
 <script>
     $(document).ready(function () {
         var isIE = navigator.userAgent.indexOf(' MSIE ') > -1;
@@ -122,22 +123,22 @@
         }
         $("#fullCalModal").modal();
     });
-    
-    
+
+
     function request(url) {
         var url = url;
-        $.ajax({
-            //Send request
-            type: 'GET',
-            data: {},
-            url: url,
-            success: function (data) {
-                $("#loader").hide();
-                $("#ajaxcontainer").html(data);
-                
-                $("#fullCalModal").modal();
-            }
-        });
+//        $.ajax({
+//            //Send request
+//            type: 'GET',
+//            data: {},
+//            url: url,
+//            success: function (data) {
+//                $("#loader").hide();
+//                $("#ajaxcontainer").html(data);
+//                
+//                $("#fullCalModal").modal();
+//            }
+//        });
     }
 </script>
 <style>

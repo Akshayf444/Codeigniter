@@ -12,10 +12,17 @@
         <link href="<?php echo asset_url(); ?>assets/libraries/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" type="text/css">
         <link href="<?php echo asset_url(); ?>assets/libraries/bootstrap-wysiwyg/bootstrap-wysiwyg.min.css" rel="stylesheet" type="text/css">
         <link href="<?php echo asset_url(); ?>assets/css/profession-black-green.css" rel="stylesheet" type="text/css" id="style-primary">
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/js/jquery.js"></script>        
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/js/jquery.js"></script> 
+        <script src="<?php echo asset_url(); ?>assets/js/jquery-ui.js" type="text/javascript"></script>
         <script type="text/javascript" src="<?php echo asset_url(); ?>js/bootstrap.min.js"></script>
         <link rel="shortcut icon" type="image/x-icon" href="<?php echo asset_url(); ?>assets/favicon.png">
         <title>Pharma Talent</title>
+        <style>
+            .document-title{
+                padding: 11px 0px;margin-bottom: 10px
+            }
+        </style>
     </head>
     <body class="hero-content-dark footer-dark">
         <div class="page-wrapper">
@@ -29,8 +36,7 @@
                                         <i class="profession profession-logo"></i>
                                         <span class="header-logo-text">Pharma Talent</span>
                                     </a>
-                                </div><!-- /.header-logo-->
-
+                                </div>
                                 <div class="header-slogan">
                                     <span class="header-slogan-slash">|</span>
                                     <span class="header-slogan-text"></span>
@@ -39,12 +45,12 @@
                             </div><!-- /.header-brand -->
 
                             <ul class="header-nav nav nav-pills collapse header-actions">
-                                <li><a href="#">Jobs <i class="fa fa-chevron-down"></i></a>
+<!--                                <li><a href="#">Jobs <i class="fa fa-chevron-down"></i></a>
                                     <ul class="sub-menu">
                                         <li><a href="companies.html">Company Listing</a></li>
                                         <li><a href="company-detail.html">Company Detail</a></li>
                                     </ul>
-                                </li>
+                                </li>-->
                                 <li><a href="#" data-toggle="modal" data-target="#myModal">Login</a></li>
                                 <li><a href="<?php echo site_url('User/linkedInRegister'); ?>">Sign Up</a></li>
                                 <li><a href="<?php echo site_url('Employee/register'); ?>" class="primary">Recruiters</a></li>
@@ -149,7 +155,7 @@
                             </div><!-- /.row -->
 
                         </div>
-                        
+
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-secondary">Login</button>
                             <a class="btn btn-social btn-linkedin" href="<?php echo site_url('Linkedin_signup/initiate'); ?>">
@@ -161,7 +167,7 @@
                     </div>
                 </div>
             </div>
-            <?php $this->load->view('footer'); ?>
+            <?php $this->load->view('footer', $view_data); ?>
 
         </div><!-- /.page-wrapper -->
 

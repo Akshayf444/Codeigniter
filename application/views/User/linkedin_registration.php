@@ -19,7 +19,7 @@
 </style>
 <?php echo validation_errors(); ?>
 <!-- container -->
-<div class="document-title">
+<div class="document-title" style="">
     <div class="container">
         <h1 class="center">Registration</h1>
     </div><!-- /.container -->
@@ -47,7 +47,7 @@
             <br/>
             <div class="form-group">
                 <label>Name</label>
-                <input type="text" placeholder="Enter Your Name" class="form-control" id="name" <?php echo isset($name) && $name != '' ? 'readonly="readonly"' : '' ?> name="name" value="<?php echo isset($name) ? $name : '' ?>">    
+                <input type="text" placeholder="Enter Your Full Name" class="form-control" id="name" <?php echo isset($name) && $name != '' ? 'readonly="readonly"' : '' ?> name="name" value="<?php echo isset($name) ? $name : '' ?>">    
             </div><!-- /.form-group -->
             <div class="form-group">
                 <label>Email</label>
@@ -61,7 +61,7 @@
                 <label>Password</label>
                 <input type="password" placeholder="Enter Your Password" class="form-control" id="password" required="required" name="password" value="">
             </div><!-- /.form-group -->
-            
+
 
             <button type="button" id="Save" class="btn btn-secondary btn-block">SIGN UP</button>
         </div>
@@ -72,7 +72,8 @@
 
             </div><!-- /.form-group -->
             <div class="form-group">
-                <button type="button" id="Verify" class="btn btn-secondary btn-block">Verify</button>
+                <button type="button" id="Verify" class="btn btn-secondary">Verify</button>
+                <button type="button" id="Resend" class="btn btn-warning">Resend</button>
             </div>
         </div>
         <div class="col-sm-6 col-sm-offset-3" id="section3" style="display: none">
@@ -89,6 +90,14 @@
 </div>
 <script>
     $("#Save").click(function () {
+        sendVerification();
+    });
+
+    $("#Resend").click(function () {
+        sendVerification();
+    });
+
+    function sendVerification() {
         $("#loader").show();
         var email = $("#mobile").val();
         var name = $("#name").val();
@@ -119,8 +128,8 @@
         } else {
             $("#messages").html('<p class="alert alert-danger">Please Enter Name, Emailid ,Password And Mobile No');
         }
+    }
 
-    });
     $("#Verify").click(function () {
         $("#loader").show();
         $("#messages").addClass('loaderimage')

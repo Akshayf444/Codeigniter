@@ -105,6 +105,8 @@ class User_model extends CI_Model {
     }
 
     public function Add_detail($id, $data) {
+        ///var_dump($data);
+       // exit();
         $entryExist = $this->Show_profile($id);
 
         if (!empty($entryExist)) {
@@ -117,7 +119,6 @@ class User_model extends CI_Model {
     }
 
     public function Show_profile($id) {
-
         $this->db->select('user.*,address_master.*');
         $this->db->from('user');
         $this->db->join('address_master', 'address_master.auth_id = user.auth_id', 'left');
@@ -236,7 +237,7 @@ class User_model extends CI_Model {
                     WHERE u.auth_id=$id
                     ORDER BY we.emp_id DESC  LIMIT 1";
         $query = $this->db->query($query);
-
+        //echo $this->db->last_query();
         return $query->row_array();
     }
 
@@ -705,6 +706,22 @@ class User_model extends CI_Model {
             '11' => 'Nov',
             '12' => 'Dec',
         );
+
+        foreach ($array as $key => $value) {
+            $Object = new stdClass();
+            $Object->month = $key;
+            $Object->monthname = $value;
+            array_push($Parameter, $Object);
+        }
+        return $Parameter;
+    }
+
+    function getDayObject() {
+        $Parameter = array();
+        $array = array();
+        for ($index = 1; $index < 32; $index++) {
+            $array[$index] = $index;
+        }
 
         foreach ($array as $key => $value) {
             $Object = new stdClass();

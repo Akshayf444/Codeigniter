@@ -69,7 +69,7 @@
                         <div class="container">
                             <div class="header-brand">
                                 <div class="header-logo">
-                                    <a href="<?php echo site_url('User/home'); ?>">
+                                    <a href="<?php echo site_url('Job/index'); ?>">
                                         <i class="profession profession-logo"></i>
                                         <span class="header-logo-text">Pharma Talent</span>
                                     </a>
@@ -92,25 +92,25 @@
                         </div><!-- /.container -->
                     </div><!-- /.header-top -->
 
-                    <div class="header-bottom">
+<!--                    <div class="header-bottom">
                         <div class="container">
                             <ul class="header-nav nav nav-pills collapse">
                                 <?php
                                 $CI = & get_instance();
-                                $this->load->view('Sidebar', $CI->loadSidebar());
+                               // $this->load->view('Sidebar', $CI->loadSidebar());
                                 ?>
 
                             </ul>
 
                         </div>
-                    </div> 
+                    </div> -->
                 </div><!-- /.header -->
             </div><!-- /.header-wrapper-->
             <div class="main-wrapper">
                 <div class="main">
                     <div class="container-fluid">
 
-                        <div class="row">
+<!--                        <div class="row">
                             <div class="col-sm-12">
                                 <div class="document-title">
                                     <div class="container">
@@ -130,175 +130,10 @@
                                 </div>
 
                             </div>
-                        </div>
+                        </div>-->
                         <div class="row">
-                            <div class="col-sm-2 col-xs-offset-1" style="padding-right: 0px" id="sidebar"  >
-                                <ul class="nav nav-pills nav-stacked" >
-                                    <?php
-                                    $CI = & get_instance();
-                                    $this->load->view('Sidebar2', $CI->loadSidebar());
-                                    ?>
-                                </ul>
-                                <div class="pull-right">
-<!--                                    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                                     sidebar 
-                                    <ins class="adsbygoogle"
-                                         style="display:inline-block;width:300px;height:600px"
-                                         data-ad-client="ca-pub-4494527869099710"
-                                         data-ad-slot="8845432514"></ins>
-                                    <script>
-                                        (adsbygoogle = window.adsbygoogle || []).push({});
-                                    </script>-->
-                                </div>
-                            </div>
-                            <div class="col-sm-6" style="padding-left: 0px">
+                            <div class="col-sm-12" style="padding-left: 0px">
                                 <?php $this->load->view($content, $view_data); ?>
-                            </div>
-                            <div class="col-sm-2 " style="border: 1px solid #cccccc" >
-                                <script src="https://code.highcharts.com/highcharts.js"></script>
-                                <script src="https://code.highcharts.com/highcharts-more.js"></script>
-                                <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
-
-                                <div id="dial" class="pull-right panel-danger" style="height: 200px;width: 200px;"></div>
-                                <script>
-                                    $(function () {
-
-                                        // Uncomment to style it like Apple Watch
-                                        /*
-                                         if (!Highcharts.theme) {
-                                         Highcharts.setOptions({
-                                         chart: {
-                                         backgroundColor: 'black'
-                                         },
-                                         colors: ['#F62366', '#9DFF02', '#0CCDD6'],
-                                         title: {
-                                         style: {
-                                         color: 'silver'
-                                         }
-                                         },
-                                         tooltip: {
-                                         style: {
-                                         color: 'silver'
-                                         }
-                                         }
-                                         });
-                                         }
-                                         // */
-
-                                        Highcharts.chart('dial', {
-                                            chart: {
-                                                type: 'solidgauge',
-                                                marginTop: 20
-                                            },
-                                            title: {
-                                                text: '<h2>Profile Completed</h2>',
-                                                style: {
-                                                    fontSize: '12px'
-                                                }
-                                            },
-                                            credits: {
-                                                enabled: false
-                                            },
-                                            tooltip: {
-                                                borderWidth: 0,
-                                                backgroundColor: 'none',
-                                                shadow: false,
-                                                style: {
-                                                    fontSize: '10px'
-                                                },
-                                                pointFormat: '{series.name}<br><span style="font-size:1.5em; color: {point.color}; font-weight: bold">{point.y}%</span>',
-                                                positioner: function (labelWidth, labelHeight) {
-                                                    return {
-                                                        x: 100 - labelWidth / 2,
-                                                        y: 60
-                                                    };
-                                                }
-                                            },
-                                            pane: {
-                                                startAngle: 0,
-                                                endAngle: 360,
-                                                background: [{// Track for Move
-                                                        outerRadius: '100%',
-                                                        innerRadius: '88%',
-                                                        backgroundColor: Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0.3).get(),
-                                                        borderWidth: 0
-                                                    }]
-                                            },
-                                            yAxis: {
-                                                min: 0,
-                                                max: 100,
-                                                lineWidth: 0,
-                                                tickPositions: []
-                                            },
-                                            plotOptions: {
-                                                solidgauge: {
-                                                    borderWidth: '12px',
-                                                    dataLabels: {
-                                                        enabled: true
-                                                    },
-                                                    linecap: 'round',
-                                                    stickyTracking: false
-                                                }
-                                            },
-                                            series: [{
-                                                    name: 'Completed',
-                                                    borderColor: Highcharts.getOptions().colors[0],
-                                                    data: [{
-                                                            color: Highcharts.getOptions().colors[0],
-                                                            radius: '100%',
-                                                            innerRadius: '100%',
-                                                            y: 80
-                                                        }]
-                                                }]
-                                        },
-                                        /**
-                                         * In the chart load callback, add icons on top of the circular shapes
-                                         */
-                                        function callback() {
-
-                                            // Move icon
-                                            this.renderer.path(['M', -8, 0, 'L', 8, 0, 'M', 0, -8, 'L', 8, 0, 0, 8])
-                                                    .attr({
-                                                        'stroke': '#303030',
-                                                        'stroke-linecap': 'round',
-                                                        'stroke-linejoin': 'round',
-                                                        'stroke-width': 2,
-                                                        'zIndex': 10
-                                                    })
-                                                    .translate(190, 26)
-                                                    .add(this.series[2].group);
-
-                                            // Exercise icon
-                                            this.renderer.path(['M', -8, 0, 'L', 8, 0, 'M', 0, -8, 'L', 8, 0, 0, 8, 'M', 8, -8, 'L', 16, 0, 8, 8])
-                                                    .attr({
-                                                        'stroke': '#303030',
-                                                        'stroke-linecap': 'round',
-                                                        'stroke-linejoin': 'round',
-                                                        'stroke-width': 2,
-                                                        'zIndex': 10
-                                                    })
-                                                    .translate(190, 61)
-                                                    .add(this.series[2].group);
-
-                                            // Stand icon
-                                            this.renderer.path(['M', 0, 8, 'L', 0, -8, 'M', -8, 0, 'L', 0, -8, 8, 0])
-                                                    .attr({
-                                                        'stroke': '#303030',
-                                                        'stroke-linecap': 'round',
-                                                        'stroke-linejoin': 'round',
-                                                        'stroke-width': 2,
-                                                        'zIndex': 10
-                                                    })
-                                                    .translate(190, 96)
-                                                    .add(this.series[2].group);
-                                        });
-
-
-                                    });
-                                </script>
-                                <div ><p style="border-top: 1px solid #cccccc">Profiles that are more than 90% complete are most preferred by recruiters.</p>
-                                </div>
-
                             </div>
                         </div>
                     </div>
@@ -435,7 +270,7 @@
              data-ad-client="ca-pub-4494527869099710"
              data-ad-slot="2079045313"></ins>
         <script>
-                                    (adsbygoogle = window.adsbygoogle || []).push({});
+            (adsbygoogle = window.adsbygoogle || []).push({});
         </script>
 
     </body>

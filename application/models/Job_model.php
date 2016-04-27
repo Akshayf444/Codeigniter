@@ -77,8 +77,13 @@ class Job_model extends CI_Model {
         return $query->result();
     }
 
-    public function search($conditions) {
-        $query = "SELECT * ,(lm.`location`) AS loc,(2)as applied_status,(j.job_id) AS job_id,(j.auth_id) AS auth_id,j.created_at as posted_at FROM jobs j
+    public function search($conditions, $limit = 0, $offset = 0, $location_condition = array()) {
+        $query = "SELECT j.* ,ep.name,(lm.`location`) AS loc,(2)as applied_status,(j.job_id) AS job_id,(j.auth_id) AS auth_id,j.created_at as posted_at FROM ( SELECT * FROM jobs ";
+        if (!empty($location_condition)) {
+            $query .= " WHERE " . join(" ", $location_condition);
+        }
+
+        $query .= " ) AS j
                 LEFT JOIN emp_profile ep
                 ON j.auth_id=ep.`auth_id`
                 LEFT JOIN `location_master` lm
@@ -86,13 +91,37 @@ class Job_model extends CI_Model {
                 LEFT JOIN `functional_area` fa
                 ON fa.`fun_id`=j.`functional_area`";
         if (!empty($conditions)) {
-            $query .= ' WHERE ' . join(' OR ', $conditions);
+            $query .= ' WHERE ' . join(' ', $conditions);
+        }
+        //var_dump($query);
+
+        $query .= " LIMIT {$limit} OFFSET {$offset} ";
+        //echo $query;
+        $query = $this->db->query($query);
+
+        return $query->result();
+    }
+
+    public function countSearch($conditions, $location_condition) {
+        $query = "SELECT COUNT(*) jobsearch FROM ( SELECT * FROM jobs ";
+        if (!empty($location_condition)) {
+            $query .= " WHERE " . join(" ", $location_condition);
+        }
+        $query .= ") AS j
+                LEFT JOIN emp_profile ep
+                ON j.auth_id=ep.`auth_id`
+                LEFT JOIN `location_master` lm
+                ON lm.loc_id=j.location
+                LEFT JOIN `functional_area` fa
+                ON fa.`fun_id`=j.`functional_area`";
+        if (!empty($conditions)) {
+            $query .= ' WHERE ' . join(' ', $conditions);
         }
         //var_dump($query);
         //echo $query;
         $query = $this->db->query($query);
 
-        return $query->result();
+        return $query->row();
     }
 
     public function search3($conditions, $user_id = 0) {
@@ -224,7 +253,24 @@ class Job_model extends CI_Model {
                     WHERE pv.jobseeker_id=$id";
 
         $query = $this->db->query($data);
+        return $query->result();
+    }
 
+    public function trendingJob() {
+        $sql = "SELECT DISTINCT(title) as title FROM jobs WHERE title !='' ORDER BY job_id DESC LIMIT 10 ";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+
+    public function jobsbyrole() {
+        $sql = "SELECT DISTINCT(title) as title FROM jobs ORDER BY job_id DESC LIMIT 10 ";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+
+    public function companies() {
+        $sql = "SELECT DISTINCT(name) as title FROM emp_profile WHERE name != '' ORDER BY emp_id DESC LIMIT 50 ";
+        $query = $this->db->query($sql);
         return $query->result();
     }
 

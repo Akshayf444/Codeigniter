@@ -73,6 +73,11 @@ class Master_model extends CI_Model {
         return $query->result();
     }
 
+    function listSkills() {
+        $query = $this->db->get('skill_master');
+        return $query->result();
+    }
+
     function listLocation2() {
 
         $query = "SELECT DISTINCT location FROM `location_master`
@@ -111,9 +116,9 @@ class Master_model extends CI_Model {
         if (!empty($result)) {
             foreach ($result as $loc) {
                 if ($loc_id == $loc->loc_id) {
-                    $location .= '<option value="' . $loc->loc_id . '" selected>' . $loc->location . '</option>';
+                    $location .= '<option value="' . $loc->location . '" selected>' . $loc->location . '</option>';
                 } else {
-                    $location .= '<option value="' . $loc->loc_id . '" >' . $loc->location . '</option>';
+                    $location .= '<option value="' . $loc->location . '" >' . $loc->location . '</option>';
                 }
             }
         }
@@ -214,7 +219,7 @@ class Master_model extends CI_Model {
         $query = $this->db->query($sql);
         return $query->result();
     }
-    
+
     function getlanguageMaster($conditions = array()) {
         $sql = "SELECT * FROM language_master ";
         if (!empty($conditions)) {

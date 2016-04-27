@@ -87,24 +87,42 @@
                                         echo '</div>';
                                         echo '</div>';
                                     }
+                                    echo '<div class="row">';
+                                    echo '<div class="col-sm-6">';
+                                    echo '<select name="languages[]"  class="form-control" >';
+                                    echo '<option value="">Select Language</option>';
+                                    $languageDropdown = $this->Master_model->generateDropdown($language_master, 'lang', 'lang');
+                                    echo $languageDropdown;
+                                    echo '</select>';
+                                    echo '</div>';
+                                    echo '<div class="col-sm-6">';
+                                    echo '<select name="rate[]" class="form-control" >';
+                                    echo '<option value="">Select Proficience</option>';
+                                    $profdropdown = $this->Master_model->generateDropdown($prof, 'id', 'Parameter');
+                                    echo $profdropdown;
+                                    echo '</select>';
+                                    echo '</div>';
+                                    echo '</div>';
+                                } else {
+                                    for ($index = 0; $index < 3; $index++) {
+                                        echo '<div class="row">';
+                                        echo '<div class="col-sm-6">';
+                                        echo '<select name="languages[]"  class="form-control" >';
+                                        echo '<option value="">Select Language</option>';
+                                        $languageDropdown = $this->Master_model->generateDropdown($language_master, 'lang', 'lang');
+                                        echo $languageDropdown;
+                                        echo '</select>';
+                                        echo '</div>';
+                                        echo '<div class="col-sm-6">';
+                                        echo '<select name="rate[]" class="form-control" >';
+                                        echo '<option value="">Select Proficience</option>';
+                                        $profdropdown = $this->Master_model->generateDropdown($prof, 'id', 'Parameter');
+                                        echo $profdropdown;
+                                        echo '</select>';
+                                        echo '</div>';
+                                        echo '</div>';
+                                    }
                                 }
-
-                                echo '<div class="row">';
-                                echo '<div class="col-sm-6">';
-                                echo '<select name="languages[]"  class="form-control" >';
-                                echo '<option value="">Select Language</option>';
-                                $languageDropdown = $this->Master_model->generateDropdown($language_master, 'lang', 'lang');
-                                echo $languageDropdown;
-                                echo '</select>';
-                                echo '</div>';
-                                echo '<div class="col-sm-6">';
-                                echo '<select name="rate[]" class="form-control" >';
-                                echo '<option value="">Select Proficience</option>';
-                                $profdropdown = $this->Master_model->generateDropdown($prof, 'id', 'Parameter');
-                                echo $profdropdown;
-                                echo '</select>';
-                                echo '</div>';
-                                echo '</div>';
                                 ?>
 
                             </div> 
@@ -121,7 +139,6 @@
     </div>
 </div>
 <script type="text/javascript">
-
     var config = {
         '.chosen-select': {},
         '.chosen-select-deselect': {allow_single_deselect: true},
@@ -134,8 +151,8 @@
     }
 
     $("#<?php echo isset($_GET['section']) ? $_GET['section'] : 'section1'; ?>").show();
-    
-    $("#addmore").click(function(){
+
+    $("#addmore").click(function () {
         $("#").insertBefore("#addmore");
     });
 </script>
