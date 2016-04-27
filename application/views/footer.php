@@ -40,7 +40,7 @@
 
                             <ul>
                                 <?php
-                                $sql = "SELECT DISTINCT(skill_name) as skill FROM skill_master where skill_name != '' LIMIT 10";
+                                $sql = "SELECT DISTINCT(sm.skill_name)  as skill,count(j.job_id) as jobcount FROM skill_master sm INNER JOIN jobs j ON  j.keyword LIKE CONCAT('%', sm.skill_name, '%')   where sm.skill_name != '' GROUP BY sm.skill_name ORDER BY jobcount DESC LIMIT 10";
                                 $query = $this->db->query($sql);
                                 $trendingJob = $query->result();
                                 if (!empty($trendingJob)) {

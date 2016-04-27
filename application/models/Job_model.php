@@ -78,7 +78,9 @@ class Job_model extends CI_Model {
     }
 
     public function search($conditions, $limit = 0, $offset = 0, $location_condition = array()) {
-        $query = "SELECT j.* ,ep.name,(lm.`location`) AS loc,(2)as applied_status,(j.job_id) AS job_id,(j.auth_id) AS auth_id,j.created_at as posted_at FROM ( SELECT * FROM jobs ";
+        $auth_id = $this->session->userdata('user_id');
+        $auth_id = $auth_id > 0 ? $auth_id : 0;
+        $query = "SELECT j.* ,ep.name,(lm.`location`) AS loc,(CASE WHEN aj.id IS NOT NULL THEN 1 ELSE 0 END) as applied_status  ,(j.job_id) AS job_id,(j.auth_id) AS auth_id,j.created_at as posted_at FROM ( SELECT * FROM jobs ";
         if (!empty($location_condition)) {
             $query .= " WHERE " . join(" ", $location_condition);
         }
@@ -89,7 +91,9 @@ class Job_model extends CI_Model {
                 LEFT JOIN `location_master` lm
                 ON lm.loc_id=j.location
                 LEFT JOIN `functional_area` fa
-                ON fa.`fun_id`=j.`functional_area`";
+                ON fa.`fun_id`=j.`functional_area` 
+                LEFT JOIN apply_job aj 
+                ON j.job_id = aj.job_id AND aj.auth_id = {$auth_id}  ";
         if (!empty($conditions)) {
             $query .= ' WHERE ' . join(' ', $conditions);
         }
@@ -272,6 +276,13 @@ class Job_model extends CI_Model {
         $sql = "SELECT DISTINCT(name) as title FROM emp_profile WHERE name != '' ORDER BY emp_id DESC LIMIT 50 ";
         $query = $this->db->query($sql);
         return $query->result();
+    }
+
+    function getSkills() {
+        $sql = "SELECT DISTINCT(skill_name) as skill FROM skill_master where skill_name != ''  UNION ALL SELECT DISTINCT(role) as skill FROM user where role != '' UNION ALL SELECT DISTINCT(name) as skill FROM emp_profile where name != '' ";
+        $query = $this->db->query($sql);
+        $result = $query->result();
+        return $result;
     }
 
 }

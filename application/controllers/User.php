@@ -412,6 +412,8 @@ class User extends CI_Controller {
     }
 
     public function home() {
+
+       
         $conditions = array();
         $this->load->model('Master_model');
         if ($this->is_logged_in() == TRUE) {
@@ -705,8 +707,8 @@ class User extends CI_Controller {
                 $this->User_model->apply($id, $user_id);
             }
         } else {
-            
-            $this->session->set_userdata("redirect_url",  site_url('Job/apply'));
+
+            $this->session->set_userdata("redirect_url", site_url('Job/apply'));
             redirect('User/login', 'refresh');
         }
     }

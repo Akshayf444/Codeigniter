@@ -190,28 +190,34 @@ class Job extends CI_Controller {
         $data['is_logged_in'] = $is_logged_in;
 
         $data = array('title' => 'Job Search', 'content' => 'Job/viewsearch2', 'view_data' => $data);
-        $this->load->view('template2', $data);
+        $this->load->view('frontTemplate', $data);
     }
 
     public function apply($id) {
-        if ($this->session->userdata("user_id")) {
+        if (isset($_GET['redirect_url']) && $_GET['redirect_url'] != '') {
+            $redirect_url = $_GET['redirect_url'] . '&location=' . $_GET['location'];
+        } else {
+            $redirect_url = site_url('User/login');
+        }
+        if ($this->session->userdata("user_id") > 0) {
             $user_id = $this->session->userdata("user_id");
+            $this->session->unset_userdata("redirect_url");
             $data['job'] = $this->Job_model->apply_id($id, $user_id);
             if (!empty($data['job'])) {
-                redirect('User/SearchJob');
+                ///echo $redirect_url;
+                redirect($redirect_url);
+                header("Location : " . $redirect_url);
             } else {
                 $this->Job_model->apply($id, $user_id);
-                //redirect('Job/Search', 'refresh');
-                $this->load->view('User/success');
+                //echo $redirect_url;
+                redirect($redirect_url);
+                header("Location : " . $redirect_url);
             }
         } else {
-            if (isset($_GET['redirect_url']) && $_GET['redirect_url'] != '') {
-                $redirect_url = $_GET['redirect_url'];
-                $this->session->set_userdata("redirect_url", $redirect_url);
-            }
-
+            $this->session->set_userdata("redirect_url", $redirect_url);
             redirect('User/login', 'refresh');
         }
+        // print_r($this->session->all_userdata());
     }
 
     public function filter() {

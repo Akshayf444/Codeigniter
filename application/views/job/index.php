@@ -1,14 +1,18 @@
 <style>
-    .btn{
+    .btn-warning {
+        padding: 5px;
+        border-radius: 0px;
+    }
+    .btn-xs{
         padding: 5px;
         border-radius: 0px;
     }
 </style>
-<div class="document-title">
-    <div class="container">
-        <h1 class="center">Open Positions</h1>
-    </div><!-- /.container -->
-</div><!-- /.document-title -->
+
+<div class="container">
+    <h1 class="center">Open Positions</h1>
+</div><!-- /.container -->
+
 <div class="container">    
     <h2 class="page-header"><strong><?php echo isset($total_count) ? $total_count : 0; ?></strong> jobs matches your search criteria</h2>
     <div class="row">
@@ -104,7 +108,7 @@
                         <div class="positions-list-item">
                             <h2 style="font-weight: 600;font-size: 16px">
                                 <a href="<?php echo site_url('Job/viewDetails/' . $j->job_id) ?>"><?php echo $j->title ?></a>
-                                <small class="pull-right"><a href="<?php echo site_url('User/view_search2') . '?id=' . $j->job_id . '&redirect_url=' . current_url() . '?skill=' . $_GET['skill'] . '&location=' . $_GET['location']; ?><?php //echo $j->link;  ?>" class="btn btn-warning">Apply</a></small>
+                                <small class="pull-right"><a href="<?php echo site_url('Job/apply/' . $j->job_id) . '?redirect_url=' . current_url() . '?skill=' . $_GET['skill'] . '&location=' . $_GET['location']; ?><?php //echo $j->link;     ?>" class="btn btn-warning"><?php echo (int) $j->applied_status == 1 ? 'Applied' : 'Apply' ?></a></small>
                             </h2>
                             <p style="color: #777;font-size: 14px"><?php echo $j->name ?></p>
                             <div class="row">

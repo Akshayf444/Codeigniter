@@ -76,7 +76,7 @@
                         <input type="text" class="form-control inputlg" id="location" name="location" placeholder="Type Location">
                     </div>
                     <div class="form-group col-sm-2 searchbox" >
-                        <button type="submit" class="btn btn-block btn-secondary inputlg" style="font-size: 22px">Search</button>
+                        <button type="submit" class="btn btn-block btn-success inputlg" style="font-size: 22px">Search</button>
                     </div><!-- /.form-group -->
                 </div><!-- /.row -->
                 </form>
@@ -107,25 +107,27 @@
 </div><!-- /.stats -->
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-12 col-md-4">
+        <div class="col-sm-12 col-md-3">
+            <img src="https://tpc.googlesyndication.com/simgad/10807557515340730654">
+            <img src="https://tpc.googlesyndication.com/simgad/6315498124850830248">
         </div>
-        <div class="col-sm-12 col-md-8">
+        <div class="col-sm-12 col-md-9">
             <div class="col-lg-12 col-sm-12">
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active" >
-                        <a href="<?php //echo site_url('User/login');  ?>" aria-controls="personal" role="tab" data-toggle="tab">
+                        <a href="<?php //echo site_url('User/login');                   ?>" aria-controls="personal" role="tab" data-toggle="tab">
                             <strong>Top Companies/Consultancy</strong>
                         </a>
                     </li>
                 </ul>
                 <div class="tab-content" style="margin-bottom: 10px">
-                    <div role="tabpanel" class="tab-pane active col-sm-10 col-xs-10" id="personal">
+                    <div role="tabpanel" class="tab-pane active col-sm-12 col-xs-12" id="personal">
                         <div class="candidate-boxes">
                             <div class="footer-top-block">                                
                                 <?php
                                 if (!empty($companies)) {
                                     foreach ($companies as $value) {
-                                        echo '<div class="col-lg-6" style="padding-bottom:5px"><a href="' . site_url('Job/search') . '?location=&skill=' . $value->title . '">' . $value->title . '</a></div>';
+                                        echo '<div class="col-sm-4" style="padding-bottom:5px"><a href="' . site_url('Job/search') . '?location=&skill=' . $value->title . '">' . $value->title . '</a></div>';
                                     }
                                 }
                                 ?>                               
@@ -138,7 +140,7 @@
 
                 <!--                <ul class="nav nav-tabs" role="tablist">
                                     <li role="presentation" >
-                                        <a href="<?php //echo site_url('Employee/login');                                         ?>" aria-controls="company" role="tab" data-toggle="tab">
+                                        <a href="<?php //echo site_url('Employee/login');                                                          ?>" aria-controls="company" role="tab" data-toggle="tab">
                                             <strong>Functional Area</strong>
                                         </a>
                                     </li>
@@ -163,7 +165,159 @@
 
     </div>
 </div>
+<style>
+    .scrolling-bg {
+        position: relative;
+    }
+    .scrolling-bg .scroll-container {
+        margin: 0 auto;
+    }
+    .gradient {
+        padding: 43px 0;
+        background: #fff url(<?php echo asset_url() ?>assets/img/gradient-bg.jpg) top no-repeat;
+        background-size: 100%;
+        float: left;
+        width: 100%;
+    }
+
+    .appinfo {
+        width: 100%;
+        margin: 0 auto;
+    }
+    .js-app {
+        width: 35%;
+        float: left;
+        padding-left: 8%;
+        padding-right: 1%;
+        max-width: 100%;
+        height: auto;
+    }
+    .main .gradient .l1 {
+        font-size: 45px;
+        line-height: 1.2em;
+        letter-spacing: -0.06em;
+        margin-bottom: 30px;
+        margin-top: 0;
+    }
+    .Fw-800 {
+        font-weight: 800;
+    }
+
+    .color-lightgrey {
+        color: #6b6a6f;
+    }
+    .Fw-lr {
+        font-weight: lighter;
+    }
+
+    .Fs-18 {
+        font-size: 112.5%;
+    }
+    .appintro {
+        width: 97%;
+    }
+    .inline-blk {
+        display: inline-block;
+    }
+    .rec-app {
+        width: 35%;
+        float: left;
+        padding-left: 4%;
+        border-left: 1px solid #999;
+        max-width: 100%;
+        height: auto;
+    }
+
+    .main .gradient .l1 {
+        font-size: 45px;
+        line-height: 1.2em;
+        letter-spacing: -0.06em;
+        margin-bottom: 30px;
+        margin-top: 0;
+    }
+    .recruiter-app-screen {
+        position: absolute;
+        background: url("http://cdn.hiree.com/resources/img/android_app.png") no-repeat;
+        width: 27%;
+        height: 150%;
+        top: -40px;
+        right: 0;
+        background-size: 100%;
+        z-index: 5;
+    }
+    @media only screen and (max-width: 870px) and (min-width: 320px)
+    .js-app {
+        padding-left: 8%;
+        max-width: 75%;
+        width: 71%;
+    }
+    @media only screen and (max-width: 870px) and (min-width: 320px)
+    .rec-app {
+        width: auto;
+        border-left: 0;
+        border-top: 1px solid #999;
+        margin-top: 9%;
+        padding-top: 5%;
+    }
+    @media only screen and (max-width: 768px) and (min-width: 320px)
+    .main .scrolling-bg .l1, .main .fixed-bg .l1 {
+        font-size: 192.5%;
+    }
+    @media only screen and (max-width: 768px) and (min-width: 320px)
+    .Fs-18 {
+        font-size: 77.75%;
+    }
+    @media only screen and (max-width: 768px) and (min-width: 320px)
+    .appinfo, .appintro {
+        width: 100%;
+        display: inline-block;
+        position: relative;
+    }
+    @media only screen and (max-width: 768px) and (min-width: 320px)
+    .appinfo, .appintro {
+        width: 100%;
+        display: inline-block;
+        position: relative;
+    }
+</style>
 <div class="container-fluid">
+    <div class="scrolling-bg">
+        <div class="scroll-container">
+            <section id="section_appinfo">
+                <div class="gradient clearfix">
+                    <div class="container appinfo">
+
+                        <div class="js-app" style="padding-left: 4%">
+                            <h2 class="l1"><span class="Fw-800">Jobseeker</span> <span class="Fw-lr color-lightgrey">App</span></h2>
+                            <div class="appintro Fs-18">
+                                <p>Hiree's jobseeker app provides you with all necessary tools to find that better offer, super fast!</p>
+                                <br>
+                                <div class="play-store">
+                                    <a target="_blank" href="#"><img class="appstore inline-blk" src="https://cdn.hiree.com/resources/img/en_generic_rgb_wo_60.png" style="max-width: 100%; height: auto;" alt="Download from Google Play Store"></a>
+                                </div>
+                            </div>
+                        </div> 
+
+
+                        <div class="rec-app">
+                            <div class="l1"><span class="Fw-800">Recruiter</span> <span class="Fw-lr color-lightgrey">App</span></div>
+                            <div class="appintro Fs-18">
+                                <p>Hiree's recruiter app is dedicated specifically to your very busy schedule and connect with candidates .... all on the go!</p>
+                                <br>
+                                <div class="play-store">
+                                    <a target="_blank" href="#"><img class="appstore inline-blk" src="https://cdn.hiree.com/resources/img/en_generic_rgb_wo_60.png" style="max-width: 100%; height: auto;" alt="Download from Google Play Store"></a>
+                                </div>
+                            </div>
+                            <div class="recruiter-app-screen"><img src="<?php echo asset_url(); ?>assets/img/android_app.png"></div>
+                        </div>	
+
+                    </div>
+                </div>
+            </section>
+        </div> 
+    </div>
+</div>
+<!--<div class="container-fluid">
     <div class="block background-secondary fullwidth candidate-title" style="padding-top: 10px;margin-bottom: 30px">
         <div class="page-title">
             <div class="row">
@@ -176,10 +330,10 @@
             </div> 
         </div> 
     </div> 
-</div>
+</div>-->
 <div class="clearfix"></div>
 <div class="container">
-    <div class="panels-highlighted">
+    <div class="panels-highlighted" style="margin-bottom: 28px">
         <div class="row">
             <div class="panel-highlighted-wrapper col-sm-6">
                 <div class="panel-highlighted-inner panel-highlighted-secondary">

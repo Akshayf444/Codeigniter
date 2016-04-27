@@ -14,28 +14,26 @@ class Employee extends CI_Controller {
     }
 
     public function register() {
-
         $this->form_validation->set_rules('email', 'email', 'required');
         $this->form_validation->set_rules('password', 'password', 'required');
         $this->form_validation->set_rules('mobile', 'mobile', 'required');
-        
-       
-            if ($this->form_validation->run() === FALSE) {
-                //$this->load->view('Employee/registration');
-            } else {
-                $check1 = $this->User_model->find_by_email($this->input->post('email'),$this->input->post('mobile'));
-                if (empty($check1)) {
+
+        if ($this->form_validation->run() === FALSE) {
+            //$this->load->view('Employee/registration');
+        } else {
+            $check1 = $this->User_model->find_by_email($this->input->post('email'), $this->input->post('mobile'));
+            if (empty($check1)) {
                 $this->employee_model->create();
                 //redirect('Employee/login', 'refresh');
                 $check['error'] = "Registered Successfully";
-                } else {
-            $check['Error'] = 'Already Registered';
-        }
+            } else {
+                $check['Error'] = 'Already Registered';
             }
-        
+        }
+
         $check['error1'] = "";
         $data = array('title' => 'Login', 'content' => 'employee/registration', 'view_data' => $check);
-        $this->load->view('frontTemplate', $data);
+        $this->load->view('frontTemplate4', $data);
     }
 
     public function login() {
@@ -160,18 +158,15 @@ class Employee extends CI_Controller {
 //            var_dump($view);
 //          $view['string'] = read_file('../../Resume/'.$view['user4']);
             $user_id = $this->session->userdata("user_id");
-            $data_new=array(
-                'visitor_id'=>$user_id,
-                'jobseeker_id'=>$id,
-                'visited_at'=>date('Y-m-d H:i:s'),
+            $data_new = array(
+                'visitor_id' => $user_id,
+                'jobseeker_id' => $id,
+                'visited_at' => date('Y-m-d H:i:s'),
             );
-            $check=  $this->employee_model->vefication_check($id,$user_id);
-            if(empty($check))
-            {
-               $insert=  $this->employee_model->email_verification($data_new); 
-            }
-            else
-            {
+            $check = $this->employee_model->vefication_check($id, $user_id);
+            if (empty($check)) {
+                $insert = $this->employee_model->email_verification($data_new);
+            } else {
                 
             }
             $data = array('title' => 'User View', 'content' => 'employee/user_view', 'view_data' => $view);

@@ -109,24 +109,140 @@
             <div class="main-wrapper">
                 <div class="main">
                     <div class="container-fluid">
+        <script>
+            $(function () {
+<?php
+$skills = array();
+$sql = "SELECT DISTINCT(skill_name) as skill FROM skill_master where skill_name != ''  UNION ALL SELECT DISTINCT(role) as skill FROM user where role != '' UNION ALL SELECT DISTINCT(name) as skill FROM emp_profile where name != '' ";
+$query = $this->db->query($sql);
+$result = $query->result();
+?>
+                var availableTags =
+<?php
+if (!empty($result)) {
+    foreach ($result as $value) {
+        array_push($skills, $value->skill);
+    }
+    echo json_encode($skills);
+}
+?>
+                ;
+                function split(val) {
+                    return val.split(/,\s*/);
+                }
+                function extractLast(term) {
+                    return split(term).pop();
+                }
 
+                $("#skills")
+                        // don't navigate away from the field on tab when selecting an item
+                        .bind("keydown", function (event) {
+                            if (event.keyCode === $.ui.keyCode.TAB &&
+                                    $(this).autocomplete("instance").menu.active) {
+                                event.preventDefault();
+                            }
+                        })
+                        .autocomplete({
+                            minLength: 0,
+                            source: function (request, response) {
+                                // delegate back to autocomplete, but extract the last term
+                                response($.ui.autocomplete.filter(
+                                        availableTags, extractLast(request.term)));
+                            },
+                            focus: function () {
+                                // prevent value inserted on focus
+                                return false;
+                            },
+                            select: function (event, ui) {
+                                var terms = split(this.value);
+                                // remove the current input
+                                terms.pop();
+                                // add the selected item
+                                terms.push(ui.item.value);
+                                // add placeholder to get the comma-and-space at the end
+                                terms.push("");
+                                this.value = terms.join(", ");
+                                return false;
+                            }
+                        });
+            });
+        </script>
+        <script>
+            $(function () {
+<?php
+$locations = array();
+?>
+                var availableTags2 =
+<?php
+$this->load->model('Master_model');
+$dropdowns = $this->Master_model->listLocation();
+if (!empty($dropdowns)) {
+    foreach ($dropdowns as $value) {
+        array_push($locations, $value->location);
+    }
+    echo json_encode($locations);
+}
+?>
+                ;
+                function split(val) {
+                    return val.split(/,\s*/);
+                }
+                function extractLast(term) {
+                    return split(term).pop();
+                }
+
+                $("#location")
+                        // don't navigate away from the field on tab when selecting an item
+                        .bind("keydown", function (event) {
+                            if (event.keyCode === $.ui.keyCode.TAB &&
+                                    $(this).autocomplete("instance").menu.active) {
+                                event.preventDefault();
+                            }
+                        })
+                        .autocomplete({
+                            minLength: 0,
+                            source: function (request, response) {
+                                // delegate back to autocomplete, but extract the last term
+                                response($.ui.autocomplete.filter(
+                                        availableTags2, extractLast(request.term)));
+                            },
+                            focus: function () {
+                                // prevent value inserted on focus
+                                return false;
+                            },
+                            select: function (event, ui) {
+                                var terms = split(this.value);
+                                // remove the current input
+                                terms.pop();
+                                // add the selected item
+                                terms.push(ui.item.value);
+                                // add placeholder to get the comma-and-space at the end
+                                terms.push("");
+                                this.value = terms.join(", ");
+                                return false;
+                            }
+                        });
+            });
+        </script>
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="document-title">
+                                    <?php
+                                    $attribute = array('method' => 'get');
+                                    echo form_open('Job/Search', $attribute);
+                                    ?>
                                     <div class="container">
                                         <div class="col-sm-4" >
-                                            <input type="text" class="form-control" placeholder="Job Skill">
+                                            <input type="text" required="required" class="form-control" id="skills" name="skill" placeholder="Job Skill">
                                         </div>
                                         <div class="col-sm-4" >
-                                            <input type="text" class="form-control" placeholder="Location">
+                                            <input type="text" class="form-control" id="location" name="location" placeholder="Location">
                                         </div>
-                                        <div class="col-sm-2" >
-                                            <input type="text" class="form-control" placeholder="Experience">
-                                        </div>
-                                        <div class="col-sm-2" >
-                                            <input type="button" class="btn btn-default" value="Search Job">
+                                        <div class="col-sm-4" >
+                                            <input type="submit" class="btn btn-default" value="Search Job">
                                         </div>
                                     </div>
+                                    </form>
                                 </div>
 
                             </div>
@@ -343,76 +459,7 @@
                     </div>
                 </div>
             </div>
-            <div class="footer-wrapper">
-                <div class="footer">
-                    <div class="footer-top">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <div class="footer-top-block">
-                                        <h2><i class="profession profession-logo"></i> Pharma Talent</h2>
-
-                                        <p>
-                                            Fusce congue, risus et pulvinar cursus, orci arcu tristique lectus, sit amet placerat justo ipsum eu diam. Pellentesque tortor urna, pellentesque nec molestie eget, volutpat in arcu. Maecenas a lectus mollis.
-                                        </p>
-
-                                        <ul class="social-links">
-                                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-tumblr"></i></a></li>
-                                        </ul>
-                                    </div><!-- /.footer-top-block -->
-                                </div><!-- /.col-* -->
-
-                                <div class="col-sm-3 col-sm-offset-1">
-                                    <div class="footer-top-block">
-                                        <h2>Helpful Links</h2>
-
-                                        <ul>
-                                            <li><a href="#">About Us</a></li>
-                                            <li><a href="#">Support</a></li>
-                                            <li><a href="#">License</a></li>
-                                            <li><a href="#">Affiliate</a></li>
-                                            <li><a href="pricing.html">Pricing</a></li>
-                                            <li><a href="#">Terms &amp; Conditions</a></li>
-                                            <li><a href="#">Contact</a></li>
-                                        </ul>
-                                    </div><!-- /.footer-top-block -->
-                                </div><!-- /.col-* -->
-
-                                <div class="col-sm-3">
-                                    <div class="footer-top-block">
-                                        <h2>Trending Jobs</h2>
-
-                                        <ul>
-                                            <li><a href="position-detail.html">Android Developer</a></li>
-                                            <li><a href="position-detail.html">Senior Teamleader</a></li>
-                                            <li><a href="position-detail.html">iOS Developer</a></li>
-                                            <li><a href="position-detail.html">Junior Tester</a></li>
-                                            <li><a href="position-detail.html">Full Stack Developer</a></li>
-                                            <li><a href="position-detail.html">Node.js Developer</a></li>
-                                            <li><a href="position-detail.html">Scala Developer</a></li>
-                                        </ul>
-                                    </div><!-- /.footer-top-left -->
-                                </div><!-- /.col-* -->
-                            </div><!-- /.row -->
-                        </div><!-- /.container -->
-                    </div><!-- /.footer-top -->
-
-                    <div class="footer-bottom">
-                        <div class="container">
-                            <div class="footer-bottom-left">
-                                &copy; <a href="#">Pharma Talent</a>, 2016 All rights reserved.
-                            </div><!-- /.footer-bottom-left -->
-
-                            <div class="footer-bottom-right">
-                                Created by <a href="http://byaviators.com/">Aviators</a>. Premium themes and templates.
-                            </div><!-- /.footer-bottom-right -->
-                        </div><!-- /.container -->
-                    </div><!-- /.footer-bottom -->
-                </div><!-- /.footer -->
-            </div>
+            <?php $this->load->view('footer', $view_data); ?>
 
         </div><!-- /.page-wrapper -->
 

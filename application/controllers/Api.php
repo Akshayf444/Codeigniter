@@ -226,7 +226,6 @@ class Api extends CI_Controller {
 
     public function view() {
 
-
         $user_id = $_REQUEST['id'];
         $content = array();
         $view['profile'][] = $this->User_model->view4($user_id);
@@ -887,7 +886,7 @@ class Api extends CI_Controller {
             'type' => $type,
         );
         $find = $this->User_model->find_by_emp_id($emp_id);
-        if(!empty($find)) {
+        if (!empty($find)) {
 
             $data1 = $this->User_model->user_workexp_update($data, $emp_id);
             if (!empty($data1)) {
@@ -942,8 +941,6 @@ class Api extends CI_Controller {
     }
 
     public function forget_password_verify() {
-
-
         $code = $_REQUEST['code'];
         $mobile = $_REQUEST['mobile'];
         $password = $_REQUEST['password'];
@@ -963,6 +960,24 @@ class Api extends CI_Controller {
             $content[] = array(
                 'Message' => 'Please Enter Correct Password',
             );
+            $output = array('status' => 'error', 'message' => $content);
+        }
+        header('content-type: application/json');
+        echo json_encode($output);
+    }
+
+    public function getSkills() {
+        $result = $this->Job_model->getSkills();
+
+        $content = array();
+        if (!empty($result)) {
+            foreach ($result as $value) {
+                $content[] = array(
+                    'skill' => $value->skill
+                );
+            }
+            $output = array('status' => 'success', 'message' => $content);
+        } else {
             $output = array('status' => 'error', 'message' => $content);
         }
         header('content-type: application/json');
