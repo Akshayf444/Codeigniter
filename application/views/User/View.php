@@ -28,6 +28,7 @@
         border-bottom: 0px;
         padding-bottom: 0px;
     }
+
 </style>
 <?php // echo form_open('WorkExperince/work_exp')       ?>
 <div class="container-fluid">
@@ -172,9 +173,9 @@
                         <ul>
                             <?php
                             if (!empty($lang)) {
-                                var_dump($lang);
+                                //var_dump($lang);
                                 foreach ($lang as $value) {
-                                    echo '<li>' . $value . '</li>';
+                                    echo '<li>' . $value->language . '</li>';
                                 }
                             }
                             ?>

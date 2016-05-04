@@ -27,3 +27,14 @@
 #sidebar li{
     list-style-type: none;
 }
+
+.primary:hover {
+    color: #fff;
+}
+.primary:active {
+    color: #fff;
+}
+
+.small-form-control{
+    height: 32px;
+}

@@ -1,3 +1,9 @@
+<style>
+        .small-form-control{
+        height: 32px;
+    }
+    
+</style>
 <div id="fullCalModal" class="modal fade" role="dialog">
     <link href="<?php echo asset_url(); ?>assets/libraries/choosen/chosen.min.css" rel="stylesheet" type="text/css"/>
     <script src="<?php echo asset_url(); ?>assets/libraries/choosen/chosen.jquery.min.js" type="text/javascript"></script>
@@ -67,66 +73,67 @@
                                 if (!empty($language)) {
                                     $language = array_shift($language);
                                     $language = json_decode($language->language);
+                                    ///var_dump($language);
                                 }
                                 if (!empty($language)) {
                                     foreach ($language as $key => $value) {
                                         echo '<div class="row">';
-                                        echo '<div class="col-sm-6">';
-                                        echo '<select name="languages[]" class="form-control" >';
+                                        echo '<div class="col-sm-4">';
+                                        echo '<select name="languages[]" class="form-control small-form-control" >';
                                         echo '<option value="">Select Language</option>';
-                                        $languageDropdown = $this->Master_model->generateDropdown($language_master, 'lang', 'lang', $value);
+                                        $languageDropdown = $this->Master_model->generateDropdown($language_master, 'lang', 'lang', $value->language);
                                         echo $languageDropdown;
                                         echo '</select>';
                                         echo '</div>';
-                                        echo '<div class="col-sm-6">';
-                                        echo '<select name="rate[]" class="form-control" >';
-                                        echo '<option value="">Select Proficience</option>';
-                                        $profdropdown = $this->Master_model->generateDropdown($prof, 'id', 'Parameter', $value);
+                                        echo '<div class="col-sm-8">';
+                                        echo '<select name="rate[]" class="form-control small-form-control" >';
+                                        echo '<option value="">Select Proficiency</option>';
+                                        $profdropdown = $this->Master_model->generateDropdown($prof, 'id', 'Parameter', (int)$value->rate);
                                         echo $profdropdown;
                                         echo '</select>';
                                         echo '</div>';
-                                        echo '</div>';
+                                        echo '</div><br/>';
                                     }
                                     echo '<div class="row">';
-                                    echo '<div class="col-sm-6">';
-                                    echo '<select name="languages[]"  class="form-control" >';
+                                    echo '<div class="col-sm-4">';
+                                    echo '<select name="languages[]"  class="form-control small-form-control" >';
                                     echo '<option value="">Select Language</option>';
                                     $languageDropdown = $this->Master_model->generateDropdown($language_master, 'lang', 'lang');
                                     echo $languageDropdown;
                                     echo '</select>';
                                     echo '</div>';
-                                    echo '<div class="col-sm-6">';
-                                    echo '<select name="rate[]" class="form-control" >';
-                                    echo '<option value="">Select Proficience</option>';
+                                    echo '<div class="col-sm-8">';
+                                    echo '<select name="rate[]" class="form-control small-form-control" >';
+                                    echo '<option value="">Select Proficiency</option>';
                                     $profdropdown = $this->Master_model->generateDropdown($prof, 'id', 'Parameter');
                                     echo $profdropdown;
                                     echo '</select>';
                                     echo '</div>';
-                                    echo '</div>';
+                                    echo '</div><br/>';
                                 } else {
                                     for ($index = 0; $index < 3; $index++) {
                                         echo '<div class="row">';
-                                        echo '<div class="col-sm-6">';
-                                        echo '<select name="languages[]"  class="form-control" >';
+                                        echo '<div class="col-sm-4">';
+                                        echo '<select name="languages[]"  class="form-control small-form-control" >';
                                         echo '<option value="">Select Language</option>';
                                         $languageDropdown = $this->Master_model->generateDropdown($language_master, 'lang', 'lang');
                                         echo $languageDropdown;
                                         echo '</select>';
                                         echo '</div>';
-                                        echo '<div class="col-sm-6">';
-                                        echo '<select name="rate[]" class="form-control" >';
-                                        echo '<option value="">Select Proficience</option>';
+                                        echo '<div class="col-sm-8">';
+                                        echo '<select name="rate[]" class="form-control small-form-control" >';
+                                        echo '<option value="">Select Proficiency</option>';
                                         $profdropdown = $this->Master_model->generateDropdown($prof, 'id', 'Parameter');
                                         echo $profdropdown;
                                         echo '</select>';
                                         echo '</div>';
-                                        echo '</div>';
+                                        echo '</div><br/>';
                                     }
                                 }
                                 ?>
 
                             </div> 
-                            <input type="button" id="addmore">
+
                             <div class="form-group">
                                 <input type="submit" value="Save" name="saveSkills" class="btn btn-success">
                             </div>
