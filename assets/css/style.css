@@ -1,0 +1,169 @@
+@import url("https://fonts.googleapis.com/css?family=Noto+Sans:400,400italic,700,700italic");
+body{
+    background:  #F5F5F5;
+    font-family: 'Noto Sans';
+
+}
+
+/*** Navigation Override****/
+.navbar-default {
+    background-color: #ffffff;
+    border-color: #CECECE;
+}
+.navbar-brand{
+    padding: 0px;
+}
+.navbar-nav>li>a{
+    font-weight: 700;
+}
+/******** Form Control Override*******************/
+.form-control{
+    padding: 3px 6px;
+    border-radius: 0;
+    height: 30px;
+}
+
+.half-formcontrol{
+    width: 50%;
+    float: left;
+
+}
+
+/****************** Btn override***************************/
+.btn{
+    border-radius: 0px;
+}
+/************** Section *******************/
+.section {
+    position: relative;
+    padding: 35px 0;
+}
+.section .background-image {
+    z-index: 0;
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+}
+.section .background-image.background-image-fixed {
+    background-attachment: fixed;
+}
+.section-primary {
+    background-color: #0C79C3 !important;
+    color: #FFF;
+}
+.section-primary .background-image {
+    opacity: 0.5;
+}
+.section-info {
+    background-color: #0E639D !important;
+    color: #ffffff;
+}
+.section-info .background-image {
+    opacity: 0.5;
+}
+.section-default {
+    background-color: #2F3B42 !important;
+    color: #fff;
+}
+.section-default .background-image {
+    opacity: 0.5;
+}
+.section-success {
+    background-color: #5cb85c !important;
+    color: #ffffff;
+}
+.section-success .background-image {
+    opacity: 0.5;
+}
+.section-warning {
+    background-color: #f0ad4e !important;
+    color: #ffffff;
+}
+.section-warning .background-image {
+    opacity: 0.5;
+}
+.section-danger {
+    background-color: #d9534f !important;
+    color: #ffffff;
+}
+.section-danger .background-image {
+    opacity: 0.5;
+}
+
+.carousel {
+    height: 80%;
+    margin-top: 50px;
+}
+
+.item,
+.active,
+.carousel-inner {
+    height: 100%;
+}
+
+/* Background images are set within the HTML using inline CSS, not here */
+
+.fill {
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+/**************************/
+footer{
+    background: url(../images/bg.png);
+}
+/*********** Heading ************/
+
+h1,h2,h3,h4,h5,h6{
+    font-family: 'Noto Sans',sans-serif;
+    font-weight: 400;
+}
+
+.page-header{
+    border-bottom: 1px dashed red;
+    margin:26px 0 0px;
+    font-weight: bold;
+}
+
+/*************** Panel Override******************/
+.panel{
+    border-radius: 0px;
+}
+
+.panel{
+    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+/*************Sidebar override**************/
+.sidebar > li > a{
+    padding: 5px 15px;
+}
+.sidebar > li > a:hover{
+    background: #CCCCCC;
+}
+.signin{
+    opacity: 0.8;
+}
+
+/******************************************/
+.default{
+    color: #fff;
+}
+
+ul{
+    list-style-type: none;
+}
+
+/************** Grids Override****************/
+.zeroleftpadding{
+    padding-left: 0;
+}
