@@ -6,36 +6,29 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <div class="positions-list">
+            <table class="table table-striped">
+                <tr>
+                    <th>Name</th>
+                    <th>Location</th>
+                    <th>Created</th>
+                    <th>Candidates</th>
+                    <th>Status</th>
+                </tr>
+
                 <?php foreach ($users as $user) { ?>
-                    <div class="positions-list-item">
-                        <h2 style="font-weight: 600;font-size: 16px">
+                    <tr>
+                        <td>
                             <a href="<?php echo site_url('Job/viewDetails/' . $user->job_id) ?>"><?php echo $user->title ?></a>
 
-                        </h2>
+                        </td>
 
-                        <div class="row">
-                            <div class="col-sm-1" style="padding-right: 1px; ">
-                                <h6><i class="fa fa-suitcase"> </i><?php echo ' ' . $user->exp_min; ?>-<?php echo $user->exp_max ?> Yrs</h6>
-                            </div>
-                            <div class="col-sm-5">
-                                <h6><i class="fa fa-map-marker"> </i><?php echo ' ' . $user->location ?></h6>
-                            </div>
-                            <div class="col-sm-3">
-                                <h6><i class="fa fa-inr"></i> : <?php
-                                    echo $user->ctc_min;
-                                    echo isset($user->ctc_type) && $user->ctc_type == 0 ? ' P.M.' : ' P.A.';
-                                    ?></h6>
-
-                            </div>
-                            <div class="col-sm-3">
-                                <?php  echo $user->applied_count .' People Applied';  ?>
-                            </div>
-                        </div>
-                    </div>
-
+                        <td><?php $user->location ?></td>
+                        <td><?php $user->created_at ?></td>
+                        <td><?php echo $user->applied_count ?>  </td>
+                        <td><select name=""><option>Open</option><option>Paused</option><option>Closed</option></select></td>
+                    </tr>
                 <?php } ?>
-            </div>
+            </table>
         </div>
     </div>
 </div>

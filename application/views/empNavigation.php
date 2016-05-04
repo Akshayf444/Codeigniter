@@ -2,11 +2,11 @@
 
 $Sidebar = array(
     'My Talent' => array(
-        'Personal Details' => 'User/view',
-        'Work Experience' => 'User/view',
-        'Education Details' => 'User/view',
-        'Certification Details' => 'User/view',
-        'Skills' => 'User/view',
+        'Personal Details' => 'Employee/Home',
+        'Work Experience' => 'Employee/Home',
+        'Education Details' => 'Employee/Home',
+        'Certification Details' => 'Employee/Home',
+        'Skills' => 'Employee/Home',
     ),
     'Jobs & Responses' => array(
         'Post A Hot Vacancy' => 'Job/add',
@@ -29,7 +29,7 @@ $Sidebar = array(
     ),
     'Salary Check' => 'User/Comingsoon',
     'Account Settings' => array(
-        'Change Password' => 'User/Comingsoon',
+        'Change Password' => 'Employee/changepassword',
         'Logout' => 'Employee/logout')
 );
 if (!empty($Sidebar)) {

@@ -17,7 +17,7 @@
 |
 */
 
-$config['base_url'] = 'http://'.$_SERVER['HTTP_HOST'].'/Codeigniter';
+$config['base_url'] = 'http://'.$_SERVER['HTTP_HOST'].'/Codeigniter-2.2.4';
 
 /*
 |--------------------------------------------------------------------------

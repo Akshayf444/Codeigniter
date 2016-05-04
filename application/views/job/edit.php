@@ -2,8 +2,7 @@
     <div class="col-lg-12 ">
         <h3 class="page-header">Edit Job</h3>
         <div class="panel">
-            <?php echo validation_errors(); ?>
-           
+            <?php echo validation_errors(); ?>           
             <?php echo form_open("Job/edit/{$user['job_id']}"); ?>
             <div class="panel-body">
                 <div class="col-lg-6">
