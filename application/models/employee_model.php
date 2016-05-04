@@ -86,8 +86,10 @@ class employee_model extends CI_Model {
     public function find_id($id) {
         $this->db->select('emp_profile.*,address_master.*');
         $this->db->from('emp_profile');
-        $this->db->join('address_master', 'emp_profile.auth_id = address_master.auth_id');
+        $this->db->join('address_master', 'emp_profile.auth_id = address_master.auth_id','left');
+        $this->db->where('emp_profile.auth_id',$id);
         $query = $this->db->get();
+//        echo $this->db->last_query();
         return $query->row_array();
     }
 
