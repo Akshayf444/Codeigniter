@@ -31,29 +31,29 @@
 </style>
 
 <div class="container" style="border-bottom: 1px solid #cccccc">
-    <div class="row" style="padding: 50px">
-        <div class="col-sm-3">
-            <span class="img imge1"style="background-position:-173px -260px; margin-bottom: 11px;margin-left: 100px;"></span>
+    <div class="row" style="padding: 25px;text-align: center">
+        <div class="col-sm-3" >
+            <span class="img imge1"style="background-position:-173px -260px; margin-bottom: 11px;margin-left: 14px;"></span>
 
             <p style="font-weight: bold;color: #333;">Find Candidates</p>
             <span>More than 1.9 crore candidates and their facebook connections</span>
         </div><!-- /.col-* -->
 
         <div class="col-sm-3">
-            <span class="img imge2" style="background-position:-120px 2px; width:62px;  margin-bottom: 11px;margin-left: 91px;"></span>
+            <span class="img imge2" style="background-position:-120px 2px; width:62px;  margin-bottom: 11px;margin-left: 14px;"></span>
 
             <p style="font-weight: bold;color: #333;">Post your jobs</p>
             <span>Get smart responses with unique two-way matching technology</span>
         </div><!-- /.col-* -->
         <div class="col-sm-3">
-            <span class="img imge3" style="background-position:-10px -86px; width:60px;  margin-bottom: 11px;margin-left: 100px;"></span>
+            <span class="img imge3" style="background-position:-10px -86px; width:60px;  margin-bottom: 11px;margin-left: 14px;"></span>
 
             <p style="font-weight: bold;color: #333;">Branding and social solutions </p>
             <span>Highlight your company as a great place to work.</span>
         </div><!-- /.col-* -->
 
         <div class="col-sm-3">
-            <span class="img imge4" style="background-position:-181px 3px;  margin-bottom: 11px;margin-left: 100px;"></span>
+            <span class="img imge4" style="background-position:-181px 3px;  margin-bottom: 11px;margin-left: 14px;"></span>
 
             <p style="font-weight: bold;color: #333;">Recruitment solutions</p>
             <span>An innovative range of solutions tailored to your specific needs</span>
