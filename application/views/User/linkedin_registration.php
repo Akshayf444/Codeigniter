@@ -28,7 +28,7 @@
 <div class="container">
     <?php
     $attribute = array('id' => 'form1');
-    echo form_open('User/register', $attribute)
+    echo form_open('User/register', $attribute);
     ?>
     <div class="row">
         <div class="col-sm-6 col-sm-offset-3">
@@ -79,10 +79,9 @@
         <div class="col-sm-6 col-sm-offset-3" id="section3" style="display: none">
             <button type="submit" id="Register" class="btn btn-secondary">Register</button>
         </div>
-        <div class="col-sm-6 col-sm-offset-3">
+        <div class="col-sm-6 col-sm-offset-3" id="section4">
             <br/>
             <p>By clicking Signup you agree to the <span class="policy" ><a>Terms</a></span> and <span class="policy" ><a>Privacy Policy</a></span>.</p>
-
             <p>Already have a Pharma Talent account? <a>Sign in</a>.</p>
         </div>
     </div>
@@ -115,6 +114,7 @@
                     if (data == '200') {
                         $("#section1").hide();
                         $("#section2").show();
+                        $("#section4").hide();
 
                         $("#messages").html('<p class="alert alert-success">Verification Code Is Sent To Your Mobile No');
                     } else if (data == '400') {
@@ -144,11 +144,10 @@
             {
                 $("#loader").hide();
                 if (data == '200') {
-
+                    $("#section4").hide();
                     $("#section2").hide();
                     $("#Save").hide();
                     $("#section3").hide();
-                    $("#section1").show();
                     $("#messages").html('<p class="alert alert-success">Verified Successfully');
                     $("#form1").submit();
                 } else if (data == '400') {
