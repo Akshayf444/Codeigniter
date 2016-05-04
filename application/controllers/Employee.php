@@ -51,15 +51,14 @@ class Employee extends CI_Controller {
                 /////////Insert Basic Profile
                 $result = $this->employee_model->Add_detail($id, $data);
                 $this->load->model('Sms_model');
-                //$message = "Your Password For Pharma Talent is " . $radnumber;
-                ///$this->Sms_model->sendsms($mobile, $message);
+
                 if (!empty($result)) {
                     $this->db->where(array('mobile' => $mobile));
                     $this->db->update('mobile_register', array('mobile' => $mobile, 'ver_code' => $ver_code, 'is_verified' => 1));
                     $this->session->set_userdata("user_id", $id);
                     $this->session->set_userdata("user_email", $this->input->post('email'));
                     $this->session->set_userdata("user_mobile", $this->input->post('mobile'));
-                    $this->session->set_userdata("user_type", 'User');
+                    $this->session->set_userdata("user_type", 'Employee');
                     $redirect_url = $this->session->userdata('redirect_url');
                     if (isset($redirect_url) && $redirect_url != '') {
                         header("Location:" . $redirect_url);
@@ -69,23 +68,6 @@ class Employee extends CI_Controller {
                 }
                 $dropdown['Error'] = '<p class="alert alert-success">Thank You . Registered Successfully</p>';
 
-                //$qualification = $this->input->post("qualification");
-                //$specialization = $this->input->post("specialization");
-                //$institute = $this->input->post("institute");
-                //$year = $this->input->post("year");
-                //for ($i = 0; $i < count($this->input->post('qualification')); $i++) {
-                ////////Insert education Details
-                /* $education_details = array(
-                  'qualification' => $qualification[$i],
-                  'specialization' => $specialization[$i],
-                  'institute' => $institute[$i],
-                  'year' => $year[$i],
-                  'created' => date('Y-m-d H:i:s'),
-                  'auth_id' => $id,
-                  ); */
-
-                // $this->User_model->user_qualification($education_details);
-                //}
             } else {
                 $this->session->unset_userdata("linkedinemail");
                 $this->session->unset_userdata("linkedinname");
@@ -98,34 +80,6 @@ class Employee extends CI_Controller {
         $data = array('title' => 'Login', 'content' => 'employee/registration', 'view_data' => $dropdown);
         $this->load->view('frontTemplate4', $data);
     }
-
-//    public function register() {
-//
-//        $this->form_validation->set_rules('email', 'email', 'required');
-//        $this->form_validation->set_rules('password', 'password', 'required');
-//        $this->form_validation->set_rules('mobile', 'mobile', 'required');
-//        $this->form_validation->set_rules('Contactperson', 'Contactperson', 'required');
-//        $this->form_validation->set_rules('Company', 'Company', 'required');
-//        $this->form_validation->set_rules('name', 'name', 'required');
-//
-//
-//        if ($this->form_validation->run() === FALSE) {
-//            //$this->load->view('Employee/registration');
-//        } else {
-//            $check1 = $this->User_model->find_by_email($this->input->post('email'), $this->input->post('mobile'));
-//            if (empty($check1)) {
-//                $this->employee_model->create();
-//                //redirect('Employee/login', 'refresh');
-//                $check['error'] = "Registered Successfully";
-//            } else {
-//                $check['Error'] = 'Already Registered';
-//            }
-//        }
-//
-//        $check['error1'] = "";
-//        $data = array('title' => 'Login', 'content' => 'employee/registration', 'view_data' => $check);
-//        $this->load->view('frontTemplate4', $data);
-//    }
 
     public function login() {
 

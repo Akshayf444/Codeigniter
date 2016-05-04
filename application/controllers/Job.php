@@ -61,7 +61,7 @@ class Job extends CI_Controller {
         $user_id = $this->session->userdata("user_id");
         $userdata['users'] = $this->Job_model->job_list($user_id);
         $data = array('title' => 'List Of Jobs ', 'content' => 'job/job_list', 'view_data' => $userdata);
-        $this->load->view('template1', $data);
+        $this->load->view('frontTemplate5', $data);
     }
 
     public function view($id) {

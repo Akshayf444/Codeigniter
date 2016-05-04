@@ -1,9 +1,10 @@
 <div class="row">
     <div class="col-lg-12">
         <h3 class="page-header"> Applied  Jobs List</h3>
-
-    </div></div>
+    </div>
+</div>
 <?php foreach ($user as $u): ?>
+
     <div class="col-lg-11 row panel panel-default">
         <div class="">
             <div class="col-lg-10">
@@ -19,10 +20,10 @@
                 <b> Mobile</b> &nbsp;  <?php echo $u->mobile; ?>
             </div>
         </div>
-        
+
     </div>
-<div class="col-lg-1"></div>
-<?php
+    <div class="col-lg-1"></div>
+    <?php
 endforeach;
 //print_r($this->session->all_userdata());
 ?>

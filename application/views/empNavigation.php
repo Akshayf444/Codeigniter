@@ -8,13 +8,13 @@ $Sidebar = array(
         'Certification Details' => 'User/view',
         'Skills' => 'User/view',
     ),
-    'Search Job' => array(
-        'Jobs in top Cities' => 'User/Comingsoon',
-        'Jobs By Courses' => 'User/Comingsoon',
+    'Jobs & Responses' => array(
+        'Post A Hot Vacancy' => 'Job/add',
+        'Jobs And Responses' => 'Job/job_list',
         'Jobs By Education' => 'User/Comingsoon',
         'Jobs By Designation' => 'User/Comingsoon',
     ),
-    'Career Plus' => array(
+    'Search' => array(
         'Resume Writing Servies' => 'User/Comingsoon',
         'Linked In Profile Writing' => 'User/Comingsoon',
         'Value Packs' => 'User/Comingsoon',
@@ -31,7 +31,6 @@ $Sidebar = array(
     'Account Settings' => array(
         'Change Password' => 'User/Comingsoon',
         'Logout' => 'Employee/logout')
-
 );
 if (!empty($Sidebar)) {
     foreach ($Sidebar as $menu => $submenu) {

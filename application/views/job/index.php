@@ -136,10 +136,7 @@
                                     <h6><b>Key Skills : </b><?php echo $j->keyword ?><small class="pull-right"><?php echo date('d-m-Y', strtotime($j->posted_at)) ?></small></h6>
                                 </div>
                             </div>
-
-                            <!--                        <div class="position-list-item-date">10/11/2015</div> /.position-list-item-date 
-                                                    <div class="position-list-item-action"><a href="#">Save Position</a></div> /.position-list-item-action -->
-                        </div><!-- /.position-list-item -->
+                        </div>
                         <?php
                     }
                 }

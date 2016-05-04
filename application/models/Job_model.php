@@ -25,8 +25,8 @@ class Job_model extends CI_Model {
     }
 
     public function job_list($id) {
-
-        $query = $this->db->get_where('jobs', array('auth_id' => $id));
+        $sql = "SELECT j.*,count(aj.id) as applied_count FROM (SELECT * FROM jobs WHERE auth_id = '$id' AND status = 0 ) AS j LEFT JOIN apply_job aj ON aj.job_id = j.job_id GROUP BY j.job_id";
+        $query = $this->db->query($sql);
         return $query->result();
     }
 
@@ -68,11 +68,11 @@ class Job_model extends CI_Model {
 
     public function appiled_job($id) {
         $query = "SELECT jobs.`job_id`, (u.name) AS NAME,(jobs.title) AS title,u.`mobile`,(apply_job.`auth_id`) AS user_id,(u.`email`)AS email FROM apply_job
-                LEFT JOIN jobs 
-                ON apply_job.job_id=jobs.job_id
-                LEFT JOIN user u 
-                ON apply_job.auth_id=u.auth_id
-                WHERE jobs.auth_id=$id";
+                    LEFT JOIN jobs 
+                    ON apply_job.job_id=jobs.job_id
+                    LEFT JOIN user u 
+                    ON apply_job.auth_id=u.auth_id
+                    WHERE jobs.auth_id=$id";
         $query = $this->db->query($query);
         return $query->result();
     }
