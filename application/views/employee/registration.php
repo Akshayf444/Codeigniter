@@ -29,7 +29,7 @@
 <div class="container">
     <?php
     $attribute = array('id' => 'form1');
-    echo form_open('User/register', $attribute)
+    echo form_open('Employee/register', $attribute)
     ?>
     <div class="row">
         <div class="col-sm-6 col-sm-offset-3">
@@ -47,9 +47,13 @@
             <p>SIGNIN UP FOR PHARMA TALENT IS FASTER AND FREE</p>
             <br/>
             <div class="form-group">
-                <label>Name</label>
+                <label> Company Name</label>
                 <input type="text" placeholder="Enter Your Full Name" class="form-control" id="name" <?php echo isset($name) && $name != '' ? 'readonly="readonly"' : '' ?> name="name" value="<?php echo isset($name) ? $name : '' ?>">    
             </div><!-- /.form-group -->
+             <div class="form-group">
+                <label>Contact Person</label>
+                <input type="text" placeholder="Enter  Contact Person" class="form-control" id="Contactperson" required="required" name="Contactperson" value="">
+            </div>
             <div class="form-group">
                 <label>Email</label>
                 <input type="text" placeholder="Enter Your Email Id" class="form-control" id="email" <?php echo isset($email) && $email != '' ? 'readonly="readonly"' : '' ?> name="email" value="<?php echo isset($email) ? $email : '' ?>">
@@ -61,7 +65,12 @@
             <div class="form-group">
                 <label>Password</label>
                 <input type="password" placeholder="Enter Your Password" class="form-control" id="password" required="required" name="password" value="">
-            </div><!-- /.form-group -->
+            </div>
+            
+            
+             
+            
+            <!-- /.form-group -->
 
 
             <button type="button" id="Save" class="btn btn-secondary btn-block">SIGN UP</button>

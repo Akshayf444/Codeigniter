@@ -18,7 +18,11 @@ class employee_model extends CI_Model {
         );
         return $this->db->insert('authentication', $data2);
     }
-
+ public function  find_email_emp(){
+     $sql=" select * from  emp_profilr where email='$email'OR mobile='$mobile'";
+     $query=$this->db->query($sql);
+     return $query->result();
+ }
     public function log($email, $pass) {
         $query = $this->db->get_where('authentication', array('email' => $email, 'password' => $pass,));
         return $query->row_array();
@@ -33,27 +37,51 @@ class employee_model extends CI_Model {
         $query = $this->db->get_where('authentication', array('auth_id' => $id));
         return $query->row_array();
     }
+    
+        public function Add_detail($id, $data) {
+        ///var_dump($data);
+       // exit();
+        $entryExist = $this->Show_profile($id);
 
-    public function add_details($id) {
-        $query = $this->db->get_where('emp_profile', array('auth_id' => $id));
-        $field_array = array(
-            'auth_id' => $this->input->post('auth_id'),
-            'designation' => $this->input->post('designation'),
-            'name' => $this->input->post('name'),
-            'type' => $this->input->post('type'),
-            'industry_type' => $this->input->post('industry_type'),
-            'contact_person' => $this->input->post('contact_person'),
-            'updated_at' => date('Y-m-d H:i:s'),
-        );
-
-        if ($query->num_rows() > 0) {
-            $this->db->where('auth_id', $id);
-            return $this->db->update('emp_profile', $field_array);
+        if (!empty($entryExist)) {
+            $this->db->where(array('auth_id' => $id));
+            return $this->db->update('emp_profile', $data);
         } else {
-            $field_array['created_at'] = date('Y-m-d H:i:s');
-            return $this->db->insert('emp_profile', $field_array);
+            $data['created_at'] = date('Y-m_d H:i:s');
+            return $this->db->insert('emp_profile', $data);
         }
     }
+
+    public function Show_profile($id) {
+        $this->db->select('emp_profile.*,address_master.*');
+        $this->db->from('emp_profile');
+        $this->db->join('address_master', 'address_master.auth_id = emp_profile.auth_id', 'left');
+        $this->db->where('emp_profile.auth_id', $id);
+        $query = $this->db->get();
+        return $query->row_array();
+    }
+    
+
+//    public function add_details($id) {
+//        $query = $this->db->get_where('emp_profile', array('auth_id' => $id));
+//        $field_array = array(
+//            'auth_id' => $this->input->post('auth_id'),
+//            'designation' => $this->input->post('designation'),
+//            'name' => $this->input->post('name'),
+//            'type' => $this->input->post('type'),
+//            'industry_type' => $this->input->post('industry_type'),
+//            'contact_person' => $this->input->post('contact_person'),
+//            'updated_at' => date('Y-m-d H:i:s'),
+//        );
+//
+//        if ($query->num_rows() > 0) {
+//            $this->db->where('auth_id', $id);
+//            return $this->db->update('emp_profile', $field_array);
+//        } else {
+//            $field_array['created_at'] = date('Y-m-d H:i:s');
+//            return $this->db->insert('emp_profile', $field_array);
+//        }
+//    }
 
     public function find_id($id) {
         $this->db->select('emp_profile.*,address_master.*');

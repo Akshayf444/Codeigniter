@@ -13,36 +13,119 @@ class Employee extends CI_Controller {
         $this->load->helper('download');
     }
 
- public function Home(){
- $data = array('title' => 'Login', 'content' => 'employee/home', 'view_data' => 'Blank');
+    public function Home() {
+        $data = array('title' => 'Login', 'content' => 'employee/home', 'view_data' => 'Blank');
         $this->load->view('frontTemplate4', $data);
     }
-
-
 
     public function register() {
+        $this->load->model('User_model');
+        $this->load->model('address_model');
+        $this->load->model('Master_model');
+        $this->load->model('Sms_model');
+        if ($this->input->post()) {
+            $check = $this->User_model->find_by_email($this->input->post('email'), $this->input->post('mobile'));
+            $check2 = $this->Employee_model->find_email_emp($this->input->post('email'), $this->input->post('mobile'));
+            if (empty($check) && empty($check2)) {
+                $password = $this->input->post('password');
+                $field_array = array(
+                    'email' => $this->input->post('email'),
+                    'password' => md5($password),
+                    'mobile' => $this->input->post('mobile'),
+                    'type' => 'Employee'
+                );
 
-        $this->form_validation->set_rules('email', 'email', 'required');
-        $this->form_validation->set_rules('password', 'password', 'required');
-        $this->form_validation->set_rules('mobile', 'mobile', 'required');
+                /////Create New User Adding Entry In Authentication Table
+                $id = $this->User_model->create($field_array);
+                //echo $id;
+                $data = array(
+                    'name' => $this->input->post('name'),
+                    'contact_person' => $this->input->post('Contactperson'),
+                    'email' => $this->input->post('email'),
+                    'mobile' => $this->input->post('mobile'),
+                    'auth_id' => $id,
+                    'updated_at' => date('Y-m-d H:i:s'),
+                );
+                $mobile = $this->input->post('mobile');
+                $ver_code = $this->input->post('ver_code');
+                /////////Insert Basic Profile
+                $result = $this->employee_model->Add_detail($id, $data);
+                $this->load->model('Sms_model');
+                //$message = "Your Password For Pharma Talent is " . $radnumber;
+                ///$this->Sms_model->sendsms($mobile, $message);
+                if (!empty($result)) {
+                    $this->db->where(array('mobile' => $mobile));
+                    $this->db->update('mobile_register', array('mobile' => $mobile, 'ver_code' => $ver_code, 'is_verified' => 1));
+                    $this->session->set_userdata("user_id", $id);
+                    $this->session->set_userdata("user_email", $this->input->post('email'));
+                    $this->session->set_userdata("user_mobile", $this->input->post('mobile'));
+                    $this->session->set_userdata("user_type", 'User');
+                    $redirect_url = $this->session->userdata('redirect_url');
+                    if (isset($redirect_url) && $redirect_url != '') {
+                        header("Location:" . $redirect_url);
+                    } else {
+                        redirect('Employee/Home', 'refresh');
+                    }
+                }
+                $dropdown['Error'] = '<p class="alert alert-success">Thank You . Registered Successfully</p>';
 
-        if ($this->form_validation->run() === FALSE) {
-            //$this->load->view('Employee/registration');
-        } else {
-            $check1 = $this->User_model->find_by_email($this->input->post('email'), $this->input->post('mobile'));
-            if (empty($check1)) {
-                $this->employee_model->create();
-                //redirect('Employee/login', 'refresh');
-                $check['error'] = "Registered Successfully";
+                //$qualification = $this->input->post("qualification");
+                //$specialization = $this->input->post("specialization");
+                //$institute = $this->input->post("institute");
+                //$year = $this->input->post("year");
+                //for ($i = 0; $i < count($this->input->post('qualification')); $i++) {
+                ////////Insert education Details
+                /* $education_details = array(
+                  'qualification' => $qualification[$i],
+                  'specialization' => $specialization[$i],
+                  'institute' => $institute[$i],
+                  'year' => $year[$i],
+                  'created' => date('Y-m-d H:i:s'),
+                  'auth_id' => $id,
+                  ); */
+
+                // $this->User_model->user_qualification($education_details);
+                //}
             } else {
-                $check['Error'] = 'Already Registered';
+                $this->session->unset_userdata("linkedinemail");
+                $this->session->unset_userdata("linkedinname");
+                $dropdown['Error'] = '<p class="alert alert-danger">Already Registered</p>';
             }
         }
-
-        $check['error1'] = "";
-        $data = array('title' => 'Login', 'content' => 'employee/registration', 'view_data' => $check);
+        $dropdown['dropdowns'] = $this->Master_model->getQualification();
+        $dropdown['institute'] = $this->Master_model->getInstitute();
+        $dropdown['location'] = $this->Master_model->getLocation();
+        $data = array('title' => 'Login', 'content' => 'employee/registration', 'view_data' => $dropdown);
         $this->load->view('frontTemplate4', $data);
     }
+
+//    public function register() {
+//
+//        $this->form_validation->set_rules('email', 'email', 'required');
+//        $this->form_validation->set_rules('password', 'password', 'required');
+//        $this->form_validation->set_rules('mobile', 'mobile', 'required');
+//        $this->form_validation->set_rules('Contactperson', 'Contactperson', 'required');
+//        $this->form_validation->set_rules('Company', 'Company', 'required');
+//        $this->form_validation->set_rules('name', 'name', 'required');
+//
+//
+//        if ($this->form_validation->run() === FALSE) {
+//            //$this->load->view('Employee/registration');
+//        } else {
+//            $check1 = $this->User_model->find_by_email($this->input->post('email'), $this->input->post('mobile'));
+//            if (empty($check1)) {
+//                $this->employee_model->create();
+//                //redirect('Employee/login', 'refresh');
+//                $check['error'] = "Registered Successfully";
+//            } else {
+//                $check['Error'] = 'Already Registered';
+//            }
+//        }
+//
+//        $check['error1'] = "";
+//        $data = array('title' => 'Login', 'content' => 'employee/registration', 'view_data' => $check);
+//        $this->load->view('frontTemplate4', $data);
+//    }
 
     public function login() {
 
