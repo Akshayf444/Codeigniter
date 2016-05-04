@@ -96,14 +96,17 @@ class Job extends CI_Controller {
         $this->load->view('template1', $userdata);
     }
 
-    public function view_applied_list() {
+    public function candidates() {
         $id = $this->session->userdata("user_id");
-        $userData['user'] = $this->Job_model->appiled_job($id);
+        $condition = array(
+            'jobs.auth_id = ' . $id
+        );
+        $userData['user'] = $this->Job_model->appiled_job($condition);
 
 //        $this->load->view('job/view_applied_job',$userData);
         $data = array('title' => 'Applied Jobs List', 'content' => 'job/view_applied_job', 'view_data' => $userData);
 
-        $this->load->view('template1', $data);
+        $this->load->view('frontTemplate5', $data);
     }
 
     public function Search($page = 1) {

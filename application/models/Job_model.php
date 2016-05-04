@@ -66,34 +66,38 @@ class Job_model extends CI_Model {
         return $this->db->update('jobs', $field_array);
     }
 
-    public function appiled_job($id) {
+    public function appiled_job($conditions = array()) {
         $query = "SELECT jobs.`job_id`, (u.name) AS NAME,(jobs.title) AS title,u.`mobile`,(apply_job.`auth_id`) AS user_id,(u.`email`)AS email FROM apply_job
                     LEFT JOIN jobs 
-                    ON apply_job.job_id=jobs.job_id
+                    ON apply_job.job_id = jobs.job_id
                     LEFT JOIN user u 
-                    ON apply_job.auth_id=u.auth_id
-                    WHERE jobs.auth_id=$id";
+                    ON apply_job.auth_id = u.auth_id ";
+        if (!empty($conditions)) {
+            $query .= " WHERE " . join(" AND ", $conditions);
+        }
+
         $query = $this->db->query($query);
+        echo $this->db->last_query();
         return $query->result();
     }
 
     public function search($conditions, $limit = 0, $offset = 0, $location_condition = array()) {
         $auth_id = $this->session->userdata('user_id');
         $auth_id = $auth_id > 0 ? $auth_id : 0;
-        $query = "SELECT j.* ,ep.name,(lm.`location`) AS loc,(CASE WHEN aj.id IS NOT NULL THEN 1 ELSE 0 END) as applied_status  ,(j.job_id) AS job_id,(j.auth_id) AS auth_id,j.created_at as posted_at FROM ( SELECT * FROM jobs ";
+        $query = "SELECT j.*, ep.name, (lm.`location`) AS loc, (CASE WHEN aj.id IS NOT NULL THEN 1 ELSE 0 END) as applied_status, (j.job_id) AS job_id, (j.auth_id) AS auth_id, j.created_at as posted_at FROM ( SELECT * FROM jobs ";
         if (!empty($location_condition)) {
             $query .= " WHERE " . join(" ", $location_condition);
         }
 
         $query .= " ) AS j
-                LEFT JOIN emp_profile ep
-                ON j.auth_id=ep.`auth_id`
-                LEFT JOIN `location_master` lm
-                ON lm.loc_id=j.location
-                LEFT JOIN `functional_area` fa
-                ON fa.`fun_id`=j.`functional_area` 
-                LEFT JOIN apply_job aj 
-                ON j.job_id = aj.job_id AND aj.auth_id = {$auth_id}  ";
+LEFT JOIN emp_profile ep
+ON j.auth_id = ep.`auth_id`
+LEFT JOIN `location_master` lm
+ON lm.loc_id = j.location
+LEFT JOIN `functional_area` fa
+ON fa.`fun_id` = j.`functional_area`
+LEFT JOIN apply_job aj
+ON j.job_id = aj.job_id AND aj.auth_id = {$auth_id} ";
         if (!empty($conditions)) {
             $query .= ' WHERE ' . join(' ', $conditions);
         }
@@ -112,12 +116,12 @@ class Job_model extends CI_Model {
             $query .= " WHERE " . join(" ", $location_condition);
         }
         $query .= ") AS j
-                LEFT JOIN emp_profile ep
-                ON j.auth_id=ep.`auth_id`
-                LEFT JOIN `location_master` lm
-                ON lm.loc_id=j.location
-                LEFT JOIN `functional_area` fa
-                ON fa.`fun_id`=j.`functional_area`";
+LEFT JOIN emp_profile ep
+ON j.auth_id = ep.`auth_id`
+LEFT JOIN `location_master` lm
+ON lm.loc_id = j.location
+LEFT JOIN `functional_area` fa
+ON fa.`fun_id` = j.`functional_area`";
         if (!empty($conditions)) {
             $query .= ' WHERE ' . join(' ', $conditions);
         }
@@ -129,15 +133,15 @@ class Job_model extends CI_Model {
     }
 
     public function search3($conditions, $user_id = 0) {
-        $query = "SELECT * ,(lm.`location`) AS loc,CASE  WHEN ap.`job_id` IS NOT NULL THEN 1 ELSE 0 END AS applied_status,(j.job_id) AS job_id,(j.auth_id) AS auth_id FROM jobs j
-                LEFT JOIN emp_profile ep
-                ON j.auth_id=ep.`auth_id`
-                LEFT JOIN `location_master` lm
-                ON lm.loc_id=j.location
-                LEFT JOIN `functional_area` fa
-                ON fa.`fun_id`=j.`functional_area`
-                LEFT JOIN apply_job ap
-                ON ap.`job_id`=j.`job_id` AND ap.auth_id = '$user_id' ";
+        $query = "SELECT *, (lm.`location`) AS loc, CASE WHEN ap.`job_id` IS NOT NULL THEN 1 ELSE 0 END AS applied_status, (j.job_id) AS job_id, (j.auth_id) AS auth_id FROM jobs j
+LEFT JOIN emp_profile ep
+ON j.auth_id = ep.`auth_id`
+LEFT JOIN `location_master` lm
+ON lm.loc_id = j.location
+LEFT JOIN `functional_area` fa
+ON fa.`fun_id` = j.`functional_area`
+LEFT JOIN apply_job ap
+ON ap.`job_id` = j.`job_id` AND ap.auth_id = '$user_id' ";
 
         if (!empty($conditions)) {
             $query .= ' WHERE ' . join(' And ', $conditions);
@@ -150,10 +154,10 @@ class Job_model extends CI_Model {
     }
 
     public function applied($job_id, $auth_id = 0) {
-        $data = "SELECT j.*,aj.* FROM jobs j
-                LEFT JOIN apply_job aj
-                ON j.job_id=aj.job_id
-                WHERE aj.auth_id=$auth_id AND j.job_id=$job_id";
+        $data = "SELECT j.*, aj.* FROM jobs j
+LEFT JOIN apply_job aj
+ON j.job_id = aj.job_id
+WHERE aj.auth_id = $auth_id AND j.job_id = $job_id";
         $query = $this->db->query($data);
 
         return $query->row_array();
@@ -170,43 +174,43 @@ class Job_model extends CI_Model {
 
     public function apply_id($job_id, $auth_id) {
         $data = "SELECT * FROM apply_job
-                WHERE job_id=$job_id AND auth_id=$auth_id";
+WHERE job_id = $job_id AND auth_id = $auth_id";
         $query = $this->db->query($data);
         return $query->row_array();
     }
 
     public function user_applied($auth_id) {
-        $data = "SELECT *,(l.location) AS loc,(lmm.location) AS location,(up.location) AS ploc,(up.role) AS prole  FROM user u
-                LEFT JOIN work_exp we
-                ON u.auth_id=we.auth_id
-                LEFT JOIN `location_master`lm
-                ON lm.loc_id=u.current_location
-                LEFT JOIN `location_master`lmm
-                ON lmm.loc_id=u.prefred_location
-                LEFT JOIN user_qualification uq
-                ON uq.auth_id=u.auth_id
-                LEFT JOIN education_master em
-                ON em.edu_id=uq.qualification
-                LEFT JOIN location_master l
-                ON l.loc_id=u.`current_location`
-                LEFT JOIN functional_area fa
-                ON fa.fun_id=u.`function_area`
-                LEFT JOIN industry_master ind
-                ON ind.indus_id=u.`industry`
-                LEFT JOIN address_master am
-                ON am.`auth_id`=u.`auth_id`
-                LEFT JOIN user_project up
-                ON up.`auth_id`=u.`auth_id`
-                WHERE u.auth_id=$auth_id";
+        $data = "SELECT *, (l.location) AS loc, (lmm.location) AS location, (up.location) AS ploc, (up.role) AS prole FROM user u
+LEFT JOIN work_exp we
+ON u.auth_id = we.auth_id
+LEFT JOIN `location_master`lm
+ON lm.loc_id = u.current_location
+LEFT JOIN `location_master`lmm
+ON lmm.loc_id = u.prefred_location
+LEFT JOIN user_qualification uq
+ON uq.auth_id = u.auth_id
+LEFT JOIN education_master em
+ON em.edu_id = uq.qualification
+LEFT JOIN location_master l
+ON l.loc_id = u.`current_location`
+LEFT JOIN functional_area fa
+ON fa.fun_id = u.`function_area`
+LEFT JOIN industry_master ind
+ON ind.indus_id = u.`industry`
+LEFT JOIN address_master am
+ON am.`auth_id` = u.`auth_id`
+LEFT JOIN user_project up
+ON up.`auth_id` = u.`auth_id`
+WHERE u.auth_id = $auth_id";
         $query = $this->db->query($data);
         return $query->row_array();
     }
 
     public function resume_search_view($location, $skill) {
         $data = "SELECT * FROM user u
-                    LEFT JOIN `location_master` lm
-                    ON lm.`loc_id`=u.`current_location`
-                    WHERE u.`current_location`='$location' AND u.`key_skill` LIKE '%$skill%'";
+LEFT JOIN `location_master` lm
+ON lm.`loc_id` = u.`current_location`
+WHERE u.`current_location` = '$location' AND u.`key_skill` LIKE '%$skill%'";
 
         $query = $this->db->query($data);
 
@@ -215,7 +219,7 @@ class Job_model extends CI_Model {
 
     public function type($skill) {
         $data = "SELECT * FROM industry_master
-                WHERE industry  LIKE '$skill%'";
+WHERE industry LIKE '$skill%'";
 
         $query = $this->db->query($data);
 
@@ -223,13 +227,13 @@ class Job_model extends CI_Model {
     }
 
     public function filter($conditions) {
-        $query = "SELECT *,(lm.`location`)AS loc FROM jobs j
-            LEFT JOIN `location_master` lm
-            ON lm.`loc_id`=j.`location`
-            LEFT JOIN `industry_master` im
-            ON im.`indus_id`=j.`industry`
-            LEFT JOIN `emp_profile` ep
-            ON ep.`auth_id`=j.`auth_id`";
+        $query = "SELECT *, (lm.`location`)AS loc FROM jobs j
+LEFT JOIN `location_master` lm
+ON lm.`loc_id` = j.`location`
+LEFT JOIN `industry_master` im
+ON im.`indus_id` = j.`industry`
+LEFT JOIN `emp_profile` ep
+ON ep.`auth_id` = j.`auth_id`";
 
         if (!empty($conditions)) {
             $query .= ' WHERE ' . join(' AND ', $conditions);
@@ -241,7 +245,7 @@ class Job_model extends CI_Model {
 
     public function job_apply_message($id) {
         $data = "SELECT * FROM jobs j
-                WHERE j.`job_id`=$id";
+WHERE j.`job_id` = $id";
 
         $query = $this->db->query($data);
 
@@ -249,12 +253,12 @@ class Job_model extends CI_Model {
     }
 
     public function visitor_detail($id) {
-        $data = "SELECT(pv.visited_at) AS visited_date,ep.`name`,im.`industry` FROM profile_visit pv
-                    LEFT JOIN `emp_profile` ep
-                    ON ep.`auth_id`=pv.visitor_id
-                    LEFT JOIN `industry_master` im
-                    ON im.`indus_id`=ep.`industry_type`
-                    WHERE pv.jobseeker_id=$id";
+        $data = "SELECT(pv.visited_at) AS visited_date, ep.`name`, im.`industry` FROM profile_visit pv
+LEFT JOIN `emp_profile` ep
+ON ep.`auth_id` = pv.visitor_id
+LEFT JOIN `industry_master` im
+ON im.`indus_id` = ep.`industry_type`
+WHERE pv.jobseeker_id = $id";
 
         $query = $this->db->query($data);
         return $query->result();
@@ -279,7 +283,7 @@ class Job_model extends CI_Model {
     }
 
     function getSkills() {
-        $sql = "SELECT DISTINCT(skill_name) as skill FROM skill_master where skill_name != ''  UNION ALL SELECT DISTINCT(role) as skill FROM user where role != '' UNION ALL SELECT DISTINCT(name) as skill FROM emp_profile where name != '' ";
+        $sql = "SELECT DISTINCT(skill_name) as skill FROM skill_master where skill_name != '' UNION ALL SELECT DISTINCT(role) as skill FROM user where role != '' UNION ALL SELECT DISTINCT(name) as skill FROM emp_profile where name != '' ";
         $query = $this->db->query($sql);
         $result = $query->result();
         return $result;
