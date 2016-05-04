@@ -925,8 +925,9 @@ class Api extends CI_Controller {
             $content = array();
             $content[] = array(
                 'Message' => 'Verification Code succefully send',
+                'code'=>''.$code.'',
             );
-            $output = array('status' => 'error', 'message' => $content);
+            $output = array('status' => 'Success', 'message' => $content);
         } else {
             $content = array();
             $content[] = array(
@@ -952,7 +953,7 @@ class Api extends CI_Controller {
             $content[] = array(
                 'Message' => 'Succefully updated Password',
             );
-            $output = array('status' => 'error', 'message' => $content);
+            $output = array('status' => 'Success', 'message' => $content);
         } else {
             $content = array();
             $content[] = array(
