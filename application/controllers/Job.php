@@ -51,7 +51,7 @@ class Job extends CI_Controller {
             $data['functional_area'] = $this->Master_model->getFunctionArea();
 
             $data = array('title' => 'Add Job', 'content' => 'job/add', 'view_data' => $data);
-            $this->load->view('template1', $data);
+            $this->load->view('frontTemplate5', $data);
         } else {
             redirect('Employee/logout', 'refresh');
         }
