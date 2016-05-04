@@ -24,24 +24,16 @@
    
 <?php foreach ($user as $u): ?>
  <tr>
-    <div class="col-lg-11 row panel panel-default">
-        <div class="">
-            <div class="col-lg-10">
-                <b>Title </b> &nbsp;  <?php echo $u->title; ?>
-            </div>
-            <div class="col-lg-10">
-                <a href="<?php echo site_url('Employee/User_view/?id=' . $u->user_id) ?>"><b> Name</b> &nbsp;  <?php echo $u->NAME; ?></a>
-            </div>
-            <div class="col-lg-10">
-                <b> Email</b> &nbsp;  <?php echo $u->email; ?>
-            </div>
-            <div class="col-lg-10">
-                <b> Mobile</b> &nbsp;  <?php echo $u->mobile; ?>
-            </div>
-        </div>
-
-    </div>
-    <div class="col-lg-1"></div>
+    
+     <td> <?php echo $u->title; ?></td>
+     <td> <?php echo $u->location; ?></td>
+     <td> <?php echo $u->role; ?></td>
+     <td> <?php echo $u->qualification ." ".$u->specialization; ?></td>
+     <td> <?php echo $u->apply_date; ?></td>
+           
+            
+              
+   
     <?php
 endforeach;
 //print_r($this->session->all_userdata());
