@@ -54,11 +54,8 @@
                                 </li>-->
                                 <li><a href="#" data-toggle="modal" data-target="#myModal">Login</a></li>
                                 <li><a href="<?php echo site_url('User/linkedInRegister'); ?>">Register</a></li>
-<<<<<<< HEAD
                                 <li><a href="<?php echo site_url('Employee/Home'); ?>" class="primary">Recruiters</a></li>
-=======
-                                <li><a href="<?php echo site_url('Employee/register'); ?>" class="primary">Recruiters</a></li>
->>>>>>> dcdce0c591c7a76e290ae26212873bb4f1f124a3
+
                             </ul><!-- /.header-actions -->
 
                             <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".header-nav">

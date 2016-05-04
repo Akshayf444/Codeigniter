@@ -1,5 +1,4 @@
 <style>
-
     .form-control {
         background: #e8ebed;
         color: #657380;
@@ -25,12 +24,12 @@
         <h1 class="center">Registration</h1>
     </div><!-- /.container -->
 </div><!-- /.document-title -->
-
 <div class="container">
     <?php
     $attribute = array('id' => 'form1');
     echo form_open('Employee/register', $attribute)
     ?>
+
     <div class="row">
         <div class="col-sm-6 col-sm-offset-3">
             <img src="<?php echo asset_url() . 'images/38-1.gif'; ?>" id="loader" style="display: none">

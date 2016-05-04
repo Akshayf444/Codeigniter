@@ -33,7 +33,7 @@
                         <div class="container">
                             <div class="header-brand">
                                 <div class="header-logo">
-                                    <a href="<?php echo site_url('Job/index'); ?>">
+                                    <a href="<?php echo site_url('Employee/Home'); ?>">
                                         <i class="profession profession-logo"></i>
                                         <span class="header-logo-text">Pharma Talent</span>
                                     </a>
@@ -53,9 +53,8 @@
                                     </ul>
                                 </li>-->
                                 <li><a href="#" data-toggle="modal" data-target="#myModal">Login</a></li>
-
                                 <li><a href="<?php echo site_url('Employee/register'); ?>">Register</a></li>
-                                <li><a href="<?php echo site_url('Employee/Home'); ?>" class="primary">Recruiters</a></li>
+                                <li><a href="<?php echo site_url('Job/index'); ?>" class="primary">Job Seekers</a></li>
 
                             </ul><!-- /.header-actions -->
 
@@ -139,7 +138,7 @@
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                             <h4 class="modal-title">Login</h4>
                         </div>
-                        <?php echo form_open('User/login') ?>
+                        <?php echo form_open('Employee/login') ?>
                         <div class="modal-body">
 
                             <div class="row">
@@ -161,9 +160,9 @@
 
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-secondary">Login</button>
-                            <a class="btn btn-social btn-linkedin" href="<?php echo site_url('Linkedin_signup/initiate'); ?>">
+<!--                            <a class="btn btn-social btn-linkedin" href="<?php //echo site_url('Linkedin_signup/initiate'); ?>">
                                 <i class="fa fa-linkedin"></i> Sign in with LinkedIn
-                            </a>                          
+                            </a>                          -->
 
                         </div>
                         </form>
