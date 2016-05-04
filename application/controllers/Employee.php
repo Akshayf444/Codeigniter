@@ -13,7 +13,15 @@ class Employee extends CI_Controller {
         $this->load->helper('download');
     }
 
+ public function Home(){
+ $data = array('title' => 'Login', 'content' => 'employee/home', 'view_data' => 'Blank');
+        $this->load->view('frontTemplate4', $data);
+    }
+
+
+
     public function register() {
+
         $this->form_validation->set_rules('email', 'email', 'required');
         $this->form_validation->set_rules('password', 'password', 'required');
         $this->form_validation->set_rules('mobile', 'mobile', 'required');
