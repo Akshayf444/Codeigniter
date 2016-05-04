@@ -115,7 +115,7 @@
             <div class="col-lg-12 col-sm-12">
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active" >
-                        <a href="<?php //echo site_url('User/login');                   ?>" aria-controls="personal" role="tab" data-toggle="tab">
+                        <a href="<?php //echo site_url('User/login');                    ?>" aria-controls="personal" role="tab" data-toggle="tab">
                             <strong>Top Companies/Consultancy</strong>
                         </a>
                     </li>
@@ -140,7 +140,7 @@
 
                 <!--                <ul class="nav nav-tabs" role="tablist">
                                     <li role="presentation" >
-                                        <a href="<?php //echo site_url('Employee/login');                                                          ?>" aria-controls="company" role="tab" data-toggle="tab">
+                                        <a href="<?php //echo site_url('Employee/login');                                                           ?>" aria-controls="company" role="tab" data-toggle="tab">
                                             <strong>Functional Area</strong>
                                         </a>
                                     </li>
@@ -245,13 +245,13 @@
         background-size: 100%;
         z-index: 5;
     }
-    @media only screen and (max-width: 870px) and (min-width: 320px)
+    
+@media only screen and (max-width: 870px) and (min-width: 320px){
     .js-app {
         padding-left: 8%;
         max-width: 75%;
         width: 71%;
     }
-    @media only screen and (max-width: 870px) and (min-width: 320px)
     .rec-app {
         width: auto;
         border-left: 0;
@@ -259,26 +259,25 @@
         margin-top: 9%;
         padding-top: 5%;
     }
-    @media only screen and (max-width: 768px) and (min-width: 320px)
+}
+@media only screen and (max-width: 768px) and (min-width: 320px){
     .main .scrolling-bg .l1, .main .fixed-bg .l1 {
         font-size: 192.5%;
     }
-    @media only screen and (max-width: 768px) and (min-width: 320px)
     .Fs-18 {
         font-size: 77.75%;
     }
-    @media only screen and (max-width: 768px) and (min-width: 320px)
     .appinfo, .appintro {
         width: 100%;
         display: inline-block;
         position: relative;
     }
-    @media only screen and (max-width: 768px) and (min-width: 320px)
     .appinfo, .appintro {
         width: 100%;
         display: inline-block;
         position: relative;
-    }
+    }   
+}
 </style>
 <div class="container-fluid">
     <div class="scrolling-bg">
@@ -290,7 +289,7 @@
                         <div class="js-app" style="padding-left: 4%">
                             <h2 class="l1"><span class="Fw-800">Jobseeker</span> <span class="Fw-lr color-lightgrey">App</span></h2>
                             <div class="appintro Fs-18">
-                                <p>Hiree's jobseeker app provides you with all necessary tools to find that better offer, super fast!</p>
+                                <p>Talent's jobseeker app provides you with all necessary tools to find that better offer, super fast!</p>
                                 <br>
                                 <div class="play-store">
                                     <a target="_blank" href="#"><img class="appstore inline-blk" src="https://cdn.hiree.com/resources/img/en_generic_rgb_wo_60.png" style="max-width: 100%; height: auto;" alt="Download from Google Play Store"></a>
@@ -302,13 +301,13 @@
                         <div class="rec-app">
                             <div class="l1"><span class="Fw-800">Recruiter</span> <span class="Fw-lr color-lightgrey">App</span></div>
                             <div class="appintro Fs-18">
-                                <p>Hiree's recruiter app is dedicated specifically to your very busy schedule and connect with candidates .... all on the go!</p>
+                                <p>Talent's recruiter app is dedicated specifically to your very busy schedule and connect with candidates .... all on the go!</p>
                                 <br>
                                 <div class="play-store">
                                     <a target="_blank" href="#"><img class="appstore inline-blk" src="https://cdn.hiree.com/resources/img/en_generic_rgb_wo_60.png" style="max-width: 100%; height: auto;" alt="Download from Google Play Store"></a>
                                 </div>
                             </div>
-                            <div class="recruiter-app-screen"><img src="<?php echo asset_url(); ?>assets/img/android_app.png"></div>
+                            <div class="recruiter-app-screen"><img class="hidden-xs" src="<?php echo asset_url(); ?>assets/img/android_app.png"></div>
                         </div>	
 
                     </div>

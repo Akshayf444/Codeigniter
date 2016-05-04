@@ -13,12 +13,10 @@ class Employee extends CI_Controller {
         $this->load->helper('download');
     }
 
- public function Home(){
- $data = array('title' => 'Login', 'content' => 'employee/home', 'view_data' => 'Blank');
+    public function Home() {
+        $data = array('title' => 'Login', 'content' => 'employee/home', 'view_data' => 'Blank');
         $this->load->view('frontTemplate4', $data);
     }
-
-
 
     public function register() {
 
@@ -74,7 +72,7 @@ class Employee extends CI_Controller {
         $this->session->unset_userdata("user_email");
         $this->session->unset_userdata("user_mobile");
         $this->session->unset_userdata("user_type");
-        redirect('Employee/login', 'refresh');
+        redirect('Employee/home', 'refresh');
     }
 
     public function is_logged_in() {
@@ -113,7 +111,7 @@ class Employee extends CI_Controller {
             $userData['industry'] = isset($details['industry_type']) ? $this->Master_model->getIndustry($details['industry_type']) : $this->Master_model->getIndustry();
             $userData['user_id'] = $user_id;
             $data = array('title' => 'Basic Employee Profile', 'content' => 'employee/add_details', 'view_data' => $userData);
-            $this->load->view('template1', $data);
+            $this->load->view('frontTemplate5', $data);
         } else {
             redirect('employee/login', 'refresh');
         }
@@ -261,6 +259,10 @@ class Employee extends CI_Controller {
         } else {
             redirect('User/login', 'refresh');
         }
+    }
+    
+    public function dashboard(){
+        
     }
 
 }

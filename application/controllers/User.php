@@ -908,7 +908,7 @@ class User extends CI_Controller {
                 $this->db->where(array('auth_id' => $user_id));
                 $this->db->update('language', $language_array);
             }
-            // redirect('User/view', 'refresh');
+            redirect('User/view', 'refresh');
         }
 
         $this->load->view('User/skills', $data);
