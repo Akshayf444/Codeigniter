@@ -63,7 +63,7 @@ class Employee extends CI_Controller {
                     if (isset($redirect_url) && $redirect_url != '') {
                         header("Location:" . $redirect_url);
                     } else {
-                        redirect('Employee/Home', 'refresh');
+                        redirect('Job/job_list', 'refresh');
                     }
                 }
                 $dropdown['Error'] = '<p class="alert alert-success">Thank You . Registered Successfully</p>';
