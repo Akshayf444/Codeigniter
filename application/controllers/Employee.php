@@ -294,7 +294,7 @@ class Employee extends CI_Controller {
             }
             $er['errrrr'] = "";
             $data = array('title' => 'Job Search', 'content' => 'Employee/changepassword', 'view_data' => $er);
-            $this->load->view('template1', $data);
+            $this->load->view('frontTemplate5', $data);
         } else {
             redirect('User/login', 'refresh');
         }
