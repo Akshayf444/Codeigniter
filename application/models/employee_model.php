@@ -18,8 +18,8 @@ class employee_model extends CI_Model {
         );
         return $this->db->insert('authentication', $data2);
     }
- public function  find_email_emp(){
-     $sql=" select * from  emp_profilr where email='$email'OR mobile='$mobile'";
+ public function  find_email_emp($email,$mobile){
+     $sql=" select * from  emp_profile where email='$email' OR mobile='$mobile'";
      $query=$this->db->query($sql);
      return $query->result();
  }

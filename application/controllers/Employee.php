@@ -25,7 +25,7 @@ class Employee extends CI_Controller {
         $this->load->model('Sms_model');
         if ($this->input->post()) {
             $check = $this->User_model->find_by_email($this->input->post('email'), $this->input->post('mobile'));
-            $check2 = $this->Employee_model->find_email_emp($this->input->post('email'), $this->input->post('mobile'));
+            $check2 = $this->employee_model->find_email_emp($this->input->post('email'), $this->input->post('mobile'));
             if (empty($check) && empty($check2)) {
                 $password = $this->input->post('password');
                 $field_array = array(
