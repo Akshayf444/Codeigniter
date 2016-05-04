@@ -71,13 +71,19 @@ class Job_model extends CI_Model {
                     LEFT JOIN jobs 
                     ON apply_job.job_id = jobs.job_id
                     LEFT JOIN user u 
-                    ON apply_job.auth_id = u.auth_id ";
+                    ON apply_job.auth_id = u.auth_id 
+                    LEFT JOIN user_qualification q
+                    ON apply_job.auth_id = u.auth_id 
+                    LEFT JOIN education_master em 
+                    ON em.edu_id = q.qualification
+                    LEFT JOIN specialization_master sm 
+                    ON sm.spec_id = q.specialization";
         if (!empty($conditions)) {
             $query .= " WHERE " . join(" AND ", $conditions);
         }
 
         $query = $this->db->query($query);
-        echo $this->db->last_query();
+        //echo $this->db->last_query();
         return $query->result();
     }
 
