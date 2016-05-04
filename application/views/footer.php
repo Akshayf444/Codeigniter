@@ -68,4 +68,8 @@
             </div><!-- /.container -->
         </div><!-- /.footer-bottom -->
     </div><!-- /.footer -->
+    <!-- Start of SimpleHitCounter Code -->
+    <div align="center"><a href="http://www.finediapercakes.com/#!boy-diaper-cakes/c2424" target="_blank"><img src="http://simplehitcounter.com/hit.php?uid=2095651&f=16777215&b=0" border="0" height="18" width="83" alt=""></a><br><a href="http://www.finediapercakes.com/#!boy-diaper-cakes/c2424" target="_blank" style="text-decoration:none;"></a></div>
+    <!-- End of SimpleHitCounter Code -->
+
 </div>

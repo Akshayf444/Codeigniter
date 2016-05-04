@@ -528,7 +528,6 @@ class Api extends CI_Controller {
     }
 
     public function SearchJob() {
-
         $this->load->model('Master_model');
         $this->load->model('Job_model');
         $skill = $_REQUEST['skill'];
@@ -555,7 +554,6 @@ class Api extends CI_Controller {
             //$data = array();
             $data = $this->Job_model->search($conditions);
             if (!empty($data)) {
-
                 $output = array('status' => 'success', 'message' => $data);
             } else {
                 $content = array();
