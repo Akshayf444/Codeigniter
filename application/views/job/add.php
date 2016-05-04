@@ -31,48 +31,61 @@
         </div>
         <div class="col-lg-6">
             <div class="form-group">
-                <label>CTC *</label><br>
-                <input type="text" value="<?php echo set_value('ctc_min') ?>" class="form-control half-formcontrol" placeholder="Enter Salary"  name="ctc_min">
-                <select class="form-control half-formcontrol"  name="ctc_type">
-                    <option value="0">Per Month</option>
-                    <option value="1">Per Year</option>
-                </select>
+                <label>CTC *</label>
+                <div class="row">
+
+                    <div class="col-sm-6">
+
+                        <input type="text" value="<?php echo set_value('ctc_min') ?>" class="form-control half-formcontrol" placeholder="Enter Salary"  name="ctc_min">
+                    </div>   
+                    <div class="col-sm-6">   <select class="form-control half-formcontrol"  name="ctc_type">
+                            <option value="0">Per Month</option>
+                            <option value="1">Per Year</option>
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="form-group">
+
                 <label>Hide Salary From Jobseeker*</label>
                 <input type="checkbox" name="hide_ctc" value="1">
             </div>
             <div class="form-group">
                 <label>Work Experience *</label><br>
-                <select class="form-control half-formcontrol"  name="exp_min"><?php echo $experience ?></select><select class="form-control half-formcontrol" name="exp_max"><?php echo $experience ?></select>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <select class="form-control half-formcontrol" name="exp_max"><?php echo $experience ?></select>
+
+                    </div> <div class="col-sm-6">  <select class="form-control half-formcontrol"  name="exp_min"><?php echo $experience ?></select>     
+                    </div>    </div>
             </div>
-            <div class="form-group">
-                <label>Location *</label>
-                <select class="form-control" name="location">
-                    <?php echo $location; ?>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Industry *</label>
-                <select class="form-control" name="industry"><?php echo $industry ?></select>
-            </div>
-            <div class="form-group">
-                <label>Function Area *</label>
-                <select class="form-control" name="functional_area"><?php echo $functional_area ?></select>
-                <input type="hidden" name="auth_id" value="<?php echo $auth_id ?>"/>
+                <div class="form-group">
+                    <label>Location *</label>
+                    <select class="form-control" name="location">
+                        <?php echo $location; ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Industry *</label>
+                    <select class="form-control" name="industry"><?php echo $industry ?></select>
+                </div>
+                <div class="form-group">
+                    <label>Function Area *</label>
+                    <select class="form-control" name="functional_area"><?php echo $functional_area ?></select>
+                    <input type="hidden" name="auth_id" value="<?php echo $auth_id ?>"/>
+                </div>
+
             </div>
 
+
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary pull-right" name="submit" value="Save" >
+            </div>
         </div>
-    
-
-    <div class="form-group">
-        <input type="submit" class="btn btn-primary pull-right" name="submit" value="Save" >
+        </form>
     </div>
-</div>
-</form>
-</div>
 
 
 
-<script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
-<script>tinymce.init({selector: 'textarea'});</script>
+    <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
+    <script>tinymce.init({selector: 'textarea'});</script>
