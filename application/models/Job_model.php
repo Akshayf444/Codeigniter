@@ -67,7 +67,7 @@ class Job_model extends CI_Model {
     }
 
     public function appiled_job($conditions = array()) {
-        $query = "SELECT jobs.`job_id`, (u.name) AS NAME,(jobs.title) AS title,u.`mobile`,(apply_job.`auth_id`) AS user_id,(u.`email`)AS email FROM apply_job
+        $query = "SELECT jobs.`job_id`,u.role,em.qualification,sm.specialization,apply_job.created as apply_date,(u.name) AS NAME,(jobs.title) AS title,u.`mobile`,(apply_job.`auth_id`) AS user_id,(u.`email`)AS email FROM apply_job
                     LEFT JOIN jobs 
                     ON apply_job.job_id = jobs.job_id
                     LEFT JOIN user u 
