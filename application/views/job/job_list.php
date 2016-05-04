@@ -1,19 +1,31 @@
 <div class="document-title">
     <div class="container">
-        <h1 class="center"> View Jobs</h1>
+        <h1 class="center"> Jobs</h1>
     </div><!-- /.container -->
 </div><!-- /.document-title -->
-<div class="container">
-    <div class="row">
+<div class="col-sm-12">
+<div class="tab">
+ <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="<?php echo site_url('Job/job_list') ;?>" aria-controls="Name" role="tab" data-toggle="tab">Job</a></li>
+       <li role="presentation"><a href="<?php echo site_url('Job/candidates') ;?>" aria-controls="Candidates" >Candidates</a></li>
+   
+  </ul>
+</div>
+</div>
+    
+
+    
         <div class="col-sm-12">
             <table class="table table-striped">
+                
+                
                 <tr>
-                    <th>Name</th>
+               <th>Name</th>
                     <th>Location</th>
                     <th>Created</th>
                     <th>Candidates</th>
                     <th>Status</th>
-                </tr>
+                              </tr>
 
                 <?php foreach ($users as $user) { ?>
                     <tr>
@@ -30,5 +42,3 @@
                 <?php } ?>
             </table>
         </div>
-    </div>
-</div>
