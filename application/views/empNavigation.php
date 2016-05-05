@@ -2,11 +2,7 @@
 
 $Sidebar = array(
     'My Talent' => array(
-        'Personal Details' => 'Employee/Home',
-        'Work Experience' => 'Employee/Home',
-        'Education Details' => 'Employee/Home',
-        'Certification Details' => 'Employee/Home',
-        'Skills' => 'Employee/Home',
+        'Profile' => 'Employee/add_details',
     ),
     'Jobs & Responses' => array(
         'Post A Hot Vacancy' => 'Job/add',
@@ -34,7 +30,12 @@ $Sidebar = array(
 );
 if (!empty($Sidebar)) {
     foreach ($Sidebar as $menu => $submenu) {
-        echo '<li><a href="' . site_url($submenu) . '">' . $menu . '</a>';
+        if (isset($submenu) && is_string($submenu)) {
+            echo '<li><a href="' . site_url($submenu) . '">' . $menu . '</a>';
+        } else {
+            echo '<li><a href="#">' . $menu . '</a>';
+        }
+
 
         if (isset($submenu) && is_array($submenu) && !empty($submenu)) {
             echo '<ul class="sub-menu">';
