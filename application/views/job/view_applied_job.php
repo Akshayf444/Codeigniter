@@ -1,6 +1,6 @@
 <div class="document-title">
     <div class="container">
-        <h1 class="center"> Applied  Jobs List</h1>
+        <h1 class="center">Candidates</h1>
     </div><!-- /.container -->
 </div>
 <div class="col-sm-12">

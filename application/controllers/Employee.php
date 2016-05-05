@@ -102,7 +102,7 @@ class Employee extends CI_Controller {
         }
         $data1['user2'] = "";
         $data = array('title' => 'Login', 'content' => 'employee/login', 'view_data' => $data1);
-        $this->load->view('frontTemplate', $data);
+        $this->load->view('frontTemplate4', $data);
 //         
     }
 
