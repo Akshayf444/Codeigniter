@@ -94,7 +94,7 @@ class Employee extends CI_Controller {
                 $this->session->set_userdata("user_type", $check['type']);
                 $check1['User'] = $this->employee_model->find_by_id($check['auth_id']);
                 //$this->load->view('Employe/view');
-                redirect('Employee/add_details', 'refresh');
+                redirect('Job/job_list', 'refresh');
             } else {
                 $data1['user'] = "Incorrect Login";
                 // $this->load->view('employee/error');
