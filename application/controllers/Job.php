@@ -26,8 +26,9 @@ class Job extends CI_Controller {
     }
 
     function add() {
+       
         $data['auth_id'] = $this->session->userdata("user_id");
-        if (isset($this->user_id) && $this->user_id != '' && $this->user_type == 'Employee') {
+        if (isset($this->user_id) && $this->user_id != '' && $this->user_type == 'Employee') { 
             if ($this->input->post()) {
                 $this->form_validation->set_rules('title', 'title', 'trim|required');
                 $this->form_validation->set_rules('description', 'description', 'trim|required');
@@ -35,7 +36,7 @@ class Job extends CI_Controller {
                 $this->form_validation->set_rules('exp_min', 'Minimum Experience', 'trim|required');
                 $this->form_validation->set_rules('exp_max', 'Maximum Experience', 'trim|required');
                 $this->form_validation->set_rules('ctc_min', 'CTC', 'trim|required');
-                $this->form_validation->set_rules('location', 'Location', 'trim|required');
+//                $this->form_validation->set_rules('location', 'Location', 'trim|required');
                 $this->form_validation->set_rules('functional_area', 'Functional Area', 'trim|required');
                 $this->form_validation->set_rules('industry', 'Industry', 'trim|required');
 

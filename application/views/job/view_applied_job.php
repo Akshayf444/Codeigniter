@@ -3,6 +3,8 @@
         <h1 class="center"> Applied  Jobs List</h1>
     </div><!-- /.container -->
 </div>
+<div class="container-fluid">
+    <div class="col-sm-offset-1 col-sm-10">
 <div class="col-sm-12">
     <div class="tab">
         <ul class="nav nav-tabs" role="tablist">
@@ -12,7 +14,7 @@
         </ul>
     </div>
 </div>
-<div class="col-sm-12">
+
     <table class="table table-striped">
         <tr>
             <th>Name</th>
@@ -39,5 +41,6 @@ endforeach;
 //print_r($this->session->all_userdata());
 ?>
     </table>
+</div>
 </div>
    

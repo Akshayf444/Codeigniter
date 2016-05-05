@@ -1,4 +1,6 @@
-
+ <link href="<?php echo asset_url(); ?>assets/libraries/choosen/chosen.min.css" rel="stylesheet" type="text/css"/>
+    <script src="<?php echo asset_url(); ?>assets/libraries/choosen/chosen.jquery.min.js" type="text/javascript"></script>
+    <script src="<?php echo asset_url(); ?>assets/libraries/choosen/chosen.proto.js" type="text/javascript"></script>
 <div class="document-title" style="">
     <div class="container">
         <h1 class="center">Post Job</h1>
@@ -59,33 +61,40 @@
                     </div> <div class="col-sm-6">  <select class="form-control half-formcontrol"  name="exp_min"><?php echo $experience ?></select>     
                     </div>    </div>
             </div>
-                <div class="form-group">
-                    <label>Location *</label>
-                    <select class="form-control" name="location">
-                        <?php echo $location; ?>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Industry *</label>
-                    <select class="form-control" name="industry"><?php echo $industry ?></select>
-                </div>
-                <div class="form-group">
-                    <label>Function Area *</label>
-                    <select class="form-control" name="functional_area"><?php echo $functional_area ?></select>
-                    <input type="hidden" name="auth_id" value="<?php echo $auth_id ?>"/>
-                </div>
-
-            </div>
-
-
             <div class="form-group">
-                <input type="submit" class="btn btn-primary pull-right" name="submit" value="Save" >
+                <label>Location *</label>
+
+                <select  multiple class="chosen-select-no-results form-control " name="location[]">
+                    <?php echo $location; ?>
+                </select>
             </div>
+            <div class="form-group">
+                <label>Industry *</label>
+                <select class="form-control" name="industry"><?php echo $industry ?></select>
+            </div>
+            <div class="form-group">
+                <label>Function Area *</label>
+                <select class="form-control" name="functional_area"><?php echo $functional_area ?></select>
+                <input type="hidden" name="auth_id" value="<?php echo $auth_id ?>"/>
+            </div>
+
         </div>
-        </form>
+
+
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary pull-right" name="submit" value="Save" >
+        </div>
     </div>
+</form>
+</div>
 
 
 
-    <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
-    <script>tinymce.init({selector: 'textarea'});</script>
+<script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
+<script>tinymce.init({selector: 'textarea'});</script>
+
+
+<script>
+ 
+</script>
+

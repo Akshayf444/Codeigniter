@@ -367,7 +367,7 @@ class User_model extends CI_Model {
                 ON j.functional_area=fa.fun_id 
                 LEFT JOIN `industry_master` im
                 ON im.indus_id=j.industry
-                WHERE j.functional_area=$id ";
+                WHERE j.functional_area=$id and j.status = 0 ";
 
         if (!empty($skills)) {
             foreach ($skills as $value) {
@@ -394,7 +394,7 @@ class User_model extends CI_Model {
         if ($user_id > 0) {
             $query .= "LEFT JOIN apply_job ap ON ap.job_id = j.job_id AND ap.auth_id = '$user_id'";
         }
-        $query .= " WHERE j.functional_area=$id";
+        $query .= " WHERE j.functional_area=$id and j.status = 0";
 
         if (!empty($skills)) {
             foreach ($skills as $value) {
@@ -414,7 +414,7 @@ class User_model extends CI_Model {
                 LEFT JOIN emp_profile ep
                 ON j.auth_id=ep.`auth_id`
                 LEFT JOIN `location_master` lm
-                ON lm.loc_id=j.location";
+                ON lm.loc_id=j.location where j.status = 0" ;
         $query = $this->db->query($query);
 
         return $query->result();
@@ -430,7 +430,7 @@ class User_model extends CI_Model {
                 ON fa.`fun_id`=j.`functional_area`
                 LEFT JOIN `industry_master` im
                 ON j.`industry`=im.`indus_id`
-                WHERE j.`job_id`=$id";
+                WHERE j.`job_id`=$id and status = 0";
         $query = $this->db->query($query);
         return $query->row_array();
     }
@@ -443,7 +443,7 @@ class User_model extends CI_Model {
     public function application($id) {
         $query = "SELECT * FROM apply_job aj
                 LEFT JOIN jobs j
-                ON aj.`job_id`=j.`job_id`
+                ON aj.`job_id`=j.`job_id` and j.status = 0
                 LEFT JOIN `emp_profile` ep
                 ON ep.`auth_id` =j.`auth_id`
                 LEFT JOIN `functional_area` fa
@@ -452,7 +452,7 @@ class User_model extends CI_Model {
                 ON im.indus_id=j.industry
                 LEFT JOIN `location_master` lm
                 ON lm.`loc_id`=j.`location`
-                WHERE aj.auth_id=$id";
+                WHERE aj.auth_id=$id ";
         $query = $this->db->query($query);
         return $query->result();
     }
@@ -476,7 +476,7 @@ class User_model extends CI_Model {
     public function viewsavedjobs($id) {
         $query = "SELECT *,(aj.`created`)AS creat FROM saved_jobs aj
                 LEFT JOIN jobs j
-                ON aj.`job_id`=j.`job_id`
+                ON aj.`job_id`=j.`job_id` and  j.status = 0
                 LEFT JOIN `emp_profile` ep
                 ON ep.`auth_id` =j.`auth_id`
                 LEFT JOIN `location_master` lm
@@ -571,7 +571,7 @@ class User_model extends CI_Model {
                 ON j.functional_area=fa.fun_id 
                 LEFT JOIN `industry_master` im
                 ON im.indus_id=j.industry
-                WHERE j.`job_id` IN($data) AND ap.auth_id=$user_id";
+                WHERE j.`job_id` IN($data) AND ap.auth_id=$user_id and j.status = 0";
         $query = $this->db->query($query);
 
         return $query->result();

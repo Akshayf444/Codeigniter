@@ -3,6 +3,7 @@
 class Job_model extends CI_Model {
 
     function add($auth_id) {
+        $location=  implode(",",$this->input->post('location'));
         $field_array = array(
             'title' => $this->input->post('title'),
             'description' => $this->input->post('description'),
@@ -12,7 +13,7 @@ class Job_model extends CI_Model {
             'ctc_min' => $this->input->post('ctc_min'),
             'ctc_type' => $this->input->post('ctc_type'),
             'hide_ctc' => $this->input->post('hide_ctc'),
-            'location' => $this->input->post('location'),
+            'location' =>$location,
             'industry' => $this->input->post('industry'),
             'functional_area' => $this->input->post('functional_area'),
             'auth_id' => $auth_id,
@@ -69,7 +70,7 @@ class Job_model extends CI_Model {
     public function appiled_job($conditions = array()) {
         $query = "SELECT jobs.`job_id`,u.role,u.prefred_location as location,em.qualification,sm.specialization,apply_job.created as apply_date,(u.name) AS NAME,(jobs.title) AS title,u.`mobile`,(apply_job.`auth_id`) AS user_id,(u.`email`)AS email FROM apply_job
                     LEFT JOIN jobs 
-                    ON apply_job.job_id = jobs.job_id
+                    ON apply_job.job_id = jobs.job_id and jobs.status = 0
                     LEFT JOIN user u 
                     ON apply_job.auth_id = u.auth_id 
                     LEFT JOIN user_qualification q
@@ -117,7 +118,7 @@ ON j.job_id = aj.job_id AND aj.auth_id = {$auth_id} ";
     }
 
     public function countSearch($conditions, $location_condition) {
-        $query = "SELECT COUNT(*) jobsearch FROM ( SELECT * FROM jobs ";
+        $query = "SELECT COUNT(*) jobsearch FROM ( SELECT * FROM jobs  where j.status = 0 ";
         if (!empty($location_condition)) {
             $query .= " WHERE " . join(" ", $location_condition);
         }
@@ -163,7 +164,7 @@ ON ap.`job_id` = j.`job_id` AND ap.auth_id = '$user_id' ";
         $data = "SELECT j.*, aj.* FROM jobs j
 LEFT JOIN apply_job aj
 ON j.job_id = aj.job_id
-WHERE aj.auth_id = $auth_id AND j.job_id = $job_id";
+WHERE aj.auth_id = $auth_id AND j.job_id = $job_id and j.status = 0" ;
         $query = $this->db->query($data);
 
         return $query->row_array();
@@ -251,7 +252,7 @@ ON ep.`auth_id` = j.`auth_id`";
 
     public function job_apply_message($id) {
         $data = "SELECT * FROM jobs j
-WHERE j.`job_id` = $id";
+WHERE j.`job_id` = $id and j.status = 0";
 
         $query = $this->db->query($data);
 
@@ -271,13 +272,13 @@ WHERE pv.jobseeker_id = $id";
     }
 
     public function trendingJob() {
-        $sql = "SELECT DISTINCT(title) as title FROM jobs WHERE title !='' ORDER BY job_id DESC LIMIT 10 ";
+        $sql = "SELECT DISTINCT(title) as title FROM jobs WHERE title !='' and status = 0 ORDER BY job_id DESC LIMIT 10 ";
         $query = $this->db->query($sql);
         return $query->result();
     }
 
     public function jobsbyrole() {
-        $sql = "SELECT DISTINCT(title) as title FROM jobs ORDER BY job_id DESC LIMIT 10 ";
+        $sql = "SELECT DISTINCT(title) as title FROM jobs where status = 0 ORDER BY job_id DESC LIMIT 10 ";
         $query = $this->db->query($sql);
         return $query->result();
     }
