@@ -6,7 +6,7 @@
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active"><a href="<?php echo site_url('Job/job_list'); ?>" aria-controls="Name" role="tab" data-toggle="tab">Job</a></li>
                     <li role="presentation"><a href="<?php echo site_url('Job/candidates'); ?>" aria-controls="Candidates" >Candidates</a></li>
-                    <a href="<?php echo site_url('Job/add') ?>"class=" btn-xs btn-success pull-right">Post Job</a>
+                    <a href="<?php echo site_url('Job/add') ?>"class=" btn-sm btn-success pull-right"><b>Post Job</b></a>
 
                 </ul>
             </div>
@@ -14,6 +14,7 @@
 
         <table class="table table-striped">
             <tr>
+
                 <th>Name</th>
                 <th>Location</th>
                 <th>Created</th>
@@ -37,7 +38,3 @@
         </table>
     </div>
 </div>
-<script>
-
-
-</script>

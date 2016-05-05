@@ -26,17 +26,17 @@ class Job extends CI_Controller {
     }
 
     function add() {
-       
+        var_dump($_POST);
         $data['auth_id'] = $this->session->userdata("user_id");
         if (isset($this->user_id) && $this->user_id != '' && $this->user_type == 'Employee') { 
             if ($this->input->post()) {
                 $this->form_validation->set_rules('title', 'title', 'trim|required');
                 $this->form_validation->set_rules('description', 'description', 'trim|required');
-                $this->form_validation->set_rules('keyword', 'keyword', 'trim|required');
+                $this->form_validation->set_rules('skill', 'skill', 'required');
                 $this->form_validation->set_rules('exp_min', 'Minimum Experience', 'trim|required');
                 $this->form_validation->set_rules('exp_max', 'Maximum Experience', 'trim|required');
                 $this->form_validation->set_rules('ctc_min', 'CTC', 'trim|required');
-//                $this->form_validation->set_rules('location', 'Location', 'trim|required');
+             $this->form_validation->set_rules('location', 'Location', 'required');
                 $this->form_validation->set_rules('functional_area', 'Functional Area', 'trim|required');
                 $this->form_validation->set_rules('industry', 'Industry', 'trim|required');
 
@@ -102,6 +102,9 @@ class Job extends CI_Controller {
         $condition = array(
             'jobs.auth_id = ' . $id
         );
+        if (isset($_GET['job'])) {
+            $condition[2] = 'jobs.job_id = ' . $_GET['job'];
+        }
         $userData['user'] = $this->Job_model->appiled_job($condition);
 
 //        $this->load->view('job/view_applied_job',$userData);

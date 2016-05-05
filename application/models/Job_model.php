@@ -3,7 +3,7 @@
 class Job_model extends CI_Model {
 
     function add($auth_id) {
-        $location=  implode(",",$this->input->post('location'));
+       
         $field_array = array(
             'title' => $this->input->post('title'),
             'description' => $this->input->post('description'),
@@ -13,11 +13,11 @@ class Job_model extends CI_Model {
             'ctc_min' => $this->input->post('ctc_min'),
             'ctc_type' => $this->input->post('ctc_type'),
             'hide_ctc' => $this->input->post('hide_ctc'),
-            'location' =>$location,
+            'location' =>$this->input->post('location'),
             'industry' => $this->input->post('industry'),
             'functional_area' => $this->input->post('functional_area'),
             'auth_id' => $auth_id,
-            'keyword' => $this->input->post('keyword'),
+            'keyword' => $this->input->post('skill'),
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
         );
@@ -59,7 +59,7 @@ class Job_model extends CI_Model {
             'location' => $this->input->post('location'),
             'industry' => $this->input->post('industry'),
             'functional_area' => $this->input->post('functional_area'),
-            'keyword' => $this->input->post('keyword'),
+            'keyword' => $this->input->post('skill'),
             'updated_at' => date('Y-m-d H:i:s'),
         );
 
@@ -69,8 +69,14 @@ class Job_model extends CI_Model {
 
     public function appiled_job($conditions = array()) {
         $query = "SELECT jobs.`job_id`,u.role,u.prefred_location as location,em.qualification,sm.specialization,apply_job.created as apply_date,(u.name) AS NAME,(jobs.title) AS title,u.`mobile`,(apply_job.`auth_id`) AS user_id,(u.`email`)AS email FROM apply_job
-                    LEFT JOIN jobs 
-                    ON apply_job.job_id = jobs.job_id and jobs.status = 0
+
+            INNER JOIN (SELECT * FROM jobs ";
+        if (!empty($conditions)) {
+            $query .= " WHERE " . join(" AND ", $conditions);
+        }
+        $query .= " ) as jobs 
+                    ON apply_job.job_id = jobs.job_id  and jobs.status=0
+
                     LEFT JOIN user u 
                     ON apply_job.auth_id = u.auth_id 
                     LEFT JOIN user_qualification q
@@ -79,12 +85,10 @@ class Job_model extends CI_Model {
                     ON em.edu_id = q.qualification
                     LEFT JOIN specialization_master sm 
                     ON sm.spec_id = q.specialization";
-        if (!empty($conditions)) {
-            $query .= " WHERE " . join(" AND ", $conditions);
-        }
+        $query .= " GROUP BY jobs.job_id,apply_job.auth_id ";
 
         $query = $this->db->query($query);
-        //echo $this->db->last_query();
+       // echo $this->db->last_query();
         return $query->result();
     }
 
@@ -118,7 +122,7 @@ ON j.job_id = aj.job_id AND aj.auth_id = {$auth_id} ";
     }
 
     public function countSearch($conditions, $location_condition) {
-        $query = "SELECT COUNT(*) jobsearch FROM ( SELECT * FROM jobs  where j.status = 0 ";
+        $query = "SELECT COUNT(*) jobsearch FROM ( SELECT * FROM jobs ";
         if (!empty($location_condition)) {
             $query .= " WHERE " . join(" ", $location_condition);
         }

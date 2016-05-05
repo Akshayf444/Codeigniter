@@ -27,7 +27,7 @@
             </div>
             <div class="form-group">
                 <label>keywords *</label>
-                <input type="text" name="keyword" value="<?php echo set_value('keyword') ?>" class="form-control"/>
+                    <input type="text" required="required" class="form-control " id="skills" name="skill" placeholder="Job Title / Skills / Company etc">
             </div>
 
         </div>
@@ -61,12 +61,13 @@
                     </div> <div class="col-sm-6">  <select class="form-control half-formcontrol"  name="exp_min"><?php echo $experience ?></select>     
                     </div>    </div>
             </div>
+           
+                   
+                  
             <div class="form-group">
                 <label>Location *</label>
 
-                <select  multiple class="chosen-select-no-results form-control " name="location[]">
-                    <?php echo $location; ?>
-                </select>
+                <input type="text" class="form-control" id="location" name="location" placeholder="Type Location">
             </div>
             <div class="form-group">
                 <label>Industry *</label>
@@ -93,8 +94,119 @@
 <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
 <script>tinymce.init({selector: 'textarea'});</script>
 
+  <script>
+            $(function () {
+<?php
+$skills = array();
+$sql = "SELECT DISTINCT(skill_name) as skill FROM skill_master where skill_name != ''  UNION ALL SELECT DISTINCT(role) as skill FROM user where role != '' UNION ALL SELECT DISTINCT(name) as skill FROM emp_profile where name != '' ";
+$query = $this->db->query($sql);
+$result = $query->result();
+?>
+                var availableTags =
+<?php
+if (!empty($result)) {
+    foreach ($result as $value) {
+        array_push($skills, $value->skill);
+    }
+    echo json_encode($skills);
+}
+?>
+                ;
+                function split(val) {
+                    return val.split(/,\s*/);
+                }
+                function extractLast(term) {
+                    return split(term).pop();
+                }
 
-<script>
- 
-</script>
+                $("#skills")
+                        // don't navigate away from the field on tab when selecting an item
+                        .bind("keydown", function (event) {
+                            if (event.keyCode === $.ui.keyCode.TAB &&
+                                    $(this).autocomplete("instance").menu.active) {
+                                event.preventDefault();
+                            }
+                        })
+                        .autocomplete({
+                            minLength: 0,
+                            source: function (request, response) {
+                                // delegate back to autocomplete, but extract the last term
+                                response($.ui.autocomplete.filter(
+                                        availableTags, extractLast(request.term)));
+                            },
+                            focus: function () {
+                                // prevent value inserted on focus
+                                return false;
+                            },
+                            select: function (event, ui) {
+                                var terms = split(this.value);
+                                // remove the current input
+                                terms.pop();
+                                // add the selected item
+                                terms.push(ui.item.value);
+                                // add placeholder to get the comma-and-space at the end
+                                terms.push("");
+                                this.value = terms.join(", ");
+                                return false;
+                            }
+                        });
+            });
+        </script>
+        <script>
+            $(function () {
+<?php
+$locations = array();
+?>
+                var availableTags2 =
+<?php
+$this->load->model('Master_model');
+$dropdowns = $this->Master_model->listLocation();
+if (!empty($dropdowns)) {
+    foreach ($dropdowns as $value) {
+        array_push($locations, $value->location);
+    }
+    echo json_encode($locations);
+}
+?>
+                ;
+                function split(val) {
+                    return val.split(/,\s*/);
+                }
+                function extractLast(term) {
+                    return split(term).pop();
+                }
 
+                $("#location")
+                        // don't navigate away from the field on tab when selecting an item
+                        .bind("keydown", function (event) {
+                            if (event.keyCode === $.ui.keyCode.TAB &&
+                                    $(this).autocomplete("instance").menu.active) {
+                                event.preventDefault();
+                            }
+                        })
+                        .autocomplete({
+                            minLength: 0,
+                            source: function (request, response) {
+                                // delegate back to autocomplete, but extract the last term
+                                response($.ui.autocomplete.filter(
+                                        availableTags2, extractLast(request.term)));
+                            },
+                            focus: function () {
+                                // prevent value inserted on focus
+                                return false;
+                            },
+                            select: function (event, ui) {
+                                var terms = split(this.value);
+                                // remove the current input
+                                terms.pop();
+                                // add the selected item
+                                terms.push(ui.item.value);
+                                // add placeholder to get the comma-and-space at the end
+                                terms.push("");
+                                this.value = terms.join(", ");
+                                return false;
+                            }
+                        });
+            });
+        </script>
+       

@@ -167,7 +167,7 @@
                     </div>
                 </div>
             </div>
-            <?php $this->load->view('footer', $view_data); ?>
+            <?php $this->load->view('empFooter', $view_data); ?>
 
         </div><!-- /.page-wrapper -->
 
