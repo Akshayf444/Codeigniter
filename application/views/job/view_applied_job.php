@@ -21,23 +21,18 @@
             <th>Education</th>
             <th>Date</th>
         </tr>
-   
-<?php foreach ($user as $u): ?>
- <tr>
-    
-     <td> <?php echo $u->title; ?></td>
-     <td> <?php echo $u->location; ?></td>
-     <td> <?php echo $u->role; ?></td>
-     <td> <?php echo $u->qualification ." ".$u->specialization; ?></td>
-     <td> <?php echo $u->apply_date; ?></td>
-           
-            
-              
-   
-    <?php
-endforeach;
+
+        <?php foreach ($user as $u): ?>
+            <tr>                
+                <td> <?php echo $u->NAME; ?></td>
+                <td> <?php echo $u->location; ?></td>
+                <td> <?php echo $u->role; ?></td>
+                <td> <?php echo $u->qualification . " " . $u->specialization; ?></td>
+                <td> <?php echo $u->apply_date; ?></td>
+
+                <?php
+            endforeach;
 //print_r($this->session->all_userdata());
-?>
+            ?>
     </table>
 </div>
-   

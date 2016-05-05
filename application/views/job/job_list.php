@@ -24,14 +24,10 @@
 
         <?php foreach ($users as $user) { ?>
             <tr>
-                <td>
-                    <a href="<?php echo site_url('Job/viewDetails/' . $user->job_id) ?>"><?php echo $user->title ?></a>
-
-                </td>
-
+                <td><a href="<?php echo site_url('Job/viewDetails/' . $user->job_id) ?>"><?php echo $user->title ?></a></td>
                 <td><?php $user->location ?></td>
                 <td><?php $user->created_at ?></td>
-                <td><?php echo $user->applied_count ?>  </td>
+                <td><a href="<?php echo site_url('Job/candidates') . '?job=' . $user->job_id; ?>"><?php echo $user->applied_count ?></a>  </td>
                 <td><select name=""><option>Open</option><option>Paused</option><option>Closed</option></select></td>
             </tr>
         <?php } ?>

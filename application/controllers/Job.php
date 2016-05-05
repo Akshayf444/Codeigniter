@@ -101,6 +101,9 @@ class Job extends CI_Controller {
         $condition = array(
             'jobs.auth_id = ' . $id
         );
+        if (isset($_GET['job'])) {
+            $condition[2] = 'jobs.job_id = ' . $_GET['job'];
+        }
         $userData['user'] = $this->Job_model->appiled_job($condition);
 
 //        $this->load->view('job/view_applied_job',$userData);

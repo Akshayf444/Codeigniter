@@ -68,7 +68,11 @@ class Job_model extends CI_Model {
 
     public function appiled_job($conditions = array()) {
         $query = "SELECT jobs.`job_id`,u.role,u.prefred_location as location,em.qualification,sm.specialization,apply_job.created as apply_date,(u.name) AS NAME,(jobs.title) AS title,u.`mobile`,(apply_job.`auth_id`) AS user_id,(u.`email`)AS email FROM apply_job
-                    LEFT JOIN jobs 
+            INNER JOIN (SELECT * FROM jobs ";
+        if (!empty($conditions)) {
+            $query .= " WHERE " . join(" AND ", $conditions);
+        }
+        $query .= " ) as jobs 
                     ON apply_job.job_id = jobs.job_id
                     LEFT JOIN user u 
                     ON apply_job.auth_id = u.auth_id 
@@ -78,12 +82,10 @@ class Job_model extends CI_Model {
                     ON em.edu_id = q.qualification
                     LEFT JOIN specialization_master sm 
                     ON sm.spec_id = q.specialization";
-        if (!empty($conditions)) {
-            $query .= " WHERE " . join(" AND ", $conditions);
-        }
+        $query .= " GROUP BY jobs.job_id,apply_job.auth_id ";
 
         $query = $this->db->query($query);
-        //echo $this->db->last_query();
+       // echo $this->db->last_query();
         return $query->result();
     }
 
