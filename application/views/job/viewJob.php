@@ -15,10 +15,10 @@
                                 <dt class="col-sm-2">
                                 <h6><i class="fa fa-suitcase"> </i><?php echo ' ' . $view['exp_min'] ?>-<?php echo $view['exp_max'] ?> Yrs</h6>
                                 </dt>
-                                <dt class="col-sm-2">
+                                <dt class="col-sm-4">
                                 <h6><i class="fa fa-map-marker"> </i><?php echo ' ' . $view['location'] ?></h6>
                                 </dt>
-                                <dt class="col-sm-8">
+                                <dt class="col-sm-6">
                                 <h6><b>Key Skills :</b> <?php echo $view['keyword'] ?></h6>
                                 </dt>
                             </dl>

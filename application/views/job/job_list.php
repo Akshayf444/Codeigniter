@@ -24,7 +24,7 @@
 
             <?php foreach ($users as $user) { ?>
                 <tr>
-                    <td><a style="cursor: pointer" onclick="request('<?php echo site_url('Job/viewJobDetails/' . $user->job_id) ?>')"  style="font-weight: 800"><?php echo $user->title ?></a></td>
+                    <td><a onclick="request('<?php echo site_url('Job/viewJobDetails/' . $user->job_id) ?>')"  style="font-weight: 800;cursor: pointer"><?php echo $user->title ?></a></td>
                     <td><?php echo $user->location ?></td>
                     <td><?php  echo date('d-m-Y',strtotime($user->created_at)); ?></td>
                     <td><a href="<?php echo site_url('Job/candidates') . '?job=' . $user->job_id; ?>"><?php echo $user->applied_count ?></a> </td>
