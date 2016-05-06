@@ -23,20 +23,22 @@
     </div><!-- /.container -->
 </div><!-- /.document-title -->
 
-<?php echo validation_errors(); ?>
+
 <div class="container">
     <div class="row">
-        <h3 style="color:red;"><?php
-            if (isset($user)) {
-                echo $user;
-            }
-            ?></h3>
-        <div class="col-sm-6 col-sm-offset-3">
 
+        <div class="col-sm-6 col-sm-offset-3">
+            <h3 style="color:red;"><?php
+                if (isset($user)) {
+                    echo $user;
+                }
+                ?></h3>
+            <?php echo validation_errors(); ?>
             <?php echo form_open('Employee/login') ?>
 
             <div class="row">
                 <div class="col-sm-12">
+
                     <h3><b>Welcome to Pharma Talent</b></h3>
                     <p>LOGIN HERE USING YOUR USERNAME AND PASSWORD</p>
                     <br/>

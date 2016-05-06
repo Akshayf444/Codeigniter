@@ -73,7 +73,6 @@
                                 $CI = & get_instance();
                                 $this->load->view('empNavigation', $CI->loadSidebar());
                                 ?>
-
                             </ul>
 
                         </div>
