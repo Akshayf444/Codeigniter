@@ -65,14 +65,14 @@
                    
                   
             <div class="form-group">
-                <label>Location *</label>
+                <label>Locations *</label>
 
                 <input type="text" class="form-control" id="location" name="location" placeholder="Type Location">
             </div>
-            <div class="form-group">
+<!--            <div class="form-group">
                 <label>Industry *</label>
                 <select class="form-control" name="industry"><?php echo $industry ?></select>
-            </div>
+            </div>-->
             <div class="form-group">
                 <label>Function Area *</label>
                 <select class="form-control" name="functional_area"><?php echo $functional_area ?></select>

@@ -531,7 +531,11 @@ class User extends CI_Controller {
             redirect('User/login', 'refresh');
         }
     }
-
+    public  function delete_edu(){
+        $id=$_GET['id'];
+        $this->User_model->user_qualification_delete($id);
+         redirect('User/view', 'refresh');
+    }
     public function edit_qualification() {
         $this->load->model('Master_model');
 

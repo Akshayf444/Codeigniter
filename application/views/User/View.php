@@ -86,7 +86,9 @@
                         <?php foreach ($user2 as $u) : ?>
                             <div class="workinghistory">
                                 <h2 style="font-weight: 700;color: #666666"><?php echo $u->role; ?></h2>
-                                <h2 style="color: #666666;"><?php echo $u->client; ?><small class="pull-right"><a onclick="request('<?php echo site_url('User/edit_project') . '?id=' . $u->id; ?>')"><i class="fa fa-2x fa-edit"></i></a></small></h2>
+                                <h2 style="color: #666666;"><?php echo $u->client; ?><small class="pull-right"><a onclick="request('<?php echo site_url('User/edit_project') . '?id=' . $u->id; ?>')"><i class="fa  fa-edit" style=" font-size: 1.5em"></i>  </a>
+                                        <a onclick="deleteworkexp('<?php echo site_url('User/delete_project') . '?id=' . $u->id; ?>')"> <i class="fa  fa-trash" style="color:#CE5858; font-size: 1.5em"></i>  </a>
+                                    </small></h2>
                                 <h2 style="color: #666666;font-weight: 300"><?php echo date('M-Y', strtotime($u->from)); ?> - <?php echo date('M-Y', strtotime($u->to)); ?> | <?php echo $u->location; ?></h2>
                                 <p style="padding-left: 3px"><?php echo $u->role_description; ?></p>
                             </div>
@@ -103,12 +105,17 @@
 
                     <div class="col-sm-12">
                         <?php if (!empty($user3)) foreach ($user3 as $u) : ?>
-                            <div class="education">
-                                <h2><?php echo $u->institute; ?></h2>
-                                <h2 style="color: #666666"><?php echo $u->qualification . ', ' . $u->specialization; ?><small class="pull-right"><a onclick="request('<?php echo site_url('User/edit_qualification') . '?id=' . $u->idd; ?>')"><i class="fa fa-2x fa-edit"></i></a></small></h2>
-                                <h2 style="color: #666666;font-weight: 300;padding-bottom: 10px"><?php echo $u->year; ?></h2>
-                            </div>
-                        <?php endforeach; ?>
+                                <div class="education">
+                                    <h2><?php echo $u->institute; ?></h2>
+                                    <h2 style="color: #666666"><?php echo $u->qualification . ', ' . $u->specialization; ?><small class="pull-right"><a onclick="request('<?php echo site_url('User/edit_qualification') . '?id=' . $u->idd; ?>')"><i class="fa fa-2x fa-edit"></i></a>
+
+
+                                            <a onclick="deleteeduction('<?php echo site_url('User/delete_edu') . '?id=' . $u->idd; ?>')"> <i class="fa  fa-trash" style="color:#CE5858; font-size: 1.5em"></i>  </a>
+
+                                        </small></h2>
+                                    <h2 style="color: #666666;font-weight: 300;padding-bottom: 10px"><?php echo $u->year; ?></h2>
+                                </div>
+                            <?php endforeach; ?>
                     </div>
 
                 </div><!-- /.resume-chapter-content -->
@@ -227,3 +234,30 @@
         margin-bottom: 10px;
     }
 </style>
+<script>
+    function deleteworkexp(url) {
+        var r = confirm("Are you sure you want to delete");
+        if (r == true)
+        {
+            window.location = url;
+
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function deleteeduction(url) {
+        var r = confirm("Are you sure you want to delete");
+        if (r == true)
+        {
+            window.location = url;
+
+        }
+        else
+        {
+            return false;
+        }
+    }
+</script>
