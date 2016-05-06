@@ -38,7 +38,7 @@ class Job extends CI_Controller {
                 $this->form_validation->set_rules('ctc_min', 'CTC', 'trim|required');
                 $this->form_validation->set_rules('location', 'Location', 'required');
                 $this->form_validation->set_rules('functional_area', 'Functional Area', 'trim|required');
-                $this->form_validation->set_rules('industry', 'Industry', 'trim|required');
+//                $this->form_validation->set_rules('industry', 'Industry', 'trim|required');
 
                 if ($this->form_validation->run() == TRUE) {
                     $this->Job_model->add($data['auth_id']);

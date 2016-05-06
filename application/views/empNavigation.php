@@ -7,8 +7,7 @@ $Sidebar = array(
     'Jobs & Responses' => array(
         'Post A Hot Vacancy' => 'Job/add',
         'Jobs And Responses' => 'Job/job_list',
-        'Jobs By Education' => 'User/Comingsoon',
-        'Jobs By Designation' => 'User/Comingsoon',
+       
     ),
     'Search' => array(
         'Resume Writing Servies' => 'User/Comingsoon',
@@ -16,14 +15,7 @@ $Sidebar = array(
         'Value Packs' => 'User/Comingsoon',
         'Cover Letter Samples' => 'User/Comingsoon',
     ),
-    'Career Info' => array(
-        'Career Advice' => 'User/Comingsoon',
-        'Interview Preperation' => 'User/Comingsoon',
-        'Resume' => 'User/Comingsoon',
-        'Industry Overview' => 'User/Comingsoon',
-        'IT BPO' => 'User/Comingsoon',
-    ),
-    'Salary Check' => 'User/Comingsoon',
+    
     'Account Settings' => array(
         'Change Password' => 'Employee/changepassword',
         'Logout' => 'Employee/logout')

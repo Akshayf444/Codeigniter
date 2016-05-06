@@ -141,6 +141,11 @@ class User_model extends CI_Model {
         return $this->db->insert('user_qualification', $data);
     }
 
+    public function user_qualification_delete( $id) {
+
+        $this->db->where(array('id' => $id));
+        return $this->db->delete('user_qualification');
+    }
     public function user_qualification_update($data, $id) {
 //        $data = array(
 //            'qualification' => $this->input->post('qualification'),
@@ -345,7 +350,7 @@ class User_model extends CI_Model {
         $this->db->where(array('id' => $this->input->post('id')));
         return $this->db->update('user_project', $data);
     }
-
+  
     public function project_update3($id, $data) {
         $this->db->where(array('id' => $id));
         return $this->db->update('user_project', $data);
