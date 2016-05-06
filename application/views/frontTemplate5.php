@@ -52,9 +52,9 @@
                                         <li><a href="company-detail.html">Company Detail</a></li>
                                     </ul>
                                 </li>-->
-<!--                                <li><a href="#" data-toggle="modal" data-target="#myModal">Login</a></li>
-                                <li><a href="<?php //echo site_url('Employee/register'); ?>">Register</a></li>
-                                <li><a href="<?php //echo site_url('Job/index'); ?>" class="primary">Job Seekers</a></li>-->
+                                <!--                                <li><a href="#" data-toggle="modal" data-target="#myModal">Login</a></li>
+                                                                <li><a href="<?php //echo site_url('Employee/register');  ?>">Register</a></li>
+                                                                <li><a href="<?php //echo site_url('Job/index');  ?>" class="primary">Job Seekers</a></li>-->
 
                             </ul><!-- /.header-actions -->
 
@@ -117,7 +117,7 @@
 
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-secondary">Login</button>
-<!--                            <a class="btn btn-social btn-linkedin" href="<?php //echo site_url('Linkedin_signup/initiate');  ?>">
+<!--                            <a class="btn btn-social btn-linkedin" href="<?php //echo site_url('Linkedin_signup/initiate');   ?>">
                                 <i class="fa fa-linkedin"></i> Sign in with LinkedIn
                             </a>                          -->
 
@@ -129,18 +129,6 @@
             <?php $this->load->view('empFooter', $view_data); ?>
 
         </div><!-- /.page-wrapper -->
-
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/js/jquery.ezmark.js"></script>
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/bootstrap-sass/javascripts/bootstrap/collapse.js"></script>
-<!--        <script type="text/javascript" src="<?php //echo asset_url(); ?>assets/libraries/bootstrap-sass/javascripts/bootstrap/dropdown.js"></script>-->
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/bootstrap-sass/javascripts/bootstrap/tab.js"></script>
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/bootstrap-sass/javascripts/bootstrap/transition.js"></script>
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/bootstrap-fileinput/js/fileinput.min.js"></script>
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/bootstrap-select/js/bootstrap-select.min.js"></script>
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/bootstrap-wysiwyg/bootstrap-wysiwyg.min.js"></script>
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/cycle2/jquery.cycle2.min.js"></script>
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/cycle2/jquery.cycle2.carousel.min.js"></script>
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/countup/countup.min.js"></script>
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/js/profession.js"></script>
+        <?php $this->load->view('links', $view_data); ?>
     </body>
 </html>
