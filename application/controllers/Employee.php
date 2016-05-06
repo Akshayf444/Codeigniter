@@ -122,7 +122,16 @@ class Employee extends CI_Controller {
             return FALSE;
         }
     }
-
+public function search_specific(){
+    $this->load->model('Master_model');
+       $this->load->model('Master_model');
+            $data['location'] = $this->Master_model->getLocation();
+            $data['experience'] = $this->Master_model->getWorkExperience();
+            $data['industry'] = $this->Master_model->getIndustry();
+            $data['functional_area'] = $this->Master_model->getFunctionArea();
+        $userdata = array('title' => 'Search Job', 'content' => 'employee/job_search', 'view_data' => $data);
+        $this->load->view('frontTemplate4', $userdata);
+}
     public function add_details() {
         if ($this->is_logged_in() == TRUE) {
             $user_id = $this->session->userdata("user_id");

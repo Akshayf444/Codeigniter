@@ -58,7 +58,9 @@ class Job extends CI_Controller {
         }
     }
 
-    public function edit($id) {
+
+
+public function edit($id) {
         $this->form_validation->set_rules('title', 'title', 'trim|required');
         $this->form_validation->set_rules('description', 'description', 'trim|required');
         $this->form_validation->set_rules('keyword', 'keyword', 'trim|required');
