@@ -1,6 +1,6 @@
 <script type="text/javascript" src="<?php echo asset_url(); ?>assets/js/jquery.ezmark.js"></script>
 <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/bootstrap-sass/javascripts/bootstrap/collapse.js"></script>
-<script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/bootstrap-sass/javascripts/bootstrap/dropdown.js"></script>
+<!--<script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/bootstrap-sass/javascripts/bootstrap/dropdown.js"></script>-->
 <!--<script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/bootstrap-sass/javascripts/bootstrap/tab.js"></script>
 <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/bootstrap-sass/javascripts/bootstrap/transition.js"></script>-->
 <!--<script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/bootstrap-fileinput/js/fileinput.min.js"></script>-->
@@ -10,3 +10,4 @@
 <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/cycle2/jquery.cycle2.carousel.min.js"></script>
 <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/countup/countup.min.js"></script>
 <script type="text/javascript" src="<?php echo asset_url(); ?>assets/js/profession.js"></script>
+<script src="<?php echo asset_url(); ?>assets/libraries/ajaxloader/ajaxLoader.js" type="text/javascript"></script>

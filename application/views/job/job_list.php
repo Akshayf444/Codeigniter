@@ -25,8 +25,7 @@
             <?php foreach ($users as $user) { ?>
                 <tr>
                     <td>
-                        <a href="<?php echo site_url('Job/viewDetails/' . $user->job_id) ?>" style="font-weight: 800"><?php echo $user->title ?></a>
-
+                        <a href="#" onclick="request('<?php echo site_url('Job/viewJobDetails/' . $user->job_id) ?>')"  style="font-weight: 800"><?php echo $user->title ?></a>
                     </td>
 
                     <td><?php echo $user->location ?></td>
@@ -38,3 +37,31 @@
         </table>
     </div>
 </div>
+<div id="ajaxcontainer">
+
+</div>
+<script>
+    $(document).ready(function () {
+        var isIE = navigator.userAgent.indexOf(' MSIE ') > -1;
+        if (isIE) {
+            $('#BookAppointment').removeClass('fade');
+        }
+        $("#fullCalModal").modal();
+    });
+
+    function request(url) {
+        var url = url;
+        $.ajax({
+            //Send request
+            type: 'GET',
+            data: {},
+            url: url,
+            success: function (data) {
+                $("#loader").hide();
+                $("#ajaxcontainer").html(data);
+
+                $("#fullCalModal").modal();
+            }
+        });
+    }
+</script>

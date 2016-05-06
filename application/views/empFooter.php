@@ -36,7 +36,7 @@
 
                     <div class="col-sm-3">
                         <div class="footer-top-block">
-                            <h2>Trending Jobs</h2>
+<!--                            <h2>Trending Jobs</h2>-->
 
                             <ul>
                                 <?php
