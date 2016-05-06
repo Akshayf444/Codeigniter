@@ -15,22 +15,19 @@
         <table class="table table-striped">
             <tr>
 
-                <th>Name</th>
-                <th>Location</th>
-                <th>Created</th>
-                <th>Candidates</th>
-                <th>Status</th>
+                <th style="width: 40%">Name</th>
+                <th style="width: 40%">Location</th>
+                <th style="width: 10%">Created</th>
+                <th style="width: 5%">Candidates</th>
+                <th style="width: 5%">Status</th>
             </tr>
 
             <?php foreach ($users as $user) { ?>
                 <tr>
-                    <td>
-                        <a href="#" onclick="request('<?php echo site_url('Job/viewJobDetails/' . $user->job_id) ?>')"  style="font-weight: 800"><?php echo $user->title ?></a>
-                    </td>
-
+                    <td><a onclick="request('<?php echo site_url('Job/viewJobDetails/' . $user->job_id) ?>')"  style="font-weight: 800;cursor: pointer"><?php echo $user->title ?></a></td>
                     <td><?php echo $user->location ?></td>
-                    <td><?php echo $user->created_at ?></td>
-                    <td><?php echo $user->applied_count ?>  </td>
+                    <td><?php  echo date('d-m-Y',strtotime($user->created_at)); ?></td>
+                    <td><a href="<?php echo site_url('Job/candidates') . '?job=' . $user->job_id; ?>"><?php echo $user->applied_count ?></a> </td>
                     <td><select name=""><option>Open</option><option>Paused</option><option>Closed</option></select></td>
                 </tr>
             <?php } ?>

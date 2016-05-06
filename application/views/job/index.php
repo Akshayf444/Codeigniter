@@ -21,78 +21,64 @@
         <script src="<?php echo asset_url() ?>/js/bootstrap-typeahead.js" type="text/javascript"></script>
         <script src="<?php echo asset_url() ?>/js/jquery-migrate-1.2.1.js" type="text/javascript"></script>
 
-        <?php
-        $attribute = array('method' => 'get');
-        echo form_open('Job/filter', $attribute);
-        ?>
+
         <div class="col-sm-3 hidden-xs">
             <div class="filter-stacked">
-                <form method="post" action="#">
+                <?php
+                $attribute = array('method' => 'get');
+                echo form_open('Job/Search', $attribute);
+                ?>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Keyword">
+                </div>
+
+                <h3>Salary <a href="#"><i class="fa fa-close"></i></a></h3>
+
+                <div class="split-forms">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Keyword">
+                        <input type="number" class="form-control" placeholder="Min.">
                     </div>
 
-                    <h3>Salary <a href="#"><i class="fa fa-close"></i></a></h3>
-
-                    <div class="split-forms">
-                        <div class="form-group">
-                            <input type="number" class="form-control" placeholder="Min.">
-                        </div>
-
-                        <div class="form-group">
-                            <input type="number" class="form-control" placeholder="Max.">
-                        </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" placeholder="Max.">
                     </div>
+                </div>
 
-                    <h3>Contract <a href="#"><i class="fa fa-close"></i></a></h3>
+                <h3>LOCATION <a href="#"><i class="fa fa-close"></i></a></h3>
+                <ul>
+                    <?php
+                    $locations = array();
+                    if (isset($_GET['location']))
+                        $locations = explode(",", $_GET['location']);
+                    $sql = "SELECT DISTINCT(sm.location)  as skill,count(j.job_id) as jobcount FROM location_master sm LEFT JOIN jobs j ON  j.location LIKE CONCAT('%', sm.location, '%') AND j.keyword LIKE '%" . $_GET['skill'] . "%'  where sm.location != ''  GROUP BY sm.location ORDER BY jobcount DESC LIMIT 10";
+                    //echo $sql;
+                    $query = $this->db->query($sql);
+                    $trendingJob = $query->result();
+                    if (!empty($trendingJob)) {
+                        foreach ($trendingJob as $value) {
+                            $checked = in_array($value->skill, $locations) ? 'checked' : '';
+                            echo '<div class="checkbox">
+                                            <label><input type="checkbox" ' . $checked . ' class="location" value="' . $value->skill . '" > ' . $value->skill . '</label>
+                                        </div>';
+                        }
+                    }
+                    ?>
+                    <input type="hidden" name="location" id="location">
+                    <input type="hidden" name="skill" value="<?php echo $_GET['skill']; ?>">
+                </ul>
+                <script>
+                    $(".location").click(function () {
+                        values = [];
+                        $(".location").each(function () {
+                            if ($(this).is(":checked"))
+                                values.push($(this).val());
+                        });
+                        $("#location").val(values.join(','));
+                    });
+                </script>
+                <a href="#" class="filter-stacked-show-more">Show More ...</a>
 
-                    <div class="checkbox">
-                        <label><input type="checkbox"> Full-time</label>
-                    </div><!-- /.checkbox -->
-
-                    <div class="checkbox">
-                        <label><input type="checkbox"> Part-time</label>
-                    </div><!-- /.checkbox -->
-
-                    <div class="checkbox">
-                        <label><input type="checkbox"> One-time project</label>
-                    </div><!-- /.checkbox -->
-
-                    <a href="#" class="filter-stacked-show-more">Show More ...</a>
-
-                    <h3>Location <a href="#"><i class="fa fa-close"></i></a></h3>
-
-                    <div class="checkbox">
-                        <label><input type="radio" name="radio-test" value="1"> San Francisco</label>
-                    </div><!-- /.checkbox -->
-
-                    <div class="checkbox">
-                        <label><input type="radio" name="radio-test" value="2"> Sacramento</label>
-                    </div><!-- /.checkbox -->
-
-                    <div class="checkbox">
-                        <label><input type="radio" name="radio-test" value="3"> Los Angeles</label>
-                    </div><!-- /.checkbox -->
-
-                    <a href="#" class="filter-stacked-show-more">Show More ...</a>
-
-                    <h3>Status <a href="#"><i class="fa fa-close"></i></a></h3>
-
-                    <div class="checkbox">
-                        <label><input type="checkbox"> Most Recent</label>
-                    </div><!-- /.checkbox -->
-
-                    <div class="checkbox">
-                        <label><input type="checkbox"> Featured</label>
-                    </div><!-- /.checkbox -->
-
-                    <div class="checkbox">
-                        <label><input type="checkbox"> Urgent</label>
-                    </div><!-- /.checkbox -->
-
-                    <a href="#" class="filter-stacked-show-more">Show More ...</a>
-
-                    <button type="submit" class="btn btn-secondary btn-block"><i class="fa fa-refresh"></i> Reset Filter</button>
+                <button type="submit" class="btn btn-secondary btn-block"><i class="fa fa-refresh"></i> Search</button>
                 </form>
             </div><!-- /.filter-stacked -->
 
@@ -107,8 +93,8 @@
                         ?>
                         <div class="positions-list-item">
                             <h2 style="font-weight: 600;font-size: 16px">
-                                <a href="<?php echo site_url('Job/viewDetails/' . $j->job_id) ?>"><?php echo $j->title ?></a>
-                                <small class="pull-right"><a href="<?php echo site_url('Job/apply/' . $j->job_id) . '?redirect_url=' . current_url() . '?skill=' . $_GET['skill'] . '&location=' . $_GET['location']; ?><?php //echo $j->link;     ?>" class="btn btn-warning"><?php echo (int) $j->applied_status == 1 ? 'Applied' : 'Apply' ?></a></small>
+                                <a onclick="request('<?php echo site_url('Job/viewJobDetails/' . $j->job_id) ?>')" ><?php echo $j->title ?></a>
+                                <small class="pull-right"><a href="<?php echo site_url('Job/apply/' . $j->job_id) . '?redirect_url=' . current_url() . '?skill=' . $_GET['skill'] . '&location=' . $_GET['location']; ?><?php //echo $j->link;                 ?>" class="btn btn-warning"><?php echo (int) $j->applied_status == 1 ? 'Applied' : 'Apply' ?></a></small>
                             </h2>
                             <p style="color: #777;font-size: 14px"><?php echo $j->name ?></p>
                             <div class="row">
@@ -156,6 +142,9 @@
         </div>
     </div>
 </div>
+<div id="ajaxcontainer">
+
+</div>
 <script type="text/javascript">
     $(document).ready(function () {
 
@@ -185,4 +174,29 @@
             });
         }
     });
+</script>
+<script>
+    $(document).ready(function () {
+        var isIE = navigator.userAgent.indexOf(' MSIE ') > -1;
+        if (isIE) {
+            $('#BookAppointment').removeClass('fade');
+        }
+        $("#fullCalModal").modal();
+    });
+
+    function request(url) {
+        var url = url;
+        $.ajax({
+            //Send request
+            type: 'GET',
+            data: {},
+            url: url,
+            success: function (data) {
+                $("#loader").hide();
+                $("#ajaxcontainer").html(data);
+
+                $("#fullCalModal").modal();
+            }
+        });
+    }
 </script>

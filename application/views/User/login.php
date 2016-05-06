@@ -22,16 +22,14 @@
         <h1 class="center">Login</h1>
     </div><!-- /.container -->
 </div><!-- /.document-title -->
-<h3 style="color:red;"><?php
-    if (isset($user)) {
-        echo $user;
-    }
-    ?></h3>
-
 <div class="container">
     <div class="row">
         <div class="col-sm-6 col-sm-offset-3">
-
+            <?php
+            if (isset($user)) {
+                echo $user;
+            }
+            ?>
             <?php echo form_open('User/login') ?>
 
             <div class="row">
