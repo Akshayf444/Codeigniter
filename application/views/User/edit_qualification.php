@@ -22,10 +22,10 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">Year</label>
-                            <input type="text" name="year[]" class="form-control" value="<?php echo $sh['year']; ?>"/>
+                            <input type="text" name="year[]" class="form-control" value="<?php echo isset($sh['year']) ? $sh['year'] : ''; ?>"/>
                         </div>
 
-                        <input type="hidden" name="id" class="form-control" value="<?php echo $sh['id']; ?>"/>
+                        <input type="hidden" name="id" class="form-control" value="<?php echo isset($sh['id']) ? $sh['id'] : ''; ?>"/>
 
                         <div class="form-group">
                             <label class="control-label">Institute</label>

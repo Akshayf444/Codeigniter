@@ -251,7 +251,7 @@ class User_model extends CI_Model {
 
     public function qualification_view($id) {
         $query = "SELECT *,(uq.id) AS idd FROM user u
-                    LEFT JOIN `user_qualification` uq
+                    INNER JOIN `user_qualification` uq
                     ON uq.`auth_id`=u.`auth_id`
                     LEFT JOIN `specialization_master` sp
                     ON sp.spec_id=uq.`specialization`

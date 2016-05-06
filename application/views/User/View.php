@@ -102,7 +102,7 @@
                     <h2 class="mb40">Education Detail<a class="pull-right" onclick="request('<?php echo site_url('User/user_qualification'); ?>')"><i class="fa fa-plus"></i> Add Education</a></h2>
 
                     <div class="col-sm-12">
-                        <?php foreach ($user3 as $u) : ?>
+                        <?php if (!empty($user3)) foreach ($user3 as $u) : ?>
                             <div class="education">
                                 <h2><?php echo $u->institute; ?></h2>
                                 <h2 style="color: #666666"><?php echo $u->qualification . ', ' . $u->specialization; ?><small class="pull-right"><a onclick="request('<?php echo site_url('User/edit_qualification') . '?id=' . $u->idd; ?>')"><i class="fa fa-2x fa-edit"></i></a></small></h2>
