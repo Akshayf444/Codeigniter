@@ -27,7 +27,11 @@ class employee_model extends CI_Model {
         $query = $this->db->get_where('authentication', array('email' => $email, 'password' => $pass,));
         return $query->row_array();
     }
-
+ public  function search($role,$key_skill,$fun,$year,$location){
+     $sql="SELECT * FROM `user`   WHERE role='$role' OR key_skill='$key_skill' OR `function_area`='$fun' OR `exp_year`='$year' OR   `prefred_location`='$location'";
+     $query=$this->db->query($sql);
+     return $query->result();
+ }
     public function find_by_id($id) {
         if ($id === FALSE) {
             $query = $this->db->get('authentication');

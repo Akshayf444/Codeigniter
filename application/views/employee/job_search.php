@@ -20,26 +20,8 @@
                 <label> Designation *</label>
                     <input type="text" required="required" class="form-control " id="" name="designation " placeholder="Designation ">
             </div>
-         
-            
-          
-        
-            <div class="form-group">
-                <label>CTC *</label>
-                <div class="row">
-
-                    <div class="col-sm-6">
-
-                        <input type="text" value="<?php echo set_value('ctc_min') ?>" class="form-control half-formcontrol" placeholder="Enter Salary"  name="ctc_min">
-                    </div>   
-                    <div class="col-sm-6">   <select class="form-control half-formcontrol"  name="ctc_type">
-                            <option value="0">Per Month</option>
-                            <option value="1">Per Year</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            
+     
+                
             <div class="form-group">
                 <label>Work Experience *</label><br>
                 <div class="row">

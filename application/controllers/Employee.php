@@ -129,7 +129,7 @@ public function search_specific(){
             $data['experience'] = $this->Master_model->getWorkExperience();
             $data['industry'] = $this->Master_model->getIndustry();
             $data['functional_area'] = $this->Master_model->getFunctionArea();
-        $userdata = array('title' => 'Search Job', 'content' => 'employee/job_search', 'view_data' => $data);
+        $userdata = array('title' => 'Search Job', 'content' => 'employee/searchresult', 'view_data' => $data);
         $this->load->view('frontTemplate4', $userdata);
 }
     public function add_details() {
