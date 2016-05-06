@@ -3,7 +3,7 @@
 class Job_model extends CI_Model {
 
     function add($auth_id) {
-       
+
         $field_array = array(
             'title' => $this->input->post('title'),
             'description' => $this->input->post('description'),
@@ -13,7 +13,7 @@ class Job_model extends CI_Model {
             'ctc_min' => $this->input->post('ctc_min'),
             'ctc_type' => $this->input->post('ctc_type'),
             'hide_ctc' => $this->input->post('hide_ctc'),
-            'location' =>$this->input->post('location'),
+            'location' => $this->input->post('location'),
             'industry' => $this->input->post('industry'),
             'functional_area' => $this->input->post('functional_area'),
             'auth_id' => $auth_id,
@@ -31,16 +31,29 @@ class Job_model extends CI_Model {
         return $query->result();
     }
 
-    public function view_job($id) {
-        $this->db->select('jobs.*,u.mobile as contact,industry_master.industry as industry_name,functional_area.fun_area,location_master.location as loc,emp.*');
-        $this->db->from('jobs');
-        $this->db->join('industry_master ', 'jobs.industry = industry_master.indus_id', 'left');
-        $this->db->join('location_master ', 'jobs.location = location_master.loc_id', 'left');
-        $this->db->join('functional_area', 'jobs.functional_area = functional_area.fun_id', 'left');
-        $this->db->join('emp_profile emp', 'jobs.auth_id = emp.auth_id', 'left');
-        $this->db->join('authentication u', 'jobs.auth_id = u.auth_id', 'left');
-        $this->db->where('jobs.job_id', $id);
-        $query = $this->db->get();
+    public function view_job($id = 0) {
+        $sql = "SELECT 
+                `jobs`.*,
+                `u`.`mobile` AS contact,
+                `industry_master`.`industry` AS industry_name,
+                `functional_area`.`fun_area`,
+                `emp`.name 
+              FROM
+                (SELECT 
+                  * 
+                FROM
+                  jobs 
+                WHERE job_id = {$id}) AS jobs
+                LEFT JOIN `industry_master` 
+                  ON `jobs`.`industry` = `industry_master`.`indus_id` 
+                LEFT JOIN `functional_area` 
+                  ON `jobs`.`functional_area` = `functional_area`.`fun_id` 
+                LEFT JOIN `emp_profile` emp 
+                  ON `jobs`.`auth_id` = `emp`.`auth_id` 
+                LEFT JOIN `authentication` u 
+                  ON `jobs`.`auth_id` = `u`.`auth_id` ";
+        $query = $this->db->query($sql);
+        //echo $this->db->last_query();
         return $query->row_array();
     }
 
@@ -88,7 +101,7 @@ class Job_model extends CI_Model {
         $query .= " GROUP BY jobs.job_id,apply_job.auth_id ";
 
         $query = $this->db->query($query);
-       // echo $this->db->last_query();
+        // echo $this->db->last_query();
         return $query->result();
     }
 
@@ -168,7 +181,7 @@ ON ap.`job_id` = j.`job_id` AND ap.auth_id = '$user_id' ";
         $data = "SELECT j.*, aj.* FROM jobs j
 LEFT JOIN apply_job aj
 ON j.job_id = aj.job_id
-WHERE aj.auth_id = $auth_id AND j.job_id = $job_id and j.status = 0" ;
+WHERE aj.auth_id = $auth_id AND j.job_id = $job_id and j.status = 0";
         $query = $this->db->query($data);
 
         return $query->row_array();
