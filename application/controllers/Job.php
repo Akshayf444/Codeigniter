@@ -289,12 +289,13 @@ public function edit($id) {
     }
 
     public function viewJobDetails($id) {
-
+        
         $this->load->model('Master_model');
         $user_id = $this->session->userdata("user_id");
         $is_logged_in = FALSE;
         $is_applied = FALSE;
         $data['view'] = $this->Job_model->view_job($id);
+        //var_dump($data['view']);
         $this->load->view('Job/viewJob', $data);
     }
 
