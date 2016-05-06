@@ -740,7 +740,7 @@ class User extends CI_Controller {
             }
             $er['errrrr'] = "";
             $data = array('title' => 'Change Password', 'content' => 'User/changepassword', 'view_data' => $er);
-            $this->load->view('template1', $data);
+            $this->load->view('frontTemplate2', $data);
         } else {
             redirect('User/login', 'refresh');
         }

@@ -64,22 +64,22 @@ $(document).ready(function () {
     /**
      * Bootstrap wysiwyg
      */
-    $('#editor').wysihtml5();
+//    $('#editor').wysihtml5();
     ;
 
     /**
      * Fileinput
      */
-    $("#form-register-photo").fileinput({
-        dropZoneTitle: '<i class="fa fa-photo"></i><span>Upload Photo</span>',
-        uploadUrl: '/',
-        maxFileCount: 1,
-        showUpload: false,
-        browseLabel: 'Browse',
-        browseIcon: '',
-        removeLabel: 'Remove',
-        removeIcon: '',
-        uploadLabel: 'Upload',
-        uploadIcon: ''
-    });
+//    $("#form-register-photo").fileinput({
+//        dropZoneTitle: '<i class="fa fa-photo"></i><span>Upload Photo</span>',
+//        uploadUrl: '/',
+//        maxFileCount: 1,
+//        showUpload: false,
+//        browseLabel: 'Browse',
+//        browseIcon: '',
+//        removeLabel: 'Remove',
+//        removeIcon: '',
+//        uploadLabel: 'Upload',
+//        uploadIcon: ''
+//    });
 });

@@ -29,26 +29,9 @@ $Sidebar = array(
     ),
     'Salary Check' => 'User/Comingsoon',
     'Account Setting' => array(
-        'Change Password' => 'User/Comingsoon',
-        'Logout' => 'User/logout')
-        /* 'Profile' => array(
-          'View Profile' => 'User/view',
-          'Project' => 'User/user_projects',
-          'Education' => 'User/user_qualification',
-          'Upload Resume' => 'User/resume',
-          'Enter Work Experince' => 'WorkExperince/work_exp',
-          ),
-          'Jobs & Application' => array(
-          'Saved Jobs' => 'User/viewsavedjobs',
-          'Application History' => 'User/Applicationhistory'
-          ),
-          'Recruiters' => array(
-          'Job & Updates' => 'User/SearchJob'
-          ),
-          'Settings' => array(
-          'Change Password' => 'User/changepassword',
-          'Logout' => 'User/logout'
-          ), */
+        'Change Password' => 'User/changepassword',
+        'Logout' => 'User/logout'
+    )
 );
 if (!empty($Sidebar)) {
     foreach ($Sidebar as $menu => $submenu) {

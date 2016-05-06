@@ -109,15 +109,15 @@
             <div class="main-wrapper">
                 <div class="main">
                     <div class="container-fluid">
-        <script>
-            $(function () {
+                        <script>
+                            $(function () {
 <?php
 $skills = array();
 $sql = "SELECT DISTINCT(skill_name) as skill FROM skill_master where skill_name != ''  UNION ALL SELECT DISTINCT(role) as skill FROM user where role != '' UNION ALL SELECT DISTINCT(name) as skill FROM emp_profile where name != '' ";
 $query = $this->db->query($sql);
 $result = $query->result();
 ?>
-                var availableTags =
+                                var availableTags =
 <?php
 if (!empty($result)) {
     foreach ($result as $value) {
@@ -126,53 +126,53 @@ if (!empty($result)) {
     echo json_encode($skills);
 }
 ?>
-                ;
-                function split(val) {
-                    return val.split(/,\s*/);
-                }
-                function extractLast(term) {
-                    return split(term).pop();
-                }
+                                ;
+                                function split(val) {
+                                    return val.split(/,\s*/);
+                                }
+                                function extractLast(term) {
+                                    return split(term).pop();
+                                }
 
-                $("#skills")
-                        // don't navigate away from the field on tab when selecting an item
-                        .bind("keydown", function (event) {
-                            if (event.keyCode === $.ui.keyCode.TAB &&
-                                    $(this).autocomplete("instance").menu.active) {
-                                event.preventDefault();
-                            }
-                        })
-                        .autocomplete({
-                            minLength: 0,
-                            source: function (request, response) {
-                                // delegate back to autocomplete, but extract the last term
-                                response($.ui.autocomplete.filter(
-                                        availableTags, extractLast(request.term)));
-                            },
-                            focus: function () {
-                                // prevent value inserted on focus
-                                return false;
-                            },
-                            select: function (event, ui) {
-                                var terms = split(this.value);
-                                // remove the current input
-                                terms.pop();
-                                // add the selected item
-                                terms.push(ui.item.value);
-                                // add placeholder to get the comma-and-space at the end
-                                terms.push("");
-                                this.value = terms.join(", ");
-                                return false;
-                            }
-                        });
-            });
-        </script>
-        <script>
-            $(function () {
+                                $("#skills")
+                                        // don't navigate away from the field on tab when selecting an item
+                                        .bind("keydown", function (event) {
+                                            if (event.keyCode === $.ui.keyCode.TAB &&
+                                                    $(this).autocomplete("instance").menu.active) {
+                                                event.preventDefault();
+                                            }
+                                        })
+                                        .autocomplete({
+                                            minLength: 0,
+                                            source: function (request, response) {
+                                                // delegate back to autocomplete, but extract the last term
+                                                response($.ui.autocomplete.filter(
+                                                        availableTags, extractLast(request.term)));
+                                            },
+                                            focus: function () {
+                                                // prevent value inserted on focus
+                                                return false;
+                                            },
+                                            select: function (event, ui) {
+                                                var terms = split(this.value);
+                                                // remove the current input
+                                                terms.pop();
+                                                // add the selected item
+                                                terms.push(ui.item.value);
+                                                // add placeholder to get the comma-and-space at the end
+                                                terms.push("");
+                                                this.value = terms.join(", ");
+                                                return false;
+                                            }
+                                        });
+                            });
+                        </script>
+                        <script>
+                            $(function () {
 <?php
 $locations = array();
 ?>
-                var availableTags2 =
+                                var availableTags2 =
 <?php
 $this->load->model('Master_model');
 $dropdowns = $this->Master_model->listLocation();
@@ -183,47 +183,47 @@ if (!empty($dropdowns)) {
     echo json_encode($locations);
 }
 ?>
-                ;
-                function split(val) {
-                    return val.split(/,\s*/);
-                }
-                function extractLast(term) {
-                    return split(term).pop();
-                }
+                                ;
+                                function split(val) {
+                                    return val.split(/,\s*/);
+                                }
+                                function extractLast(term) {
+                                    return split(term).pop();
+                                }
 
-                $("#location")
-                        // don't navigate away from the field on tab when selecting an item
-                        .bind("keydown", function (event) {
-                            if (event.keyCode === $.ui.keyCode.TAB &&
-                                    $(this).autocomplete("instance").menu.active) {
-                                event.preventDefault();
-                            }
-                        })
-                        .autocomplete({
-                            minLength: 0,
-                            source: function (request, response) {
-                                // delegate back to autocomplete, but extract the last term
-                                response($.ui.autocomplete.filter(
-                                        availableTags2, extractLast(request.term)));
-                            },
-                            focus: function () {
-                                // prevent value inserted on focus
-                                return false;
-                            },
-                            select: function (event, ui) {
-                                var terms = split(this.value);
-                                // remove the current input
-                                terms.pop();
-                                // add the selected item
-                                terms.push(ui.item.value);
-                                // add placeholder to get the comma-and-space at the end
-                                terms.push("");
-                                this.value = terms.join(", ");
-                                return false;
-                            }
-                        });
-            });
-        </script>
+                                $("#location")
+                                        // don't navigate away from the field on tab when selecting an item
+                                        .bind("keydown", function (event) {
+                                            if (event.keyCode === $.ui.keyCode.TAB &&
+                                                    $(this).autocomplete("instance").menu.active) {
+                                                event.preventDefault();
+                                            }
+                                        })
+                                        .autocomplete({
+                                            minLength: 0,
+                                            source: function (request, response) {
+                                                // delegate back to autocomplete, but extract the last term
+                                                response($.ui.autocomplete.filter(
+                                                        availableTags2, extractLast(request.term)));
+                                            },
+                                            focus: function () {
+                                                // prevent value inserted on focus
+                                                return false;
+                                            },
+                                            select: function (event, ui) {
+                                                var terms = split(this.value);
+                                                // remove the current input
+                                                terms.pop();
+                                                // add the selected item
+                                                terms.push(ui.item.value);
+                                                // add placeholder to get the comma-and-space at the end
+                                                terms.push("");
+                                                this.value = terms.join(", ");
+                                                return false;
+                                            }
+                                        });
+                            });
+                        </script>
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="document-title">
@@ -277,140 +277,140 @@ if (!empty($dropdowns)) {
 
                                 <div id="dial" class="pull-right panel-danger" style="height: 200px;width: 200px;"></div>
                                 <script>
-                                    $(function () {
+                            $(function () {
 
-                                        // Uncomment to style it like Apple Watch
-                                        /*
-                                         if (!Highcharts.theme) {
-                                         Highcharts.setOptions({
-                                         chart: {
-                                         backgroundColor: 'black'
-                                         },
-                                         colors: ['#F62366', '#9DFF02', '#0CCDD6'],
-                                         title: {
-                                         style: {
-                                         color: 'silver'
-                                         }
-                                         },
-                                         tooltip: {
-                                         style: {
-                                         color: 'silver'
-                                         }
-                                         }
-                                         });
-                                         }
-                                         // */
+                                // Uncomment to style it like Apple Watch
+                                /*
+                                 if (!Highcharts.theme) {
+                                 Highcharts.setOptions({
+                                 chart: {
+                                 backgroundColor: 'black'
+                                 },
+                                 colors: ['#F62366', '#9DFF02', '#0CCDD6'],
+                                 title: {
+                                 style: {
+                                 color: 'silver'
+                                 }
+                                 },
+                                 tooltip: {
+                                 style: {
+                                 color: 'silver'
+                                 }
+                                 }
+                                 });
+                                 }
+                                 // */
 
-                                        Highcharts.chart('dial', {
-                                            chart: {
-                                                type: 'solidgauge',
-                                                marginTop: 20
-                                            },
-                                            title: {
-                                                text: '<h2>Profile Completed</h2>',
-                                                style: {
-                                                    fontSize: '12px'
-                                                }
-                                            },
-                                            credits: {
-                                                enabled: false
-                                            },
-                                            tooltip: {
-                                                borderWidth: 0,
-                                                backgroundColor: 'none',
-                                                shadow: false,
-                                                style: {
-                                                    fontSize: '10px'
-                                                },
-                                                pointFormat: '{series.name}<br><span style="font-size:1.5em; color: {point.color}; font-weight: bold">{point.y}%</span>',
-                                                positioner: function (labelWidth, labelHeight) {
-                                                    return {
-                                                        x: 100 - labelWidth / 2,
-                                                        y: 60
-                                                    };
-                                                }
-                                            },
-                                            pane: {
-                                                startAngle: 0,
-                                                endAngle: 360,
-                                                background: [{// Track for Move
-                                                        outerRadius: '100%',
-                                                        innerRadius: '88%',
-                                                        backgroundColor: Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0.3).get(),
-                                                        borderWidth: 0
-                                                    }]
-                                            },
-                                            yAxis: {
-                                                min: 0,
-                                                max: 100,
-                                                lineWidth: 0,
-                                                tickPositions: []
-                                            },
-                                            plotOptions: {
-                                                solidgauge: {
-                                                    borderWidth: '12px',
-                                                    dataLabels: {
-                                                        enabled: true
-                                                    },
-                                                    linecap: 'round',
-                                                    stickyTracking: false
-                                                }
-                                            },
-                                            series: [{
-                                                    name: 'Completed',
-                                                    borderColor: Highcharts.getOptions().colors[0],
-                                                    data: [{
-                                                            color: Highcharts.getOptions().colors[0],
-                                                            radius: '100%',
-                                                            innerRadius: '100%',
-                                                            y: 80
-                                                        }]
-                                                }]
+                                Highcharts.chart('dial', {
+                                    chart: {
+                                        type: 'solidgauge',
+                                        marginTop: 20
+                                    },
+                                    title: {
+                                        text: '<h2>Profile Completed</h2>',
+                                        style: {
+                                            fontSize: '12px'
+                                        }
+                                    },
+                                    credits: {
+                                        enabled: false
+                                    },
+                                    tooltip: {
+                                        borderWidth: 0,
+                                        backgroundColor: 'none',
+                                        shadow: false,
+                                        style: {
+                                            fontSize: '10px'
                                         },
-                                        /**
-                                         * In the chart load callback, add icons on top of the circular shapes
-                                         */
-                                        function callback() {
+                                        pointFormat: '{series.name}<br><span style="font-size:1.5em; color: {point.color}; font-weight: bold">{point.y}%</span>',
+                                        positioner: function (labelWidth, labelHeight) {
+                                            return {
+                                                x: 100 - labelWidth / 2,
+                                                y: 60
+                                            };
+                                        }
+                                    },
+                                    pane: {
+                                        startAngle: 0,
+                                        endAngle: 360,
+                                        background: [{// Track for Move
+                                                outerRadius: '100%',
+                                                innerRadius: '88%',
+                                                backgroundColor: Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0.3).get(),
+                                                borderWidth: 0
+                                            }]
+                                    },
+                                    yAxis: {
+                                        min: 0,
+                                        max: 100,
+                                        lineWidth: 0,
+                                        tickPositions: []
+                                    },
+                                    plotOptions: {
+                                        solidgauge: {
+                                            borderWidth: '12px',
+                                            dataLabels: {
+                                                enabled: true
+                                            },
+                                            linecap: 'round',
+                                            stickyTracking: false
+                                        }
+                                    },
+                                    series: [{
+                                            name: 'Completed',
+                                            borderColor: Highcharts.getOptions().colors[0],
+                                            data: [{
+                                                    color: Highcharts.getOptions().colors[0],
+                                                    radius: '100%',
+                                                    innerRadius: '100%',
+                                                    y: 80
+                                                }]
+                                        }]
+                                },
+                                /**
+                                 * In the chart load callback, add icons on top of the circular shapes
+                                 */
+                                function callback() {
 
-                                            // Move icon
-                                            this.renderer.path(['M', -8, 0, 'L', 8, 0, 'M', 0, -8, 'L', 8, 0, 0, 8])
-                                                    .attr({
-                                                        'stroke': '#303030',
-                                                        'stroke-linecap': 'round',
-                                                        'stroke-linejoin': 'round',
-                                                        'stroke-width': 2,
-                                                        'zIndex': 10
-                                                    })
-                                                    .translate(190, 26)
-                                                    .add(this.series[2].group);
+                                    // Move icon
+                                    this.renderer.path(['M', -8, 0, 'L', 8, 0, 'M', 0, -8, 'L', 8, 0, 0, 8])
+                                            .attr({
+                                                'stroke': '#303030',
+                                                'stroke-linecap': 'round',
+                                                'stroke-linejoin': 'round',
+                                                'stroke-width': 2,
+                                                'zIndex': 10
+                                            })
+                                            .translate(190, 26)
+                                            .add(this.series[2].group);
 
-                                            // Exercise icon
-                                            this.renderer.path(['M', -8, 0, 'L', 8, 0, 'M', 0, -8, 'L', 8, 0, 0, 8, 'M', 8, -8, 'L', 16, 0, 8, 8])
-                                                    .attr({
-                                                        'stroke': '#303030',
-                                                        'stroke-linecap': 'round',
-                                                        'stroke-linejoin': 'round',
-                                                        'stroke-width': 2,
-                                                        'zIndex': 10
-                                                    })
-                                                    .translate(190, 61)
-                                                    .add(this.series[2].group);
+                                    // Exercise icon
+                                    this.renderer.path(['M', -8, 0, 'L', 8, 0, 'M', 0, -8, 'L', 8, 0, 0, 8, 'M', 8, -8, 'L', 16, 0, 8, 8])
+                                            .attr({
+                                                'stroke': '#303030',
+                                                'stroke-linecap': 'round',
+                                                'stroke-linejoin': 'round',
+                                                'stroke-width': 2,
+                                                'zIndex': 10
+                                            })
+                                            .translate(190, 61)
+                                            .add(this.series[2].group);
 
-                                            // Stand icon
-                                            this.renderer.path(['M', 0, 8, 'L', 0, -8, 'M', -8, 0, 'L', 0, -8, 8, 0])
-                                                    .attr({
-                                                        'stroke': '#303030',
-                                                        'stroke-linecap': 'round',
-                                                        'stroke-linejoin': 'round',
-                                                        'stroke-width': 2,
-                                                        'zIndex': 10
-                                                    })
-                                                    .translate(190, 96)
-                                                    .add(this.series[2].group);
-                                        });
+                                    // Stand icon
+                                    this.renderer.path(['M', 0, 8, 'L', 0, -8, 'M', -8, 0, 'L', 0, -8, 8, 0])
+                                            .attr({
+                                                'stroke': '#303030',
+                                                'stroke-linecap': 'round',
+                                                'stroke-linejoin': 'round',
+                                                'stroke-width': 2,
+                                                'zIndex': 10
+                                            })
+                                            .translate(190, 96)
+                                            .add(this.series[2].group);
+                                });
 
 
-                                    });
+                            });
                                 </script>
                                 <div ><p style="border-top: 1px solid #cccccc">Profiles that are more than 90% complete are most preferred by recruiters.</p>
                                 </div>
@@ -462,19 +462,7 @@ if (!empty($dropdowns)) {
             <?php $this->load->view('footer', $view_data); ?>
 
         </div><!-- /.page-wrapper -->
-
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/js/jquery.ezmark.js"></script>
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/bootstrap-sass/javascripts/bootstrap/collapse.js"></script>
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/bootstrap-sass/javascripts/bootstrap/dropdown.js"></script>
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/bootstrap-sass/javascripts/bootstrap/tab.js"></script>
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/bootstrap-sass/javascripts/bootstrap/transition.js"></script>
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/bootstrap-fileinput/js/fileinput.min.js"></script>
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/bootstrap-select/js/bootstrap-select.min.js"></script>
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/bootstrap-wysiwyg/bootstrap-wysiwyg.min.js"></script>
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/cycle2/jquery.cycle2.min.js"></script>
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/cycle2/jquery.cycle2.carousel.min.js"></script>
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/countup/countup.min.js"></script>
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/js/profession.js"></script>
+        <?php $this->load->view('links', $view_data); ?>
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         <!-- Ptalent_home_upper -->
         <ins class="adsbygoogle"
@@ -482,7 +470,7 @@ if (!empty($dropdowns)) {
              data-ad-client="ca-pub-4494527869099710"
              data-ad-slot="2079045313"></ins>
         <script>
-                                    (adsbygoogle = window.adsbygoogle || []).push({});
+                            (adsbygoogle = window.adsbygoogle || []).push({});
         </script>
 
     </body>

@@ -46,16 +46,9 @@
                             </div><!-- /.header-brand -->
 
                             <ul class="header-nav nav nav-pills collapse header-actions">
-<!--                                <li><a href="#">Jobs <i class="fa fa-chevron-down"></i></a>
-                                    <ul class="sub-menu">
-                                        <li><a href="companies.html">Company Listing</a></li>
-                                        <li><a href="company-detail.html">Company Detail</a></li>
-                                    </ul>
-                                </li>-->
                                 <li><a href="#" data-toggle="modal" data-target="#myModal">Login</a></li>
                                 <li><a href="<?php echo site_url('Employee/register'); ?>">Register</a></li>
                                 <li><a href="<?php echo site_url('Job/index'); ?>" class="primary">Job Seekers</a></li>
-
                             </ul><!-- /.header-actions -->
 
                             <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".header-nav">
@@ -67,58 +60,6 @@
                         </div><!-- /.container -->
                     </div><!-- /.header-top -->
 
-                    <!--                    <div class="header-bottom">
-                                            <div class="container">
-                                                <ul class="header-nav nav nav-pills collapse">
-                                                    <li class="active">
-                                                        <a href="index.html">Home</a>
-                                                    </li>
-                    
-                                                    <li >
-                                                        <a href="#">Companies <i class="fa fa-chevron-down"></i></a>
-                    
-                                                        <ul class="sub-menu">
-                                                            <li><a href="companies.html">Company Listing</a></li>
-                                                            <li><a href="company-detail.html">Company Detail</a></li>
-                                                        </ul>
-                                                    </li>
-                    
-                                                    <li >
-                                                        <a href="#">Positions <i class="fa fa-chevron-down"></i> </a>
-                                                        <ul class="sub-menu">
-                                                            <li><a href="positions.html">Position Listing</a></li>
-                                                            <li><a href="position-detail.html">Position Detail</a></li>
-                                                        </ul>
-                                                    </li>
-                    
-                                                    <li >
-                                                        <a href="#">Candidates <i class="fa fa-chevron-down"></i></a>
-                    
-                                                        <ul class="sub-menu">
-                                                            <li><a href="candidates.html">Candidates List</a></li>
-                                                            <li><a href="resume.html">Resume</a></li>
-                                                            <li><a href="create-resume.html">Create Resume</a></li>
-                                                        </ul> /.sub-menu 
-                                                    </li>
-                    
-                                                    <li >
-                                                        <a href="#">Pages <i class="fa fa-chevron-down"></i></a>
-                    
-                                                        <ul class="sub-menu">
-                                                            <li><a href="pricing.html">Pricing</a></li>
-                                                            <li><a href="login.html">Login</a></li>
-                                                            <li><a href="registration.html">Registration</a></li>
-                                                        </ul>
-                                                    </li>
-                                                </ul>
-                    
-                                                <div class="header-search hidden-sm">
-                                                    <form method="get" action="http://preview.byaviators.com/template/profession/index.html?">
-                                                        <input type="text" class="form-control" placeholder="Search ...">
-                                                    </form>
-                                                </div> /.header-search 
-                                            </div> /.container 
-                                        </div> /.header-bottom -->
                 </div><!-- /.header -->
             </div><!-- /.header-wrapper-->
 
@@ -158,7 +99,7 @@
 
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-secondary">Login</button>
-<!--                            <a class="btn btn-social btn-linkedin" href="<?php //echo site_url('Linkedin_signup/initiate'); ?>">
+<!--                            <a class="btn btn-social btn-linkedin" href="<?php //echo site_url('Linkedin_signup/initiate');  ?>">
                                 <i class="fa fa-linkedin"></i> Sign in with LinkedIn
                             </a>                          -->
 
@@ -171,17 +112,6 @@
 
         </div><!-- /.page-wrapper -->
 
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/js/jquery.ezmark.js"></script>
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/bootstrap-sass/javascripts/bootstrap/collapse.js"></script>
-<!--        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/bootstrap-sass/javascripts/bootstrap/dropdown.js"></script>-->
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/bootstrap-sass/javascripts/bootstrap/tab.js"></script>
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/bootstrap-sass/javascripts/bootstrap/transition.js"></script>
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/bootstrap-fileinput/js/fileinput.min.js"></script>
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/bootstrap-select/js/bootstrap-select.min.js"></script>
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/bootstrap-wysiwyg/bootstrap-wysiwyg.min.js"></script>
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/cycle2/jquery.cycle2.min.js"></script>
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/cycle2/jquery.cycle2.carousel.min.js"></script>
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/libraries/countup/countup.min.js"></script>
-        <script type="text/javascript" src="<?php echo asset_url(); ?>assets/js/profession.js"></script>
+        <?php $this->load->view('links', $view_data); ?>
     </body>
 </html>

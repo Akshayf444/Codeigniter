@@ -26,9 +26,9 @@ class Job extends CI_Controller {
     }
 
     function add() {
-        var_dump($_POST);
+        //var_dump($_POST);
         $data['auth_id'] = $this->session->userdata("user_id");
-        if (isset($this->user_id) && $this->user_id != '' && $this->user_type == 'Employee') { 
+        if (isset($this->user_id) && $this->user_id != '' && $this->user_type == 'Employee') {
             if ($this->input->post()) {
                 $this->form_validation->set_rules('title', 'title', 'trim|required');
                 $this->form_validation->set_rules('description', 'description', 'trim|required');
@@ -36,7 +36,7 @@ class Job extends CI_Controller {
                 $this->form_validation->set_rules('exp_min', 'Minimum Experience', 'trim|required');
                 $this->form_validation->set_rules('exp_max', 'Maximum Experience', 'trim|required');
                 $this->form_validation->set_rules('ctc_min', 'CTC', 'trim|required');
-             $this->form_validation->set_rules('location', 'Location', 'required');
+                $this->form_validation->set_rules('location', 'Location', 'required');
                 $this->form_validation->set_rules('functional_area', 'Functional Area', 'trim|required');
 //                $this->form_validation->set_rules('industry', 'Industry', 'trim|required');
 
@@ -56,20 +56,6 @@ class Job extends CI_Controller {
         } else {
             redirect('Employee/logout', 'refresh');
         }
-    }
-
-    public function Job_list() {
-        $user_id = $this->session->userdata("user_id");
-        $userdata['users'] = $this->Job_model->job_list($user_id);
-        $data = array('title' => 'List Of Jobs ', 'content' => 'job/job_list', 'view_data' => $userdata);
-        $this->load->view('frontTemplate5', $data);
-    }
-
-    public function view($id) {
-//        $user_id = $this->session->userdata("user_id");
-        $userData['user'] = $this->Job_model->view_job($id);
-        $data = array('title' => 'Basic Employee Profile', 'content' => 'job/view', 'view_data' => $userData);
-        $this->load->view('template1', $data);
     }
 
     public function edit($id) {
@@ -97,6 +83,21 @@ class Job extends CI_Controller {
         $this->load->view('template1', $userdata);
     }
 
+    public function Job_list() {
+        $user_id = $this->session->userdata("user_id");
+        $userdata['users'] = $this->Job_model->job_list($user_id);
+        $data = array('title' => 'List Of Jobs ', 'content' => 'job/job_list', 'view_data' => $userdata);
+        $this->load->view('frontTemplate5', $data);
+    }
+
+    public function view($id) {
+//        $user_id = $this->session->userdata("user_id");
+        $userData['user'] = $this->Job_model->view_job($id);
+        $data = array('title' => 'Basic Employee Profile', 'content' => 'job/view', 'view_data' => $userData);
+        $this->load->view('template1', $data);
+    }
+
+    ///Get List Of Applied Candidates
     public function candidates() {
         $id = $this->session->userdata("user_id");
         $condition = array(
@@ -283,6 +284,16 @@ class Job extends CI_Controller {
         } else {
             echo '';
         }
+    }
+
+    public function viewJobDetails($id) {
+
+        $this->load->model('Master_model');
+        $user_id = $this->session->userdata("user_id");
+        $is_logged_in = FALSE;
+        $is_applied = FALSE;
+        $data['view'] = $this->Job_model->view_job($id);
+        $this->load->view('Job/viewJob', $data);
     }
 
 }

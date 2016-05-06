@@ -27,7 +27,7 @@
         echo $user;
     }
     ?></h3>
-<?php echo validation_errors(); ?>
+
 <div class="container">
     <div class="row">
         <div class="col-sm-6 col-sm-offset-3">
@@ -36,9 +36,10 @@
 
             <div class="row">
                 <div class="col-sm-12">
+                    <?php echo validation_errors(); ?>
                     <h3><b>Welcome to Pharma Talent</b></h3>
                     <p>LOGIN HERE USING YOUR USERNAME AND PASSWORD</p>
-                   <br/>
+                    <br/>
                     <div class="form-group">
                         <label >E-mail</label>
                         <input type="text" class="form-control" name="email"/>
