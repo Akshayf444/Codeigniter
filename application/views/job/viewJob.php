@@ -23,18 +23,12 @@
                                 </dt>
                             </dl>
                         </div>
-                        <div class="row">
-                            <dl>
-                                <dt class="col-sm-1">
-                                <h6><i class="fa fa-inr"> </i><?php
-                                    echo $view['ctc_min'];
-                                    echo isset($view['ctc_type']) && $view['ctc_type'] == 0 ? ' P.M.' : ' P.A.';
-                                    ?>
-                                </h6>
-                                </dt>
 
-                            </dl>
-                        </div>
+                        <h6><i class="fa fa-inr"> </i><?php
+                            echo " ".$view['ctc_min'];
+                            echo isset($view['ctc_type']) && $view['ctc_type'] == 0 ? ' P.M.' : ' P.A.';
+                            ?>
+                        </h6>
                     </div>
                     <div class="col-sm-12">
                         <div class="row">
