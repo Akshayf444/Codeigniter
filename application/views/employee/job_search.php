@@ -3,67 +3,13 @@
         <h1 class="center">Search</h1>
     </div><!-- /.container -->
 </div>
-<<<<<<< HEAD
+<?php
+echo validation_errors();
+$attribute = array('method' => 'get');
+echo form_open('Employee/searchResume', $attribute);
+?>
 <div class="container " >
-    <div class="row">
-        <div class="col-sm-12">
-            <?php
-            echo validation_errors();
-            $attribute = array('method' => 'get');
-            ?>
-            <?php echo form_open('Employee/searchResume', $attribute); ?>
-
-            <div class="form-group">
-                <label>  Keywords *</label>
-                <input type="text" required="required" class="form-control " id="skills" name="skill" placeholder="Skills">
-            </div>
-            <div class="form-group">
-                <label> Designation *</label>
-                <input type="text" required="required" class="form-control " id="" name="designation " placeholder="Designation ">
-            </div>
-            <div class="form-group">
-                <label>CTC *</label>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <input type="text" value="<?php echo set_value('ctc_min') ?>" class="form-control half-formcontrol" placeholder="Enter Salary"  name="ctc_min">
-                    </div>   
-                    <div class="col-sm-6">   <select class="form-control half-formcontrol"  name="ctc_type">
-                            <option value="0">Per Month</option>
-                            <option value="1">Per Year</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Work Experience *</label><br>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <select class="form-control half-formcontrol" name="exp_max"><?php echo $experience ?></select>
-                    </div>
-                    <div class="col-sm-6">  <select class="form-control half-formcontrol"  name="exp_min"><?php echo $experience ?></select>     
-                    </div>  
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Locations *</label>
-                <input type="text" class="form-control" id="location" name="location" placeholder="Type Location">
-            </div>
-
-            <div class="form-group">
-                <label>Function Area *</label>
-                <select class="form-control" name="functional_area"><?php echo $functional_area ?></select>
-                <input type="hidden" name="auth_id" value="<?php // echo $auth_id         ?>"/>
-            </div>
-            <div class="form-group">
-                <input type="text" class="btn btn-success " name="search" value="SEARCH" >
-            </div>
-=======
-<div class="row">
-    <div class="container " >
-        <?php echo validation_errors();
-        $attribute = array('method' => 'get');
-        ?>
-<?php echo form_open('Employee/searchResume', $attribute); ?>
+    <div class="row col-sm-12">
 
         <div class="form-group">
             <label>  Keywords *</label>
@@ -109,45 +55,31 @@
         <div class="form-group">
             <label>Function Area *</label>
             <select class="form-control" name="functional_area"><?php echo $functional_area ?></select>
-            <input type="hidden" name="auth_id" value="<?php // echo $auth_id      ?>"/>
+            <input type="hidden" name="auth_id" value="<?php // echo $auth_id            ?>"/>
         </div>
     </div>
 </div>
 
-<div class="row">
-    <div class="container " >
-
-
+<div class="container " >
+    <div class="row col-sm-12">
         <div class="form-group">
             <label>  Qualification </label>
-<?php echo $quali[0] ?>
-
+            <?php echo $quali[0] ?>
         </div>
         <div class="form-group">
             <label> Institute Name</label>
-
             <select class="form-control half-formcontrol" name="Institute"><?php echo $institute ?></select>
         </div>
-
         <div class="form-group">
             <label>Year Of Graduation</label>
-
             <input type="text" class="form-control" id="" name="Grduation" placeholder="Year Of Graduation">
         </div>
         <div class="form-group">
-            <input type="text" class="btn btn-primary " name="search" value="Search" >
->>>>>>> fd6645dfac85bf8de933955b718ae77806a26139
+            <input type="text" class="btn btn-success " name="search" value="SEARCH" >
         </div>
-
     </div>
 </div>
-<<<<<<< HEAD
-=======
 
-
-
-
->>>>>>> fd6645dfac85bf8de933955b718ae77806a26139
 </form>
 
 <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
@@ -267,8 +199,4 @@ if (!empty($dropdowns)) {
                     }
                 });
     });
-<<<<<<< HEAD
 </script>
-=======
-</script>
->>>>>>> fd6645dfac85bf8de933955b718ae77806a26139
