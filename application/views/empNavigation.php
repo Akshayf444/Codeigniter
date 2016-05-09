@@ -9,12 +9,7 @@ $Sidebar = array(
         'Jobs And Responses' => 'Job/job_list',
        
     ),
-    'Search' => array(
-        'Resume Writing Servies' => 'User/Comingsoon',
-        'Linked In Profile Writing' => 'User/Comingsoon',
-        'Value Packs' => 'User/Comingsoon',
-        'Cover Letter Samples' => 'User/Comingsoon',
-    ),
+    'Search' => 'Employee/search_specific',
     
     'Account Settings' => array(
         'Change Password' => 'Employee/changepassword',

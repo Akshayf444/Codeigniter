@@ -35,9 +35,9 @@ class Employee extends CI_Controller {
                     'type' => 'Employee'
                 );
 
-                /////Create New User Adding Entry In Authentication Table
+/////Create New User Adding Entry In Authentication Table
                 $id = $this->User_model->create($field_array);
-                //echo $id;
+//echo $id;
                 $data = array(
                     'name' => $this->input->post('name'),
                     'contact_person' => $this->input->post('Contactperson'),
@@ -48,7 +48,7 @@ class Employee extends CI_Controller {
                 );
                 $mobile = $this->input->post('mobile');
                 $ver_code = $this->input->post('ver_code');
-                /////////Insert Basic Profile
+/////////Insert Basic Profile
                 $result = $this->employee_model->Add_detail($id, $data);
                 $this->load->model('Sms_model');
 
@@ -92,11 +92,11 @@ class Employee extends CI_Controller {
                 $this->session->set_userdata("user_mobile", $check['mobile']);
                 $this->session->set_userdata("user_type", $check['type']);
                 $check1['User'] = $this->employee_model->find_by_id($check['auth_id']);
-                //$this->load->view('Employe/view');
+//$this->load->view('Employe/view');
                 redirect('Job/job_list', 'refresh');
             } else {
                 $data1['user'] = "Incorrect Login";
-                // $this->load->view('employee/error');
+// $this->load->view('employee/error');
             }
         }
         $data1['user2'] = "";
@@ -114,7 +114,7 @@ class Employee extends CI_Controller {
     }
 
     public function is_logged_in() {
-        //$is_logged_in = $this->session->userdata('user_id');
+//$is_logged_in = $this->session->userdata('user_id');
         if (isset($this->user_id) && $this->user_id != '') {
             return TRUE;
         } else {
@@ -124,7 +124,9 @@ class Employee extends CI_Controller {
 
     public function search_specific() {
         $this->load->model('Master_model');
-        ///$this->load->model('Master_model');
+        $data['quali'] = $this->Master_model->getQualification();
+        $data['institute'] = $this->Master_model->getInstitute();
+
         $data['location'] = $this->Master_model->getLocation();
         $data['experience'] = $this->Master_model->getWorkExperience();
         $data['industry'] = $this->Master_model->getIndustry();
@@ -178,7 +180,7 @@ class Employee extends CI_Controller {
     public function profile() {
 
         $user_id = $this->session->userdata("user_id");
-        //$userData['user2'] = $this->session->userdata("mobile");
+//$userData['user2'] = $this->session->userdata("mobile");
         $userData['user'] = $this->employee_model->profile($user_id);
         $data = array('title' => 'Basic Employee Profile', 'content' => 'employee/view', 'view_data' => $userData);
         $this->load->view('template1', $data);
