@@ -50,7 +50,7 @@
                     $locations = array();
                     if (isset($_GET['location']))
                         $locations = explode(",", $_GET['location']);
-                    $sql = "SELECT DISTINCT(sm.location)  as skill,count(j.job_id) as jobcount FROM location_master sm LEFT JOIN jobs j ON  j.location LIKE CONCAT('%', sm.location, '%') AND j.keyword LIKE '%" . $_GET['skill'] . "%'  where sm.location != ''  GROUP BY sm.location ORDER BY jobcount DESC LIMIT 10";
+                    $sql = "SELECT DISTINCT(sm.location)  as skill,count(j.job_id) as jobcount FROM location_master sm LEFT JOIN jobs j ON  j.location LIKE CONCAT('%', sm.location, '%') AND j.keyword LIKE '%" . $_GET['skill'] . "%'  where sm.location != '' GROUP BY sm.location HAVING jobcount > 0 ORDER BY jobcount DESC ";
                     //echo $sql;
                     $query = $this->db->query($sql);
                     $trendingJob = $query->result();
@@ -61,6 +61,7 @@
                                             <label><input type="checkbox" ' . $checked . ' class="location" value="' . $value->skill . '" > ' . $value->skill . '</label>
                                         </div>';
                         }
+                        
                     }
                     ?>
                     <input type="hidden" name="location" id="location">
@@ -76,9 +77,8 @@
                         $("#location").val(values.join(','));
                     });
                 </script>
-                <a href="#" class="filter-stacked-show-more">Show More ...</a>
 
-                <button type="submit" class="btn btn-secondary btn-block"><i class="fa fa-refresh"></i> Search</button>
+                <button type="submit" class="btn btn-secondary btn-block">SEARCH</button>
                 </form>
             </div><!-- /.filter-stacked -->
 
