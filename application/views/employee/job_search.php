@@ -7,7 +7,8 @@
 <div class="row">
     <div class="container " >
         <?php echo validation_errors();
-        $attribute = array('method' => 'get'); ?>
+        $attribute = array('method' => 'get');
+        ?>
 <?php echo form_open('Employee/searchResume', $attribute); ?>
 
         <div class="form-group">
@@ -22,6 +23,7 @@
             <label>CTC *</label>
             <div class="row">
 
+
                 <div class="col-sm-6">
 
                     <input type="text" value="<?php echo set_value('ctc_min') ?>" class="form-control half-formcontrol" placeholder="Enter Salary"  name="ctc_min">
@@ -33,20 +35,16 @@
                 </div>
             </div>
         </div>
+
         <div class="form-group">
             <label>Work Experience *</label><br>
             <div class="row">
                 <div class="col-sm-6">
                     <select class="form-control half-formcontrol" name="exp_max"><?php echo $experience ?></select>
 
-                </div>
-
-                <div class="col-sm-6">  <select class="form-control half-formcontrol"  name="exp_min"><?php echo $experience ?></select>     
-                </div>  
-            </div>
+                </div> <div class="col-sm-6">  <select class="form-control half-formcontrol"  name="exp_min"><?php echo $experience ?></select>     
+                </div>    </div>
         </div>
-
-
 
         <div class="form-group">
             <label>Locations *</label>
@@ -57,7 +55,7 @@
         <div class="form-group">
             <label>Function Area *</label>
             <select class="form-control" name="functional_area"><?php echo $functional_area ?></select>
-            <input type="hidden" name="auth_id" value="<?php // echo $auth_id     ?>"/>
+            <input type="hidden" name="auth_id" value="<?php // echo $auth_id      ?>"/>
         </div>
     </div>
 </div>
@@ -68,16 +66,16 @@
 
         <div class="form-group">
             <label>  Qualification </label>
-          <?php echo  $quali[0] ?>
+<?php echo $quali[0] ?>
 
         </div>
         <div class="form-group">
             <label> Institute Name</label>
-          
-             <select class="form-control half-formcontrol" name="Institute"><?php echo $institute ?></select>
+
+            <select class="form-control half-formcontrol" name="Institute"><?php echo $institute ?></select>
         </div>
-        
-       <div class="form-group">
+
+        <div class="form-group">
             <label>Year Of Graduation</label>
 
             <input type="text" class="form-control" id="" name="Grduation" placeholder="Year Of Graduation">

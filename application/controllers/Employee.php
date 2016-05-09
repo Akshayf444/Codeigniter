@@ -122,6 +122,7 @@ class Employee extends CI_Controller {
         }
     }
 
+
     public function search_specific() {
         $this->load->model('Master_model');
         $data['quali'] = $this->Master_model->getQualification();
@@ -133,6 +134,7 @@ class Employee extends CI_Controller {
         $userdata = array('title' => 'Search Job', 'content' => 'employee/job_search', 'view_data' => $data);
         $this->load->view('frontTemplate5', $userdata);
     }
+
 
     public function add_details() {
         if ($this->is_logged_in() == TRUE) {
