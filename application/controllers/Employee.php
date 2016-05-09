@@ -67,7 +67,6 @@ class Employee extends CI_Controller {
                     }
                 }
                 $dropdown['Error'] = '<p class="alert alert-success">Thank You . Registered Successfully</p>';
-
             } else {
                 $this->session->unset_userdata("linkedinemail");
                 $this->session->unset_userdata("linkedinname");
@@ -122,16 +121,19 @@ class Employee extends CI_Controller {
             return FALSE;
         }
     }
-public function search_specific(){
-    $this->load->model('Master_model');
-       $this->load->model('Master_model');
-            $data['location'] = $this->Master_model->getLocation();
-            $data['experience'] = $this->Master_model->getWorkExperience();
-            $data['industry'] = $this->Master_model->getIndustry();
-            $data['functional_area'] = $this->Master_model->getFunctionArea();
+
+    public function search_specific() {
+        $this->load->model('Master_model');
+        $data['quali'] = $this->Master_model->getQualification();
+        $data['institute'] = $this->Master_model->getInstitute();
+        $data['location'] = $this->Master_model->getLocation();
+        $data['experience'] = $this->Master_model->getWorkExperience();
+        $data['industry'] = $this->Master_model->getIndustry();
+        $data['functional_area'] = $this->Master_model->getFunctionArea();
         $userdata = array('title' => 'Search Job', 'content' => 'employee/job_search', 'view_data' => $data);
-        $this->load->view('frontTemplate4', $userdata);
-}
+        $this->load->view('frontTemplate5', $userdata);
+    }
+
     public function add_details() {
         if ($this->is_logged_in() == TRUE) {
             $user_id = $this->session->userdata("user_id");
@@ -308,9 +310,12 @@ public function search_specific(){
             redirect('User/login', 'refresh');
         }
     }
-    
-    public function dashboard(){
-        
+
+    public function searchResume() {
+        if ($this->input->post('skill') != '') {
+            $skill = explode(",", $this->input->get('skill'));
+            $skill = array_filter(array_map('trim', $skill));
+        }
     }
 
 }
