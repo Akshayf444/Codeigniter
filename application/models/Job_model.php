@@ -114,14 +114,14 @@ class Job_model extends CI_Model {
         }
 
         $query .= " ) AS j
-LEFT JOIN emp_profile ep
-ON j.auth_id = ep.`auth_id`
-LEFT JOIN `location_master` lm
-ON lm.loc_id = j.location
-LEFT JOIN `functional_area` fa
-ON fa.`fun_id` = j.`functional_area`
-LEFT JOIN apply_job aj
-ON j.job_id = aj.job_id AND aj.auth_id = {$auth_id} ";
+            LEFT JOIN emp_profile ep
+            ON j.auth_id = ep.`auth_id`
+            LEFT JOIN `location_master` lm
+            ON lm.loc_id = j.location
+            LEFT JOIN `functional_area` fa
+            ON fa.`fun_id` = j.`functional_area`
+            LEFT JOIN apply_job aj
+            ON j.job_id = aj.job_id AND aj.auth_id = {$auth_id} ";
         if (!empty($conditions)) {
             $query .= ' WHERE ' . join(' ', $conditions);
         }

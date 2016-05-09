@@ -106,7 +106,7 @@ class User_model extends CI_Model {
 
     public function Add_detail($id, $data) {
         ///var_dump($data);
-       // exit();
+        // exit();
         $entryExist = $this->Show_profile($id);
 
         if (!empty($entryExist)) {
@@ -141,11 +141,12 @@ class User_model extends CI_Model {
         return $this->db->insert('user_qualification', $data);
     }
 
-    public function user_qualification_delete( $id) {
+    public function user_qualification_delete($id) {
 
         $this->db->where(array('id' => $id));
         return $this->db->delete('user_qualification');
     }
+
     public function user_qualification_update($data, $id) {
 //        $data = array(
 //            'qualification' => $this->input->post('qualification'),
@@ -350,7 +351,7 @@ class User_model extends CI_Model {
         $this->db->where(array('id' => $this->input->post('id')));
         return $this->db->update('user_project', $data);
     }
-  
+
     public function project_update3($id, $data) {
         $this->db->where(array('id' => $id));
         return $this->db->update('user_project', $data);
@@ -419,7 +420,7 @@ class User_model extends CI_Model {
                 LEFT JOIN emp_profile ep
                 ON j.auth_id=ep.`auth_id`
                 LEFT JOIN `location_master` lm
-                ON lm.loc_id=j.location where j.status = 0" ;
+                ON lm.loc_id=j.location where j.status = 0";
         $query = $this->db->query($query);
 
         return $query->result();
@@ -589,17 +590,13 @@ class User_model extends CI_Model {
     }
 
     public function delete_qualification($id) {
-
         $this->db->where('id', $id);
         return $this->db->delete('user_qualification');
     }
 
     public function show_workexp($id) {
-
-        $query = "SELECT * FROM `work_exp` we
-                    WHERE auth_id=$id";
+        $query = "SELECT * FROM `work_exp` we   WHERE auth_id=$id";
         $query = $this->db->query($query);
-
         return $query->result();
     }
 
@@ -636,12 +633,10 @@ class User_model extends CI_Model {
                     WHERE u.auth_id=$id
                     ORDER BY we.emp_id DESC  LIMIT 1";
         $query = $this->db->query($query);
-
         return $query->row_array();
     }
 
     public function device_id($id, $data) {
-
         $this->db->where('auth_id', $id);
         return $this->db->update('authentication', $data);
     }
@@ -753,6 +748,16 @@ class User_model extends CI_Model {
             array_push($Parameter, $Object);
         }
         return $Parameter;
+    }
+
+    function searchResume($usercondition = array(), $conditions = array()) {
+        $sql = "SELECT u.* FROM user u LEFT JOIN skills ON u.auth_id = skills.auth_id ";
+        if (!empty($usercondition)) {
+            $sql .= " WHERE " . join(" ", $usercondition);
+        }
+
+        $query = $this->db->query($sql);
+        return $query->result();
     }
 
 }

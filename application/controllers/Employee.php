@@ -67,7 +67,6 @@ class Employee extends CI_Controller {
                     }
                 }
                 $dropdown['Error'] = '<p class="alert alert-success">Thank You . Registered Successfully</p>';
-
             } else {
                 $this->session->unset_userdata("linkedinemail");
                 $this->session->unset_userdata("linkedinname");
@@ -122,16 +121,18 @@ class Employee extends CI_Controller {
             return FALSE;
         }
     }
-public function search_specific(){
-    $this->load->model('Master_model');
-       $this->load->model('Master_model');
-            $data['location'] = $this->Master_model->getLocation();
-            $data['experience'] = $this->Master_model->getWorkExperience();
-            $data['industry'] = $this->Master_model->getIndustry();
-            $data['functional_area'] = $this->Master_model->getFunctionArea();
+
+    public function search_specific() {
+        $this->load->model('Master_model');
+        ///$this->load->model('Master_model');
+        $data['location'] = $this->Master_model->getLocation();
+        $data['experience'] = $this->Master_model->getWorkExperience();
+        $data['industry'] = $this->Master_model->getIndustry();
+        $data['functional_area'] = $this->Master_model->getFunctionArea();
         $userdata = array('title' => 'Search Job', 'content' => 'employee/job_search', 'view_data' => $data);
-        $this->load->view('frontTemplate4', $userdata);
-}
+        $this->load->view('frontTemplate5', $userdata);
+    }
+
     public function add_details() {
         if ($this->is_logged_in() == TRUE) {
             $user_id = $this->session->userdata("user_id");
@@ -308,9 +309,44 @@ public function search_specific(){
             redirect('User/login', 'refresh');
         }
     }
-    
-    public function dashboard(){
-        
+
+    public function searchResume() {
+        $locondition = array();
+        $conditions = array();
+        $conditions3 = array();
+        if ($this->input->get('skill') != '') {
+            $skill = explode(",", $this->input->get('skill'));
+            $skill = array_filter(array_map('trim', $skill));
+            foreach ($skill as $value) {
+                $conditions3[] = "  skills.`skill` LIKE '%$value%'  ";
+            }
+            $conditions[] = join(" OR ", $conditions3);
+        }
+
+        if ($this->input->get('designation') != '') {
+            $value = $this->input->get('designation');
+            $conditions[] = "OR u.role LIKE '%$value%' ";
+        }
+
+        if ($this->input->get('exp_max') != '') {
+            
+        }
+
+        if ($this->input->get('location') != '') {
+            $location = explode(",", $this->input->get('location'));
+            $location = array_filter(array_map('trim', $location));
+            foreach ($location as $value) {
+                $locondition[] = " u.`prefred_location` LIKE '%$value%'  ";
+            }
+            $conditions[] = join(" OR ", $locondition);
+        }
+
+        if ($this->input->get('functional_area') != '') {
+            $functional_area = explode(",", $this->input->get('functional_area'));
+            $conditions[] = "OR u.function_area LIKE '%$functional_area%' ";
+        }
+
+        $data['show'] = $this->User_model->searchResume($conditions);
     }
 
 }
