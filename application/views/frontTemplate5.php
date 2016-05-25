@@ -33,7 +33,7 @@
                         <div class="container">
                             <div class="header-brand">
                                 <div class="header-logo">
-                                    <a href="<?php echo site_url('Employee/dashboard'); ?>">
+                                    <a href="<?php echo site_url('Job/job_list'); ?>">
                                         <i class="profession profession-logo"></i>
                                         <span class="header-logo-text">Pharma Talent</span>
                                     </a>
