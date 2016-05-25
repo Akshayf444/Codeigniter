@@ -9,57 +9,46 @@ $attribute = array('method' => 'get');
 echo form_open('Employee/searchResume', $attribute);
 ?>
 <div class="container " >
-    <div class="row col-sm-12">
 
-        <div class="form-group">
-            <label>  Keywords *</label>
-            <input type="text" required="required" class="form-control " id="skills" name="skill" placeholder="Job Title / Skills / Role">
-        </div>
-        <div class="form-group">
-            <label> Designation *</label>
-            <input type="text" required="required" class="form-control " id="" name="designation " placeholder="Designation ">
-        </div>
-        <div class="form-group">
-            <label>CTC *</label>
-            <div class="row">
+    <div class="row">
+        <div class="col-sm-12">
+            <?php
+            echo validation_errors();
+            $attribute = array('method' => 'get');
+            ?>
+            <?php echo form_open('Employee/searchResume', $attribute); ?>
 
-
-                <div class="col-sm-6">
-
-                    <input type="text" value="<?php echo set_value('ctc_min') ?>" class="form-control half-formcontrol" placeholder="Enter Salary"  name="ctc_min">
-                </div>   
-                <div class="col-sm-6">   <select class="form-control half-formcontrol"  name="ctc_type">
-                        <option value="0">Per Month</option>
-                        <option value="1">Per Year</option>
-                    </select>
+            <div class="form-group">
+                <label>  Keywords *</label>
+                <input type="text" required="required" class="form-control " id="skills" name="skill" placeholder="Skills">
+            </div>
+            <div class="form-group">
+                <label> Designation *</label>
+                <input type="text" required="required" class="form-control " id="" name="designation " placeholder="Designation ">
+            </div>
+                        <div class="form-group">
+                <label>Work Experience *</label><br>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <select class="form-control half-formcontrol" name="exp_max"><?php echo $experience ?></select>
+                    </div>
+                    <div class="col-sm-6">  <select class="form-control half-formcontrol"  name="exp_min"><?php echo $experience ?></select>     
+                    </div>  
                 </div>
             </div>
-        </div>
+            <div class="form-group">
+                <label>Locations *</label>
+                <input type="text" class="form-control" id="location" name="location" placeholder="Type Location">
+            </div>
 
-        <div class="form-group">
-            <label>Work Experience *</label><br>
-            <div class="row">
-                <div class="col-sm-6">
-                    <select class="form-control half-formcontrol" name="exp_max"><?php echo $experience ?></select>
-
-                </div> <div class="col-sm-6">  <select class="form-control half-formcontrol"  name="exp_min"><?php echo $experience ?></select>     
-                </div>    </div>
-        </div>
-
-        <div class="form-group">
-            <label>Locations *</label>
-
-            <input type="text" class="form-control" id="location" name="location" placeholder="Type Location">
-        </div>
-
-        <div class="form-group">
-            <label>Function Area *</label>
-            <select class="form-control" name="functional_area"><?php echo $functional_area ?></select>
-            <input type="hidden" name="auth_id" value="<?php // echo $auth_id            ?>"/>
+            <div class="form-group">
+                <label>Function Area *</label>
+                <select class="form-control" name="functional_area"><?php echo $functional_area ?></select>
+                <input type="hidden" name="auth_id" value="<?php // echo $auth_id         ?>"/>
+            </div>
         </div>
     </div>
-</div>
-
+            
 <div class="container " >
     <div class="row col-sm-12">
         <div class="form-group">
